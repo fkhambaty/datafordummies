@@ -133,62 +133,34 @@
     }
 
     function trackPageView() {
-        ensureSupabase(function (sb) {
-            if (!sb) return;
-            fetchGeo(function (geo) {
-                getUserId(sb).then(function (uid) {
-                    var row = {
-                        visitor_id: _visitorId,
-                        session_id: _sessionId,
-                        page_path: getPagePath(),
-                        page_title: document.title || '',
-                        referrer: document.referrer || '',
-                        ip_address: (geo && geo.ip) || '',
-                        country: (geo && geo.country_name) || '',
-                        city: (geo && geo.city) || '',
-                        device_type: detectDevice(),
-                        browser: detectBrowser(),
-                        os: detectOS(),
-                        screen_size: screen.width + 'x' + screen.height,
-                        user_id: uid || null
-                    };
-                    sb.from('page_views').insert([row]).then(function () {});
-
-                    sb.from('site_visitors')
-                        .upsert([{
-                            visitor_id: _visitorId,
-                            last_seen: new Date().toISOString(),
-                            ip_address: row.ip_address,
-                            country: row.country,
-                            city: row.city,
-                            device_type: row.device_type,
-                            browser: row.browser,
-                            os: row.os,
-                            is_registered: !!uid,
-                            user_id: uid || null
-                        }], { onConflict: 'visitor_id' })
-                        .then(function () {});
-                });
+        if (!window.FKTI_Auth || !window.FKTI_Auth.track) return;
+        fetchGeo(function (geo) {
+            window.FKTI_Auth.track('/v1/page-view', {
+                visitor_id: _visitorId,
+                session_id: _sessionId,
+                page_path: getPagePath(),
+                page_title: document.title || '',
+                referrer: document.referrer || '',
+                country: (geo && geo.country_name) || '',
+                city: (geo && geo.city) || '',
+                device_type: detectDevice(),
+                browser: detectBrowser(),
+                os: detectOS(),
+                screen_size: screen.width + 'x' + screen.height
             });
         });
     }
 
     function trackEvent(eventType, eventData) {
-        ensureSupabase(function (sb) {
-            if (!sb) return;
-            fetchGeo(function (geo) {
-                getUserId(sb).then(function (uid) {
-                    sb.from('analytics_events').insert([{
-                        visitor_id: _visitorId,
-                        session_id: _sessionId,
-                        event_type: eventType,
-                        event_data: eventData || {},
-                        page_path: getPagePath(),
-                        ip_address: (geo && geo.ip) || '',
-                        country: (geo && geo.country_name) || '',
-                        user_id: uid || null
-                    }]).then(function () {});
-                });
+        if (!window.FKTI_Auth || !window.FKTI_Auth.track) return;
+        fetchGeo(function (geo) {
+            window.FKTI_Auth.track('/v1/event', {
+                visitor_id: _visitorId,
+                session_id: _sessionId,
+                event_type: eventType,
+                event_data: eventData || {},
+                page_path: getPagePath(),
+                country: (geo && geo.country_name) || ''
             });
         });
     }

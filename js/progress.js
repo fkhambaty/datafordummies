@@ -32,20 +32,13 @@
         if (!courseId) return Promise.resolve();
         getUserId().then(function (userId) {
             if (!userId) return;
-            var supabase = getSupabase();
-            if (!supabase) return;
-            var row = {
-                user_id: userId,
+            if (!window.FKTI_Auth || !window.FKTI_Auth.saveProgress) return;
+            window.FKTI_Auth.saveProgress({
                 course_id: courseId,
                 last_lesson_id: lessonId || null,
                 last_lesson_label: lessonLabel || null,
-                last_visited_at: new Date().toISOString(),
-                updated_at: new Date().toISOString()
-            };
-            supabase.from('user_progress').upsert(row, {
-                onConflict: 'user_id,course_id',
-                ignoreDuplicates: false
-            }).then(function () {});
+                last_visited_at: new Date().toISOString()
+            });
         });
     }
 
@@ -57,20 +50,18 @@
         if (!courseId || !lessonId) return Promise.resolve();
         getUserId().then(function (userId) {
             if (!userId) return;
-            var supabase = getSupabase();
-            if (!supabase) return;
-            supabase.from('user_progress').select('completed_lesson_ids').eq('user_id', userId).eq('course_id', courseId).single().then(function (res) {
-                var existing = (res.data && res.data.completed_lesson_ids) || [];
+            if (!window.FKTI_Auth || !window.FKTI_Auth.getProgress || !window.FKTI_Auth.saveProgress) return;
+            window.FKTI_Auth.getProgress(courseId).then(function (res) {
+                var row = (res.data && res.data[0]) || {};
+                var existing = row.completed_lesson_ids || [];
                 if (existing.indexOf(lessonId) !== -1) return;
                 var updated = existing.concat([lessonId]);
                 var pct = totalLessons > 0 ? Math.min(100, Math.round((updated.length / totalLessons) * 100)) : 0;
-                supabase.from('user_progress').upsert({
-                    user_id: userId,
+                window.FKTI_Auth.saveProgress({
                     course_id: courseId,
                     completed_lesson_ids: updated,
-                    progress_pct: pct,
-                    updated_at: new Date().toISOString()
-                }, { onConflict: 'user_id,course_id' }).then(function () {});
+                    progress_pct: pct
+                });
             });
         });
     }
@@ -82,9 +73,8 @@
     function getProgress() {
         return getUserId().then(function (userId) {
             if (!userId) return [];
-            var supabase = getSupabase();
-            if (!supabase) return [];
-            return supabase.from('user_progress').select('course_id, last_lesson_id, last_lesson_label, last_visited_at, progress_pct').eq('user_id', userId).order('last_visited_at', { ascending: false }).then(function (res) {
+            if (!window.FKTI_Auth || !window.FKTI_Auth.getProgress) return [];
+            return window.FKTI_Auth.getProgress().then(function (res) {
                 return res.data || [];
             });
         }).catch(function () { return []; });

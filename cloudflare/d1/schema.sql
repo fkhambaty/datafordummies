@@ -5,8 +5,12 @@
 
 CREATE TABLE IF NOT EXISTS profiles (
   id TEXT PRIMARY KEY,
-  email TEXT,
+  email TEXT UNIQUE,
+  password_hash TEXT,
+  password_salt TEXT,
   full_name TEXT,
+  phone TEXT,
+  country_code TEXT,
   role TEXT NOT NULL DEFAULT 'student',
   subscription_status TEXT NOT NULL DEFAULT 'free',
   subscription_plan TEXT NOT NULL DEFAULT 'free',
@@ -81,3 +85,12 @@ CREATE INDEX IF NOT EXISTS idx_page_views_visitor ON page_views (visitor_id);
 CREATE INDEX IF NOT EXISTS idx_events_type ON analytics_events (event_type);
 CREATE INDEX IF NOT EXISTS idx_events_created ON analytics_events (created_at);
 CREATE INDEX IF NOT EXISTS idx_visitors_last_seen ON site_visitors (last_seen);
+
+CREATE TABLE IF NOT EXISTS sessions (
+  token_hash TEXT PRIMARY KEY,
+  user_id TEXT NOT NULL,
+  created_at TEXT NOT NULL DEFAULT (strftime('%Y-%m-%dT%H:%M:%fZ', 'now')),
+  expires_at TEXT NOT NULL
+);
+
+CREATE INDEX IF NOT EXISTS idx_sessions_user ON sessions (user_id);

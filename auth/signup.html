@@ -76,7 +76,7 @@
                     submitBtn.disabled = false;
                     return;
                 }
-                window.location.href = 'verify.html?email=' + encodeURIComponent(email);
+                window.location.href = 'profile.html';
             }).catch(function (err) {
                 errEl.textContent = (err && err.message) || 'Something went wrong. Try again.';
                 errEl.style.display = 'block';

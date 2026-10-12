@@ -1,144 +1,158 @@
 /**
- * Supabase Auth — session, login, signup, OTP verify, profile.
- * Replace SUPABASE_URL and SUPABASE_ANON_KEY with your project values.
+ * Account session for Data For Dummies.
+ * The browser talks to the Cloudflare API. The database password never reaches this file.
  */
 (function () {
     'use strict';
 
-    var SUPABASE_URL = window.SUPABASE_URL || '';
-    var SUPABASE_ANON_KEY = window.SUPABASE_ANON_KEY || '';
+    var API = window.DFD_API || '';
+    var STORAGE_KEY = 'dfd_session';
+    var listeners = [];
 
-    if (!SUPABASE_URL || !SUPABASE_ANON_KEY) {
-        console.warn('Supabase credentials not set. Set window.SUPABASE_URL and window.SUPABASE_ANON_KEY (e.g. in auth pages).');
+    function readStored() {
+        try {
+            return JSON.parse(localStorage.getItem(STORAGE_KEY) || 'null');
+        } catch (e) {
+            return null;
+        }
     }
 
-    var supabase = null;
-    if (typeof window.supabase !== 'undefined') {
-        supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+    function writeStored(session) {
+        if (!session) localStorage.removeItem(STORAGE_KEY);
+        else localStorage.setItem(STORAGE_KEY, JSON.stringify(session));
+        listeners.forEach(function (listener) {
+            listener(session ? 'SIGNED_IN' : 'SIGNED_OUT', session);
+        });
     }
 
-    function getSupabase() {
-        return supabase;
+    function authHeader() {
+        var stored = readStored();
+        return stored && stored.token ? { Authorization: 'Bearer ' + stored.token } : {};
+    }
+
+    function request(path, options) {
+        if (!API) return Promise.resolve({ data: null, error: { message: 'Account service is not configured.' } });
+        var headers = Object.assign({ 'Content-Type': 'application/json' }, authHeader(), (options && options.headers) || {});
+        return fetch(API + path, {
+            method: (options && options.method) || 'GET',
+            headers: headers,
+            body: options && options.body ? JSON.stringify(options.body) : undefined
+        }).then(function (response) {
+            return response.json().catch(function () { return {}; }).then(function (body) {
+                if (!response.ok) return { data: null, error: { message: body.error || 'Request failed.' }, status: response.status };
+                return { data: body, error: null };
+            });
+        }).catch(function () {
+            return { data: null, error: { message: 'The account service did not answer.' } };
+        });
+    }
+
+    function sessionObject(user) {
+        var stored = readStored();
+        if (!user || !stored) return null;
+        return { access_token: stored.token, user: user };
     }
 
     function getSession() {
-        return supabase ? supabase.auth.getSession() : Promise.resolve({ data: { session: null }, error: null });
+        var stored = readStored();
+        if (!stored || !stored.user) return Promise.resolve({ data: { session: null }, error: null });
+        return Promise.resolve({ data: { session: sessionObject(stored.user) }, error: null });
     }
 
     function getUser() {
-        return supabase ? supabase.auth.getUser() : Promise.resolve({ data: { user: null }, error: null });
+        return getSession().then(function (res) {
+            var session = res.data && res.data.session;
+            return { data: { user: session ? session.user : null }, error: null };
+        });
     }
 
     function onAuthStateChange(callback) {
-        if (!supabase) return function () {};
-        var sub = supabase.auth.onAuthStateChange(function (event, session) {
-            callback(event, session);
-        });
+        listeners.push(callback);
         return function () {
-            if (sub && sub.unsubscribe) sub.unsubscribe();
+            listeners = listeners.filter(function (listener) { return listener !== callback; });
         };
     }
 
     function signInWithPassword(email, password) {
-        if (!supabase) return Promise.resolve({ data: null, error: { message: 'Supabase not configured' } });
-        return supabase.auth.signInWithPassword({ email: email, password: password });
+        return request('/v1/login', { method: 'POST', body: { email: email, password: password } }).then(function (res) {
+            if (res.error) return res;
+            writeStored({ token: res.data.token, user: res.data.user });
+            return { data: { session: sessionObject(res.data.user), user: res.data.user }, error: null };
+        });
     }
 
     function signUp(email, password, options) {
-        if (!supabase) return Promise.resolve({ data: null, error: { message: 'Supabase not configured' } });
-        var redirectTo = (typeof window !== 'undefined' && window.location && window.location.origin)
-            ? window.location.origin + '/auth/confirm.html'
-            : '';
-        return supabase.auth.signUp({
-            email: email,
-            password: password,
-            options: {
-                emailRedirectTo: redirectTo,
-                data: (options && options.data) || {}
+        var data = (options && options.data) || {};
+        return request('/v1/signup', {
+            method: 'POST',
+            body: {
+                email: email,
+                password: password,
+                full_name: data.full_name || data.fullName || '',
+                phone: data.phone || '',
+                country_code: data.country_code || data.countryCode || ''
             }
+        }).then(function (res) {
+            if (res.error) return res;
+            writeStored({ token: res.data.token, user: res.data.user });
+            return { data: { session: sessionObject(res.data.user), user: res.data.user }, error: null };
         });
     }
 
-    function signInWithOtp(email) {
-        if (!supabase) return Promise.resolve({ data: null, error: { message: 'Supabase not configured' } });
-        return supabase.auth.signInWithOtp({
-            email: email,
-            options: {
-                shouldCreateUser: true,
-                data: {}
-            }
-        });
-    }
-
-    function verifyOtp(email, token) {
-        if (!supabase) return Promise.resolve({ data: null, error: { message: 'Supabase not configured' } });
-        return supabase.auth.verifyOtp({
-            email: email,
-            token: token,
-            type: 'email'
+    function signOut() {
+        return request('/v1/logout', { method: 'POST', body: {} }).then(function () {
+            writeStored(null);
+            return { error: null };
         });
     }
 
     function updateUserPassword(password) {
-        if (!supabase) return Promise.resolve({ data: null, error: { message: 'Supabase not configured' } });
-        return supabase.auth.updateUser({ password: password });
+        return request('/v1/password', { method: 'POST', body: { password: password } });
     }
 
-    function updateUserMetadata(meta) {
-        if (!supabase) return Promise.resolve({ data: null, error: { message: 'Supabase not configured' } });
-        return supabase.auth.updateUser({ data: meta });
-    }
-
-    function signOut() {
-        if (!supabase) return Promise.resolve({ error: null });
-        return supabase.auth.signOut();
-    }
-
-    function getProfile(userId) {
-        if (!supabase) return Promise.resolve({ data: null, error: null });
-        return supabase.from('profiles').select('*').eq('id', userId).single();
-    }
-
-    function upsertProfile(profile) {
-        if (!supabase) return Promise.resolve({ data: null, error: { message: 'Supabase not configured' } });
-        return supabase.from('profiles').upsert(profile, { onConflict: 'id' });
-    }
-
-    function ensureProfile(user) {
-        if (!supabase || !user || !user.id) return Promise.resolve();
-        return supabase.from('profiles').select('id').eq('id', user.id).single().then(function (res) {
-            if (res.data) return;
-            return supabase.from('profiles').insert({
-                id: user.id,
-                email: user.email || null,
-                full_name: (user.user_metadata && user.user_metadata.full_name) || null,
-                subscription_status: 'free',
-                updated_at: new Date().toISOString()
-            });
-        }).catch(function () {});
-    }
-
-    if (supabase) {
-        supabase.auth.onAuthStateChange(function (event, session) {
-            if ((event === 'SIGNED_IN' || event === 'USER_UPDATED') && session && session.user) {
-                ensureProfile(session.user);
-            }
+    function getProfile() {
+        var stored = readStored();
+        if (!stored) return Promise.resolve({ data: null, error: null });
+        return request('/v1/profile').then(function (res) {
+            if (res.error) return { data: stored.user, error: null };
+            stored.user = res.data.profile;
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(stored));
+            return { data: res.data.profile, error: null };
         });
     }
 
+    function saveProgress(row) {
+        return request('/v1/progress', { method: 'PUT', body: row });
+    }
+
+    function getProgress(courseId) {
+        var path = courseId ? '/v1/progress?course_id=' + encodeURIComponent(courseId) : '/v1/progress';
+        return request(path).then(function (res) {
+            return { data: (res.data && res.data.progress) || [], error: res.error };
+        });
+    }
+
+    function track(path, body) {
+        return request(path, { method: 'POST', body: body });
+    }
+
     window.FKTI_Auth = {
-        getSupabase: getSupabase,
         getSession: getSession,
         getUser: getUser,
         onAuthStateChange: onAuthStateChange,
         signUp: signUp,
         signInWithPassword: signInWithPassword,
-        signInWithOtp: signInWithOtp,
-        verifyOtp: verifyOtp,
-        updateUserPassword: updateUserPassword,
-        updateUserMetadata: updateUserMetadata,
         signOut: signOut,
+        updateUserPassword: updateUserPassword,
         getProfile: getProfile,
-        upsertProfile: upsertProfile
+        saveProgress: saveProgress,
+        getProgress: getProgress,
+        track: track,
+        upsertProfile: function () { return Promise.resolve({ data: null, error: null }); },
+        ensureProfile: function () { return Promise.resolve(); },
+        signInWithOtp: function () { return Promise.resolve({ data: null, error: { message: 'Email codes are off. Use your password.' } }); },
+        verifyOtp: function () { return Promise.resolve({ data: null, error: { message: 'Email codes are off. Use your password.' } }); },
+        updateUserMetadata: function () { return Promise.resolve({ data: null, error: null }); },
+        getSupabase: function () { return null; }
     };
 })();

@@ -30,22 +30,16 @@ The domain itself is registered at GoDaddy. API keys for DNS changes are created
 ```
 Browser
   → GitHub Pages (the HTML in this repo)
-      → most learning progress is in localStorage
-      → sign-in, Pro status, and payments call Supabase
-      → an older analytics path still knows about Firebase project fkti-analytics
-  → Supabase project gfskxboxvzuwozknfulo
-      → Auth
-      → Postgres
-      → Edge functions: create-subscription, razorpay-webhook,
-        razorpay-callback, send-email, send-renewal-reminders, get-analytics
-  → Razorpay for Pro
+      → course pages stay in these files
+      → new accounts, lesson progress, and visit counts call
+        https://datafordummies-api.fkhambaty.workers.dev
+  → Cloudflare D1 database datafordummies
+      → schema cloudflare/d1/schema.sql
+      → worker cloudflare/worker
+  → Razorpay checkout still uses the old Supabase function
 ```
 
-Supabase project ref: `gfskxboxvzuwozknfulo`
-
-API settings: https://supabase.com/dashboard/project/gfskxboxvzuwozknfulo/settings/api
-
-The browser config is `js/supabase-config.js`. Do not put the service-role key in that file or in any HTML page. On 12 Oct 2026 the auth health URL for this project did not return a healthy response. Course pages still open, because they are static files. Sign-in and Pro do not.
+New accounts do not use Supabase. Signup logs the person in and opens the profile. There is no confirmation email. Password-reset email is not connected. A logged-in person changes a password from the profile page. The public config is `window.DFD_API` in `js/supabase-config.js`. Do not put the Cloudflare API token in that file.
 
 ## Repository map
 
