@@ -1,10 +1,8 @@
-/* ═══════════════════════════════════════════════════════════════════════════════
-   🐍 PYTHON MASTERY - FKTI LIGHT THEME
-   Apple-inspired minimalist design
-   ═══════════════════════════════════════════════════════════════════════════════ */
+/* Python course theme. Class names are the lesson contract — do not rename them.
+   Syntax colors live on inline spans in the lessons; this file does not restyle them. */
 
 /* Google Fonts - aligned with Data Science course */
-@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Nunito:wght@400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap');
 
 /* ════════════════════════════════════
    CSS Variables (aligned with Data Science course look & feel)
@@ -73,10 +71,10 @@ html {
 }
 
 body {
-  font-family: 'Nunito', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  background: linear-gradient(135deg, #fce7f3 0%, #fbcfe8 50%, #f9a8d4 100%);
+  font-family: 'Outfit', 'Nunito', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  background: linear-gradient(180deg, #fff 0%, #fdf2f8 46%, #fce7f3 100%);
   color: var(--text-primary);
-  line-height: 1.6;
+  line-height: 1.65;
   min-height: 100vh;
   font-size: 15px;
   padding: 20px;
@@ -1501,4 +1499,17 @@ pre code {
         height: 45px;
         font-size: 18px;
     }
+}
+
+.nav a:focus-visible,
+.back-to-top:focus-visible,
+button:focus-visible {
+    outline: 2px solid var(--course-primary, #db2777);
+    outline-offset: 3px;
+}
+
+.code-block,
+pre {
+    max-width: 100%;
+    overflow-x: auto;
 }

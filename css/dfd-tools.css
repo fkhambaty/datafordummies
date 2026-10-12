@@ -1,0 +1,49 @@
+/* Shared chrome for the four long tool pages:
+   pipeline-designer, data-modelling, bus-matrix, distributed-computing.
+   Loaded after each page's inline <style>. Only layout, focus, and overflow.
+   Colors and diagram logic stay in the page. */
+
+@media (max-width: 860px) {
+    .top-nav {
+        top: 8px;
+        margin: 0 10px;
+        border-radius: 18px;
+    }
+
+    .nav-c {
+        height: auto;
+        min-height: 44px;
+        flex-wrap: wrap;
+        padding: 8px 10px;
+    }
+
+    .nav-links {
+        flex-wrap: wrap;
+        justify-content: flex-end;
+        max-width: 100%;
+    }
+
+    .main,
+    .workspace,
+    .builder,
+    .canvas-wrap,
+    .diagram-wrap {
+        min-width: 0;
+        max-width: 100%;
+    }
+}
+
+.config,
+.cfg-card,
+.panel,
+.board {
+    min-width: 0;
+    max-width: 100%;
+}
+
+.top-nav a:focus-visible,
+.top-nav button:focus-visible,
+.nav-dropdown-trigger:focus-visible {
+    outline: 2px solid #4f46e5;
+    outline-offset: 2px;
+}

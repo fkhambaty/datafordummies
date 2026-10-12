@@ -1,0 +1,38 @@
+/* Admin analytics chrome. Linked only from admin/analytics.html, after its inline sheet.
+   Does not change .dashboard / .auth-gate / .admin-signin-overlay display. Those stay with the page script. */
+
+.auth-gate {
+    background:
+        radial-gradient(900px 420px at 10% -10%, rgba(99, 102, 241, 0.16), transparent 55%),
+        radial-gradient(700px 380px at 100% 0%, rgba(14, 165, 233, 0.12), transparent 50%),
+        #f8fafc;
+}
+
+.auth-card,
+.admin-signin-modal {
+    border: 1px solid #e2e8f0;
+    box-shadow: 0 24px 60px rgba(15, 23, 42, 0.12);
+}
+
+.dash-header {
+    background: linear-gradient(135deg, #1e1b4b 0%, #312e81 55%, #4338ca 100%);
+}
+
+.auth-card button,
+.admin-signin-modal button {
+    border-radius: 12px;
+}
+
+.auth-card input,
+.admin-signin-modal input {
+    letter-spacing: 0.2em;
+}
+
+@media (max-width: 720px) {
+    .dash-header,
+    .auth-card,
+    .admin-signin-modal {
+        padding-left: 18px;
+        padding-right: 18px;
+    }
+}

@@ -498,15 +498,26 @@
     .ux-faq-item { padding: var(--ux-2) var(--ux-3); }
 }
 
-/* ── Scroll-reveal: only on homepage (body.page-home) so other pages are not blank ── */
-body.page-home .ux-section,
-body.page-home .ux-cta-banner {
-    opacity: 0;
-    transform: translateY(24px);
-    transition: opacity 0.6s cubic-bezier(0.16,1,0.3,1), transform 0.6s cubic-bezier(0.16,1,0.3,1);
+/* Homepage sections stay readable if the scroll observer never runs.
+   The page script may still add .ux-visible; that class no longer hides content. */
+.ux-btn:focus-visible,
+.ux-tool:focus-visible,
+.ux-path-card a:focus-visible {
+    outline: 2px solid #4f46e5;
+    outline-offset: 3px;
 }
-body.page-home .ux-section.ux-visible,
-body.page-home .ux-cta-banner.ux-visible {
-    opacity: 1;
-    transform: translateY(0);
+
+@media (prefers-reduced-motion: no-preference) {
+    body.page-home .ux-section,
+    body.page-home .ux-cta-banner {
+        animation: uxFadeUp 0.55s cubic-bezier(0.16, 1, 0.3, 1) both;
+    }
+}
+
+@media (max-width: 720px) {
+    .ux-logos-track,
+    .ux-hero-btns,
+    .ux-project-tags {
+        max-width: 100%;
+    }
 }

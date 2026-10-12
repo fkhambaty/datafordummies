@@ -78,6 +78,38 @@ Pro is Razorpay, wired through the Supabase edge functions above. Setup notes th
 
 Contact addresses published on the site: `fktiindia@gmail.com` and `fakhruddinkhambaty@gmail.com`. There is no Discord server and no discussion forum. Do not add those links back as `href="#"`.
 
+## Design system
+
+`css/dfd-system.css` owns shared tokens, keyboard focus, reduced motion, and overflow guards. Every static HTML page links it last inside `<head>`, with a relative path (`css/dfd-system.css` at the root, `../css/dfd-system.css` one folder down). Checked 13 October 2026: 214 pages, one link each, every path resolves.
+
+Family styles sit in front of that file. They own color and layout. The system file must not repaint them.
+
+| Family | Stylesheet | Pages |
+|--------|------------|--------|
+| Marketing | `css/fkti-light-theme.css`, `css/hub-styles.css`, `styles/ui-upgrade.css` | Home, learning path, founder, projects index, and pages that already share that nav |
+| Course hubs | `css/hub-light.css` | The nine `hub.html` files that already link it. Each hub sets `--hub-color` and `--hub-color2` |
+| Shared lesson shell | `css/course-light-theme.css` | Lessons whose `styles.css` imports it (PostgreSQL, ClickHouse, Metabase, Redshift) |
+| Python | `python_course/light-theme.css` | Python lessons |
+| Accounts | `styles/design-system.css`, `styles/auth.css` | `auth/` |
+| Pricing | `styles/pricing.css` | `pricing.html` |
+| Project walkthroughs | `css/project-pages.css` | `projects/*.html` |
+| Admin | `css/dfd-admin.css` | `admin/analytics.html` only |
+| Tools | `css/dfd-tools.css` | `pipeline-designer.html`, `data-modelling.html`, `bus-matrix.html`, `distributed-computing.html` |
+
+Many data-science, SQL Server, Airflow, dbt, and LLM lessons still carry their own `<style>` block. That is intentional. Those blocks own the course accent. Do not replace them with a blanket theme.
+
+### Safe extension rules
+
+- A new page links `dfd-system.css` with the correct relative path. It does not copy the token list into a new file.
+- New rules in `dfd-system.css` use `:where()` or stay limited to focus, reduced motion, and overflow. The file loads after inline `<style>`, so a normal class selector would override lesson colors.
+- Course accent colors stay in the course stylesheet or that page's own `:root`.
+- Do not restyle `.keyword`, `.string`, `.comment`, `.function`, `.number`, `.type`, or `.operator`. Lessons paint those as inline spans.
+- Do not rename `FKTI_Auth`, any `fkti_` storage key, or the Firebase project id `fkti-analytics`. The published address `fktiindia@gmail.com` stays. Visible "FKTI" labels may say Data For Dummies.
+- Do not rename classes that course JavaScript or the paywall reads, including hub cards, lesson nav, quiz options, and code-copy buttons.
+- Do not set `display` on `[data-access]`, `.paywall`, `.pro-lock-overlay`, `.pro-locked-wrapper`, `.dashboard`, `.auth-gate`, or `.admin-signin-overlay`. Signup verification, progress, code copy, the paywall, and Razorpay stay wired as they are.
+- Do not put `overflow` on `html` or `body` in the shared file. That forces the other axis off `visible` and breaks fixed menus and modals.
+- The filename `css/fkti-light-theme.css` stays. Renaming it would break every existing link.
+
 ## Local run
 
 Open `index.html` in a browser, or serve the folder:
@@ -91,6 +123,6 @@ No install step. A change is live only after it is pushed to `main` and GitHub P
 ## What not to get wrong
 
 - Do not move the site to Vercel as a drive-by. The domain points at GitHub Pages on purpose.
-- Do not invent learner counts, employer logos, or a community that does not exist. The home page already jokes about bragging. Adding more claims makes that worse.
+- The homepage must not invent learner counts, employer logos, testimonials, or project totals. Course folders and project pages that exist in this repo can be named. A number that was not counted from the repo does not go on the page.
 - The homepage footer used to link GitHub at `fkhambaty/fkti_data` and the five Python assignment cards linked `student-a1.html` through `student-a5.html`, which were 404s. Those now point at this repository and at `student-assignments.html#assignmentN`.
-- Course pages and the marketing home do not share one design system. A visual rewrite has to be done page by page and checked in a browser. Do not run a blind find-and-replace across the course HTML.
+- Visual changes go through the design-system table above. Do not find-and-replace course HTML class names, syntax spans, or payment scripts to chase a new look.

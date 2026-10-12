@@ -82,13 +82,12 @@ body {
 /* ── Sections ── */
 .section {
     background: var(--bg-card);
-    backdrop-filter: blur(8px);
     border-radius: 20px; padding: 40px; margin-bottom: 30px;
     border: 1px solid var(--border-subtle);
     box-shadow: var(--shadow-card);
-    opacity: 0; transform: translateY(30px); transition: all 0.6s ease;
+    opacity: 1;
 }
-.section.visible { opacity: 1; transform: translateY(0); }
+.section.visible { opacity: 1; }
 .section h2 { color: var(--course-primary); font-size: 2em; margin-bottom: 20px; display: flex; align-items: center; gap: 12px; }
 .section h3 { color: var(--course-accent); font-size: 1.4em; margin: 25px 0 15px; }
 
@@ -247,10 +246,26 @@ body {
 }
 
 /* ── Responsive ── */
+.nav a:focus-visible,
+.lesson-nav a:focus-visible,
+.quiz-option:focus-visible,
+.quiz-opt:focus-visible {
+    outline: 2px solid var(--course-primary, #4f46e5);
+    outline-offset: 3px;
+}
+
+.comparison-table,
+.result-table,
+.code-block {
+    max-width: 100%;
+}
+
 @media (max-width: 768px) {
+    .lesson-hero { padding: 32px 18px; }
     .lesson-hero h1 { font-size: 2em; }
-    .section { padding: 25px 20px; }
-    .lesson-nav { flex-direction: column; gap: 15px; }
+    .section { padding: 25px 18px; }
+    .lesson-nav { flex-direction: column; gap: 12px; align-items: stretch; }
     .lesson-nav a { width: 100%; justify-content: center; }
+    .nav { padding: 12px 14px; gap: 10px; flex-wrap: wrap; }
     body { padding: 12px; }
 }

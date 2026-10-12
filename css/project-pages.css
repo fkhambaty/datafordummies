@@ -303,12 +303,36 @@
 .project-back:hover { background: rgba(99,102,241,0.2); transform: translateX(-3px); }
 
 /* ---------- Responsive ---------- */
+.project-tab:focus-visible,
+.project-back:focus-visible,
+.ext-link-card:focus-visible,
+.pro-lock-overlay a:focus-visible {
+    outline: 2px solid #4f46e5;
+    outline-offset: 3px;
+}
+
+.project-code,
+.project-section,
+.build-step {
+    min-width: 0;
+    max-width: 100%;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .anim-step,
+    .anim-arrow,
+    .pro-lock-overlay .lock-icon-big,
+    .project-panel {
+        animation: none;
+    }
+}
+
 @media (max-width: 768px) {
     .project-detail { padding: 14px 10px 32px; }
     .project-section, .build-step { padding: 22px 18px; }
     .project-hero { padding: 28px 16px; }
     .project-tabs { flex-direction: column; top: 58px; }
-    .project-code pre { font-size: 0.82rem; padding: 16px 14px; }
+    .project-code pre { font-size: 0.82rem; padding: 16px 14px; overflow-x: auto; }
     .anim-flow-wrap { flex-direction: column; }
     .pro-lock-overlay { padding: 32px 16px; }
 }

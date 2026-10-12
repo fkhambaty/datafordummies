@@ -1,4 +1,4 @@
-/* FKTI - Clean White Theme with Colorful Accents */
+/* Marketing base theme. Filename stays fkti-light-theme.css so existing links keep working. */
 
 :root {
   /* Base Colors - Clean White */
@@ -848,4 +848,29 @@ footer {
         height: 45px;
         font-size: 18px;
     }
+}
+
+.btn:focus-visible,
+button.btn:focus-visible,
+a.btn:focus-visible {
+    outline: 2px solid #4f46e5;
+    outline-offset: 3px;
+}
+
+.btn-primary,
+.btn-secondary,
+.btn-success,
+.btn-purple,
+.btn-orange,
+.btn-pink {
+    box-shadow: 0 1px 2px rgba(15, 23, 42, 0.08), 0 8px 20px rgba(15, 23, 42, 0.08);
+}
+
+.btn-primary:hover,
+.btn-secondary:hover,
+.btn-success:hover,
+.btn-purple:hover,
+.btn-orange:hover,
+.btn-pink:hover {
+    box-shadow: 0 10px 24px rgba(15, 23, 42, 0.12);
 }

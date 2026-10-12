@@ -214,3 +214,19 @@
         padding-bottom: var(--ds-space-6);
     }
 }
+
+.ds-btn:focus-visible,
+.ds-card a:focus-visible {
+    outline: 2px solid var(--ds-primary);
+    outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .ds-animate-in,
+    .ds-animate-scale,
+    .ds-card,
+    .ds-btn {
+        animation: none;
+        transition: none;
+    }
+}

@@ -1,0 +1,109 @@
+/* Data For Dummies — shared visual system
+   Owner: this file. Load it last in <head> on every static page.
+   It is additive. Rules use :where() or accessibility-only selectors so they
+   do not repaint lesson colors, syntax spans, paywall gates, or auth wiring.
+
+   Do not style: .keyword .string .comment .function .number .type .operator
+   Do not set display on: [data-access] .paywall .pro-lock-overlay
+     .pro-locked-wrapper .dashboard .auth-gate .auth-page
+   Do not rename storage keys or Firebase ids from this stylesheet. */
+
+:root {
+    --dfd-font: "Outfit", "Nunito", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    --dfd-mono: "Fira Code", ui-monospace, "SFMono-Regular", Consolas, monospace;
+    --dfd-ink: #0f172a;
+    --dfd-text: #1e293b;
+    --dfd-muted: #475569;
+    --dfd-faint: #64748b;
+    --dfd-line: #e2e8f0;
+    --dfd-surface: #ffffff;
+    --dfd-wash: #f8fafc;
+    --dfd-accent: #4f46e5;
+    --dfd-accent-strong: #4338ca;
+    --dfd-accent-soft: #eef2ff;
+    --dfd-focus: #4f46e5;
+    --dfd-ok: #047857;
+    --dfd-warn: #b45309;
+    --dfd-danger: #b91c1c;
+    --dfd-radius: 16px;
+    --dfd-radius-sm: 10px;
+    --dfd-shadow: 0 1px 2px rgba(15, 23, 42, 0.06), 0 12px 32px rgba(15, 23, 42, 0.06);
+    --dfd-space: 8px;
+    --dfd-ease: cubic-bezier(0.2, 0.8, 0.2, 1);
+    --dfd-fast: 160ms;
+    color-scheme: light;
+}
+
+html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+}
+
+/* Do not set overflow on html or body. overflow-x: clip forces the other
+   axis off visible and breaks position: fixed navs, paywall modals, and menus. */
+
+::selection {
+    background: #e0e7ff;
+    color: #1e1b4b;
+}
+
+/* Keyboard focus. !important so older outline:none rules cannot hide it.
+   :focus-visible stays off for mouse clicks. */
+:where(a, button, input, select, textarea, summary, [role="button"], [tabindex]):focus-visible {
+    outline: 2px solid var(--dfd-focus) !important;
+    outline-offset: 3px !important;
+}
+
+:where(input, select, textarea):focus-visible {
+    outline-offset: 1px !important;
+}
+
+/* Shared overflow guards. :where() loses to any lesson rule that sets the same property. */
+:where(pre, .code-block, .project-code, .comparison-table, .result-table) {
+    max-width: 100%;
+}
+
+:where(pre, .code-block) {
+    overflow-x: auto;
+}
+
+:where(.comparison-table, .result-table) {
+    display: block;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+:where(img, video) {
+    max-width: 100%;
+}
+
+:where(.modules-grid, .ux-paths-grid, .ux-projects-grid, .ux-tools-grid, .pricing-grid) {
+    min-width: 0;
+}
+
+@media (max-width: 720px) {
+    :where(.nav, .lesson-nav, .hero-cta-row, .ux-hero-btns) {
+        flex-wrap: wrap;
+    }
+
+    :where(.header, .lesson-hero) {
+        padding-left: 18px;
+        padding-right: 18px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    html {
+        scroll-behavior: auto;
+    }
+
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+}

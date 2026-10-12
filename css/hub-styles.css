@@ -1,4 +1,4 @@
-/* FKTI Learning Hub Styles */
+/* Marketing hub layout. Shared with the home page, learning path, and founder pages. */
 
 /* CSS Reset and Base Styles */
 * {
@@ -46,7 +46,7 @@
     --metabase-secondary: #42a5f5;
     
     /* Typography */
-    --font-primary: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    --font-primary: 'Outfit', 'Nunito', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
     --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
     
     /* Font Sizes */
@@ -4685,5 +4685,30 @@ li {
         width: 45px;
         height: 45px;
         font-size: 18px;
+    }
+}
+
+.main-nav a:focus-visible,
+.main-nav button:focus-visible,
+.nav-dropdown-trigger:focus-visible,
+.footer a:focus-visible {
+    outline: 2px solid #4f46e5;
+    outline-offset: 3px;
+}
+
+.hero-container,
+.tech-powerhouse,
+.footer-container {
+    min-width: 0;
+    max-width: 100%;
+}
+
+@media (max-width: 720px) {
+    .hero-logo-frame {
+        width: 100%;
+    }
+    .hero-cta-row,
+    .hero-stats {
+        max-width: 100%;
     }
 }

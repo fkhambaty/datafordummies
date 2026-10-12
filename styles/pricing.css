@@ -324,6 +324,12 @@
 
 .pricing-card:nth-child(3) { animation-delay: 0.45s; }
 
+.pricing-card a:focus-visible,
+.pricing-card button:focus-visible {
+    outline: 2px solid var(--ds-primary, #4f46e5);
+    outline-offset: 3px;
+}
+
 @media (max-width: 960px) {
     .pricing-grid {
         grid-template-columns: 1fr !important;
