@@ -108,6 +108,15 @@ Many data-science, SQL Server, Airflow, dbt, and LLM lessons still carry their o
 - Do not rename classes that course JavaScript or the paywall reads, including hub cards, lesson nav, quiz options, and code-copy buttons.
 - Do not set `display` on `[data-access]`, `.paywall`, `.pro-lock-overlay`, `.pro-locked-wrapper`, `.dashboard`, `.auth-gate`, or `.admin-signin-overlay`. Signup verification, progress, code copy, the paywall, and Razorpay stay wired as they are.
 - Do not put `overflow` on `html` or `body` in the shared file. That forces the other axis off `visible` and breaks fixed menus and modals.
+
+### Mobile width rule (720px and below)
+
+The page itself never scrolls sideways. Only intrinsically wide content scrolls, inside its own box. Checked 13 October 2026: all 214 pages have `scrollWidth` equal to the viewport at 390px and 1440px.
+
+- Every `table` becomes `display: block` with `overflow-x: auto`, so the table is its own scroll container. Rows and cells keep table layout inside it. Do not set `display` on `thead`, `tbody`, `tr`, or cells; that breaks the column grid. A lesson that needs a wide table needs no wrapper markup.
+- `pre` and `.code-block` keep `white-space: pre` and scroll horizontally. Code lines are never wrapped.
+- Headings and quiz `.opt` options use `overflow-wrap: anywhere`, because many are flex rows and only `anywhere` lowers a flex item's min-content. Inline `code`, `kbd`, `samp`, and links in prose do the same. Body text uses `break-word`.
+- Do not fix overflow by clipping a lesson container with `overflow: hidden`. Find the widest element and make it wrap or scroll.
 - The filename `css/fkti-light-theme.css` stays. Renaming it would break every existing link.
 
 ## Local run

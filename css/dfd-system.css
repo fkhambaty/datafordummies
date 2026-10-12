@@ -122,8 +122,26 @@ html {
         overflow-x: auto;
     }
 
+    /* A display:table box grows instead of scrolling, so the table becomes the
+       scroll container; rows and cells keep table layout inside it. */
+    table {
+        display: block;
+        -webkit-overflow-scrolling: touch;
+    }
+
     pre,
     .code-block {
+        overflow-wrap: anywhere;
+    }
+
+    :where(p, li, dd, dt, blockquote, figcaption, .download-box) {
+        overflow-wrap: break-word;
+    }
+
+    /* Many headings and quiz options are flex rows; only "anywhere" lowers a
+       flex item's min-content so one long identifier cannot widen the page. */
+    :where(h1, h2, h3, h4, h5, h6, .opt),
+    :where(p, li, dd, dt, blockquote, figcaption, .download-box) :where(code, kbd, samp, a) {
         overflow-wrap: anywhere;
     }
 
