@@ -5,7 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>Airflow Certification | Data For Dummies</title>
     <link rel="stylesheet" href="../css/fkti-light-theme.css">
-    <style>
+    <link rel="stylesheet" href="styles.css">
+<style>
         .page-header {
             text-align: center;
             padding: 60px 20px 40px;
@@ -172,11 +173,20 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <link rel="stylesheet" href="../css/dfd-system.css">
 </head>
-<body>
+<body data-course-id="airflow" data-lesson-id="certification-hub" data-total-lessons="15" class="dfd-safe">
+<div class="dfd-lesson-progress" data-dfd-progress>
+  <p class="dfd-lesson-progress-label" data-dfd-progress-label>Sign in to save your place.</p>
+  <div class="dfd-lesson-progress-track" data-dfd-progress-bar role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-label="Course progress">
+    <div class="dfd-lesson-progress-fill" data-dfd-progress-fill></div>
+  </div>
+  <p><button type="button" data-dfd-complete>Mark lesson complete</button></p>
+  <p data-dfd-complete-status></p>
+</div>
+
     <nav id="navbar">
         <div class="container" style="justify-content: flex-start;">
             <a href="../index.html" class="nav-btn">Home</a>
-            <a href="index.html" class="nav-btn">Course Hub</a>
+            <a href="hub.html" class="nav-btn">Course Hub</a>
             <span class="nav-btn active">Certification</span>
         </div>
     </nav>
@@ -205,7 +215,7 @@
             </div>
         </div>
         
-        <a href="index.html" class="back-link">← Back to Airflow Course</a>
+        <a href="hub.html" class="back-link">← Back to Airflow Course</a>
     </div>
 
     <!-- Password Modal -->
@@ -255,7 +265,25 @@
     </script>
 
     <!-- Back to Top Button -->
-    <button class="back-to-top" id="backToTop" onclick="window.scrollTo({top: 0, behavior: 'smooth'})" aria-label="Back to top">
+    
+<section class="dfd-current" id="october-2026" data-dfd-current="2026-10">
+  <h2>October 2026 practice</h2>
+  <p>Checked against Apache Airflow 3.3.2, the stable release dated 17 September 2026. New DAG files import from airflow.sdk. Dataset was renamed to Asset. @task is the default for Python. PythonOperator still runs, and it is the migration path from older DAGs.</p>
+  <p>Practice mode and the answer key belong to this course. There is no claim here of an official Airflow credential. Use the lesson pages for Assets, TaskFlow, and bundles, then come back and sit the 75 questions without looking.</p>
+  
+</section>
+<section class="dfd-quiz" id="check" data-dfd-quiz data-explanation="The set covers the course modules. It is not an Apache or Astronomer exam.">
+  <h2 data-dfd-prompt>Knowledge check</h2>
+  <p>Who publishes this question set?</p>
+  <div data-dfd-choices>
+    <button type="button" data-correct="false">The Apache Software Foundation, as the Airflow certification</button>
+    <button type="button" data-correct="true">Data For Dummies, as course practice</button>
+  </div>
+  <p class="dfd-quiz-feedback" data-dfd-feedback hidden></p>
+  <p class="dfd-quiz-explain" data-dfd-explain hidden></p>
+</section>
+
+<button class="back-to-top" id="backToTop" onclick="window.scrollTo({top: 0, behavior: 'smooth'})" aria-label="Back to top">
         <i class="fas fa-arrow-up"></i>
     </button>
     <script>
@@ -266,6 +294,14 @@
             });
         }
     </script>
+
+<script src="../js/code-copy.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="../js/paywall.js"></script>
+<script src="../js/progress.js"></script>
+<script src="../js/lesson-common.js"></script>
+<script src="../js/quiz.js"></script>
+<script src="../js/analytics-tracker.js"></script>
 </body>
 </html>
 

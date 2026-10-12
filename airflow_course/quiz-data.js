@@ -66,7 +66,7 @@ const subsectionQuizzes = {
             "SqlOperator"
         ],
         correct: 1,
-        explanation: "PythonOperator is used to execute Python functions as tasks in Airflow DAGs."
+        explanation: "Older DAGs use PythonOperator. New Airflow 3 Python tasks use the TaskFlow @task decorator from airflow.sdk."
     },
     'step7': {
         question: "What is a PostgresHook used for?",
@@ -355,7 +355,7 @@ const sectionQuizzes = {
                 explanation: "@once is a special preset that schedules a DAG to run only once."
             },
             {
-                question: "What is the execution_date in Airflow?",
+                question: "What is logical_date in Airflow 3?",
                 options: [
                     "When the task actually runs",
                     "When the task was created", 
@@ -363,7 +363,7 @@ const sectionQuizzes = {
                     "When the DAG was deployed"
                 ],
                 correct: 2,
-                explanation: "execution_date represents the start of the data interval the DAG run is supposed to process, not when it actually executes."
+                explanation: "The current names are logical_date and data_interval_start. execution_date is the old context name for the start of the data interval, not the wall clock."
             },
             {
                 question: "How do you create a DAG that runs on weekdays only?",
@@ -678,7 +678,7 @@ const finalQuiz = {
         },
         {
             type: "multiple-choice",
-            question: "What is the execution_date in Airflow?",
+            question: "What is logical_date in Airflow 3?",
             options: [
                 "When task actually runs",
                 "Data interval start time",

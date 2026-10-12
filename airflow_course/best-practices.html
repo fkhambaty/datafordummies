@@ -6,7 +6,8 @@
     <title>Module 13: Best Practices | Data For Dummies</title>
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <style>
+    <link rel="stylesheet" href="styles.css">
+<style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
@@ -255,8 +256,17 @@
     </style>
     <link rel="stylesheet" href="../css/dfd-system.css">
 </head>
-<body data-access="pro">
+<body data-access="pro" data-course-id="airflow" data-lesson-id="best-practices" data-total-lessons="15" class="dfd-safe">
     <div class="container">
+<div class="dfd-lesson-progress" data-dfd-progress>
+  <p class="dfd-lesson-progress-label" data-dfd-progress-label>Sign in to save your place.</p>
+  <div class="dfd-lesson-progress-track" data-dfd-progress-bar role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-label="Course progress">
+    <div class="dfd-lesson-progress-fill" data-dfd-progress-fill></div>
+  </div>
+  <p><button type="button" data-dfd-complete>Mark lesson complete</button></p>
+  <p data-dfd-complete-status></p>
+</div>
+
         <nav class="nav">
             <a href="containers.html"><i class="fas fa-arrow-left"></i> Module 12: Containers</a>
             <a href="production.html">Module 14: Production <i class="fas fa-arrow-right"></i></a>
@@ -728,7 +738,32 @@ data = requests.get(<span class="string">"https://api.example.com/huge"</span>).
             </div>
         </div>
 
-        <div class="nav-buttons">
+        
+<section class="section dfd-current" id="october-2026" data-dfd-current="2026-10">
+  <h2>October 2026 practice</h2>
+  <p>Checked against Apache Airflow 3.3.2, the stable release dated 17 September 2026. New DAG files import from airflow.sdk. Dataset was renamed to Asset. @task is the default for Python. PythonOperator still runs, and it is the migration path from older DAGs.</p>
+  <p>One DAG file should stay import-cheap: no network calls and no warehouse queries at parse time. Keep dag_id stable. Use schedule, catchup=False unless you really want history, and max_active_runs when two runs must not overlap. Put Python in @task. Keep PythonOperator only where an old DAG already uses it. Store data in the warehouse. Return a pointer.</p>
+  <div class="code-block"><pre><code>@dag(
+    dag_id='orders_daily',
+    schedule='0 2 * * *',
+    catchup=False,
+    max_active_runs=1,
+)
+def orders_daily():
+    ...</code></pre></div>
+</section>
+<section class="section dfd-quiz" id="check" data-dfd-quiz data-explanation="Parse-time work slows the dag processor and can hit systems that are down.">
+  <h2 data-dfd-prompt>Knowledge check</h2>
+  <p>What should DAG parse time avoid?</p>
+  <div data-dfd-choices>
+    <button type="button" data-correct="false">A warehouse query that runs while the dag processor imports the file</button>
+    <button type="button" data-correct="true">A stable dag_id and a schedule argument</button>
+  </div>
+  <p class="dfd-quiz-feedback" data-dfd-feedback hidden></p>
+  <p class="dfd-quiz-explain" data-dfd-explain hidden></p>
+</section>
+
+<div class="nav-buttons">
             <a href="containers.html" class="nav-btn prev"><i class="fas fa-arrow-left"></i> Module 12: Containers</a>
             <a href="production.html" class="nav-btn next">Module 14: Production <i class="fas fa-arrow-right"></i></a>
         </div>
@@ -772,5 +807,10 @@ data = requests.get(<span class="string">"https://api.example.com/huge"</span>).
 <script src="../js/supabase-config.js"></script>
 <script src="../js/supabase-auth.js"></script>
 <script src="../js/paywall.js"></script>
+
+<script src="../js/progress.js"></script>
+<script src="../js/lesson-common.js"></script>
+<script src="../js/quiz.js"></script>
+<script src="../js/analytics-tracker.js"></script>
 </body>
 </html>

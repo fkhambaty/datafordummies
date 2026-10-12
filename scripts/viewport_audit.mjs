@@ -60,6 +60,29 @@ function pagesFromArgs() {
     return raw.split(',').map((item) => item.trim()).filter(Boolean);
 }
 
+async function exerciseCopy(page, problems, label) {
+    const hasCode = await page.locator('.code-block, pre').count();
+    const buttons = page.locator('.fkti-copy-btn');
+    const count = await buttons.count();
+    if (hasCode > 0 && count === 0) {
+        problems.push(label + ' code block has no copy button');
+        return;
+    }
+    if (count === 0) return;
+    try {
+        await page.context().grantPermissions(['clipboard-read', 'clipboard-write']);
+    } catch (error) {
+        // Some headless builds reject clipboard permissions. The click still runs.
+    }
+    const clicked = await page.evaluate(() => {
+        const btn = document.querySelector('.fkti-copy-btn');
+        if (!btn) return 'missing';
+        btn.click();
+        return 'clicked';
+    });
+    if (clicked !== 'clicked') problems.push(label + ' copy button did not run');
+}
+
 async function exerciseQuiz(page, problems, label) {
     const quiz = page.locator('[data-dfd-quiz]');
     if (await quiz.count() === 0) return;
@@ -71,6 +94,10 @@ async function exerciseQuiz(page, problems, label) {
         return style.display !== 'none' && style.visibility !== 'hidden' && overlay.getAttribute('aria-hidden') !== 'true';
     });
     if (locked) return;
+    if (!(await quiz.first().isVisible())) {
+        problems.push(label + ' knowledge check is not visible');
+        return;
+    }
     const choices = page.locator('[data-dfd-quiz] [data-correct]');
     if (await choices.count() < 2) {
         problems.push(label + ' quiz has fewer than two choices');
@@ -145,6 +172,7 @@ async function main() {
                 logs.forEach((line) => problems.push(label + ' ' + line));
                 if (!exercised) {
                     await exerciseQuiz(page, problems, label);
+                    await exerciseCopy(page, problems, label);
                     exercised = true;
                 }
                 checks += 1;

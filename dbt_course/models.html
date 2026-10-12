@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="../css/dfd-system.css">
 </head>
-<body data-access="pro">
+<body data-access="pro" data-course-id="dbt" data-lesson-id="models" data-total-lessons="12" class="dfd-safe">
 
 <!-- Background Particles -->
 <div class="page-bg-particles">
@@ -28,6 +28,15 @@
 
 <!-- Lesson Container -->
 <div class="lesson-container">
+<div class="dfd-lesson-progress" data-dfd-progress>
+  <p class="dfd-lesson-progress-label" data-dfd-progress-label>Sign in to save your place.</p>
+  <div class="dfd-lesson-progress-track" data-dfd-progress-bar role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-label="Course progress">
+    <div class="dfd-lesson-progress-fill" data-dfd-progress-fill></div>
+  </div>
+  <p><button type="button" data-dfd-complete>Mark lesson complete</button></p>
+  <p data-dfd-complete-status></p>
+</div>
+
 
     <!-- Sticky Nav -->
     <nav class="lesson-nav">
@@ -1057,7 +1066,29 @@
     <!-- ============================================================
          Navigation Buttons
          ============================================================ -->
-    <div class="nav-buttons">
+    
+<section class="section dfd-current" id="october-2026" data-dfd-current="2026-10">
+  <h2>October 2026 practice</h2>
+  <p>Checked against the dbt Developer Hub in October 2026. The latest self-hosted channel listed there is v2.0.8. The dbt package installs the Fusion engine. dbt-core is the Apache-licensed runtime. dbt build is the command that runs seeds, models, snapshots, unit tests, and data tests in DAG order.</p>
+  <p>Views, tables, and incremental models are still the everyday materializations. A contract checks column names and data types before the model builds. On an incremental model, pair a contract with on_schema_change: append_new_columns or fail. sync_all_columns drops columns, and dropping a contracted column is a breaking change. Incremental models should filter on a reliable watermark.</p>
+  <div class="code-block"><pre><code>{{ config(materialized='incremental', on_schema_change='append_new_columns') }}
+select * from {{ ref('stg_orders') }}
+{% if is_incremental() %}
+where ordered_at &gt; (select max(ordered_at) from {{ this }})
+{% endif %}</code></pre></div>
+</section>
+<section class="section dfd-quiz" id="check" data-dfd-quiz data-explanation="The contract docs say to use append_new_columns or fail, not sync_all_columns.">
+  <h2 data-dfd-prompt>Knowledge check</h2>
+  <p>Why avoid sync_all_columns on a contracted incremental model?</p>
+  <div data-dfd-choices>
+    <button type="button" data-correct="false">It refuses to add columns</button>
+    <button type="button" data-correct="true">It can drop columns, which breaks a contract</button>
+  </div>
+  <p class="dfd-quiz-feedback" data-dfd-feedback hidden></p>
+  <p class="dfd-quiz-explain" data-dfd-explain hidden></p>
+</section>
+
+<div class="nav-buttons">
         <a href="project-structure.html" class="nav-btn-prev">
             <i class="fas fa-arrow-left"></i> Project Structure
         </a>
@@ -1125,5 +1156,9 @@ function checkQuiz(el) {
 <script src="../js/supabase-config.js"></script>
 <script src="../js/supabase-auth.js"></script>
 <script src="../js/paywall.js"></script>
+
+<script src="../js/progress.js"></script>
+<script src="../js/lesson-common.js"></script>
+<script src="../js/quiz.js"></script>
 </body>
 </html>

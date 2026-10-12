@@ -6,7 +6,8 @@
     <title>Module 2: Your First DAG | Data For Dummies</title>
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <style>
+    <link rel="stylesheet" href="styles.css">
+<style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
@@ -368,8 +369,17 @@
     </style>
     <link rel="stylesheet" href="../css/dfd-system.css">
 </head>
-<body data-access="pro">
+<body data-access="pro" data-course-id="airflow" data-lesson-id="first-dag" data-total-lessons="15" class="dfd-safe">
     <div class="container">
+<div class="dfd-lesson-progress" data-dfd-progress>
+  <p class="dfd-lesson-progress-label" data-dfd-progress-label>Sign in to save your place.</p>
+  <div class="dfd-lesson-progress-track" data-dfd-progress-bar role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-label="Course progress">
+    <div class="dfd-lesson-progress-fill" data-dfd-progress-fill></div>
+  </div>
+  <p><button type="button" data-dfd-complete>Mark lesson complete</button></p>
+  <p data-dfd-complete-status></p>
+</div>
+
         <nav class="nav">
             <a href="meet-airflow.html"><i class="fas fa-arrow-left"></i> Module 1</a>
             <a href="scheduling.html">Module 3 <i class="fas fa-arrow-right"></i></a>
@@ -1073,7 +1083,31 @@
         </div>
 
         <!-- NAV BUTTONS -->
-        <div class="nav-buttons">
+        
+<section class="section dfd-current" id="october-2026" data-dfd-current="2026-10">
+  <h2>October 2026 practice</h2>
+  <p>Checked against Apache Airflow 3.3.2, the stable release dated 17 September 2026. New DAG files import from airflow.sdk. Dataset was renamed to Asset. @task is the default for Python. PythonOperator still runs, and it is the migration path from older DAGs.</p>
+  <p>A first DAG needs a stable dag_id, a start_date that you do not generate with datetime.now(), and schedule rather than the removed schedule_interval argument. Call the @dag function or the DAG will not be registered. catchup=False avoids a surprise backfill the moment you unpause.</p>
+  <div class="code-block"><pre><code>@dag(dag_id='first_pipeline', schedule='@daily', start_date=datetime(2026, 1, 1), catchup=False)
+def first_pipeline():
+    @task
+    def extract():
+        return {'rows': 3}
+    extract()
+first_pipeline()</code></pre></div>
+</section>
+<section class="section dfd-quiz" id="check" data-dfd-quiz data-explanation="Airflow 3 DAG code uses schedule. schedule_interval is the old argument.">
+  <h2 data-dfd-prompt>Knowledge check</h2>
+  <p>Which argument sets how often a new Airflow 3 DAG runs?</p>
+  <div data-dfd-choices>
+    <button type="button" data-correct="false">schedule_interval, because Airflow 3 still requires that name</button>
+    <button type="button" data-correct="true">schedule. schedule_interval was removed in Airflow 3</button>
+  </div>
+  <p class="dfd-quiz-feedback" data-dfd-feedback hidden></p>
+  <p class="dfd-quiz-explain" data-dfd-explain hidden></p>
+</section>
+
+<div class="nav-buttons">
             <a href="meet-airflow.html" class="nav-btn prev"><i class="fas fa-arrow-left"></i> Module 1: Meet Airflow</a>
             <a href="scheduling.html" class="nav-btn next">Module 3: Scheduling <i class="fas fa-arrow-right"></i></a>
         </div>
@@ -1119,5 +1153,10 @@
 <script src="../js/supabase-config.js"></script>
 <script src="../js/supabase-auth.js"></script>
 <script src="../js/paywall.js"></script>
+
+<script src="../js/progress.js"></script>
+<script src="../js/lesson-common.js"></script>
+<script src="../js/quiz.js"></script>
+<script src="../js/analytics-tracker.js"></script>
 </body>
 </html>

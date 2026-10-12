@@ -6,7 +6,8 @@
     <title>Module 7: Sensors & Triggers | Data For Dummies</title>
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <style>
+    <link rel="stylesheet" href="styles.css">
+<style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
@@ -368,10 +369,19 @@
     </style>
     <link rel="stylesheet" href="../css/dfd-system.css">
 </head>
-<body data-access="pro">
+<body data-access="pro" data-course-id="airflow" data-lesson-id="sensors" data-total-lessons="15" class="dfd-safe">
     <div class="container">
+<div class="dfd-lesson-progress" data-dfd-progress>
+  <p class="dfd-lesson-progress-label" data-dfd-progress-label>Sign in to save your place.</p>
+  <div class="dfd-lesson-progress-track" data-dfd-progress-bar role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-label="Course progress">
+    <div class="dfd-lesson-progress-fill" data-dfd-progress-fill></div>
+  </div>
+  <p><button type="button" data-dfd-complete>Mark lesson complete</button></p>
+  <p data-dfd-complete-status></p>
+</div>
+
         <nav class="nav">
-            <a href="index.html"><i class="fas fa-th-large"></i> Course Hub</a>
+            <a href="hub.html"><i class="fas fa-th-large"></i> Course Hub</a>
             <span style="display: flex; gap: 20px;">
                 <a href="templating.html"><i class="fas fa-arrow-left"></i> Module 6</a>
                 <a href="xcom.html">Module 8 <i class="fas fa-arrow-right"></i></a>
@@ -579,12 +589,12 @@
                 <p>Trigger DAGs without the UI:</p>
                 <ul style="margin: 20px 0; padding-left: 30px; color: #334155;">
                     <li style="margin-bottom: 10px;"><strong>CLI:</strong> <code>airflow dags trigger my_dag</code></li>
-                    <li style="margin-bottom: 10px;"><strong>REST API:</strong> <code>POST /api/v1/dags/{dag_id}/dagRuns</code> with optional <code>conf</code></li>
+                    <li style="margin-bottom: 10px;"><strong>REST API:</strong> <code>POST /api/v2/dags/{dag_id}/dagRuns</code> on Airflow 3 with optional <code>conf</code></li>
                 </ul>
             </div>
 
             <div class="section">
-                <h2><i class="fas fa-bolt"></i> Deferrable Operators (Airflow 2.x)</h2>
+                <h2><i class="fas fa-bolt"></i> Deferrable operators and triggers</h2>
 
                 <p>Async sensors that <strong>don't use workers at all</strong> while waiting. They defer to a "triggerer" process and wake up when ready. Best of both worlds: no worker slots, no polling!</p>
 
@@ -1114,7 +1124,31 @@
         </div>
 
         <!-- NAV BUTTONS -->
-        <div class="nav-buttons">
+        
+<section class="section dfd-current" id="october-2026" data-dfd-current="2026-10">
+  <h2>October 2026 practice</h2>
+  <p>Checked against Apache Airflow 3.3.2, the stable release dated 17 September 2026. New DAG files import from airflow.sdk. Dataset was renamed to Asset. @task is the default for Python. PythonOperator still runs, and it is the migration path from older DAGs.</p>
+  <p>A sensor waits. poke mode holds a worker slot. reschedule gives the slot back between checks. deferrable mode hands the wait to the triggerer and uses no worker slot until the event arrives. Set deferrable=True on a sensor that supports it. FileSensor and similar class-based sensors are the place for that. A @task function cannot defer. Airflow 3's HTTP API is served under /api/v2. Do not copy a 2.x /api/v1 path into a 3.3 deployment.</p>
+  <div class="code-block"><pre><code>wait_for_file = FileSensor(
+    task_id='wait_for_file',
+    filepath='/data/ready.csv',
+    poke_interval=60,
+    mode='reschedule',
+    deferrable=True,
+)</code></pre></div>
+</section>
+<section class="section dfd-quiz" id="check" data-dfd-quiz data-explanation="Deferral is only for class-based operators, and the triggerer must be running.">
+  <h2 data-dfd-prompt>Knowledge check</h2>
+  <p>Why run a triggerer?</p>
+  <div data-dfd-choices>
+    <button type="button" data-correct="false">So @task functions can call self.defer()</button>
+    <button type="button" data-correct="true">So deferrable sensors wait without holding a worker slot</button>
+  </div>
+  <p class="dfd-quiz-feedback" data-dfd-feedback hidden></p>
+  <p class="dfd-quiz-explain" data-dfd-explain hidden></p>
+</section>
+
+<div class="nav-buttons">
             <a href="templating.html" class="nav-btn prev"><i class="fas fa-arrow-left"></i> Module 6: Templating</a>
             <a href="xcom.html" class="nav-btn next">Module 8: XCom <i class="fas fa-arrow-right"></i></a>
         </div>
@@ -1160,5 +1194,10 @@
 <script src="../js/supabase-config.js"></script>
 <script src="../js/supabase-auth.js"></script>
 <script src="../js/paywall.js"></script>
+
+<script src="../js/progress.js"></script>
+<script src="../js/lesson-common.js"></script>
+<script src="../js/quiz.js"></script>
+<script src="../js/analytics-tracker.js"></script>
 </body>
 </html>

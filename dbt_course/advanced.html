@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="../css/dfd-system.css">
 </head>
-<body data-access="pro">
+<body data-access="pro" data-course-id="dbt" data-lesson-id="advanced" data-total-lessons="12" class="dfd-safe">
 
 <!-- Background Particles -->
 <div class="page-bg-particles">
@@ -28,6 +28,15 @@
 
 <!-- Lesson Container -->
 <div class="lesson-container">
+<div class="dfd-lesson-progress" data-dfd-progress>
+  <p class="dfd-lesson-progress-label" data-dfd-progress-label>Sign in to save your place.</p>
+  <div class="dfd-lesson-progress-track" data-dfd-progress-bar role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-label="Course progress">
+    <div class="dfd-lesson-progress-fill" data-dfd-progress-fill></div>
+  </div>
+  <p><button type="button" data-dfd-complete>Mark lesson complete</button></p>
+  <p data-dfd-complete-status></p>
+</div>
+
 
     <!-- Sticky Nav -->
     <nav class="lesson-nav">
@@ -1020,7 +1029,37 @@
     <!-- ============================================================
          Navigation Buttons
          ============================================================ -->
-    <div class="nav-buttons">
+    
+<section class="section dfd-current" id="october-2026" data-dfd-current="2026-10">
+  <h2>October 2026 practice</h2>
+  <p>Checked against the dbt Developer Hub in October 2026. The latest self-hosted channel listed there is v2.0.8. The dbt package installs the Fusion engine. dbt-core is the Apache-licensed runtime. dbt build is the command that runs seeds, models, snapshots, unit tests, and data tests in DAG order.</p>
+  <p>A group has an owner. access: private stays in the group, protected stays in the project, public may be ref'd by another project. A public model needs a contract. Versions let you change a public model without breaking the previous v. The Semantic Layer describes measures and dimensions in YAML for MetricFlow. Migrate that YAML to the current spec before Fusion. Fusion on the dbt platform is generally available for Snowflake projects and in preview for the other supported adapters. Local lifecycle can lag the platform. Do not treat every adapter feature as available on Fusion.</p>
+  <div class="code-block"><pre><code>models:
+  - name: orders
+    access: public
+    latest_version: 1
+    config:
+      group: finance
+      contract:
+        enforced: true
+    columns:
+      - name: order_id
+        data_type: bigint
+    versions:
+      - v: 1</code></pre></div>
+</section>
+<section class="section dfd-quiz" id="check" data-dfd-quiz data-explanation="Mesh cross-project refs resolve public models, and public models are contracted.">
+  <h2 data-dfd-prompt>Knowledge check</h2>
+  <p>What does another project need before it can ref your model?</p>
+  <div data-dfd-choices>
+    <button type="button" data-correct="false">access: private</button>
+    <button type="button" data-correct="true">access: public, with a contract</button>
+  </div>
+  <p class="dfd-quiz-feedback" data-dfd-feedback hidden></p>
+  <p class="dfd-quiz-explain" data-dfd-explain hidden></p>
+</section>
+
+<div class="nav-buttons">
         <a href="deployment.html" class="nav-btn-prev">
             <i class="fas fa-arrow-left"></i> Deployment & CI/CD
         </a>
@@ -1088,5 +1127,9 @@ function checkQuiz(el) {
 <script src="../js/supabase-config.js"></script>
 <script src="../js/supabase-auth.js"></script>
 <script src="../js/paywall.js"></script>
+
+<script src="../js/progress.js"></script>
+<script src="../js/lesson-common.js"></script>
+<script src="../js/quiz.js"></script>
 </body>
 </html>

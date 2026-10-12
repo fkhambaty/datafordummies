@@ -1,6 +1,8 @@
+/* dbt family theme. Imports the shared course theme, then keeps dbt colors and diagrams. */
+@import url("../css/course-light-theme.css");
+
 /* ============================================
    DBT Course — Custom Theme & Animations
-   Base: ../css/fkti-light-theme.css
    ============================================ */
 
 :root {
@@ -17,6 +19,8 @@
     --dbt-gradient: linear-gradient(135deg, #ff694a 0%, #e5532e 50%, #c2410c 100%);
     --dbt-gradient-cool: linear-gradient(135deg, #1e3a5f 0%, #0f172a 100%);
     --dbt-gradient-green: linear-gradient(135deg, #059669 0%, #10b981 50%, #34d399 100%);
+    --course-primary: #e5532e;
+    --course-accent: #ff694a;
 }
 
 /* ---- Page-level ---- */
@@ -25,7 +29,6 @@ body {
     background: var(--dbt-bg);
     color: var(--dbt-text);
     line-height: 1.75;
-    overflow-x: hidden;
 }
 
 /* ---- Animated background particles ---- */
@@ -784,4 +787,50 @@ body {
 @media (max-width: 480px) {
     .lesson-hero h1 { font-size: 1.5em; }
     .stats-grid { grid-template-columns: 1fr 1fr; }
+}
+
+body .nav a,
+body .nav-btn,
+body .lesson-link,
+body .quiz-option,
+body .quiz-opt,
+body button {
+    min-height: 48px;
+    min-width: 48px;
+}
+
+body svg,
+body img {
+    max-width: 100%;
+    height: auto;
+}
+
+body table {
+    display: block;
+    max-width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+body pre,
+body .code-block {
+    max-width: 100%;
+    overflow-x: auto;
+}
+
+body p code,
+body li code,
+body td code,
+body h1 code,
+body h2 code,
+body h3 code {
+    overflow-wrap: anywhere;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .page-bg-particles .orb,
+    .back-to-top {
+        animation: none;
+        transition: none;
+    }
 }

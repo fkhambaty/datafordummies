@@ -5,7 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>Airflow Certification Practice | Data For Dummies</title>
     <link rel="stylesheet" href="../css/fkti-light-theme.css">
-    <style>
+    <link rel="stylesheet" href="styles.css">
+<style>
         .page-header {
             text-align: center;
             padding: 60px 20px 32px;
@@ -135,7 +136,16 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <link rel="stylesheet" href="../css/dfd-system.css">
 </head>
-<body>
+<body data-course-id="airflow" data-lesson-id="certification-student" data-total-lessons="15" class="dfd-safe">
+<div class="dfd-lesson-progress" data-dfd-progress>
+  <p class="dfd-lesson-progress-label" data-dfd-progress-label>Sign in to save your place.</p>
+  <div class="dfd-lesson-progress-track" data-dfd-progress-bar role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-label="Course progress">
+    <div class="dfd-lesson-progress-fill" data-dfd-progress-fill></div>
+  </div>
+  <p><button type="button" data-dfd-complete>Mark lesson complete</button></p>
+  <p data-dfd-complete-status></p>
+</div>
+
     <nav id="navbar">
         <div class="container" style="justify-content: flex-start;">
             <a href="../index.html" class="nav-btn">Home</a>
@@ -148,7 +158,7 @@
     <div class="page-header">
         <div class="logo-text">Data For Dummies · Airflow</div>
         <h1>Practice Questions</h1>
-        <p>75 Questions · Test your knowledge</p>
+        <p>75 Questions · Test your knowledge. Not an Apache Software Foundation exam.</p>
     </div>
 
     <div class="content">
@@ -179,7 +189,7 @@
             { id: 10, q: "What is the role of the executor?", opts: ["It deletes unwanted tasks", "It defines how tasks are executed and on which system", "It executes tasks", "It schedules tasks"], cat: "Architecture", hint: "Different executors include Local, Celery, and Kubernetes." },
             { id: 11, q: "Which mode is best when poke_interval > 5 minutes?", opts: ["reschedule", "poke"], cat: "Sensors", hint: "For long intervals, it's better to release the worker slot between checks." },
             { id: 12, q: "Schedule for every 10 minutes, but not on weekends?", opts: ["schedule='/10 * * * *'", "schedule='*/10 * * * 1-5'", "schedule=timedelta(minutes=10)", "schedule='*/10 * * * M-F'"], cat: "Scheduling", hint: "Use cron notation where 1-5 represents Monday-Friday." },
-            { id: 13, q: "Which are valid schedule values? (select all that apply)", opts: ["Timedelta", "Integers", "Calendar", "Cron"], cat: "Scheduling", hint: "Airflow accepts Cron strings, Timedelta objects, and Timetables." },
+            { id: 13, q: "Which are valid schedule values? (select all that apply)", opts: ["Timedelta", "Integers", "Calendar", "Cron"], cat: "Scheduling", hint: "Airflow 3 accepts cron, timedelta, timetables, and an Asset. Dataset is the old name." },
             { id: 14, q: "A new DAG file doesn't show up. Why? (select all that apply)", opts: ["The code doesn't contain 'airflow' or 'dag'", "The Airflow instance must be restarted", "5 minute default delay", "The .airflowignore file has the name"], cat: "Troubleshooting", hint: "Airflow scans for certain keywords and has delays for new files." },
             { id: 15, q: "What is the default value for start_date?", opts: ["datetime.now()", "datetime(2020, 1, 1)", "None", "Yesterday"], cat: "DAG Parameters", hint: "Without explicitly setting this, the DAG won't have a defined start." },
             { id: 16, q: "Which sets start date to 2025/01/01?", opts: ["start_date=datetime(2025, 1, 1)", "schedule=datetime(2025, 1, 1)", "start_date=datetime(1, 1, 2025)", "start_date='2025/01/01'"], cat: "DAG Parameters", hint: "datetime() takes year, month, day in that order." },
@@ -212,7 +222,7 @@
             { id: 43, q: "What does a Sensor Operator do?", opts: ["Waits for a condition", "Evaluates conditions for branching", "Sends notifications", "Provides utility functions"], cat: "Sensors", hint: "Sensors wait until something becomes true." },
             { id: 44, q: "Is [t0, t1] >> t2 >> [t3, t4] >> t5 valid?", opts: ["No", "Yes"], cat: "Dependencies", hint: "Airflow allows lists on both sides of the >> operator." },
             { id: 45, q: "Jan 8 10:00, start_date Jan 5, catchup=True. How many DAG runs?", opts: ["4", "2", "1", "3"], cat: "Scheduling", hint: "Count complete intervals: 5→6, 6→7, 7→8." },
-            { id: 46, q: "Optional params without @dag? (select all)", opts: ["schedule_interval", "start_date", "default_args", "dag_id"], cat: "DAG Parameters", hint: "Only one parameter is strictly required when creating a DAG." },
+            { id: 46, q: "Optional params without @dag? (select all)", opts: ["schedule", "start_date", "default_args", "dag_id"], cat: "DAG Parameters", hint: "Only one parameter is strictly required when creating a DAG." },
             { id: 47, q: "How can Airflow help build a user behavior dashboard?", opts: ["As the database", "To schedule pipelines feeding a data warehouse", "To analyze events and present dashboards", "To build dashboards in the UI"], cat: "Use Cases", hint: "Airflow orchestrates pipelines, it's not an analytics or visualization tool." },
             { id: 48, q: "Can env variable variables be accessed in DAGs even if not in UI?", opts: ["Yes", "No"], cat: "Variables", hint: "AIRFLOW_VAR_* variables work in code even if not visible in UI." },
             { id: 49, q: "Result of chain(t0, t1, [t2, t3], [t4, t5], t6)?", opts: ["chain(t0, t1, [t2, t4], [t3, t5], t6)", "t0 >> t1 >> [t2, t3] >> [t4, t5] >> t6", "chain(t0, t1, [t2, t3], [t4, t5], t6)", "[t0, t1] >> t2 >> t3 >> t4 >> [t5, t6]"], cat: "Dependencies", hint: "chain() with lists connects corresponding elements." },
@@ -222,7 +232,7 @@
             { id: 53, q: "Method to add data to XCom?", opts: ["xcom parameter of DAG", "xcom_push", "xcom_add", "xcom_pull"], cat: "XCom", hint: "The method name suggests pushing data out." },
             { id: 54, q: "What does 'queued' status mean?", opts: ["Task is running", "Task executes immediately", "Task waiting to be scheduled", "Task assigned to executor, awaiting worker"], cat: "Core Concepts", hint: "Queued tasks are waiting for an available worker." },
             { id: 55, q: "Is daily SQL aggregation a use case for Airflow?", opts: ["No", "Yes"], cat: "Use Cases", hint: "Scheduled database operations are a common Airflow use case." },
-            { id: 56, q: "Purpose of PythonOperator?", opts: ["Deploy Python packages", "Execute Python code as a task", "Schedule Python scripts", "Manage virtual environments"], cat: "Operators", hint: "This operator runs a Python callable as a task." },
+            { id: 56, q: "Purpose of PythonOperator?", opts: ["Deploy Python packages", "Execute Python code as a task", "Schedule Python scripts", "Manage virtual environments"], cat: "Operators", hint: "PythonOperator runs a Python callable. New Airflow 3 code uses @task from airflow.sdk." },
             { id: 57, q: "Is automated failure notification a use case for Airflow?", opts: ["No", "Yes"], cat: "Use Cases", hint: "Airflow has built-in notification capabilities." },
             { id: 58, q: "Correct env var for variable 'customer_folder'='my_folder'?", opts: ["AIRFLOW_VARIABLE_CUSTOMER_FOLDER='my_folder'", "CUSTOMER_FOLDER='my_folder'", "AIRFLOW_VAR_CUSTOMER_FOLDER='my_folder'", "AIRFLOW_CUSTOMER_FOLDER='my_folder'"], cat: "Variables", hint: "The format is AIRFLOW_VAR_ followed by uppercase variable name." },
             { id: 59, q: "Which creates t0 → t1 → t2 → t3? (select all)", opts: ["t3 << t2 << t1 << t0", "t0 >> t1 >> t2 >> t3", "t0 >> [t1, t2] >> t3", "t0 >> [t1, t2, t3]"], cat: "Dependencies", hint: "Both >> and << can create the same linear dependency." },
@@ -300,7 +310,25 @@
     </script>
 
     <!-- Back to Top Button -->
-    <button class="back-to-top" id="backToTop" onclick="window.scrollTo({top: 0, behavior: 'smooth'})" aria-label="Back to top">
+    
+<section class="dfd-current" id="october-2026" data-dfd-current="2026-10">
+  <h2>October 2026 practice</h2>
+  <p>Checked against Apache Airflow 3.3.2, the stable release dated 17 September 2026. New DAG files import from airflow.sdk. Dataset was renamed to Asset. @task is the default for Python. PythonOperator still runs, and it is the migration path from older DAGs.</p>
+  <p>Answer from Airflow 3.3 behavior. schedule is the DAG argument. An Asset is a valid schedule value. PythonOperator still means 'run this Python callable', and new code uses @task from airflow.sdk instead. The score on this page is practice, not a credential.</p>
+  
+</section>
+<section class="dfd-quiz" id="check" data-dfd-quiz data-explanation="Airflow 3 renamed Dataset to Asset.">
+  <h2 data-dfd-prompt>Knowledge check</h2>
+  <p>Which schedule value is current for an upstream data event?</p>
+  <div data-dfd-choices>
+    <button type="button" data-correct="false">A Dataset object, which is the Airflow 3 name</button>
+    <button type="button" data-correct="true">An Asset object. Dataset is the old name</button>
+  </div>
+  <p class="dfd-quiz-feedback" data-dfd-feedback hidden></p>
+  <p class="dfd-quiz-explain" data-dfd-explain hidden></p>
+</section>
+
+<button class="back-to-top" id="backToTop" onclick="window.scrollTo({top: 0, behavior: 'smooth'})" aria-label="Back to top">
         <i class="fas fa-arrow-up"></i>
     </button>
     <script>
@@ -311,6 +339,16 @@
             });
         }
     </script>
+
+<script src="../js/code-copy.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="../js/supabase-config.js"></script>
+<script src="../js/supabase-auth.js"></script>
+<script src="../js/paywall.js"></script>
+<script src="../js/progress.js"></script>
+<script src="../js/lesson-common.js"></script>
+<script src="../js/quiz.js"></script>
+<script src="../js/analytics-tracker.js"></script>
 </body>
 </html>
 

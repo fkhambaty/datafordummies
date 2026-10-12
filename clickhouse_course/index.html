@@ -48,9 +48,18 @@
     </style>
     <link rel="stylesheet" href="../css/dfd-system.css">
 </head>
-<body data-access="pro">
+<body data-access="pro" data-course-id="clickhouse" data-lesson-id="index" data-total-lessons="11" class="dfd-safe">
     <header style="background: linear-gradient(135deg, #eab308 0%, #ca8a04 50%, #a16207 100%); color: #1e293b; padding: 20px 0;">
         <div class="container">
+<div class="dfd-lesson-progress" data-dfd-progress>
+  <p class="dfd-lesson-progress-label" data-dfd-progress-label>Sign in to save your place.</p>
+  <div class="dfd-lesson-progress-track" data-dfd-progress-bar role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-label="Course progress">
+    <div class="dfd-lesson-progress-fill" data-dfd-progress-fill></div>
+  </div>
+  <p><button type="button" data-dfd-complete>Mark lesson complete</button></p>
+  <p data-dfd-complete-status></p>
+</div>
+
             <div style="display: flex; align-items: center; gap: 20px;">
                 <span style="font-size: 2.5rem;">⚡</span>
                 <div>
@@ -772,5 +781,30 @@ ORDER BY time;</pre>
 <script src="../js/supabase-config.js"></script>
 <script src="../js/supabase-auth.js"></script>
 <script src="../js/paywall.js"></script>
+
+<script src="../js/progress.js"></script>
+<script src="../js/lesson-common.js"></script>
+<script src="../js/quiz.js"></script>
+
+<section class="section dfd-current" id="october-2026" data-dfd-current="2026-10">
+  <h2>October 2026 practice</h2>
+  <p>Checked against the ClickHouse documentation in October 2026. The JSON type has been production-ready since version 25.3. ClickHouse Cloud rewrites a MergeTree create onto the matching SharedMergeTree engine.</p>
+  <p>This URL stays as the long reference. The modules are on hub.html. New tables use MergeTree with an ORDER BY you meant. Read JSON as the JSON type. Prefer argMax over FINAL. Use a refreshable materialized view when the result should be recomputed on a clock. On Cloud, expect SharedMergeTree even though the SQL says MergeTree.</p>
+  <div class="code-block"><pre><code>SELECT user_id, argMax(email, updated_at)
+FROM user_profiles
+GROUP BY user_id</code></pre></div>
+</section>
+<section class="section dfd-quiz" id="check" data-dfd-quiz data-explanation="JSON is the production type. Object('json') is the old experimental form.">
+  <h2 data-dfd-prompt>Knowledge check</h2>
+  <p>What is the current way to store a JSON document?</p>
+  <div data-dfd-choices>
+    <button type="button" data-correct="false">Object('json')</button>
+    <button type="button" data-correct="true">The JSON type</button>
+  </div>
+  <p class="dfd-quiz-feedback" data-dfd-feedback hidden></p>
+  <p class="dfd-quiz-explain" data-dfd-explain hidden></p>
+</section>
+
+<script src="../js/analytics-tracker.js"></script>
 </body>
 </html>

@@ -6,7 +6,8 @@
     <title>Module 15: Security & Cloud | Data For Dummies</title>
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <style>
+    <link rel="stylesheet" href="styles.css">
+<style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
@@ -272,10 +273,19 @@
     </style>
     <link rel="stylesheet" href="../css/dfd-system.css">
 </head>
-<body data-access="pro">
+<body data-access="pro" data-course-id="airflow" data-lesson-id="security-cloud" data-total-lessons="15" class="dfd-safe">
     <div class="container">
+<div class="dfd-lesson-progress" data-dfd-progress>
+  <p class="dfd-lesson-progress-label" data-dfd-progress-label>Sign in to save your place.</p>
+  <div class="dfd-lesson-progress-track" data-dfd-progress-bar role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-label="Course progress">
+    <div class="dfd-lesson-progress-fill" data-dfd-progress-fill></div>
+  </div>
+  <p><button type="button" data-dfd-complete>Mark lesson complete</button></p>
+  <p data-dfd-complete-status></p>
+</div>
+
         <nav class="nav">
-            <a href="index.html"><i class="fas fa-th-large"></i> Course Hub</a>
+            <a href="hub.html"><i class="fas fa-th-large"></i> Course Hub</a>
             <a href="certification-hub.html">Certification <i class="fas fa-arrow-right"></i></a>
         </nav>
 
@@ -474,27 +484,17 @@
 
             <div class="section">
                 <h2><i class="fas fa-cog"></i> RBAC Configuration</h2>
-                <p>Enable RBAC and create a custom role via <code>airflow.cfg</code> and the UI or CLI.</p>
+                <p>Airflow 3.3 uses an auth manager. The default is the simple auth manager: users are listed in configuration, and passwords are generated into a file. Do not set <code>simple_auth_manager_all_admins</code> on a deployment other people can reach. That switch turns authentication off. A shared environment that still wants Flask-AppBuilder roles installs <code>apache-airflow-providers-fab</code> and sets the auth manager to <code>FabAuthManager</code>. The old <code>[webserver] rbac = True</code> block and <code>airflow users create</code> belong to that FAB path, not to the default simple manager.</p>
 
                 <div class="code-block">
-<pre><span class="comment"># airflow.cfg — enable RBAC (default in Airflow 2+)</span>
-[api]
-auth_backends = airflow.api.auth.backend.session,airflow.api.auth.backend.basic_auth
+<pre><span class="comment"># Default on Airflow 3.3. Passwords are generated, not typed here.</span>
+[core]
+auth_manager = airflow.api_fastapi.auth.managers.simple.simple_auth_manager.SimpleAuthManager
+simple_auth_manager_users = data_engineer:op
 
-[webserver]
-rbac = <span class="keyword">True</span>
-
-<span class="comment"># Create a user and assign role via CLI</span>
-<span class="function">airflow</span> users create \
-  --username data_engineer \
-  --password &lt;secure_password&gt; \
-  --firstname Data \
-  --lastname Engineer \
-  --role Op \
-  --email engineer@company.com
-
-<span class="comment"># List roles (Admin UI: Security → List Roles)</span>
-<span class="function">airflow</span> roles list</pre>
+<span class="comment"># Shared deployment that needs FAB roles:</span>
+<span class="comment"># pip install apache-airflow-providers-fab  (use the 3.3.2 constraints)</span>
+<span class="comment"># auth_manager = airflow.providers.fab.auth_manager.fab_auth_manager.FabAuthManager</span></pre>
                 </div>
             </div>
 
@@ -715,9 +715,30 @@ server {
             </div>
         </div>
 
-        <div class="nav-buttons">
+        
+<section class="section dfd-current" id="october-2026" data-dfd-current="2026-10">
+  <h2>October 2026 practice</h2>
+  <p>Checked against Apache Airflow 3.3.2, the stable release dated 17 September 2026. New DAG files import from airflow.sdk. Dataset was renamed to Asset. @task is the default for Python. PythonOperator still runs, and it is the migration path from older DAGs.</p>
+  <p>Airflow 3.3's default auth manager is the simple auth manager. Users are names and roles in configuration, and passwords are generated into a file. <code>simple_auth_manager_all_admins = True</code> turns authentication off. Do not set that on a deployment other people can reach. A shared environment that needs Flask-AppBuilder roles installs <code>apache-airflow-providers-fab</code> and sets <code>auth_manager</code> to <code>airflow.providers.fab.auth_manager.fab_auth_manager.FabAuthManager</code>. Run the API server behind TLS. Give the metadata database its own user. Keep DAG code in a bundle that does not contain passwords.</p>
+  <div class="code-block"><pre><code>[core]
+auth_manager = airflow.api_fastapi.auth.managers.simple.simple_auth_manager.SimpleAuthManager
+simple_auth_manager_users = data_engineer:op
+# Do not set simple_auth_manager_all_admins = True on a shared deployment.</code></pre></div>
+</section>
+<section class="section dfd-quiz" id="check" data-dfd-quiz data-explanation="The simple auth manager is the Airflow 3 default. all_admins disables authentication. A shared deployment that needs roles uses FabAuthManager from the FAB provider.">
+  <h2 data-dfd-prompt>Knowledge check</h2>
+  <p>What does simple_auth_manager_all_admins = True do?</p>
+  <div data-dfd-choices>
+    <button type="button" data-correct="false">It keeps generated passwords and requires a login</button>
+    <button type="button" data-correct="true">It turns authentication off and treats every UI visitor as an admin</button>
+  </div>
+  <p class="dfd-quiz-feedback" data-dfd-feedback hidden></p>
+  <p class="dfd-quiz-explain" data-dfd-explain hidden></p>
+</section>
+
+<div class="nav-buttons">
             <a href="production.html" class="nav-btn prev"><i class="fas fa-arrow-left"></i> Module 14: Production Operations</a>
-            <a href="index.html" class="nav-btn next">Course Hub <i class="fas fa-th-large"></i></a>
+            <a href="hub.html" class="nav-btn next">Course Hub <i class="fas fa-th-large"></i></a>
         </div>
         <p style="text-align: center; margin-top: 15px;"><a href="certification-hub.html" style="color: #0891b2; font-weight: 600;">Get certified → Certification Hub</a></p>
     </div>
@@ -760,5 +781,10 @@ server {
 <script src="../js/supabase-config.js"></script>
 <script src="../js/supabase-auth.js"></script>
 <script src="../js/paywall.js"></script>
+
+<script src="../js/progress.js"></script>
+<script src="../js/lesson-common.js"></script>
+<script src="../js/quiz.js"></script>
+<script src="../js/analytics-tracker.js"></script>
 </body>
 </html>

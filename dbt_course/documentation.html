@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="../css/dfd-system.css">
 </head>
-<body data-access="pro">
+<body data-access="pro" data-course-id="dbt" data-lesson-id="documentation" data-total-lessons="12" class="dfd-safe">
 
 <!-- Background Particles -->
 <div class="page-bg-particles">
@@ -28,6 +28,15 @@
 
 <!-- Lesson Container -->
 <div class="lesson-container">
+<div class="dfd-lesson-progress" data-dfd-progress>
+  <p class="dfd-lesson-progress-label" data-dfd-progress-label>Sign in to save your place.</p>
+  <div class="dfd-lesson-progress-track" data-dfd-progress-bar role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-label="Course progress">
+    <div class="dfd-lesson-progress-fill" data-dfd-progress-fill></div>
+  </div>
+  <p><button type="button" data-dfd-complete>Mark lesson complete</button></p>
+  <p data-dfd-complete-status></p>
+</div>
+
 
     <!-- Sticky Nav -->
     <nav class="lesson-nav">
@@ -719,7 +728,30 @@
     <!-- ============================================================
          Navigation Buttons
          ============================================================ -->
-    <div class="nav-buttons">
+    
+<section class="section dfd-current" id="october-2026" data-dfd-current="2026-10">
+  <h2>October 2026 practice</h2>
+  <p>Checked against the dbt Developer Hub in October 2026. The latest self-hosted channel listed there is v2.0.8. The dbt package installs the Fusion engine. dbt-core is the Apache-licensed runtime. dbt build is the command that runs seeds, models, snapshots, unit tests, and data tests in DAG order.</p>
+  <p>Descriptions live in YAML and in doc blocks. dbt docs generate still builds the site on Core. Fusion adds a docs v2 path: a lite site without a platform login, and column-level lineage after you sign in to a dbt platform account. Do not promise column-level lineage from the free local engine alone. Persist descriptions on the warehouse when the adapter supports persist_docs.</p>
+  <div class="code-block"><pre><code>models:
+  - name: orders
+    description: One row per order.
+    columns:
+      - name: order_id
+        description: Warehouse key.</code></pre></div>
+</section>
+<section class="section dfd-quiz" id="check" data-dfd-quiz data-explanation="The Fusion availability page puts full column-level lineage behind a platform login.">
+  <h2 data-dfd-prompt>Knowledge check</h2>
+  <p>When does Fusion show column-level lineage in docs?</p>
+  <div data-dfd-choices>
+    <button type="button" data-correct="false">In every local install, with no account</button>
+    <button type="button" data-correct="true">After you sign in to a dbt platform account</button>
+  </div>
+  <p class="dfd-quiz-feedback" data-dfd-feedback hidden></p>
+  <p class="dfd-quiz-explain" data-dfd-explain hidden></p>
+</section>
+
+<div class="nav-buttons">
         <a href="testing.html" class="nav-btn-prev">
             <i class="fas fa-arrow-left"></i> Testing & Data Quality
         </a>
@@ -787,5 +819,9 @@ function checkQuiz(el) {
 <script src="../js/supabase-config.js"></script>
 <script src="../js/supabase-auth.js"></script>
 <script src="../js/paywall.js"></script>
+
+<script src="../js/progress.js"></script>
+<script src="../js/lesson-common.js"></script>
+<script src="../js/quiz.js"></script>
 </body>
 </html>

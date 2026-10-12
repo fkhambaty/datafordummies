@@ -6,7 +6,8 @@
     <title>Module 3: Scheduling Mastery | Data For Dummies</title>
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <style>
+    <link rel="stylesheet" href="styles.css">
+<style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
@@ -327,10 +328,19 @@
     </style>
     <link rel="stylesheet" href="../css/dfd-system.css">
 </head>
-<body data-access="pro">
+<body data-access="pro" data-course-id="airflow" data-lesson-id="scheduling" data-total-lessons="15" class="dfd-safe">
     <div class="container">
+<div class="dfd-lesson-progress" data-dfd-progress>
+  <p class="dfd-lesson-progress-label" data-dfd-progress-label>Sign in to save your place.</p>
+  <div class="dfd-lesson-progress-track" data-dfd-progress-bar role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-label="Course progress">
+    <div class="dfd-lesson-progress-fill" data-dfd-progress-fill></div>
+  </div>
+  <p><button type="button" data-dfd-complete>Mark lesson complete</button></p>
+  <p data-dfd-complete-status></p>
+</div>
+
         <nav class="nav">
-            <a href="index.html"><i class="fas fa-th-large"></i> Course Hub</a>
+            <a href="hub.html"><i class="fas fa-th-large"></i> Course Hub</a>
             <a href="first-dag.html">Module 2 <i class="fas fa-arrow-left"></i></a>
             <a href="operators.html">Module 4 <i class="fas fa-arrow-right"></i></a>
         </nav>
@@ -372,11 +382,11 @@
             <div class="section">
                 <h2><i class="fas fa-cog"></i> schedule_interval / schedule Parameter</h2>
 
-                <p>In your DAG definition, you specify <em>when</em> the DAG runs using either <code>schedule_interval</code> (older Airflow) or <code>schedule</code> (Airflow 2.2+). They do the same thing!</p>
+                <p>In Airflow 3 the DAG argument is <code>schedule</code>. <code>schedule_interval</code> is the old name and was removed. Use <code>schedule</code> in new DAGs.</p>
 
                 <div class="important-box">
                     <h4><i class="fas fa-exclamation-triangle"></i> Naming Change</h4>
-                    <p><code>schedule_interval</code> was deprecated in favor of <code>schedule</code>. Use <code>schedule</code> in new DAGs. Both work, but <code>schedule</code> is the modern choice.</p>
+                    <p>Use <code>schedule</code>. Airflow 3 does not accept <code>schedule_interval</code> on a new DAG.</p>
                 </div>
 
                 <p>You can use three types of schedules:</p>
@@ -575,9 +585,9 @@
             </div>
 
             <div class="section">
-                <h2><i class="fas fa-clock"></i> Timetables (Airflow 2.x)</h2>
+                <h2><i class="fas fa-clock"></i> Timetables</h2>
 
-                <p>In Airflow 2.2+, <strong>timetables</strong> offer a more powerful, programmatic way to define schedules. Instead of cron, you write a Python class that returns when the next run should be.</p>
+                <p>Timetables, since Airflow 2.2 and still in 3.3, offer a programmatic way to define schedules. Instead of cron, you write a Python class that returns when the next run should be.</p>
 
                 <p>Use timetables when you need:</p>
                 <ul style="margin: 20px 0; padding-left: 30px; color: #334155;">
@@ -957,7 +967,35 @@ process = <span class="function">BashOperator</span>(
             </div>
         </div>
 
-        <div class="nav-buttons">
+        
+<section class="section dfd-current" id="october-2026" data-dfd-current="2026-10">
+  <h2>October 2026 practice</h2>
+  <p>Checked against Apache Airflow 3.3.2, the stable release dated 17 September 2026. New DAG files import from airflow.sdk. Dataset was renamed to Asset. @task is the default for Python. PythonOperator still runs, and it is the migration path from older DAGs.</p>
+  <p>A cron schedule still creates a data interval. logical_date is the start of that interval for a regular timetable, not the wall-clock moment the task process starts. Templates should use logical_date, ds, data_interval_start, and data_interval_end. An Asset schedule runs the DAG when that asset is updated. On a versioned Git bundle, a backfill defaults to the latest bundle version. A clear or rerun defaults to the original version unless rerun_with_latest_version says otherwise. LocalDagBundle does not version code.</p>
+  <div class="code-block"><pre><code>from airflow.sdk import Asset, dag, task
+
+orders = Asset('s3://warehouse/orders/')
+
+@dag(schedule=[orders], catchup=False)
+def on_orders():
+    @task
+    def stage():
+        return 'ready'
+    stage()
+on_orders()</code></pre></div>
+</section>
+<section class="section dfd-quiz" id="check" data-dfd-quiz data-explanation="Assets replaced Datasets. Scheduling on an Asset is the event-driven path.">
+  <h2 data-dfd-prompt>Knowledge check</h2>
+  <p>What does an Asset schedule do?</p>
+  <div data-dfd-choices>
+    <button type="button" data-correct="false">It renames execution_date and keeps a cron interval</button>
+    <button type="button" data-correct="true">It runs the DAG when that Asset is updated</button>
+  </div>
+  <p class="dfd-quiz-feedback" data-dfd-feedback hidden></p>
+  <p class="dfd-quiz-explain" data-dfd-explain hidden></p>
+</section>
+
+<div class="nav-buttons">
             <a href="first-dag.html" class="nav-btn prev"><i class="fas fa-arrow-left"></i> Module 2: Your First DAG</a>
             <a href="operators.html" class="nav-btn next">Module 4: Operators <i class="fas fa-arrow-right"></i></a>
         </div>
@@ -1001,5 +1039,10 @@ process = <span class="function">BashOperator</span>(
 <script src="../js/supabase-config.js"></script>
 <script src="../js/supabase-auth.js"></script>
 <script src="../js/paywall.js"></script>
+
+<script src="../js/progress.js"></script>
+<script src="../js/lesson-common.js"></script>
+<script src="../js/quiz.js"></script>
+<script src="../js/analytics-tracker.js"></script>
 </body>
 </html>

@@ -5,7 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>Airflow Certification | Data For Dummies</title>
     <link rel="stylesheet" href="../css/fkti-light-theme.css">
-    <style>
+    <link rel="stylesheet" href="styles.css">
+<style>
         .page-header {
             text-align: center;
             padding: 48px 20px 32px;
@@ -216,10 +217,19 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <link rel="stylesheet" href="../css/dfd-system.css">
 </head>
-<body>
+<body data-course-id="airflow" data-lesson-id="certification" data-total-lessons="15" class="dfd-safe">
     <!-- Simple Nav -->
     <nav id="navbar">
         <div class="container">
+<div class="dfd-lesson-progress" data-dfd-progress>
+  <p class="dfd-lesson-progress-label" data-dfd-progress-label>Sign in to save your place.</p>
+  <div class="dfd-lesson-progress-track" data-dfd-progress-bar role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-label="Course progress">
+    <div class="dfd-lesson-progress-fill" data-dfd-progress-fill></div>
+  </div>
+  <p><button type="button" data-dfd-complete>Mark lesson complete</button></p>
+  <p data-dfd-complete-status></p>
+</div>
+
             <a href="../index.html" class="nav-btn">Home</a>
             <a href="hub.html" class="nav-btn">Course Hub</a>
             <span class="nav-btn" style="opacity: 1;">Certification</span>
@@ -232,7 +242,8 @@
         <div class="logo-text">Data For Dummies</div>
         <h1>Airflow Certification</h1>
         <p>75 Questions · Complete Study Guide</p>
-    </div>
+    <p>Course practice for the 15 modules. Not an Apache Software Foundation exam and not an Astronomer certification.</p>
+        </div>
 
     <!-- Tabs -->
     <div class="tabs">
@@ -284,7 +295,7 @@
             { id: 10, q: "What is the role of the executor?", opts: ["It deletes unwanted tasks", "It defines how tasks are executed and on which system", "It executes tasks", "It schedules tasks"], ans: [1], type: "single", cat: "Architecture", exp: "The executor defines the mechanism for running tasks (Local, Celery, Kubernetes, etc.)." },
             { id: 11, q: "Which mode is best when poke_interval > 5 minutes?", opts: ["reschedule", "poke"], ans: [0], type: "single", cat: "Sensors", exp: "reschedule mode releases the worker slot between pokes." },
             { id: 12, q: "Schedule for every 10 minutes, but not on weekends?", opts: ["schedule='/10 * * * *'", "schedule='*/10 * * * 1-5'", "schedule=timedelta(minutes=10)", "schedule='*/10 * * * M-F'"], ans: [1], type: "single", cat: "Scheduling", exp: "'*/10 * * * 1-5' = every 10 min, Mon-Fri." },
-            { id: 13, q: "Which are valid schedule values? (select all)", opts: ["Timedelta", "Integers", "Calendar", "Cron"], ans: [0, 3], type: "multiple", cat: "Scheduling", exp: "Valid: Cron strings, Timedelta objects, Timetables, None, Datasets." },
+            { id: 13, q: "Which are valid schedule values? (select all)", opts: ["Timedelta", "Integers", "Calendar", "Cron"], ans: [0, 3], type: "multiple", cat: "Scheduling", exp: "Valid schedules include cron, timedelta, timetables, None, and Asset. Asset is the Airflow 3 name. Older notes said Dataset." },
             { id: 14, q: "A new DAG file doesn't show up. Why? (select all)", opts: ["The code doesn't contain 'airflow' or 'dag'", "The Airflow instance must be restarted", "5 minute default delay", "The .airflowignore file has the name"], ans: [0, 2, 3], type: "multiple", cat: "Troubleshooting", exp: "Airflow scans for keywords, has 5-min delay for new files, and respects .airflowignore." },
             { id: 15, q: "What is the default value for start_date?", opts: ["datetime.now()", "datetime(2020, 1, 1)", "None", "Yesterday"], ans: [2], type: "single", cat: "DAG Parameters", exp: "start_date defaults to None." },
             { id: 16, q: "Which sets start date to 2025/01/01?", opts: ["start_date=datetime(2025, 1, 1)", "schedule=datetime(2025, 1, 1)", "start_date=datetime(1, 1, 2025)", "start_date='2025/01/01'"], ans: [0], type: "single", cat: "DAG Parameters", exp: "Format: datetime(year, month, day)." },
@@ -317,7 +328,7 @@
             { id: 43, q: "What does a Sensor Operator do?", opts: ["Waits for a condition", "Evaluates conditions for branching", "Sends notifications", "Provides utility functions"], ans: [0], type: "single", cat: "Sensors", exp: "Sensors wait for a condition to be true." },
             { id: 44, q: "Is [t0, t1] >> t2 >> [t3, t4] >> t5 valid?", opts: ["No", "Yes"], ans: [1], type: "single", cat: "Dependencies", exp: "Yes, valid Airflow syntax." },
             { id: 45, q: "Jan 8 10:00, start_date Jan 5, catchup=True. How many DAG runs?", opts: ["4", "2", "1", "3"], ans: [3], type: "single", cat: "Scheduling", exp: "3 completed intervals: 5→6, 6→7, 7→8." },
-            { id: 46, q: "Optional params without @dag? (select all)", opts: ["schedule_interval", "start_date", "default_args", "dag_id"], ans: [0, 1, 2], type: "multiple", cat: "DAG Parameters", exp: "Only dag_id is required." },
+            { id: 46, q: "Optional params without @dag? (select all)", opts: ["schedule", "start_date", "default_args", "dag_id"], ans: [0, 1, 2], type: "multiple", cat: "DAG Parameters", exp: "Only dag_id is required." },
             { id: 47, q: "How can Airflow help build a user behavior dashboard?", opts: ["As the database", "To schedule pipelines feeding a data warehouse", "To analyze events and present dashboards", "To build dashboards in the UI"], ans: [1], type: "single", cat: "Use Cases", exp: "Airflow orchestrates pipelines, not databases or dashboards." },
             { id: 48, q: "Can env variable variables be accessed in DAGs even if not in UI?", opts: ["Yes", "No"], ans: [0], type: "single", cat: "Variables", exp: "Yes, via Variable.get()." },
             { id: 49, q: "Result of chain(t0, t1, [t2, t3], [t4, t5], t6)?", opts: ["chain(t0, t1, [t2, t4], [t3, t5], t6)", "t0 >> t1 >> [t2, t3] >> [t4, t5] >> t6", "chain(t0, t1, [t2, t3], [t4, t5], t6)", "[t0, t1] >> t2 >> t3 >> t4 >> [t5, t6]"], ans: [2], type: "single", cat: "Dependencies", exp: "chain() with lists connects corresponding elements." },
@@ -327,7 +338,7 @@
             { id: 53, q: "Method to add data to XCom?", opts: ["xcom parameter of DAG", "xcom_push", "xcom_add", "xcom_pull"], ans: [1], type: "single", cat: "XCom", exp: "Use xcom_push to add data." },
             { id: 54, q: "What does 'queued' status mean?", opts: ["Task is running", "Task executes immediately", "Task waiting to be scheduled", "Task assigned to executor, awaiting worker"], ans: [3], type: "single", cat: "Core Concepts", exp: "Queued = sent to executor, waiting for worker." },
             { id: 55, q: "Is daily SQL aggregation a use case for Airflow?", opts: ["No", "Yes"], ans: [1], type: "single", cat: "Use Cases", exp: "Yes, perfect use case!" },
-            { id: 56, q: "Purpose of PythonOperator?", opts: ["Deploy Python packages", "Execute Python code as a task", "Schedule Python scripts", "Manage virtual environments"], ans: [1], type: "single", cat: "Operators", exp: "PythonOperator executes a Python function as a task." },
+            { id: 56, q: "Purpose of PythonOperator?", opts: ["Deploy Python packages", "Execute Python code as a task", "Schedule Python scripts", "Manage virtual environments"], ans: [1], type: "single", cat: "Operators", exp: "PythonOperator still runs a Python callable. New Airflow 3 code uses @task from airflow.sdk. Keep PythonOperator for older DAGs." },
             { id: 57, q: "Is automated failure notification a use case for Airflow?", opts: ["No", "Yes"], ans: [1], type: "single", cat: "Use Cases", exp: "Yes! Airflow provides email_on_failure, Slack, etc." },
             { id: 58, q: "Correct env var for variable 'customer_folder'='my_folder'?", opts: ["AIRFLOW_VARIABLE_CUSTOMER_FOLDER='my_folder'", "CUSTOMER_FOLDER='my_folder'", "AIRFLOW_VAR_CUSTOMER_FOLDER='my_folder'", "AIRFLOW_CUSTOMER_FOLDER='my_folder'"], ans: [2], type: "single", cat: "Variables", exp: "Format: AIRFLOW_VAR_<NAME_UPPERCASE>=value" },
             { id: 59, q: "Which creates t0 → t1 → t2 → t3? (select all)", opts: ["t3 << t2 << t1 << t0", "t0 >> t1 >> t2 >> t3", "t0 >> [t1, t2] >> t3", "t0 >> [t1, t2, t3]"], ans: [0, 1], type: "multiple", cat: "Dependencies", exp: "Both >> and << create the same chain." },
@@ -457,7 +468,7 @@
             document.getElementById('score').textContent = pct + '%';
             document.getElementById('correct').textContent = correct;
             document.getElementById('wrong').textContent = questions.length - correct;
-            document.getElementById('score-msg').textContent = pct >= 70 ? '🎉 Passed!' : '📚 Keep studying';
+            document.getElementById('score-msg').textContent = pct >= 70 ? 'Practice threshold met' : 'Keep studying';
             document.getElementById('score-msg').className = 'score-msg ' + (pct >= 70 ? 'pass' : 'fail');
             document.getElementById('results').classList.add('show');
             document.getElementById('submit-btn').classList.add('hidden');
@@ -485,7 +496,26 @@
     </script>
 
     <!-- Back to Top Button -->
-    <button class="back-to-top" id="backToTop" onclick="window.scrollTo({top: 0, behavior: 'smooth'})" aria-label="Back to top">
+    
+<section class="dfd-current" id="october-2026" data-dfd-current="2026-10">
+  <h2>October 2026 practice</h2>
+  <p>Checked against Apache Airflow 3.3.2, the stable release dated 17 September 2026. New DAG files import from airflow.sdk. Dataset was renamed to Asset. @task is the default for Python. PythonOperator still runs, and it is the migration path from older DAGs.</p>
+  <p>These 75 questions are a Data For Dummies practice set for the 15 modules. They are not an Apache Software Foundation exam and they are not an Astronomer certification. A 70% line on this page is only this page's practice threshold. Where a question says schedule, that is the Airflow 3 argument. Asset is the current name for what older notes called a Dataset.</p>
+  <div class="code-block"><pre><code># practice threshold on this page only
+# not an official exam score</code></pre></div>
+</section>
+<section class="dfd-quiz" id="check" data-dfd-quiz data-explanation="Do not describe this quiz as an official certification exam.">
+  <h2 data-dfd-prompt>Knowledge check</h2>
+  <p>What is the 70% line on this page?</p>
+  <div data-dfd-choices>
+    <button type="button" data-correct="false">The passing score of an Apache Software Foundation exam</button>
+    <button type="button" data-correct="true">This course page's own practice threshold</button>
+  </div>
+  <p class="dfd-quiz-feedback" data-dfd-feedback hidden></p>
+  <p class="dfd-quiz-explain" data-dfd-explain hidden></p>
+</section>
+
+<button class="back-to-top" id="backToTop" onclick="window.scrollTo({top: 0, behavior: 'smooth'})" aria-label="Back to top">
         <i class="fas fa-arrow-up"></i>
     </button>
     <script>
@@ -496,6 +526,16 @@
             });
         }
     </script>
+
+<script src="../js/code-copy.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="../js/supabase-config.js"></script>
+<script src="../js/supabase-auth.js"></script>
+<script src="../js/paywall.js"></script>
+<script src="../js/progress.js"></script>
+<script src="../js/lesson-common.js"></script>
+<script src="../js/quiz.js"></script>
+<script src="../js/analytics-tracker.js"></script>
 </body>
 </html>
 

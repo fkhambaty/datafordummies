@@ -6,7 +6,8 @@
     <title>Module 11: Testing Airflow | Data For Dummies</title>
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <style>
+    <link rel="stylesheet" href="styles.css">
+<style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
@@ -315,8 +316,17 @@
     </style>
     <link rel="stylesheet" href="../css/dfd-system.css">
 </head>
-<body data-access="pro">
+<body data-access="pro" data-course-id="airflow" data-lesson-id="testing" data-total-lessons="15" class="dfd-safe">
     <div class="container">
+<div class="dfd-lesson-progress" data-dfd-progress>
+  <p class="dfd-lesson-progress-label" data-dfd-progress-label>Sign in to save your place.</p>
+  <div class="dfd-lesson-progress-track" data-dfd-progress-bar role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-label="Course progress">
+    <div class="dfd-lesson-progress-fill" data-dfd-progress-fill></div>
+  </div>
+  <p><button type="button" data-dfd-complete>Mark lesson complete</button></p>
+  <p data-dfd-complete-status></p>
+</div>
+
         <nav class="nav">
             <a href="custom-components.html"><i class="fas fa-arrow-left"></i> Custom Components</a>
             <a href="containers.html">Containers <i class="fas fa-arrow-right"></i></a>
@@ -369,7 +379,7 @@
                 <p>Airflow provides a built-in way to test that a DAG loads correctly:</p>
                 <div class="key-point">
                     <h4><i class="fas fa-terminal"></i> Command</h4>
-                    <p><code>airflow dags test &lt;dag_id&gt; &lt;execution_date&gt;</code> runs the DAG once for that date without recording state in the metadata database. It's great for a quick sanity check that the DAG runs end-to-end.</p>
+                    <p><code>airflow tasks test</code> runs one task. <code>dag.test()</code> needs a metadata database and a serializable DAG. Do not open an ORM session inside task code. Airflow 3 removed that direct database access. Parse the bundle in CI and treat a local run as a check, not as production proof.</p>
                 </div>
                 <p>For CI (continuous integration), you typically want to <strong>parse all DAGs</strong> in your repo and assert no import errors. That way every pull request is checked before merge.</p>
             </div>
@@ -737,7 +747,26 @@
             </div>
         </div>
 
-        <div class="nav-buttons">
+        
+<section class="section dfd-current" id="october-2026" data-dfd-current="2026-10">
+  <h2>October 2026 practice</h2>
+  <p>Checked against Apache Airflow 3.3.2, the stable release dated 17 September 2026. New DAG files import from airflow.sdk. Dataset was renamed to Asset. @task is the default for Python. PythonOperator still runs, and it is the migration path from older DAGs.</p>
+  <p>airflow tasks test runs one task. airflow dags list-import-errors catches a DAG that fails to parse. dag.test() needs a metadata database and a DAG that serializes. Do not open an ORM session inside the task: Airflow 3 removed that direct database access from task code. A green parse in CI is not a substitute for a run against a dev deployment. The Task SDK version is pinned with Airflow. The 3.3.2 constraints pair apache-airflow-task-sdk 1.3.2 with that release.</p>
+  <div class="code-block"><pre><code>airflow dags list-import-errors
+airflow tasks test first_pipeline extract 2026-10-13</code></pre></div>
+</section>
+<section class="section dfd-quiz" id="check" data-dfd-quiz data-explanation="Task code must not use the metadata ORM. Parsing and a targeted task test are the local checks.">
+  <h2 data-dfd-prompt>Knowledge check</h2>
+  <p>What is a safe CI check for DAG files?</p>
+  <div data-dfd-choices>
+    <button type="button" data-correct="false">Import airflow.settings.Session inside the task and query the metadata tables</button>
+    <button type="button" data-correct="true">Parse the DAG bundle and fail the job on import errors</button>
+  </div>
+  <p class="dfd-quiz-feedback" data-dfd-feedback hidden></p>
+  <p class="dfd-quiz-explain" data-dfd-explain hidden></p>
+</section>
+
+<div class="nav-buttons">
             <a href="custom-components.html" class="nav-btn prev"><i class="fas fa-arrow-left"></i> Custom Components</a>
             <a href="containers.html" class="nav-btn next">Module 12: Containers <i class="fas fa-arrow-right"></i></a>
         </div>
@@ -781,5 +810,10 @@
 <script src="../js/supabase-config.js"></script>
 <script src="../js/supabase-auth.js"></script>
 <script src="../js/paywall.js"></script>
+
+<script src="../js/progress.js"></script>
+<script src="../js/lesson-common.js"></script>
+<script src="../js/quiz.js"></script>
+<script src="../js/analytics-tracker.js"></script>
 </body>
 </html>

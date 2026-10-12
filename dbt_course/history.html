@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="../css/dfd-system.css">
 </head>
-<body data-access="pro">
+<body data-access="pro" data-course-id="dbt" data-lesson-id="history" data-total-lessons="12" class="dfd-safe">
 
     <!-- Background particles -->
     <div class="page-bg-particles">
@@ -28,6 +28,15 @@
 
     <!-- Sticky nav -->
     <div class="lesson-container">
+<div class="dfd-lesson-progress" data-dfd-progress>
+  <p class="dfd-lesson-progress-label" data-dfd-progress-label>Sign in to save your place.</p>
+  <div class="dfd-lesson-progress-track" data-dfd-progress-bar role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-label="Course progress">
+    <div class="dfd-lesson-progress-fill" data-dfd-progress-fill></div>
+  </div>
+  <p><button type="button" data-dfd-complete>Mark lesson complete</button></p>
+  <p data-dfd-complete-status></p>
+</div>
+
         <nav class="lesson-nav">
             <a href="meet-dbt.html"><i class="fas fa-arrow-left"></i> Prev: Meet dbt</a>
             <a href="hub.html"><i class="fas fa-th-large"></i> Hub</a>
@@ -654,7 +663,27 @@
             </div>
 
             <!-- Nav buttons -->
-            <div class="nav-buttons">
+            
+<section class="section dfd-current" id="october-2026" data-dfd-current="2026-10">
+  <h2>October 2026 practice</h2>
+  <p>Checked against the dbt Developer Hub in October 2026. The latest self-hosted channel listed there is v2.0.8. The dbt package installs the Fusion engine. dbt-core is the Apache-licensed runtime. dbt build is the command that runs seeds, models, snapshots, unit tests, and data tests in DAG order.</p>
+  <p>dbt 1.0 in December 2021 was a real stability line. The October 2026 line is v2, delivered by Fusion. Core 1.x projects still run. The upgrade guide says v2 and v1 can sit side by side, and state:modified can compare across them. Treat 1.0 as history, not as the version you install today.</p>
+  <div class="code-block"><pre><code># v2 distribution
+# package name: dbt
+# Apache-licensed runtime: dbt-core</code></pre></div>
+</section>
+<section class="section dfd-quiz" id="check" data-dfd-quiz data-explanation="v2.0.8 is the latest self-hosted channel checked on the dbt Developer Hub.">
+  <h2 data-dfd-prompt>Knowledge check</h2>
+  <p>What should a new install learn first in October 2026?</p>
+  <div data-dfd-choices>
+    <button type="button" data-correct="false">dbt 1.0, because that label still means the current release</button>
+    <button type="button" data-correct="true">The v2 Fusion engine, with Core 1.x kept in mind for projects that have not upgraded</button>
+  </div>
+  <p class="dfd-quiz-feedback" data-dfd-feedback hidden></p>
+  <p class="dfd-quiz-explain" data-dfd-explain hidden></p>
+</section>
+
+<div class="nav-buttons">
                 <a href="meet-dbt.html" class="nav-btn-prev"><i class="fas fa-arrow-left"></i> Prev: Meet dbt</a>
                 <a href="installation.html" class="nav-btn-next">Next: Installation <i class="fas fa-arrow-right"></i></a>
             </div>
@@ -743,5 +772,9 @@
 <script src="../js/supabase-config.js"></script>
 <script src="../js/supabase-auth.js"></script>
 <script src="../js/paywall.js"></script>
+
+<script src="../js/progress.js"></script>
+<script src="../js/lesson-common.js"></script>
+<script src="../js/quiz.js"></script>
 </body>
 </html>

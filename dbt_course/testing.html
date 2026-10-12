@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="../css/dfd-system.css">
 </head>
-<body data-access="pro">
+<body data-access="pro" data-course-id="dbt" data-lesson-id="testing" data-total-lessons="12" class="dfd-safe">
 
 <!-- Background Particles -->
 <div class="page-bg-particles">
@@ -28,6 +28,15 @@
 
 <!-- Lesson Container -->
 <div class="lesson-container">
+<div class="dfd-lesson-progress" data-dfd-progress>
+  <p class="dfd-lesson-progress-label" data-dfd-progress-label>Sign in to save your place.</p>
+  <div class="dfd-lesson-progress-track" data-dfd-progress-bar role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-label="Course progress">
+    <div class="dfd-lesson-progress-fill" data-dfd-progress-fill></div>
+  </div>
+  <p><button type="button" data-dfd-complete>Mark lesson complete</button></p>
+  <p data-dfd-complete-status></p>
+</div>
+
 
     <!-- Sticky Nav -->
     <nav class="lesson-nav">
@@ -737,7 +746,34 @@
     <!-- ============================================================
          Navigation Buttons
          ============================================================ -->
-    <div class="nav-buttons">
+    
+<section class="section dfd-current" id="october-2026" data-dfd-current="2026-10">
+  <h2>October 2026 practice</h2>
+  <p>Checked against the dbt Developer Hub in October 2026. The latest self-hosted channel listed there is v2.0.8. The dbt package installs the Fusion engine. dbt-core is the Apache-licensed runtime. dbt build is the command that runs seeds, models, snapshots, unit tests, and data tests in DAG order.</p>
+  <p>Data tests such as unique and not_null run after the model is built. Unit tests fake the inputs and check the SQL result. Put them in YAML under unit_tests. Select them with --select test_type:unit. In v2, dbt build runs all unit tests first, then builds the rest of the graph. On Core 1.x, unit tests run in lineage order and the parent columns have to be known. A local DuckDB unit test is experimental in v2: set DBT_ENGINE_EXPERIMENTAL_LOCAL_UNIT_TESTS and compute: local. Package macro overrides in unit tests are a known Fusion gap.</p>
+  <div class="code-block"><pre><code>unit_tests:
+  - name: orders_keep_paid
+    model: orders
+    given:
+      - input: ref('stg_orders')
+        rows:
+          - {id: 1, status: 'paid'}
+    expect:
+      rows:
+        - {id: 1, status: 'paid'}</code></pre></div>
+</section>
+<section class="section dfd-quiz" id="check" data-dfd-quiz data-explanation="The v2 upgrade guide says all unit tests run first.">
+  <h2 data-dfd-prompt>Knowledge check</h2>
+  <p>When does a v2 dbt build run unit tests?</p>
+  <div data-dfd-choices>
+    <button type="button" data-correct="false">After every model is materialized</button>
+    <button type="button" data-correct="true">Before the rest of the DAG is built</button>
+  </div>
+  <p class="dfd-quiz-feedback" data-dfd-feedback hidden></p>
+  <p class="dfd-quiz-explain" data-dfd-explain hidden></p>
+</section>
+
+<div class="nav-buttons">
         <a href="sources-refs.html" class="nav-btn-prev">
             <i class="fas fa-arrow-left"></i> Sources, Refs & Lineage
         </a>
@@ -805,5 +841,9 @@ function checkQuiz(el) {
 <script src="../js/supabase-config.js"></script>
 <script src="../js/supabase-auth.js"></script>
 <script src="../js/paywall.js"></script>
+
+<script src="../js/progress.js"></script>
+<script src="../js/lesson-common.js"></script>
+<script src="../js/quiz.js"></script>
 </body>
 </html>

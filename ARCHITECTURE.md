@@ -99,13 +99,16 @@ Family styles sit in front of that file. They own color and layout. The system f
 | Python | `python_course/light-theme.css` | Python lessons. October 2026 pass: 15-session nav, visualization on sessions 13 and 14, shared progress and knowledge checks. |
 | Data science | `data_science_course/styles.css` | Imports `css/course-light-theme.css`. Lesson pages keep their own `<style>` blocks for diagrams. |
 | LLM | `llm_course/styles.css` | Imports `css/course-light-theme.css`. Page animations stay in each lesson's `<style>` block. |
+| Airflow | `airflow_course/styles.css` | Imports `css/course-light-theme.css`. Page `<style>` blocks keep diagrams. Framed for Airflow 3.3.2. |
+| dbt | `dbt_course/styles.css` | Imports `css/course-light-theme.css`, then dbt colors. Framed for dbt v2 / Fusion and Core. |
+| ClickHouse | `clickhouse_course/styles.css` | Imports `css/course-light-theme.css`. Framed for current MergeTree, JSON, and Cloud storage. |
 | Accounts | `styles/design-system.css`, `styles/auth.css` | `auth/` |
 | Pricing | `styles/pricing.css` | `pricing.html` |
 | Project walkthroughs | `css/project-pages.css` | `projects/*.html` |
 | Admin | `css/dfd-admin.css` | `admin/analytics.html` only |
 | Tools | `css/dfd-tools.css` | `pipeline-designer.html`, `data-modelling.html`, `bus-matrix.html`, `distributed-computing.html` |
 
-Data science and LLM lessons link a family `styles.css` and still carry their own `<style>` block for diagrams and accents. SQL Server, Airflow, and dbt lessons still carry only their own block. Do not replace those blocks with a blanket theme.
+Data science, LLM, Airflow, and dbt lessons link a family `styles.css` and still carry their own `<style>` block for diagrams and accents. ClickHouse lessons use the family stylesheet. Do not replace those blocks with a blanket theme.
 
 ### Safe extension rules
 
@@ -150,6 +153,8 @@ Head order for a new lesson: the family stylesheet, then the page accent, then `
 Metabase, the Redshift hub lessons, the PostgreSQL replication lesson, and the SQL Server practice-dataset page use the same shell. Redshift's canonical URLs are the files linked from `redshift_course/hub.html`. `redshift_course/index.html` remains the older single-page course and points at those lessons. Meet Metabase and Meet Redshift stay free. The other hub lessons in those two courses are Pro.
 
 Checked 13 October 2026, the Python, data science, and LLM families use that same progress and knowledge-check script. Python sessions 13 and 14 teach matplotlib/seaborn and enhanced charts. `python_course/a4-functions.html` is the function solutions page for `student-assignments.html#assignment4`. Data science `index.html` is the course hub: every card links a real lesson or a section on that hub. LLM lessons distinguish the 2019 GPT-2 decoder from ChatGPT, and the deployment lesson uses a LangChain runnable instead of `RetrievalQA`. Access flags are unchanged. The Terraform hub still warns that `index.html#workspaces` is missing.
+
+Checked 13 October 2026, the Airflow, dbt, and ClickHouse families use the same shell. Each family `styles.css` imports `css/course-light-theme.css`. Lesson pages keep their own `<style>` blocks for diagrams. Airflow lessons are framed for Apache Airflow 3.3.2 (17 September 2026): `airflow.sdk`, Assets (the rename of Datasets), TaskFlow `@task` as the default, provider packages, deferrable operators, data intervals, dynamic task mapping, and DAG bundles. `PythonOperator` stays as migration context. The 75-question certification pages are a course practice set, not an Apache Software Foundation exam and not an Astronomer certification. dbt lessons are framed for the October 2026 Developer Hub: `dbt build`, unit tests, contracts, groups, access, versions, the Semantic Layer, Mesh, and `state:modified` with `--defer`. The `dbt` package is the Fusion v2 engine (self-hosted channel v2.0.8 on that check). `dbt-core` remains the Apache-licensed runtime. Fusion is generally available for dbt platform projects on Snowflake, with other adapters still preview or beta, and local lifecycle can lag the platform. ClickHouse lessons use current MergeTree practice, the JSON type (production-ready since 25.3), projections, incremental and refreshable materialized views, SharedMergeTree on Cloud, Iceberg and Delta reads, Kafka-to-MergeTree ingestion, `argMax` instead of `FINAL` on large tables, and ClickHouse Keeper. `airflow_course/index.html`, `dbt_course/index.html`, and `clickhouse_course/index.html` stay at those URLs. Free and Pro flags are unchanged: Meet Airflow, Meet dbt, and Meet ClickHouse are free. The other hub lessons are Pro.
 
 ## Local run
 

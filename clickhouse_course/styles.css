@@ -6,3 +6,46 @@
     --course-accent:  #eab308;
     --bg-page: linear-gradient(160deg, #fffbeb 0%, #fef3c7 40%, #fefce8 70%, #fffbeb 100%);
 }
+
+body .nav a,
+body .nav-btn,
+body .lesson-link,
+body .quiz-option,
+body button {
+    min-height: 48px;
+    min-width: 48px;
+}
+
+body svg,
+body img {
+    max-width: 100%;
+    height: auto;
+}
+
+body table {
+    display: block;
+    max-width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+body pre,
+body .code-block {
+    max-width: 100%;
+    overflow-x: auto;
+}
+
+body p code,
+body li code,
+body td code,
+body h1 code,
+body h2 code,
+body h3 code {
+    overflow-wrap: anywhere;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .page-bg-particles .orb {
+        animation: none;
+    }
+}

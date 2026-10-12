@@ -6,7 +6,8 @@
     <title>Module 4: Operators Deep Dive | Data For Dummies</title>
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <style>
+    <link rel="stylesheet" href="styles.css">
+<style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
@@ -368,10 +369,19 @@
     </style>
     <link rel="stylesheet" href="../css/dfd-system.css">
 </head>
-<body data-access="pro">
+<body data-access="pro" data-course-id="airflow" data-lesson-id="operators" data-total-lessons="15" class="dfd-safe">
     <div class="container">
+<div class="dfd-lesson-progress" data-dfd-progress>
+  <p class="dfd-lesson-progress-label" data-dfd-progress-label>Sign in to save your place.</p>
+  <div class="dfd-lesson-progress-track" data-dfd-progress-bar role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-label="Course progress">
+    <div class="dfd-lesson-progress-fill" data-dfd-progress-fill></div>
+  </div>
+  <p><button type="button" data-dfd-complete>Mark lesson complete</button></p>
+  <p data-dfd-complete-status></p>
+</div>
+
         <nav class="nav">
-            <a href="index.html"><i class="fas fa-th-large"></i> Course Hub</a>
+            <a href="hub.html"><i class="fas fa-th-large"></i> Course Hub</a>
             <span style="display: flex; gap: 20px;">
                 <a href="scheduling.html"><i class="fas fa-arrow-left"></i> Module 3</a>
                 <a href="dependencies.html">Module 5 <i class="fas fa-arrow-right"></i></a>
@@ -458,7 +468,7 @@
 
                 <div class="key-point">
                     <h4><i class="fas fa-key"></i> Context Variables</h4>
-                    <p><code>ti</code> = current task instance (for XCom, logging). <code>ds</code> = execution date (YYYY-MM-DD). <code>ds_nodash</code> = same but no dashes (20240115). <code>execution_date</code> = datetime object.</p>
+                    <p><code>ti</code> = current task instance (for XCom, logging). <code>ds</code> = execution date (YYYY-MM-DD). <code>ds_nodash</code> = same but no dashes (20240115). <code>logical_date</code> (the old name was execution_date) = datetime object.</p>
                 </div>
             </div>
 
@@ -1017,7 +1027,26 @@
         </div>
 
         <!-- NAV BUTTONS -->
-        <div class="nav-buttons">
+        
+<section class="section dfd-current" id="october-2026" data-dfd-current="2026-10">
+  <h2>October 2026 practice</h2>
+  <p>Checked against Apache Airflow 3.3.2, the stable release dated 17 September 2026. New DAG files import from airflow.sdk. Dataset was renamed to Asset. @task is the default for Python. PythonOperator still runs, and it is the migration path from older DAGs.</p>
+  <p>Providers are separate packages, pinned with the Airflow constraints file. Bash and SQL still use class-based operators from those providers. New Python uses @task. A deferrable sensor is a class-based operator: you cannot call self.defer() from inside a @task function. Install the provider you import, for example apache-airflow-providers-postgres, with the 3.3.2 constraints.</p>
+  <div class="code-block"><pre><code>pip install 'apache-airflow==3.3.2' \
+  --constraint 'https://raw.githubusercontent.com/apache/airflow/constraints-3.3.2/constraints-3.12.txt'</code></pre></div>
+</section>
+<section class="section dfd-quiz" id="check" data-dfd-quiz data-explanation="The 3.3 docs say deferral is not available from TaskFlow Python functions.">
+  <h2 data-dfd-prompt>Knowledge check</h2>
+  <p>Where does deferral work?</p>
+  <div data-dfd-choices>
+    <button type="button" data-correct="false">Inside any @task function, by calling time.sleep</button>
+    <button type="button" data-correct="true">On a class-based operator, with the triggerer process running</button>
+  </div>
+  <p class="dfd-quiz-feedback" data-dfd-feedback hidden></p>
+  <p class="dfd-quiz-explain" data-dfd-explain hidden></p>
+</section>
+
+<div class="nav-buttons">
             <a href="scheduling.html" class="nav-btn prev"><i class="fas fa-arrow-left"></i> Module 3: Scheduling</a>
             <a href="dependencies.html" class="nav-btn next">Module 5: Dependencies <i class="fas fa-arrow-right"></i></a>
         </div>
@@ -1063,5 +1092,10 @@
 <script src="../js/supabase-config.js"></script>
 <script src="../js/supabase-auth.js"></script>
 <script src="../js/paywall.js"></script>
+
+<script src="../js/progress.js"></script>
+<script src="../js/lesson-common.js"></script>
+<script src="../js/quiz.js"></script>
+<script src="../js/analytics-tracker.js"></script>
 </body>
 </html>

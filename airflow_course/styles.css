@@ -1,7 +1,53 @@
-/* Airflow Course - Minimal overrides only */
-/* Main styling comes from fkti-light-theme.css */
+/* Airflow family theme. Page <style> blocks stay after this link and keep diagrams.
+   dfd-system.css still loads last. */
+@import url("../css/course-light-theme.css");
 
-/* Back to Top Button */
+:root {
+    --course-primary: #0e7490;
+    --course-accent: #06b6d4;
+}
+
+body .nav a,
+body .nav-btn,
+body .lesson-link,
+body .quiz-opt,
+body .quiz-option,
+body .tab-btn,
+body .opt,
+body button {
+    min-height: 48px;
+    min-width: 48px;
+}
+
+body svg,
+body .visual svg,
+body img {
+    max-width: 100%;
+    height: auto;
+}
+
+body svg[width] {
+    width: 100%;
+    max-width: 100%;
+    height: auto;
+}
+
+body table {
+    display: block;
+    max-width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+body p code,
+body li code,
+body td code,
+body h1 code,
+body h2 code,
+body h3 code {
+    overflow-wrap: anywhere;
+}
+
 .back-to-top {
     position: fixed;
     bottom: 30px;
@@ -44,8 +90,16 @@
     .back-to-top {
         bottom: 20px;
         right: 20px;
-        width: 45px;
-        height: 45px;
+        width: 48px;
+        height: 48px;
         font-size: 18px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .back-to-top,
+    .page-bg-particles .orb {
+        transition: none;
+        animation: none;
     }
 }
