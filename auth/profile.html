@@ -233,12 +233,15 @@
                         subscriptionBadge.className = 'auth-badge auth-badge-pro';
                         subscriptionBadge.textContent = 'Pro';
                         var planLabel = profile.subscription_plan === 'monthly' ? '₹349/month' : '₹99/week';
-                        subscriptionText.textContent = profile.subscription_cancel_at_cycle_end
+                        if (profile.subscription_plan === 'lifetime') {
+                            subscriptionBadge.textContent = 'Pro · Lifetime';
+                            subscriptionText.textContent = 'You have lifetime Pro access. Nothing renews and nothing is charged.';
+                        } else subscriptionText.textContent = profile.subscription_cancel_at_cycle_end
                             ? 'You have full Pro access (' + planLabel + ') until the current billing cycle ends. Renewal is cancelled.'
                             : 'You have full Pro access (' + planLabel + ', auto-renewing). Thank you for supporting Data For Dummies!';
                         var btns = document.getElementById('upgradeBtns');
                         if (btns) btns.style.display = 'none';
-                        if (cancelBtn && !profile.subscription_cancel_at_cycle_end) cancelBtn.hidden = false;
+                        if (cancelBtn && !profile.subscription_cancel_at_cycle_end && profile.razorpay_subscription_id) cancelBtn.hidden = false;
                     } else if (profile && (profile.id === 'dummy-test-account' || profile.username === 'dummy')) {
                         subscriptionText.textContent = 'Demo account: no charge.';
                         var demoBtns = document.getElementById('upgradeBtns');
