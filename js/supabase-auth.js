@@ -150,6 +150,35 @@
         });
     }
 
+    function createSubscription(plan) {
+        return request('/v1/payments/razorpay/subscriptions', {
+            method: 'POST',
+            body: { plan: plan }
+        });
+    }
+
+    function confirmSubscription(payment) {
+        return request('/v1/payments/razorpay/confirm', {
+            method: 'POST',
+            body: payment
+        });
+    }
+
+    function checkSubscription(subscriptionId) {
+        return request('/v1/payments/razorpay/status', {
+            method: 'POST',
+            body: { subscription_id: subscriptionId || '' }
+        });
+    }
+
+    function cancelSubscription() {
+        return request('/v1/payments/razorpay/cancel', { method: 'POST', body: {} });
+    }
+
+    function getAdminAnalytics(since) {
+        return request('/v1/admin/analytics?since=' + encodeURIComponent(since || '2020-01-01T00:00:00Z'));
+    }
+
     function saveProgress(row) {
         return request('/v1/progress', { method: 'PUT', body: row });
     }
@@ -178,6 +207,11 @@
         signOut: signOut,
         updateUserPassword: updateUserPassword,
         getProfile: getProfile,
+        createSubscription: createSubscription,
+        confirmSubscription: confirmSubscription,
+        checkSubscription: checkSubscription,
+        cancelSubscription: cancelSubscription,
+        getAdminAnalytics: getAdminAnalytics,
         saveProgress: saveProgress,
         getProgress: getProgress,
         track: track,

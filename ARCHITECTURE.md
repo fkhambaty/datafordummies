@@ -36,7 +36,7 @@ Browser
   → Cloudflare D1 database datafordummies
       → schema cloudflare/d1/schema.sql
       → worker cloudflare/worker
-  → Razorpay checkout still uses the old Supabase function
+      → FKTech Razorpay subscriptions and verified webhooks
 ```
 
 New accounts do not use Supabase. Signup emails a 6-digit code. The account cannot log in until `auth/verify.html` accepts that code. `auth/reset-password.html` emails a reset code and sets a new password. Codes expire after 15 minutes and allow 5 tries. Email goes through Resend: the worker secret is `RESEND_API_KEY` and the sender is `MAIL_FROM` in `wrangler.toml`. Without the secret, signup and reset return 503 on purpose.
@@ -68,13 +68,19 @@ Course folders, each with its own `index.html` and usually a `hub.html`:
 
 `js/hub-script.js` function `enterCourse` is the old router from the home page into a course `hub.html`. Footer links should also have a real `href`, so the course opens when JavaScript does not.
 
-`supabase/migrations` is the database. `supabase/functions` is the payment and email edge code. `admin/` is the private analytics view.
+`cloudflare/d1` is the live database schema and migrations. `cloudflare/worker` owns accounts, progress, analytics, admin data, and payments. `supabase/` is retained only as retired history; its edge functions and database are not deployed dependencies. `admin/` is the private analytics view and requires an authenticated owner profile.
 
 `python_course/student-assignments.html` is the student practice (anchors `assignment1` through `assignment5`). `a1-strings.html` and its siblings are solution pages, not the student links. Do not point the student cards at the solution files.
 
 ## Payments and accounts
 
-Pro is Razorpay, wired through the Supabase edge functions above. Setup notes that are still useful: `PAYMENTS_SETUP.md`, `PAYWALL_SETUP.md`, `AUTH_SETUP.md`. Several of those files contain placeholder hosts (`abcdefgh.supabase.co`). The real host is `gfskxboxvzuwozknfulo.supabase.co`.
+Pro subscriptions use the single **FKTech live Razorpay account**, shared with FunBerry and Okavo. Data For Dummies has its own weekly and monthly plan ids and its own webhook secret. Secrets live only in Cloudflare Worker secrets. Public plan ids and the live key id are Worker vars.
+
+The Worker creates a subscription with notes tying it to the signed-in D1 profile, verifies every payment or webhook signature, fetches the subscription from Razorpay, and grants Pro only when Razorpay reports `active` or `authenticated`. D1 stores subscription state, captured charges for revenue reporting, and webhook event ids for idempotency. `/v1/profile` reconciles pending or expired subscriptions directly with Razorpay, so renewal does not depend on webhooks.
+
+`CHECKOUT_MODE = "hosted"` is the production default while `datafordummies.in` awaits Razorpay website approval. The browser follows Razorpay's subscription `short_url`; returning to the profile causes server-side reconciliation. After Razorpay approves the website, set the Worker var to `modal` and deploy. Modal checkout is branded **FKTech** and falls back to the hosted URL if the embedded checkout is blocked or reports a website/domain error.
+
+The old Supabase `create-subscription`, `razorpay-callback`, `razorpay-webhook`, and `get-analytics` functions are retired. Do not revive or call `gfskxboxvzuwozknfulo.supabase.co`.
 
 Contact addresses published on the site: `fktiindia@gmail.com` and `fakhruddinkhambaty@gmail.com`. There is no Discord server and no discussion forum. Do not add those links back as `href="#"`.
 

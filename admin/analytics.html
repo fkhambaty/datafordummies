@@ -209,10 +209,8 @@
     <div class="auth-card">
         <div class="icon">🔐</div>
         <h2>Admin Analytics</h2>
-        <p>Enter the admin passcode to view your dashboard. Data is loaded from Supabase.</p>
-        <input type="password" id="passcode" placeholder="Admin passcode" autofocus
-               onkeypress="if(event.key==='Enter')verify()">
-        <button onclick="verify()">Access Dashboard</button>
+        <p id="authMessage">Checking your Data For Dummies admin account…</p>
+        <a href="../auth/login.html?returnTo=%2Fadmin%2Fanalytics.html" id="adminLoginLink" hidden>Log in with an owner account</a>
         <div class="auth-error" id="authError"></div>
     </div>
 </div>
@@ -250,6 +248,8 @@
             <div class="kpi-card"><div class="kpi-icon">💰</div><div class="kpi-value" id="kpiPricingViews">--</div><div class="kpi-label">Pricing Page Views</div></div>
             <div class="kpi-card"><div class="kpi-icon">🛒</div><div class="kpi-value" id="kpiCheckoutClicks">--</div><div class="kpi-label">Checkout Clicks</div></div>
             <div class="kpi-card"><div class="kpi-icon">👑</div><div class="kpi-value" id="kpiActiveSubscribers">--</div><div class="kpi-label">Active Subscribers</div></div>
+            <div class="kpi-card"><div class="kpi-icon">🧑‍🎓</div><div class="kpi-value" id="kpiUsers">--</div><div class="kpi-label">Registered Users</div></div>
+            <div class="kpi-card"><div class="kpi-icon">₹</div><div class="kpi-value" id="kpiRevenue">--</div><div class="kpi-label">Captured Revenue</div></div>
         </div>
 
         <!-- Row 1: Top Pages + Countries -->
@@ -307,7 +307,7 @@
         <!-- Row 6: Visitor IP list -->
         <div class="panel-grid">
             <div class="panel panel-full">
-                <h3><i class="fas fa-network-wired"></i> Recent Visitors (IP / Geo / Device)</h3>
+                <h3><i class="fas fa-network-wired"></i> Recent Visitors (Geo / Device)</h3>
                 <div id="visitorList"><div class="loading"><i class="fas fa-spinner"></i>Loading…</div></div>
             </div>
         </div>
@@ -322,35 +322,24 @@
     </div>
 </div>
 
+<script src="../js/supabase-config.js"></script>
+<script src="../js/supabase-auth.js"></script>
 <script>
 (function () {
     'use strict';
 
-    var SUPABASE_URL = 'https://gfskxboxvzuwozknfulo.supabase.co';
     var currentRange = '7d';
-    var verifiedPasscode = '';
+    var isAuthorized = false;
 
-    window.verify = function () {
-        var input = document.getElementById('passcode').value.trim();
-        if (!input) {
-            document.getElementById('authError').textContent = 'Enter the passcode.';
+    function authorize() {
+        if (!window.FKTI_Auth || !window.FKTI_Auth.getAdminAnalytics) {
+            showAuthError('The account service is unavailable.');
             return;
         }
-        document.getElementById('authError').textContent = '';
-        var since = getRangeDate();
-        fetch(SUPABASE_URL + '/functions/v1/get-analytics', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ passcode: input, since: since })
-        })
-            .then(function (r) { return r.text().then(function (text) {
-                var data;
-                try { data = text ? JSON.parse(text) : {}; } catch (e) { data = {}; }
-                return { ok: r.ok, status: r.status, data: data, text: text };
-            }); })
+        window.FKTI_Auth.getAdminAnalytics(getRangeDate())
             .then(function (result) {
-                if (result.ok && result.data && result.data.page_views !== undefined) {
-                    verifiedPasscode = input;
+                if (!result.error && result.data && result.data.page_views !== undefined) {
+                    isAuthorized = true;
                     document.getElementById('authGate').style.display = 'none';
                     document.getElementById('dashboard').classList.add('visible');
                     var pv = result.data.page_views || [];
@@ -358,16 +347,21 @@
                     var vis = result.data.site_visitors || [];
                     var totalSubs = result.data.total_active_subscribers;
                     var subsList = result.data.subscribers || [];
-                    renderAll(pv, ev, vis, totalSubs, subsList);
+                    renderAll(pv, ev, vis, totalSubs, subsList, result.data.users || [], result.data.revenue || {});
                 } else {
-                    var errMsg = (result.data && result.data.error) ? result.data.error : 'Invalid passcode. Try again.';
-                    document.getElementById('authError').textContent = errMsg;
+                    showAuthError((result.error && result.error.message) || 'Admin access required.');
                 }
             })
             .catch(function (err) {
-                document.getElementById('authError').textContent = err && err.message ? err.message : 'Could not connect. Check your connection and try again.';
+                showAuthError(err && err.message ? err.message : 'Could not connect.');
             });
-    };
+    }
+
+    function showAuthError(message) {
+        document.getElementById('authMessage').textContent = 'Use a signed-in owner account to view this dashboard.';
+        document.getElementById('authError').textContent = message;
+        document.getElementById('adminLoginLink').hidden = false;
+    }
 
     function getRangeDate() {
         var now = new Date();
@@ -385,25 +379,14 @@
     };
 
     window.loadDashboard = function () {
-        if (!verifiedPasscode) return;
+        if (!isAuthorized) return;
         var since = getRangeDate();
         document.getElementById('lastUpdated').textContent = 'Data since: ' + new Date(since).toLocaleDateString('en-IN') + ' | Refreshed: ' + new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' });
 
-        fetch(SUPABASE_URL + '/functions/v1/get-analytics', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ passcode: verifiedPasscode, since: since })
-        })
-            .then(function (r) {
-                return r.text().then(function (text) {
-                    var data;
-                    try { data = text ? JSON.parse(text) : {}; } catch (e) { data = {}; }
-                    return { ok: r.ok, status: r.status, data: data };
-                });
-            })
+        window.FKTI_Auth.getAdminAnalytics(since)
             .then(function (result) {
-                if (!result.ok) {
-                    var errMsg = (result.data && result.data.error) ? result.data.error : 'Failed to load.';
+                if (result.error) {
+                    var errMsg = result.error.message || 'Failed to load.';
                     throw new Error(errMsg);
                 }
                 var pvData = result.data.page_views || [];
@@ -411,14 +394,14 @@
                 var visData = result.data.site_visitors || [];
                 var totalSubs = result.data.total_active_subscribers;
                 var subsList = result.data.subscribers || [];
-                renderAll(pvData, evData, visData, totalSubs, subsList);
+                renderAll(pvData, evData, visData, totalSubs, subsList, result.data.users || [], result.data.revenue || {});
             })
             .catch(function (err) {
                 var msg = err && err.message ? err.message : 'Failed to load analytics.';
-                if (String(msg).indexOf('Invalid passcode') !== -1) {
+                if (String(msg).indexOf('Admin access') !== -1) {
                     document.getElementById('authGate').style.display = 'flex';
                     document.getElementById('dashboard').classList.remove('visible');
-                    document.getElementById('authError').textContent = 'Session expired. Enter the passcode again.';
+                    showAuthError('Your admin session expired. Log in again.');
                 } else {
                     document.getElementById('kpiGrid').innerHTML = '<p style="color:#ef4444;">' + msg + '</p>';
                     clearLoadingPanels();
@@ -426,8 +409,8 @@
             });
     };
 
-    function renderAll(pvData, evData, visData, totalActiveSubscribers, subscribersList) {
-        renderKPIs(pvData, evData, visData, totalActiveSubscribers);
+    function renderAll(pvData, evData, visData, totalActiveSubscribers, subscribersList, users, revenue) {
+        renderKPIs(pvData, evData, visData, totalActiveSubscribers, users, revenue);
         renderTopPages(pvData);
         renderCountries(pvData);
         renderDevices(pvData);
@@ -448,7 +431,7 @@
         });
     }
 
-    function renderKPIs(pv, ev, vis, totalActiveSubscribers) {
+    function renderKPIs(pv, ev, vis, totalActiveSubscribers, users, revenue) {
         document.getElementById('kpiPageViews').textContent = pv.length.toLocaleString();
         var uniqueVis = new Set(pv.map(function (r) { return r.visitor_id; }));
         document.getElementById('kpiUniqueVisitors').textContent = uniqueVis.size.toLocaleString();
@@ -463,6 +446,8 @@
         document.getElementById('kpiCheckoutClicks').textContent = checkouts.length.toLocaleString();
         var subsEl = document.getElementById('kpiActiveSubscribers');
         if (subsEl) subsEl.textContent = typeof totalActiveSubscribers === 'number' ? totalActiveSubscribers.toLocaleString() : '0';
+        document.getElementById('kpiUsers').textContent = (users || []).length.toLocaleString();
+        document.getElementById('kpiRevenue').textContent = '₹' + ((Number(revenue && revenue.amount_paise) || 0) / 100).toLocaleString('en-IN');
     }
 
     function countBy(arr, key) {
@@ -579,11 +564,11 @@
         var el = document.getElementById('visitorList');
         if (!vis.length) { el.innerHTML = '<p style="color:#6e6e73;font-size:0.85rem;">No visitor data yet</p>'; return; }
         var top = vis.slice(0, 50);
-        el.innerHTML = '<table class="data-table"><thead><tr><th>IP</th><th>Country</th><th>City</th><th>Device</th><th>Browser</th><th>OS</th><th>Visits</th><th>Last Seen</th></tr></thead><tbody>' +
+        el.innerHTML = '<table class="data-table"><thead><tr><th>Country</th><th>City</th><th>Device</th><th>Browser</th><th>OS</th><th>Visits</th><th>Last Seen</th></tr></thead><tbody>' +
             top.map(function (v) {
                 var lastSeen = v.last_seen ? new Date(v.last_seen).toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' }) : '—';
                 var devCls = v.device_type === 'mobile' ? 'badge-mobile' : v.device_type === 'tablet' ? 'badge-tablet' : 'badge-desktop';
-                return '<tr><td>' + (v.ip_address || '—') + '</td><td>' + (v.country || '—') + '</td><td>' + (v.city || '—') + '</td><td><span class="badge ' + devCls + '">' + (v.device_type || '—') + '</span></td><td>' + (v.browser || '—') + '</td><td>' + (v.os || '—') + '</td><td><strong>' + (v.total_visits || 1) + '</strong></td><td style="font-size:0.8rem;color:#6e6e73">' + lastSeen + '</td></tr>';
+                return '<tr><td>' + (v.country || '—') + '</td><td>' + (v.city || '—') + '</td><td><span class="badge ' + devCls + '">' + (v.device_type || '—') + '</span></td><td>' + (v.browser || '—') + '</td><td>' + (v.os || '—') + '</td><td><strong>' + (v.total_visits || 1) + '</strong></td><td style="font-size:0.8rem;color:#6e6e73">' + lastSeen + '</td></tr>';
             }).join('') + '</tbody></table>';
     }
 
@@ -597,7 +582,7 @@
                 var planBadge = plan === 'monthly'
                     ? '<span style="background:#d1fae5;color:#065f46;padding:3px 8px;border-radius:6px;font-size:0.7rem;font-weight:700;">MONTHLY</span>'
                     : '<span style="background:#dbeafe;color:#1d4ed8;padding:3px 8px;border-radius:6px;font-size:0.7rem;font-weight:700;">WEEKLY</span>';
-                var status = s.subscription_status === 'pro'
+                var status = (s.subscription_status === 'active' || s.subscription_status === 'pro')
                     ? '<span style="background:#fef3c7;color:#92400e;padding:3px 8px;border-radius:6px;font-size:0.7rem;font-weight:700;">PRO</span>'
                     : '<span style="background:#f3f4f6;color:#6b7280;padding:3px 8px;border-radius:6px;font-size:0.7rem;font-weight:700;">FREE</span>';
                 var expires = s.subscription_end_date ? new Date(s.subscription_end_date).toLocaleDateString('en-IN') : '—';
@@ -610,13 +595,15 @@
         var el = document.getElementById('recentActivity');
         var recent = pv.slice(0, 30);
         if (!recent.length) { el.innerHTML = '<p style="color:#6e6e73;font-size:0.85rem;">No activity yet</p>'; return; }
-        el.innerHTML = '<table class="data-table"><thead><tr><th>Page</th><th>Country</th><th>Device</th><th>IP</th><th>Time (IST)</th></tr></thead><tbody>' +
+        el.innerHTML = '<table class="data-table"><thead><tr><th>Page</th><th>Country</th><th>Device</th><th>Time (IST)</th></tr></thead><tbody>' +
             recent.map(function (r) {
                 var page = (r.page_path || '').replace(/^\//, '').replace(/\.html$/, '') || 'Home';
                 var time = r.created_at ? new Date(r.created_at).toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' }) : '—';
-                return '<tr><td>' + page + '</td><td>' + (r.country || '—') + '</td><td>' + (r.device_type || '—') + '</td><td style="font-size:0.8rem">' + (r.ip_address || '—') + '</td><td style="font-size:0.8rem;color:#6e6e73">' + time + '</td></tr>';
+                return '<tr><td>' + page + '</td><td>' + (r.country || '—') + '</td><td>' + (r.device_type || '—') + '</td><td style="font-size:0.8rem;color:#6e6e73">' + time + '</td></tr>';
             }).join('') + '</tbody></table>';
     }
+
+    authorize();
 })();
 </script>
 </body>

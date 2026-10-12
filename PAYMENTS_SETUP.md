@@ -1,35 +1,52 @@
-# Payments Setup (Razorpay + Supabase Edge Functions)
+# Payments setup (Razorpay + Cloudflare Worker)
 
-## 1. Razorpay Dashboard
+Data For Dummies uses the single FKTech live Razorpay account shared with FunBerry and Okavo. Product isolation comes from separate plan ids, a separate webhook secret, and subscription notes containing `product: datafordummies` plus the D1 user id.
 
-- Create a **Plan**: Name "Data For Dummies Pro", amount **₹499**, billing cycle **monthly**. Note the **plan_id** (e.g. `plan_xxxx`).
-- Under **Webhooks**, add a webhook URL: `https://YOUR_PROJECT_REF.supabase.co/functions/v1/razorpay-webhook`. Subscribe to events: `subscription.charged`, `subscription.activated` (and optionally `payment.captured`). Copy the **Webhook Secret**.
+## Live plans
 
-## 2. Supabase Edge Function secrets
+- Weekly: ₹99, 52 charges.
+- Monthly: ₹349, 12 charges.
+- The retired ₹499 monthly plan must not be used.
 
-Set these in Supabase Dashboard → Project Settings → Edge Functions → Secrets (or via CLI):
+Plan ids and the live key id are public Worker vars in `cloudflare/worker/wrangler.toml`. `RAZORPAY_KEY_SECRET` and `RAZORPAY_WEBHOOK_SECRET` are Worker secrets. Never place either secret in HTML, JavaScript, logs, or commits.
 
-- **create-subscription**: `RAZORPAY_KEY_ID`, `RAZORPAY_KEY_SECRET`, `RAZORPAY_PLAN_ID`
-- **razorpay-webhook**: `RAZORPAY_WEBHOOK_SECRET`. Supabase automatically provides `SUPABASE_URL` and `SUPABASE_SERVICE_ROLE_KEY`.
+## Checkout mode
 
-## 3. Deploy Edge Functions
+Production defaults to:
 
-From the project root:
-
-```bash
-npx supabase link --project-ref YOUR_PROJECT_REF
-npx supabase functions deploy create-subscription
-npx supabase functions deploy razorpay-webhook
+```toml
+CHECKOUT_MODE = "hosted"
 ```
 
-## 4. Frontend config
+Razorpay has not yet approved `datafordummies.in`, so hosted mode sends the customer to the Razorpay-hosted `short_url`. The profile page asks the Worker to fetch the subscription and grants Pro only for an owned `active` or `authenticated` subscription.
 
-On the pricing page (and any page that opens checkout), set:
+After Razorpay approves `datafordummies.in`, change the var to:
 
-```js
-window.RAZORPAY_KEY_ID = 'your_razorpay_key_id';
-window.SUPABASE_URL = 'https://YOUR_PROJECT_REF.supabase.co';
-window.SUPABASE_ANON_KEY = 'your_anon_key';
+```toml
+CHECKOUT_MODE = "modal"
 ```
 
-Optional: if you do not use the create-subscription function, set `window.RAZORPAY_SUBSCRIPTION_LINK` to a Razorpay Subscription Link URL from the dashboard; the "Upgrade to Pro" button will redirect there instead.
+Then deploy the Worker. Modal checkout displays `FKTech` and automatically falls back to the hosted URL for iframe blocking or website/domain-mismatch failures.
+
+## Webhook
+
+Register this exact URL in the Razorpay dashboard:
+
+`https://datafordummies-api.fkhambaty.workers.dev/v1/payments/razorpay/webhook`
+
+Select:
+
+- `subscription.authenticated`
+- `subscription.activated`
+- `subscription.charged`
+- `subscription.cancelled`
+- `subscription.halted`
+- `subscription.completed`
+
+The webhook is backup reconciliation. Checkout confirmation and `/v1/profile` also fetch state directly from Razorpay. Webhook signatures are verified against the Data For Dummies-specific secret, and D1 event ids make retries idempotent.
+
+## Deployment
+
+Apply `cloudflare/d1/*.sql` migrations remotely, set secrets through stdin, and deploy from `cloudflare/worker`. Preserve the existing `RESEND_API_KEY`.
+
+The old Supabase payment functions (`create-subscription`, `razorpay-callback`, and `razorpay-webhook`) are retired and must not be deployed or called.

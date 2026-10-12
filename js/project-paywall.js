@@ -1,7 +1,7 @@
 /**
  * Project section-level paywall.
  * Locks .pro-locked-wrapper sections; unlocks for Pro/Admin users.
- * Works with FKTI_Auth (Supabase) when available; falls back to locked.
+ * Works with the Cloudflare Worker-backed FKTI_Auth; falls back to locked.
  */
 (function () {
     'use strict';
@@ -28,7 +28,7 @@
             auth.getProfile(session.user.id).then(function (profRes) {
                 var p = profRes.data;
                 var isAdmin = p && p.role === 'admin';
-                var isPro = p && p.subscription_status === 'pro';
+                var isPro = p && (p.subscription_status === 'active' || p.subscription_status === 'pro');
                 if (p && p.subscription_end_date && !isAdmin) {
                     if (new Date(p.subscription_end_date) < new Date()) isPro = false;
                 }

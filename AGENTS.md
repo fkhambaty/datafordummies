@@ -11,7 +11,14 @@ Read [`ARCHITECTURE.md`](ARCHITECTURE.md) before editing. It is the map of hosti
 
 ## What this product is
 
-A static HTML learning site. GitHub Pages serves the files in this repository. Supabase (`gfskxboxvzuwozknfulo`) is only for accounts, Pro, and analytics. Razorpay takes payment through Supabase edge functions.
+A static HTML learning site. GitHub Pages serves the files in this repository. Accounts, progress, analytics, admin data, and Pro subscription state live in the Cloudflare Worker + D1 backend. The old Supabase project and edge functions are retired.
+
+## Payments
+
+- Data For Dummies uses the single FKTech live Razorpay account shared with FunBerry and Okavo, with product-specific plan ids and webhook secret.
+- Production uses `CHECKOUT_MODE = "hosted"` until Razorpay approves `datafordummies.in`. Flip it to `modal` and redeploy only after approval.
+- The Worker creates subscriptions, verifies signatures, checks ownership through Razorpay notes, reconciles `/v1/profile`, records charges, and handles cancellation at cycle end.
+- Never use the retired ₹499 plan or the generic `razorpay.me` link. Never call the retired Supabase payment functions.
 
 ## What this product is not
 
@@ -24,7 +31,7 @@ A static HTML learning site. GitHub Pages serves the files in this repository. S
 
 - Course links need a real `href` to a file that exists. `enterCourse` in `js/hub-script.js` is an extra, not the only path.
 - Student Python practice is `python_course/student-assignments.html`. Solution pages are separate. Do not mix them.
-- Do not put a Supabase service-role key, a Razorpay secret, or a webhook secret in HTML or in `js/supabase-config.js`.
+- Do not put a Razorpay secret, webhook secret, Resend key, or Cloudflare credential in HTML or JavaScript. Public Razorpay plan ids and key id belong in Worker vars.
 - Do not invent learner counts or employer claims.
 - Pushing `main` publishes the site. Check the changed page in a browser before you call the work done.
 

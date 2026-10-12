@@ -1,7 +1,6 @@
 /**
  * Paywall — for pages with data-access="pro", show upgrade overlay if user is not Pro.
- * Requires: Supabase auth (FKTI_Auth), design-system or similar for styling.
- * Include after supabase-auth.js. Add <script> with SUPABASE_URL and SUPABASE_ANON_KEY before supabase-auth.js.
+ * Requires FKTI_Auth, which reads the current profile from the Cloudflare Worker.
  */
 (function () {
     'use strict';
@@ -96,7 +95,7 @@
             auth.getProfile(session.user.id).then(function (profRes) {
                 var profile = profRes.data;
                 var isAdmin = profile && profile.role === 'admin';
-                var isPro = profile && profile.subscription_status === 'pro';
+                var isPro = profile && (profile.subscription_status === 'active' || profile.subscription_status === 'pro');
                 if (profile && profile.subscription_end_date && !isAdmin) {
                     var end = new Date(profile.subscription_end_date);
                     if (end < new Date()) isPro = false;

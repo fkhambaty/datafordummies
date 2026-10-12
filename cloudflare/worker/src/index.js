@@ -10,6 +10,10 @@ const OWNER_EMAILS = new Set([
   "fktiindia@gmail.com",
 ]);
 
+const RAZORPAY_API = "https://api.razorpay.com/v1";
+const PAID_SUBSCRIPTION_STATUSES = new Set(["active", "authenticated"]);
+const TERMINAL_SUBSCRIPTION_STATUSES = new Set(["cancelled", "halted", "completed", "expired"]);
+
 function json(body, status, origin) {
   const headers = {
     "content-type": "application/json; charset=utf-8",
@@ -59,6 +63,7 @@ function publicProfile(row) {
   return {
     id: row.id,
     email: row.email,
+    username: row.username,
     full_name: row.full_name,
     phone: row.phone,
     country_code: row.country_code,
@@ -67,6 +72,7 @@ function publicProfile(row) {
     subscription_plan: row.subscription_plan,
     subscription_end_date: row.subscription_end_date,
     razorpay_subscription_id: row.razorpay_subscription_id,
+    subscription_cancel_at_cycle_end: Boolean(row.subscription_cancel_at_cycle_end),
     updated_at: row.updated_at,
   };
 }
@@ -186,6 +192,164 @@ async function userFromRequest(request, db) {
     .first();
 }
 
+function isDummyProfile(profile) {
+  return profile?.id === "dummy-test-account" || profile?.username === "dummy";
+}
+
+function isActiveProfile(profile) {
+  if (!profile || !["active", "pro"].includes(profile.subscription_status)) return false;
+  return !profile.subscription_end_date || Date.parse(profile.subscription_end_date) > Date.now();
+}
+
+function planDetails(env, plan) {
+  if (plan === "weekly") {
+    return { plan: "weekly", planId: env.RAZORPAY_PLAN_WEEKLY, totalCount: 52 };
+  }
+  if (plan === "monthly") {
+    return { plan: "monthly", planId: env.RAZORPAY_PLAN_MONTHLY, totalCount: 12 };
+  }
+  return null;
+}
+
+function planFromSubscription(env, subscription) {
+  if (subscription?.plan_id === env.RAZORPAY_PLAN_MONTHLY) return "monthly";
+  if (subscription?.plan_id === env.RAZORPAY_PLAN_WEEKLY) return "weekly";
+  return null;
+}
+
+function dateFromUnix(seconds) {
+  return Number(seconds) > 0 ? new Date(Number(seconds) * 1000).toISOString() : null;
+}
+
+async function razorpayRequest(env, path, options = {}) {
+  if (!env.RAZORPAY_KEY_ID || !env.RAZORPAY_KEY_SECRET) {
+    throw new Error("Razorpay is not configured.");
+  }
+  const response = await fetch(`${RAZORPAY_API}${path}`, {
+    ...options,
+    headers: {
+      authorization: `Basic ${btoa(`${env.RAZORPAY_KEY_ID}:${env.RAZORPAY_KEY_SECRET}`)}`,
+      "content-type": "application/json",
+      ...(options.headers || {}),
+    },
+  });
+  const data = await response.json().catch(() => ({}));
+  if (!response.ok) {
+    const message = data?.error?.description || data?.error || `Razorpay returned ${response.status}.`;
+    throw new Error(String(message));
+  }
+  return data;
+}
+
+async function hmacKey(secret) {
+  return crypto.subtle.importKey(
+    "raw",
+    new TextEncoder().encode(secret),
+    { name: "HMAC", hash: "SHA-256" },
+    false,
+    ["verify"],
+  );
+}
+
+function hexToBytes(value) {
+  if (!/^[a-f0-9]{64}$/i.test(value || "")) return null;
+  return new Uint8Array(value.match(/.{2}/g).map((byte) => parseInt(byte, 16)));
+}
+
+async function verifyHmac(message, signature, secret) {
+  const bytes = hexToBytes(signature);
+  if (!bytes || !secret) return false;
+  return crypto.subtle.verify(
+    "HMAC",
+    await hmacKey(secret),
+    bytes,
+    new TextEncoder().encode(message),
+  );
+}
+
+async function saveSubscription(db, subscription, userId, plan) {
+  const now = new Date().toISOString();
+  await db
+    .prepare(
+      `INSERT INTO razorpay_subscriptions
+       (razorpay_subscription_id, user_id, plan, status, short_url, current_end, created_at, updated_at)
+       VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+       ON CONFLICT(razorpay_subscription_id) DO UPDATE SET
+         status = excluded.status, short_url = COALESCE(excluded.short_url, razorpay_subscriptions.short_url),
+         current_end = excluded.current_end, updated_at = excluded.updated_at`,
+    )
+    .bind(
+      subscription.id,
+      userId,
+      plan,
+      subscription.status || "created",
+      subscription.short_url || null,
+      dateFromUnix(subscription.current_end),
+      now,
+      now,
+    )
+    .run();
+}
+
+async function applySubscription(db, env, profile, subscription) {
+  const userId = subscription?.notes?.user_id;
+  const plan = planFromSubscription(env, subscription);
+  if (
+    !userId ||
+    userId !== profile.id ||
+    subscription?.notes?.product !== "datafordummies" ||
+    !plan
+  ) return false;
+
+  await saveSubscription(db, subscription, profile.id, plan);
+  const now = new Date().toISOString();
+  if (PAID_SUBSCRIPTION_STATUSES.has(subscription.status)) {
+    await db
+      .prepare(
+        `UPDATE profiles SET subscription_status = 'active', subscription_plan = ?,
+         subscription_end_date = ?, razorpay_subscription_id = ?,
+         subscription_cancel_at_cycle_end = ?, updated_at = ? WHERE id = ?`,
+      )
+      .bind(
+        plan,
+        dateFromUnix(subscription.current_end),
+        subscription.id,
+        subscription.cancel_at_cycle_end ? 1 : 0,
+        now,
+        profile.id,
+      )
+      .run();
+    return true;
+  }
+  if (TERMINAL_SUBSCRIPTION_STATUSES.has(subscription.status)) {
+    await db
+      .prepare(
+        `UPDATE profiles SET subscription_status = 'free', subscription_plan = 'free',
+         subscription_end_date = NULL, subscription_cancel_at_cycle_end = 0, updated_at = ?
+         WHERE id = ?`,
+      )
+      .bind(now, profile.id)
+      .run();
+  }
+  return false;
+}
+
+async function syncProfileSubscription(db, env, profile) {
+  if (!profile?.razorpay_subscription_id || isDummyProfile(profile)) return profile;
+  const expired = profile.subscription_end_date && Date.parse(profile.subscription_end_date) <= Date.now();
+  if (isActiveProfile(profile) && profile.subscription_end_date && !expired) return profile;
+  try {
+    const subscription = await razorpayRequest(
+      env,
+      `/subscriptions/${encodeURIComponent(profile.razorpay_subscription_id)}`,
+    );
+    await applySubscription(db, env, profile, subscription);
+    return db.prepare("SELECT * FROM profiles WHERE id = ?").bind(profile.id).first();
+  } catch {
+    return profile;
+  }
+}
+
 export default {
   async fetch(request, env) {
     const origin = request.headers.get("origin");
@@ -199,6 +363,62 @@ export default {
     const db = env.DB;
 
     try {
+      if (request.method === "POST" && path === "/v1/payments/razorpay/webhook") {
+        const rawBody = await request.text();
+        const signature = request.headers.get("x-razorpay-signature") || "";
+        if (!(await verifyHmac(rawBody, signature, env.RAZORPAY_WEBHOOK_SECRET))) {
+          return json({ error: "Invalid signature." }, 400, "");
+        }
+        const payload = JSON.parse(rawBody);
+        const eventId = request.headers.get("x-razorpay-event-id") || (await sha256(rawBody));
+        const existingEvent = await db
+          .prepare("SELECT event_id FROM razorpay_webhook_events WHERE event_id = ?")
+          .bind(eventId)
+          .first();
+        if (existingEvent) return json({ ok: true, duplicate: true }, 200, "");
+
+        const subscription = payload?.payload?.subscription?.entity;
+        const payment = payload?.payload?.payment?.entity;
+        const handled = new Set([
+          "subscription.authenticated",
+          "subscription.activated",
+          "subscription.charged",
+          "subscription.cancelled",
+          "subscription.halted",
+          "subscription.completed",
+        ]);
+        if (subscription && handled.has(payload.event)) {
+          const userId = subscription?.notes?.user_id;
+          const profile = userId
+            ? await db.prepare("SELECT * FROM profiles WHERE id = ?").bind(userId).first()
+            : null;
+          if (profile) await applySubscription(db, env, profile, subscription);
+          if (payload.event === "subscription.charged" && payment?.id && userId) {
+            await db
+              .prepare(
+                `INSERT OR IGNORE INTO razorpay_payments
+                 (razorpay_payment_id, razorpay_subscription_id, user_id, amount, currency, status, paid_at)
+                 VALUES (?, ?, ?, ?, ?, ?, ?)`,
+              )
+              .bind(
+                payment.id,
+                subscription.id,
+                userId,
+                Number(payment.amount || 0),
+                payment.currency || "INR",
+                payment.status || "captured",
+                dateFromUnix(payment.created_at) || new Date().toISOString(),
+              )
+              .run();
+          }
+        }
+        await db
+          .prepare("INSERT OR IGNORE INTO razorpay_webhook_events (event_id, event_type) VALUES (?, ?)")
+          .bind(eventId, String(payload.event || "unknown"))
+          .run();
+        return json({ ok: true }, 200, "");
+      }
+
       if (request.method === "POST" && path === "/v1/signup") {
         const body = await readJson(request);
         const email = String(body?.email || "").trim().toLowerCase();
@@ -338,8 +558,9 @@ export default {
       }
 
       if (request.method === "GET" && path === "/v1/session") {
-        const profile = await userFromRequest(request, db);
+        let profile = await userFromRequest(request, db);
         if (!profile) return json({ user: null }, 200, allowedOrigin);
+        profile = await syncProfileSubscription(db, env, profile);
         return json({ user: publicProfile(profile) }, 200, allowedOrigin);
       }
 
@@ -361,9 +582,181 @@ export default {
       }
 
       if (request.method === "GET" && path === "/v1/profile") {
+        let profile = await userFromRequest(request, db);
+        if (!profile) return json({ error: "Log in again." }, 401, allowedOrigin);
+        profile = await syncProfileSubscription(db, env, profile);
+        return json({ profile: publicProfile(profile) }, 200, allowedOrigin);
+      }
+
+      if (request.method === "POST" && path === "/v1/payments/razorpay/subscriptions") {
         const profile = await userFromRequest(request, db);
         if (!profile) return json({ error: "Log in again." }, 401, allowedOrigin);
-        return json({ profile: publicProfile(profile) }, 200, allowedOrigin);
+        if (isDummyProfile(profile)) {
+          return json({ error: "Demo account: no charge.", demo: true }, 403, allowedOrigin);
+        }
+        if (isActiveProfile(profile)) {
+          return json({ error: "Your Pro subscription is already active." }, 409, allowedOrigin);
+        }
+        const body = await readJson(request);
+        const details = planDetails(env, String(body?.plan || "").toLowerCase());
+        if (!details || !details.planId) {
+          return json({ error: "Choose the weekly or monthly plan." }, 400, allowedOrigin);
+        }
+
+        const cutoff = new Date(Date.now() - 15 * 60 * 1000).toISOString();
+        const reusable = await db
+          .prepare(
+            `SELECT * FROM razorpay_subscriptions
+             WHERE user_id = ? AND plan = ? AND status = 'created' AND created_at >= ?
+             ORDER BY created_at DESC LIMIT 1`,
+          )
+          .bind(profile.id, details.plan, cutoff)
+          .first();
+        if (reusable) {
+          const remote = await razorpayRequest(
+            env,
+            `/subscriptions/${encodeURIComponent(reusable.razorpay_subscription_id)}`,
+          );
+          await saveSubscription(db, remote, profile.id, details.plan);
+          if (remote.status === "created") {
+            return json(
+              {
+                subscription_id: remote.id,
+                key_id: env.RAZORPAY_KEY_ID,
+                plan: details.plan,
+                checkout_mode: env.CHECKOUT_MODE || "hosted",
+                short_url: remote.short_url,
+                return_url: "https://datafordummies.in/auth/profile.html?subscription=return",
+              },
+              200,
+              allowedOrigin,
+            );
+          }
+        }
+
+        const subscription = await razorpayRequest(env, "/subscriptions", {
+          method: "POST",
+          body: JSON.stringify({
+            plan_id: details.planId,
+            total_count: details.totalCount,
+            customer_notify: 1,
+            notes: { product: "datafordummies", user_id: profile.id },
+          }),
+        });
+        await saveSubscription(db, subscription, profile.id, details.plan);
+        await db
+          .prepare(
+            `UPDATE profiles SET razorpay_subscription_id = ?, subscription_plan = ?,
+             subscription_status = 'pending', updated_at = ? WHERE id = ?`,
+          )
+          .bind(subscription.id, details.plan, new Date().toISOString(), profile.id)
+          .run();
+        return json(
+          {
+            subscription_id: subscription.id,
+            key_id: env.RAZORPAY_KEY_ID,
+            plan: details.plan,
+            checkout_mode: env.CHECKOUT_MODE || "hosted",
+            short_url: subscription.short_url,
+            return_url: "https://datafordummies.in/auth/profile.html?subscription=return",
+          },
+          201,
+          allowedOrigin,
+        );
+      }
+
+      if (request.method === "POST" && path === "/v1/payments/razorpay/confirm") {
+        const profile = await userFromRequest(request, db);
+        if (!profile) return json({ error: "Log in again." }, 401, allowedOrigin);
+        if (isDummyProfile(profile)) {
+          return json({ error: "Demo account: no charge.", demo: true }, 403, allowedOrigin);
+        }
+        const body = await readJson(request);
+        const paymentId = String(body?.razorpay_payment_id || "");
+        const subscriptionId = String(body?.razorpay_subscription_id || "");
+        const signature = String(body?.razorpay_signature || "");
+        if (
+          !paymentId ||
+          !subscriptionId ||
+          !(await verifyHmac(`${paymentId}|${subscriptionId}`, signature, env.RAZORPAY_KEY_SECRET))
+        ) {
+          return json({ error: "Invalid payment signature." }, 400, allowedOrigin);
+        }
+        const subscription = await razorpayRequest(
+          env,
+          `/subscriptions/${encodeURIComponent(subscriptionId)}`,
+        );
+        if (
+          subscription?.notes?.user_id !== profile.id ||
+          subscription?.notes?.product !== "datafordummies" ||
+          !PAID_SUBSCRIPTION_STATUSES.has(subscription.status)
+        ) {
+          return json({ error: "Subscription is not active for this account." }, 403, allowedOrigin);
+        }
+        await applySubscription(db, env, profile, subscription);
+        const updated = await db.prepare("SELECT * FROM profiles WHERE id = ?").bind(profile.id).first();
+        return json({ ok: true, profile: publicProfile(updated) }, 200, allowedOrigin);
+      }
+
+      if (request.method === "POST" && path === "/v1/payments/razorpay/status") {
+        const profile = await userFromRequest(request, db);
+        if (!profile) return json({ error: "Log in again." }, 401, allowedOrigin);
+        if (isDummyProfile(profile)) {
+          return json({ active: false, message: "Demo account: no charge." }, 200, allowedOrigin);
+        }
+        const body = await readJson(request);
+        const subscriptionId = String(body?.subscription_id || profile.razorpay_subscription_id || "");
+        if (!subscriptionId || subscriptionId !== profile.razorpay_subscription_id) {
+          return json({ error: "Subscription does not belong to this account." }, 403, allowedOrigin);
+        }
+        const subscription = await razorpayRequest(
+          env,
+          `/subscriptions/${encodeURIComponent(subscriptionId)}`,
+        );
+        const active = await applySubscription(db, env, profile, subscription);
+        const updated = await db.prepare("SELECT * FROM profiles WHERE id = ?").bind(profile.id).first();
+        return json(
+          { active, status: subscription.status, profile: publicProfile(updated) },
+          200,
+          allowedOrigin,
+        );
+      }
+
+      if (request.method === "POST" && path === "/v1/payments/razorpay/cancel") {
+        const profile = await userFromRequest(request, db);
+        if (!profile) return json({ error: "Log in again." }, 401, allowedOrigin);
+        if (isDummyProfile(profile)) {
+          return json({ error: "Demo account: no charge.", demo: true }, 403, allowedOrigin);
+        }
+        if (!profile.razorpay_subscription_id || !isActiveProfile(profile)) {
+          return json({ error: "There is no active subscription to cancel." }, 409, allowedOrigin);
+        }
+        const subscription = await razorpayRequest(
+          env,
+          `/subscriptions/${encodeURIComponent(profile.razorpay_subscription_id)}/cancel`,
+          { method: "POST", body: JSON.stringify({ cancel_at_cycle_end: 1 }) },
+        );
+        if (
+          subscription?.notes?.user_id !== profile.id ||
+          subscription?.notes?.product !== "datafordummies"
+        ) {
+          return json({ error: "Subscription does not belong to this account." }, 403, allowedOrigin);
+        }
+        await saveSubscription(
+          db,
+          subscription,
+          profile.id,
+          planFromSubscription(env, subscription) || profile.subscription_plan,
+        );
+        await db
+          .prepare("UPDATE profiles SET subscription_cancel_at_cycle_end = 1, updated_at = ? WHERE id = ?")
+          .bind(new Date().toISOString(), profile.id)
+          .run();
+        return json(
+          { ok: true, subscription_end_date: dateFromUnix(subscription.current_end) },
+          200,
+          allowedOrigin,
+        );
       }
 
       if (request.method === "PUT" && path === "/v1/progress") {
@@ -442,6 +835,55 @@ export default {
         return json({ progress }, 200, allowedOrigin);
       }
 
+      if (request.method === "GET" && path === "/v1/admin/analytics") {
+        const profile = await userFromRequest(request, db);
+        if (!profile || profile.role !== "admin" || !OWNER_EMAILS.has(profile.email)) {
+          return json({ error: "Admin access required." }, 403, allowedOrigin);
+        }
+        const since = url.searchParams.get("since") || "2020-01-01T00:00:00Z";
+        const [pageViews, events, visitors, users, subscriptions, revenue] = await Promise.all([
+          db.prepare("SELECT * FROM page_views WHERE created_at >= ? ORDER BY created_at DESC LIMIT 5000").bind(since).all(),
+          db.prepare("SELECT * FROM analytics_events WHERE created_at >= ? ORDER BY created_at DESC LIMIT 3000").bind(since).all(),
+          db.prepare("SELECT * FROM site_visitors ORDER BY last_seen DESC LIMIT 1000").all(),
+          db.prepare(
+            "SELECT id, email, full_name, role, subscription_status, created_at FROM profiles ORDER BY created_at DESC LIMIT 500",
+          ).all(),
+          db.prepare(
+            `SELECT id, email, subscription_status, subscription_plan, subscription_end_date,
+             razorpay_subscription_id, created_at, updated_at, subscription_cancel_at_cycle_end
+             FROM profiles ORDER BY created_at DESC LIMIT 500`,
+          ).all(),
+          db.prepare(
+            `SELECT COALESCE(SUM(amount), 0) AS amount_paise, COUNT(*) AS payment_count
+             FROM razorpay_payments WHERE status IN ('captured', 'authorized')`,
+          ).first(),
+        ]);
+        const parsedEvents = (events.results || []).map((event) => {
+          try {
+            return { ...event, event_data: JSON.parse(event.event_data || "{}") };
+          } catch {
+            return { ...event, event_data: {} };
+          }
+        });
+        return json(
+          {
+            page_views: pageViews.results || [],
+            analytics_events: parsedEvents,
+            site_visitors: visitors.results || [],
+            users: users.results || [],
+            subscribers: subscriptions.results || [],
+            total_active_subscribers: (subscriptions.results || []).filter(isActiveProfile).length,
+            revenue: {
+              amount_paise: Number(revenue?.amount_paise || 0),
+              payment_count: Number(revenue?.payment_count || 0),
+              currency: "INR",
+            },
+          },
+          200,
+          allowedOrigin,
+        );
+      }
+
       if (request.method === "POST" && path === "/v1/page-view") {
         const body = await readJson(request);
         const visitorId = String(body?.visitor_id || "").slice(0, 80);
@@ -460,8 +902,8 @@ export default {
             pagePath,
             body?.page_title ? String(body.page_title).slice(0, 200) : null,
             body?.referrer ? String(body.referrer).slice(0, 300) : null,
-            body?.country ? String(body.country).slice(0, 80) : null,
-            body?.city ? String(body.city).slice(0, 80) : null,
+            request.cf?.country || null,
+            request.cf?.city || null,
             body?.device_type ? String(body.device_type).slice(0, 40) : null,
             body?.browser ? String(body.browser).slice(0, 40) : null,
             body?.os ? String(body.os).slice(0, 40) : null,
@@ -485,8 +927,8 @@ export default {
           )
           .bind(
             visitorId,
-            body?.country ? String(body.country).slice(0, 80) : null,
-            body?.city ? String(body.city).slice(0, 80) : null,
+            request.cf?.country || null,
+            request.cf?.city || null,
             body?.device_type ? String(body.device_type).slice(0, 40) : null,
             body?.browser ? String(body.browser).slice(0, 40) : null,
             body?.os ? String(body.os).slice(0, 40) : null,
@@ -515,7 +957,7 @@ export default {
             eventType,
             JSON.stringify(body?.event_data || {}).slice(0, 2000),
             body?.page_path ? String(body.page_path).slice(0, 300) : null,
-            body?.country ? String(body.country).slice(0, 80) : null,
+            request.cf?.country || null,
             profile?.id || null,
           )
           .run();
@@ -524,7 +966,7 @@ export default {
 
       return json({ error: "Not found" }, 404, allowedOrigin);
     } catch (error) {
-      return json({ error: "The database did not accept that request." }, 500, allowedOrigin);
+      return json({ error: "The service could not complete that request." }, 500, allowedOrigin);
     }
   },
 };

@@ -38,6 +38,7 @@
                     <button type="button" class="ds-btn ds-btn-primary auth-upgrade-btn" id="upgradeWeekly">Upgrade — ₹99/week</button>
                     <button type="button" class="ds-btn auth-upgrade-btn auth-upgrade-monthly" id="upgradeMonthly">Upgrade — ₹349/month (save ₹47)</button>
                 </div>
+                <button type="button" class="ds-btn auth-upgrade-btn" id="cancelSubscription" hidden>Cancel at end of billing cycle</button>
             </div>
             <div class="auth-profile-block" id="progressSection">
                 <h3 class="auth-profile-block-title">Continue learning</h3>
@@ -104,6 +105,13 @@
 
         var profileErrorEl = document.getElementById('profileError');
         var params = new URLSearchParams(window.location.search);
+
+        var checkoutMessage = params.get('msg');
+        if (checkoutMessage && (params.has('demo') || params.has('payment_error') || params.has('checkout_closed'))) {
+            profileErrorEl.textContent = checkoutMessage;
+            profileErrorEl.style.display = 'block';
+            if (window.history && window.history.replaceState) window.history.replaceState({}, '', window.location.pathname);
+        }
 
         var razorpayError = params.get('razorpay_error') || params.get('error_description') || (params.get('error') && params.get('error') !== 'subscription_unavailable' ? params.get('error') : null);
         if (razorpayError) {
@@ -182,8 +190,23 @@
             }
             var wBtn = document.getElementById('upgradeWeekly');
             var mBtn = document.getElementById('upgradeMonthly');
+            var cancelBtn = document.getElementById('cancelSubscription');
             if (wBtn) wBtn.addEventListener('click', function () { doCheckout('weekly'); });
             if (mBtn) mBtn.addEventListener('click', function () { doCheckout('monthly'); });
+            if (cancelBtn) cancelBtn.addEventListener('click', function () {
+                if (!window.confirm('Cancel renewal at the end of this billing cycle?')) return;
+                cancelBtn.disabled = true;
+                window.FKTI_Auth.cancelSubscription().then(function (result) {
+                    if (result.error) {
+                        profileErrorEl.textContent = result.error.message || 'Could not schedule cancellation.';
+                        profileErrorEl.style.display = 'block';
+                        cancelBtn.disabled = false;
+                        return;
+                    }
+                    cancelBtn.hidden = true;
+                    subscriptionText.textContent = 'Your Pro access remains active until the current billing cycle ends. Renewal is cancelled.';
+                });
+            });
             var user = session.user;
             var email = user.email || '';
             var meta = user.user_metadata || {};
@@ -205,13 +228,21 @@
                 window.FKTI_Auth.getProfile(user.id).then(function (profRes) {
                     var profile = profRes.data;
                     if (profile && profile.full_name) paintName(profile);
-                    if (profile && profile.subscription_status === 'pro') {
+                    var isPaid = profile && (profile.subscription_status === 'active' || profile.subscription_status === 'pro');
+                    if (isPaid) {
                         subscriptionBadge.className = 'auth-badge auth-badge-pro';
                         subscriptionBadge.textContent = 'Pro';
                         var planLabel = profile.subscription_plan === 'monthly' ? '₹349/month' : '₹99/week';
-                        subscriptionText.textContent = 'You have full Pro access (' + planLabel + ', auto-renewing). Thank you for supporting Data For Dummies!';
+                        subscriptionText.textContent = profile.subscription_cancel_at_cycle_end
+                            ? 'You have full Pro access (' + planLabel + ') until the current billing cycle ends. Renewal is cancelled.'
+                            : 'You have full Pro access (' + planLabel + ', auto-renewing). Thank you for supporting Data For Dummies!';
                         var btns = document.getElementById('upgradeBtns');
                         if (btns) btns.style.display = 'none';
+                        if (cancelBtn && !profile.subscription_cancel_at_cycle_end) cancelBtn.hidden = false;
+                    } else if (profile && (profile.id === 'dummy-test-account' || profile.username === 'dummy')) {
+                        subscriptionText.textContent = 'Demo account: no charge.';
+                        var demoBtns = document.getElementById('upgradeBtns');
+                        if (demoBtns) demoBtns.style.display = 'none';
                     }
                 }).catch(function () {});
             }

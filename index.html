@@ -1418,7 +1418,7 @@
                 if (!window.FKTI_Auth.getProfile) return;
                 window.FKTI_Auth.getProfile(session.user.id).then(function (profRes) {
                     var p = profRes.data;
-                    if (p && p.subscription_status === 'pro') {
+                    if (p && (p.subscription_status === 'active' || p.subscription_status === 'pro')) {
                         var end = p.subscription_end_date && new Date(p.subscription_end_date);
                         if (!end || end >= new Date()) {
                             var badge = document.getElementById('proBadgeBanner');

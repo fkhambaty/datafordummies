@@ -201,7 +201,7 @@
                 <div class="card-icon">🔐</div>
                 <h2>Answer Key</h2>
                 <p>Access complete solutions and explanations. Restricted to instructors only.</p>
-                <span class="badge purple">Passcode Required</span>
+                <span class="badge purple">Owner Account Required</span>
             </div>
         </div>
         
@@ -212,30 +212,42 @@
     <div class="modal" id="modal">
         <div class="modal-box">
             <button class="close-btn" onclick="hideModal()">×</button>
-            <h3>Enter Passcode</h3>
-            <input type="password" id="passcode" placeholder="••••••••" onkeypress="if(event.key==='Enter')verify()">
-            <button class="modal-btn" onclick="verify()">Continue</button>
-            <p class="error-msg" id="error">Incorrect passcode</p>
+            <h3>Instructor access</h3>
+            <p>Checking your signed-in owner account…</p>
+            <button class="modal-btn" onclick="verify()">Check access</button>
+            <p class="error-msg" id="error">Owner account required</p>
         </div>
     </div>
 
+    <script src="../js/supabase-config.js"></script>
+    <script src="../js/supabase-auth.js"></script>
     <script>
         function showModal() {
             document.getElementById('modal').classList.add('show');
-            document.getElementById('passcode').focus();
         }
         function hideModal() {
             document.getElementById('modal').classList.remove('show');
             document.getElementById('error').style.display = 'none';
-            document.getElementById('passcode').value = '';
         }
         function verify() {
-            var _0x1=['\x67\x65\x74\x44\x61\x74\x65','\x67\x65\x74\x4d\x6f\x6e\x74\x68','\x67\x65\x74\x46\x75\x6c\x6c\x59\x65\x61\x72'];
-            var n=new Date();var d=n[_0x1[0]](),m=n[_0x1[1]]()+1,y=n[_0x1[2]]();
-            var _0xp=(d<10?'0':'')+d+(m<10?'0':'')+m+y;
-            var v=document.getElementById('passcode').value;
-            if(v===_0xp){window.location.href=atob('Y2VydGlmaWNhdGlvbi1hZG1pbi5odG1s');}
-            else{document.getElementById('error').style.display='block';}
+            if (!window.FKTI_Auth) {
+                document.getElementById('error').style.display = 'block';
+                return;
+            }
+            window.FKTI_Auth.getSession().then(function (result) {
+                var session = result.data && result.data.session;
+                if (!session) {
+                    window.location.href = '../auth/login.html?returnTo=' + encodeURIComponent(window.location.pathname);
+                    return;
+                }
+                window.FKTI_Auth.getProfile().then(function (profileResult) {
+                    if (profileResult.data && profileResult.data.role === 'admin') {
+                        window.location.href = 'certification-admin.html';
+                    } else {
+                        document.getElementById('error').style.display = 'block';
+                    }
+                });
+            });
         }
         document.getElementById('modal').addEventListener('click', function(e) {
             if (e.target === this) hideModal();

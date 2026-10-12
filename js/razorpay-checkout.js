@@ -1,164 +1,144 @@
 /**
- * Razorpay Checkout for Pro subscription (weekly or monthly).
- * Requires: window.RAZORPAY_KEY_ID, window.SUPABASE_URL, window.SUPABASE_ANON_KEY,
- * and window.FKTI_Auth.getSession() (supabase-auth.js).
- *
- * Optional fallback: window.RAZORPAY_SUBSCRIPTION_LINK
+ * Data For Dummies Pro checkout.
+ * The Worker creates and verifies subscriptions. Hosted checkout is the default
+ * until datafordummies.in is approved for Razorpay Standard Checkout.
  */
 (function () {
     'use strict';
+
+    var planDescriptions = {
+        weekly: 'Data For Dummies Pro — ₹99/week',
+        monthly: 'Data For Dummies Pro — ₹349/month'
+    };
 
     function authPageUrl(page) {
         return window.location.origin + '/auth/' + page;
     }
 
-    function getFallbackLink() {
-        return window.RAZORPAY_SUBSCRIPTION_LINK || '';
+    function profileMessage(type, message) {
+        var query = '?' + type + '=1';
+        if (message) query += '&msg=' + encodeURIComponent(message);
+        window.location.href = authPageUrl('profile.html') + query;
     }
 
-    var planDescriptions = {
-        weekly: 'Pro — ₹99/week (auto-renewing)',
-        monthly: 'Pro — ₹349/month (auto-renewing)'
-    };
-
     function openProCheckout(plan) {
-        plan = (plan || 'weekly').toLowerCase();
+        plan = String(plan || 'weekly').toLowerCase();
         if (plan !== 'weekly' && plan !== 'monthly') plan = 'weekly';
 
-        var keyId = window.RAZORPAY_KEY_ID;
-        var supabaseUrl = (window.SUPABASE_URL || '').replace(/\/$/, '');
-        var anonKey = window.SUPABASE_ANON_KEY || '';
         var auth = window.FKTI_Auth;
-
-        if (!keyId || !supabaseUrl || !anonKey) {
-            if (getFallbackLink()) { window.location.href = getFallbackLink(); return; }
-            redirectToProfileWithError('Payment not configured. Please contact support.');
-            return;
-        }
-
-        if (!auth || !auth.getSession) {
+        if (!auth || !auth.getSession || !auth.createSubscription) {
             window.location.href = authPageUrl('login.html') + '?returnTo=' + encodeURIComponent(window.location.href);
             return;
         }
 
-        auth.getSession().then(function (res) {
-            var session = res.data && res.data.session;
+        auth.getSession().then(function (result) {
+            var session = result.data && result.data.session;
             if (!session) {
                 window.location.href = authPageUrl('login.html') + '?returnTo=' + encodeURIComponent(window.location.href);
                 return;
             }
+            var user = session.user || {};
+            if (user.id === 'dummy-test-account' || user.username === 'dummy') {
+                profileMessage('demo', 'Demo account: no charge.');
+                return;
+            }
 
-            var user = session.user;
-            var userId = user.id;
-            var email = user.email || '';
-            var meta = user.user_metadata || {};
-            var name = user.full_name || meta.full_name || email.split('@')[0] || '';
-            var phone = user.phone || meta.phone || '';
-            var countryCode = user.country_code || meta.country_code || '';
-            var contact = (phone || countryCode) ? (countryCode || '') + (phone || '') : '';
-
-            var baseUrl = (typeof window !== 'undefined' && window.location && window.location.origin)
-                ? window.location.origin.replace(/\/$/, '')
-                : '';
-            var callbackUrl = (supabaseUrl + '/functions/v1/razorpay-callback') +
-                (baseUrl ? '?redirect=' + encodeURIComponent(baseUrl) : '');
-
-            fetch(supabaseUrl + '/functions/v1/create-subscription', {
-                method: 'POST',
-                headers: {
-                    'Authorization': 'Bearer ' + session.access_token,
-                    'apikey': anonKey,
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ user_id: userId, plan: plan, email: email })
-            })
-                .then(function (r) {
-                    return r.text().then(function (text) {
-                        var data;
-                        try { data = text ? JSON.parse(text) : {}; } catch (e) { data = {}; }
-                        return { ok: r.ok, status: r.status, data: data, text: text };
-                    });
-                })
-                .then(function (result) {
-                    var data = result.data;
-                    if (result.ok && data.subscription_id) {
-                        var checkoutKey = (data.key_id && data.key_id.trim()) ? data.key_id.trim() : keyId;
-                        var desc = planDescriptions[data.plan || plan] || planDescriptions.weekly;
-                        openRazorpay(checkoutKey, data.subscription_id, name, email, contact, callbackUrl, userId, desc);
-                    } else {
-                        var userMsg = (data && data.error) || '';
-                        var isFatalConfig = result.status === 503 || result.status === 502
-                            || (result.status === 400 && userMsg.indexOf('setup issue') >= 0);
-
-                        if (isFatalConfig && getFallbackLink()) {
-                            window.location.href = getFallbackLink();
-                        } else {
-                            redirectToProfileWithError(userMsg || 'Could not start subscription. Please try again.');
-                        }
+            auth.createSubscription(plan).then(function (created) {
+                if (created.error) {
+                    profileMessage('payment_error', created.error.message || 'Could not start checkout.');
+                    return;
+                }
+                var data = created.data || {};
+                sessionStorage.setItem('dfd_pending_subscription', data.subscription_id || '');
+                sessionStorage.setItem('dfd_checkout_return', data.return_url || authPageUrl('profile.html'));
+                if (data.checkout_mode !== 'modal') {
+                    if (!data.short_url) {
+                        profileMessage('payment_error', 'Hosted checkout is temporarily unavailable.');
+                        return;
                     }
-                })
-                .catch(function () {
-                    if (getFallbackLink()) { window.location.href = getFallbackLink(); }
-                    else { redirectToProfileWithError('Network error. Please check your connection and try again.'); }
-                });
+                    window.location.assign(data.short_url);
+                    return;
+                }
+                openModal(data, user);
+            });
+        }).catch(function () {
+            profileMessage('payment_error', 'The account service did not answer. Please try again.');
         });
     }
 
-    function redirectToProfileWithError(message) {
-        var q = '?error=subscription_unavailable' + (message ? '&msg=' + encodeURIComponent(message) : '');
-        window.location.href = authPageUrl('profile.html') + q;
-    }
-
-    function openRazorpay(keyId, subscriptionId, name, email, contact, callbackUrl, userId, description) {
-        if (typeof Razorpay === 'undefined') {
-            var s = document.createElement('script');
-            s.src = 'https://checkout.razorpay.com/v1/checkout.js';
-            s.async = true;
-            document.head.appendChild(s);
-            s.onload = function () { doOpen(); };
-            s.onerror = function () {
-                if (getFallbackLink()) { window.location.href = getFallbackLink(); }
-                else { redirectToProfileWithError('Could not load payment gateway. Please try again.'); }
-            };
-        } else {
-            doOpen();
+    function openModal(data, user) {
+        function hostedFallback() {
+            if (data.short_url) window.location.assign(data.short_url);
+            else profileMessage('payment_error', 'Could not open checkout. Please try again.');
         }
 
-        function doOpen() {
-            var imgUrl = (typeof window !== 'undefined' && window.location && window.location.origin)
-                ? window.location.origin.replace(/\/$/, '') + '/logo.png'
-                : '';
-            var prefill = { name: name || 'Customer', email: email || '' };
-            if (contact && /^[\d+]/.test(String(contact).replace(/\s/g, ''))) {
-                prefill.contact = String(contact).replace(/\s/g, '');
-            }
+        function loadCheckout(done) {
+            if (typeof window.Razorpay !== 'undefined') { done(); return; }
+            var script = document.createElement('script');
+            script.src = 'https://checkout.razorpay.com/v1/checkout.js';
+            script.async = true;
+            script.onload = done;
+            script.onerror = hostedFallback;
+            document.head.appendChild(script);
+        }
+
+        loadCheckout(function () {
+            var email = user.email || '';
+            var name = user.full_name || email.split('@')[0] || 'Customer';
+            var contact = ((user.country_code || '') + (user.phone || '')).replace(/\s/g, '');
+            var prefill = { name: name, email: email };
+            if (/^\+?\d{7,15}$/.test(contact)) prefill.contact = contact;
+            var opened = false;
             var options = {
-                key: keyId,
-                subscription_id: subscriptionId,
-                name: 'Data For Dummies',
-                description: description || 'Pro Subscription',
-                callback_url: callbackUrl,
+                key: data.key_id,
+                subscription_id: data.subscription_id,
+                name: 'FKTech',
+                description: planDescriptions[data.plan] || planDescriptions.weekly,
+                image: window.location.origin + '/logo.png',
                 prefill: prefill,
-                notes: { user_id: userId },
+                notes: { product: 'datafordummies', user_id: user.id },
                 theme: { color: '#4f46e5' },
-                modal: { ondismiss: function () {} }
+                modal: {
+                    ondismiss: function () {
+                        profileMessage('checkout_closed', 'Checkout closed. No payment was completed.');
+                    }
+                },
+                handler: function (payment) {
+                    window.FKTI_Auth.confirmSubscription(payment).then(function (confirmed) {
+                        if (confirmed.error) {
+                            profileMessage('payment_error', confirmed.error.message || 'Payment verification failed.');
+                            return;
+                        }
+                        return window.FKTI_Auth.getProfile().then(function () {
+                            window.location.href = authPageUrl('profile.html') + '?subscription=success';
+                        });
+                    });
+                }
             };
-            if (imgUrl) options.image = imgUrl;
             try {
-                var rzp = new Razorpay(options);
-                rzp.on('payment.failed', function (response) {
-                    var desc = (response.error && response.error.description) || 'Payment failed. Please try again.';
-                    redirectToProfileWithError(desc);
+                var checkout = new window.Razorpay(options);
+                checkout.on('payment.failed', function (response) {
+                    var error = response && response.error ? response.error : {};
+                    var description = String(error.description || error.reason || 'Payment failed.');
+                    if (/website|domain|origin|whitelist|approved/i.test(description)) {
+                        hostedFallback();
+                        return;
+                    }
+                    profileMessage('payment_error', description);
                 });
-                rzp.open();
-            } catch (e) {
-                if (getFallbackLink()) { window.location.href = getFallbackLink(); }
-                else { redirectToProfileWithError('Could not open payment window. Please try again.'); }
+                checkout.open();
+                opened = true;
+            } catch (error) {
+                hostedFallback();
+                return;
             }
-        }
+            setTimeout(function () {
+                if (!opened) return;
+                var frame = document.querySelector('iframe[src*="razorpay"], .razorpay-container, .razorpay-backdrop');
+                if (!frame) hostedFallback();
+            }, 6000);
+        });
     }
 
-    window.FKTI_RazorpayCheckout = {
-        openProCheckout: openProCheckout
-    };
+    window.FKTI_RazorpayCheckout = { openProCheckout: openProCheckout };
 })();
