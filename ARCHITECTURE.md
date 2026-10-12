@@ -39,7 +39,9 @@ Browser
   → Razorpay checkout still uses the old Supabase function
 ```
 
-New accounts do not use Supabase. Signup logs the person in and opens the profile. There is no confirmation email. Password-reset email is not connected. A logged-in person changes a password from the profile page. The public config is `window.DFD_API` in `js/supabase-config.js`. Do not put the Cloudflare API token in that file.
+New accounts do not use Supabase. Signup emails a 6-digit code. The account cannot log in until `auth/verify.html` accepts that code. `auth/reset-password.html` emails a reset code and sets a new password. Codes expire after 15 minutes and allow 5 tries. Email goes through Resend: the worker secret is `RESEND_API_KEY` and the sender is `MAIL_FROM` in `wrangler.toml`. Without the secret, signup and reset return 503 on purpose.
+
+Test login: username `dummy`, password `dummy`. It is an already-confirmed student account, never an admin. Delete it with `DELETE FROM profiles WHERE id = 'dummy-test-account'` if the site should not have it. The public config is `window.DFD_API` in `js/supabase-config.js`. Do not put the Cloudflare API token in that file.
 
 ## Repository map
 

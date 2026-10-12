@@ -39,7 +39,17 @@
             body: options && options.body ? JSON.stringify(options.body) : undefined
         }).then(function (response) {
             return response.json().catch(function () { return {}; }).then(function (body) {
-                if (!response.ok) return { data: null, error: { message: body.error || 'Request failed.' }, status: response.status };
+                if (!response.ok) {
+                    return {
+                        data: null,
+                        error: {
+                            message: body.error || 'Request failed.',
+                            needs_verification: Boolean(body.needs_verification),
+                            email: body.email || ''
+                        },
+                        status: response.status
+                    };
+                }
                 return { data: body, error: null };
             });
         }).catch(function () {
@@ -94,9 +104,28 @@
             }
         }).then(function (res) {
             if (res.error) return res;
+            return { data: { session: null, user: null, needs_verification: true, email: res.data.email }, error: null };
+        });
+    }
+
+    function verifyEmail(email, code) {
+        return request('/v1/verify', { method: 'POST', body: { email: email, code: code } }).then(function (res) {
+            if (res.error) return res;
             writeStored({ token: res.data.token, user: res.data.user });
             return { data: { session: sessionObject(res.data.user), user: res.data.user }, error: null };
         });
+    }
+
+    function resendCode(email) {
+        return request('/v1/resend-code', { method: 'POST', body: { email: email } });
+    }
+
+    function requestPasswordReset(email) {
+        return request('/v1/forgot-password', { method: 'POST', body: { email: email } });
+    }
+
+    function resetPassword(email, code, password) {
+        return request('/v1/reset-password', { method: 'POST', body: { email: email, code: code, password: password } });
     }
 
     function signOut() {
@@ -142,6 +171,10 @@
         onAuthStateChange: onAuthStateChange,
         signUp: signUp,
         signInWithPassword: signInWithPassword,
+        verifyEmail: verifyEmail,
+        resendCode: resendCode,
+        requestPasswordReset: requestPasswordReset,
+        resetPassword: resetPassword,
         signOut: signOut,
         updateUserPassword: updateUserPassword,
         getProfile: getProfile,

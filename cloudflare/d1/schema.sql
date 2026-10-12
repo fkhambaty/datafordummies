@@ -16,6 +16,8 @@ CREATE TABLE IF NOT EXISTS profiles (
   subscription_plan TEXT NOT NULL DEFAULT 'free',
   subscription_end_date TEXT,
   razorpay_subscription_id TEXT,
+  username TEXT,
+  email_verified_at TEXT,
   created_at TEXT NOT NULL DEFAULT (strftime('%Y-%m-%dT%H:%M:%fZ', 'now')),
   updated_at TEXT
 );
@@ -94,3 +96,15 @@ CREATE TABLE IF NOT EXISTS sessions (
 );
 
 CREATE INDEX IF NOT EXISTS idx_sessions_user ON sessions (user_id);
+
+CREATE TABLE IF NOT EXISTS email_codes (
+  email TEXT NOT NULL,
+  purpose TEXT NOT NULL,
+  code_hash TEXT NOT NULL,
+  expires_at TEXT NOT NULL,
+  attempts INTEGER NOT NULL DEFAULT 0,
+  created_at TEXT NOT NULL,
+  PRIMARY KEY (email, purpose)
+);
+
+CREATE UNIQUE INDEX IF NOT EXISTS idx_profiles_username ON profiles (username);

@@ -4,6 +4,9 @@ compatibility_date = "2026-10-12"
 account_id = "ec00d4a6131c20118d82605d6b969c8e"
 workers_dev = true
 
+[vars]
+MAIL_FROM = "Data For Dummies <no-reply@datafordummies.in>"
+
 [[d1_databases]]
 binding = "DB"
 database_name = "datafordummies"

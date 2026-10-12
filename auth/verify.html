@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Verify email | Data For Dummies</title>
+    <title>Confirm email | Data For Dummies</title>
     <link rel="stylesheet" href="../styles/design-system.css">
     <link rel="stylesheet" href="../styles/auth.css">
 </head>
@@ -11,31 +11,68 @@
     <a href="../index.html" class="auth-back-home"><span aria-hidden="true">←</span> Back to home</a>
     <div class="auth-card ds-animate-in">
         <h1>Check your email</h1>
-        <p class="auth-subtitle" id="emailHint">We sent you a verification link. Click the link in the email to verify your account.</p>
+        <p class="auth-subtitle" id="emailHint">We sent you a 6-digit code. Enter it below to confirm your email.</p>
         <div id="authError" class="auth-error" style="display:none;"></div>
-        <div class="auth-verify-link-box" style="margin:1.5rem 0;padding:1rem;background:var(--ds-surface-secondary,#f3f4f6);border-radius:12px;font-size:0.9rem;">
-            <p style="margin:0 0 0.5rem;font-weight:600;">What to do next</p>
-            <ol style="margin:0;padding-left:1.25rem;color:var(--ds-text-secondary,#6b7280);">
-                <li>Open your email inbox (check spam if you don’t see it)</li>
-                <li>Click the <strong>verification link</strong> in the email we sent</li>
-                <li>You’ll be signed in and taken to your account</li>
-            </ol>
-        </div>
+        <div id="authSuccess" class="auth-success" style="display:none;"></div>
+        <form class="auth-form" id="verifyForm">
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" required placeholder="you@example.com" autocomplete="email">
+            <label for="code">6-digit code</label>
+            <input type="text" id="code" name="code" required inputmode="numeric" maxlength="6" pattern="[0-9]{6}" placeholder="123456" autocomplete="one-time-code">
+            <button type="submit" class="ds-btn ds-btn-primary auth-submit" id="submitBtn">Confirm email</button>
+        </form>
         <p class="auth-links">
-            <a href="login.html">Back to login</a> · <a href="signup.html">Use a different email</a>
+            <a href="#" id="resendLink">Send a new code</a> · <a href="login.html">Back to login</a>
         </p>
     </div>
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="../js/supabase-config.js"></script>
     <script src="../js/supabase-auth.js"></script>
     <script>
         (function () {
             var params = new URLSearchParams(window.location.search);
-            var email = params.get('email') || '';
-            var hint = document.getElementById('emailHint');
-            if (email) {
-                hint.textContent = 'We sent a verification link to ' + email + '. Click the link in that email to verify your account.';
+            var emailInput = document.getElementById('email');
+            var codeInput = document.getElementById('code');
+            var errEl = document.getElementById('authError');
+            var successEl = document.getElementById('authSuccess');
+            var submitBtn = document.getElementById('submitBtn');
+            emailInput.value = params.get('email') || '';
+            if (emailInput.value) {
+                document.getElementById('emailHint').textContent =
+                    'We sent a 6-digit code to ' + emailInput.value + '. Check spam if you do not see it.';
+                codeInput.focus();
             }
+
+            function show(el, text) {
+                errEl.style.display = 'none';
+                successEl.style.display = 'none';
+                el.textContent = text;
+                el.style.display = 'block';
+            }
+
+            document.getElementById('verifyForm').addEventListener('submit', function (e) {
+                e.preventDefault();
+                submitBtn.disabled = true;
+                window.FKTI_Auth.verifyEmail(emailInput.value.trim(), codeInput.value.trim()).then(function (res) {
+                    if (res.error) {
+                        show(errEl, res.error.message);
+                        submitBtn.disabled = false;
+                        return;
+                    }
+                    window.location.href = 'profile.html';
+                });
+            });
+
+            document.getElementById('resendLink').addEventListener('click', function (e) {
+                e.preventDefault();
+                var email = emailInput.value.trim();
+                if (!email) {
+                    show(errEl, 'Enter your email first.');
+                    return;
+                }
+                window.FKTI_Auth.resendCode(email).then(function () {
+                    show(successEl, 'If that account is waiting for confirmation, a new code is on its way.');
+                });
+            });
         })();
     </script>
 </body>
