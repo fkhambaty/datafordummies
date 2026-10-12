@@ -3,68 +3,145 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>SQL Queries | Redshift Course</title>
-    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <title>SQL queries in Redshift | Data For Dummies</title>
     <link rel="stylesheet" href="styles.css">
+    
     <link rel="stylesheet" href="../css/dfd-system.css">
 </head>
-<body data-access="pro">
-    <div class="page-bg-particles" aria-hidden="true"><div class="orb"></div><div class="orb"></div><div class="orb"></div></div>
+<body class="dfd-safe" data-course-id="redshift" data-lesson-id="sql-queries" data-lesson-label="SQL queries" data-total-lessons="9" data-access="pro">
     <div class="container">
-        <nav class="nav">
-            <a href="hub.html"><i class="fas fa-arrow-left"></i> Course Hub</a>
-            <a href="data-loading.html">Data Loading <i class="fas fa-arrow-right"></i></a>
+        <nav class="nav" aria-label="Course">
+            <a href="hub.html">Course hub</a>
+            <a href="../index.html">Home</a>
+            <a href="#check">Knowledge check</a>
         </nav>
-        <div class="lesson-hero">
-            <h1>SQL Queries</h1>
-            <p>Write analytical queries in Redshift — window functions, CTEs, approximate functions, and Redshift-specific SQL.</p>
-        </div>
-
-        <div class="section visible">
-            <h2>📚 SQL Queries</h2>
-            <p>Write analytical queries in Redshift — window functions, CTEs, approximate functions, and Redshift-specific SQL.</p>
-            <div class="eli5-box">
-                <h4>🧒 ELI5 Coming Up!</h4>
-                <p>This lesson covers sql queries in depth with real-world examples, code snippets, animated diagrams, and hands-on exercises. Every concept is explained like you're 5 years old with layman analogies.</p>
+        <header class="lesson-hero" id="top">
+            <p class="course-kicker">Pro · Lesson 4 of 9</p>
+            <h1>SQL queries</h1>
+            <p>Redshift speaks a PostgreSQL-like SQL, with unenforced keys, SUPER values, and SYS catalog views.</p>
+        </header>
+        <div class="dfd-lesson-progress" data-dfd-progress>
+            <p class="dfd-lesson-progress-label" data-dfd-progress-label>Sign in to save your place.</p>
+            <div class="dfd-lesson-progress-track" data-dfd-progress-bar role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-label="Course progress">
+                <div class="dfd-lesson-progress-fill" data-dfd-progress-fill></div>
             </div>
         </div>
-        <div class="section">
-            <h2>📊 Redshift SQL</h2>
-            <p>Redshift SQL is PostgreSQL-compatible with some powerful additions:</p>
-            <div class="code-block"><pre><span class="comment">-- Window functions for analytics</span>
-<span class="keyword">SELECT</span>
-    date,
-    revenue,
-    <span class="function">SUM</span>(revenue) <span class="keyword">OVER</span> (<span class="keyword">ORDER BY</span> date <span class="keyword">ROWS UNBOUNDED PRECEDING</span>) <span class="keyword">AS</span> running_total,
-    <span class="function">LAG</span>(revenue, 7) <span class="keyword">OVER</span> (<span class="keyword">ORDER BY</span> date) <span class="keyword">AS</span> last_week,
-    <span class="function">PERCENT_RANK</span>() <span class="keyword">OVER</span> (<span class="keyword">ORDER BY</span> revenue) <span class="keyword">AS</span> percentile
-<span class="keyword">FROM</span> daily_sales;
+        <section class="section" data-dfd-reveal><div class="eli5-box"><h4>Picture it this way</h4><p>Redshift SQL looks like PostgreSQL from across the room. Up close, some furniture is missing and some is bolted to the floor. You can write SELECT, JOIN, and window functions. You should not assume every PostgreSQL feature arrived with them.</p></div></section>
+<section class="section" data-dfd-reveal><h2>Write the SQL you can defend</h2>
+<p>Create tables in a schema you name, not only in <code>public</code>. Prefer explicit column lists. Primary keys and foreign keys are not enforced the way they are in PostgreSQL. The planner may use them as hints. They will not stop a bad load. Put the real checks in the pipeline that loads the table.</p>
+<p>The <code>SUPER</code> type holds semi-structured values, with PartiQL paths. Use it for a payload you cannot flatten yet. Do not use it as an excuse to skip a model. Late-binding views resolve tables at query time, which is useful when a table is rebuilt by dropping and renaming. They can also hide a missing column until the query runs.</p>
+<div class="code-block"><pre><code>CREATE SCHEMA analytics;
 
-<span class="comment">-- Approximate count distinct (much faster!)</span>
-<span class="keyword">SELECT</span> <span class="function">APPROXIMATE COUNT</span>(<span class="keyword">DISTINCT</span> user_id) <span class="keyword">FROM</span> events;
+CREATE TABLE analytics.orders (
+    order_id BIGINT,
+    ordered_at DATE,
+    status VARCHAR(20),
+    amount NUMERIC(12, 2)
+);
 
-<span class="comment">-- SUPER type for semi-structured data (JSON)</span>
-<span class="keyword">SELECT</span> json_data.customer.name
-<span class="keyword">FROM</span> orders
-<span class="keyword">WHERE</span> json_data.customer.country = <span class="string">'US'</span>;</pre></div>
-        </div>
-        <div class="lesson-nav">
-            <a href="architecture.html" class="secondary"><i class="fas fa-arrow-left"></i> Architecture</a>
-            <a href="data-loading.html">Data Loading <i class="fas fa-arrow-right"></i></a>
-        </div>
+SELECT DATE_TRUNC(&#x27;month&#x27;, ordered_at) AS month_start,
+       SUM(amount) AS revenue
+FROM analytics.orders
+WHERE status = &#x27;paid&#x27;
+GROUP BY 1
+ORDER BY 1;</code></pre></div>
+</section>
+<section class="section" data-dfd-reveal><h2>Catalog views, old and current</h2>
+<p>Older tutorials query <code>STL_</code> and <code>SVL_</code> views. Current monitoring prefers the <code>SYS_</code> views, including <code>SYS_QUERY_HISTORY</code>. Use the SYS views for new dashboards. Keep the STL queries only when you are reading an old runbook.</p>
+<div class="code-block"><pre><code>SELECT query_id, query_text, status, elapsed_time / 1000000.0 AS seconds
+FROM sys_query_history
+WHERE start_time &gt; DATEADD(hour, -2, GETDATE())
+ORDER BY start_time DESC
+LIMIT 20;</code></pre></div>
+<p>Functions differ at the edges. <code>GETDATE()</code> is the usual clock. Some PostgreSQL-only extensions are absent. When a query from a PostgreSQL course fails, check the Redshift SQL reference before you assume the cluster is broken.</p>
+</section>
+<section class="section dfd-diagram" data-dfd-diagram data-dfd-reveal><h2>From a table to the catalog</h2><div data-dfd-diagram-panel="one">
+<svg class="dfd-responsive" viewBox="0 0 360 100" role="img" aria-label="Tables highlighted">
+<rect x="12" y="26" width="104" height="48" rx="8" fill="#0f172a"></rect>
+<text x="64" y="54" text-anchor="middle" font-size="13" fill="#ffffff" font-family="Nunito,sans-serif">Tables</text>
+<rect x="128" y="26" width="104" height="48" rx="8" fill="#e2e8f0"></rect>
+<text x="180" y="54" text-anchor="middle" font-size="13" fill="#0f172a" font-family="Nunito,sans-serif">SQL</text>
+<rect x="244" y="26" width="104" height="48" rx="8" fill="#e2e8f0"></rect>
+<text x="296" y="54" text-anchor="middle" font-size="13" fill="#0f172a" font-family="Nunito,sans-serif">Catalog</text>
+</svg>
+</div><div data-dfd-diagram-panel="two" hidden>
+<svg class="dfd-responsive" viewBox="0 0 360 100" role="img" aria-label="SQL highlighted">
+<rect x="12" y="26" width="104" height="48" rx="8" fill="#e2e8f0"></rect>
+<text x="64" y="54" text-anchor="middle" font-size="13" fill="#0f172a" font-family="Nunito,sans-serif">Tables</text>
+<rect x="128" y="26" width="104" height="48" rx="8" fill="#0f172a"></rect>
+<text x="180" y="54" text-anchor="middle" font-size="13" fill="#ffffff" font-family="Nunito,sans-serif">SQL</text>
+<rect x="244" y="26" width="104" height="48" rx="8" fill="#e2e8f0"></rect>
+<text x="296" y="54" text-anchor="middle" font-size="13" fill="#0f172a" font-family="Nunito,sans-serif">Catalog</text>
+</svg>
+</div><div data-dfd-diagram-panel="three" hidden>
+<svg class="dfd-responsive" viewBox="0 0 360 100" role="img" aria-label="Catalog highlighted">
+<rect x="12" y="26" width="104" height="48" rx="8" fill="#e2e8f0"></rect>
+<text x="64" y="54" text-anchor="middle" font-size="13" fill="#0f172a" font-family="Nunito,sans-serif">Tables</text>
+<rect x="128" y="26" width="104" height="48" rx="8" fill="#e2e8f0"></rect>
+<text x="180" y="54" text-anchor="middle" font-size="13" fill="#0f172a" font-family="Nunito,sans-serif">SQL</text>
+<rect x="244" y="26" width="104" height="48" rx="8" fill="#0f172a"></rect>
+<text x="296" y="54" text-anchor="middle" font-size="13" fill="#ffffff" font-family="Nunito,sans-serif">Catalog</text>
+</svg>
+</div><div class="dfd-diagram-controls"><button type="button" data-dfd-diagram-step="one" aria-pressed="true">Tables</button><button type="button" data-dfd-diagram-step="two" aria-pressed="false">SQL</button><button type="button" data-dfd-diagram-step="three" aria-pressed="false">Catalog</button></div></section>
+<section class="section" data-dfd-reveal><h2>Practice</h2>
+<p>Create a schema, a two-column table, and one grouped query. Then find that query in <code>SYS_QUERY_HISTORY</code>. If the view is empty, widen the time filter. You are looking at the warehouse's own log, not at a file on your laptop.</p>
+<p><button type="button" data-dfd-complete>Mark lesson complete</button></p><p data-dfd-complete-status></p>
+</section>
+        <section class="section" id="check" data-dfd-reveal>
+<h2>Knowledge check</h2>
+<section class="dfd-quiz" data-dfd-quiz data-explanation="Redshift does not enforce the constraint. The pipeline has to.">
+<h3 data-dfd-prompt>Does a primary key stop duplicate loads?</h3>
+<div data-dfd-choices>
+<button type="button" data-correct="false">Yes, the load fails on the second row</button>
+<button type="button" data-correct="true">No. Treat keys as documentation unless you check them yourself</button>
+<button type="button" data-correct="false">Only on Serverless</button>
+</div>
+<p class="dfd-quiz-feedback" data-dfd-feedback hidden></p>
+<p class="dfd-quiz-explain" data-dfd-explain hidden></p>
+</section>
+<section class="dfd-quiz" data-dfd-quiz data-explanation="SYS_QUERY_HISTORY is the current catalog for recent queries.">
+<h3 data-dfd-prompt>Which view should a new monitoring query use?</h3>
+<div data-dfd-choices>
+<button type="button" data-correct="true">SYS_QUERY_HISTORY</button>
+<button type="button" data-correct="false">A CSV on your desktop</button>
+<button type="button" data-correct="false">Only STL views, because SYS was removed</button>
+</div>
+<p class="dfd-quiz-feedback" data-dfd-feedback hidden></p>
+<p class="dfd-quiz-explain" data-dfd-explain hidden></p>
+</section>
+<section class="dfd-quiz" data-dfd-quiz data-explanation="It stores semi-structured values you query with paths.">
+<h3 data-dfd-prompt>What is SUPER for?</h3>
+<div data-dfd-choices>
+<button type="button" data-correct="false">A faster sort key</button>
+<button type="button" data-correct="true">Semi-structured data inside a column</button>
+<button type="button" data-correct="false">The leader node log</button>
+</div>
+<p class="dfd-quiz-feedback" data-dfd-feedback hidden></p>
+<p class="dfd-quiz-explain" data-dfd-explain hidden></p>
+</section>
+</section>
+        <section class="section" data-dfd-reveal>
+            <h2>Official sources</h2>
+            <p>Checked against vendor documentation in October 2026. Screens and plan names still change, so confirm the control in your own instance.</p>
+            <ul class="source-list"><li><a href="https://docs.aws.amazon.com/redshift/latest/dg/c_SQL_commands.html" target="_blank" rel="noopener noreferrer">SQL reference</a></li>
+<li><a href="https://docs.aws.amazon.com/redshift/latest/dg/super-overview.html" target="_blank" rel="noopener noreferrer">SUPER type</a></li>
+<li><a href="https://docs.aws.amazon.com/redshift/latest/dg/SYS_QUERY_HISTORY.html" target="_blank" rel="noopener noreferrer">SYS_QUERY_HISTORY</a></li></ul>
+        </section>
+        <nav class="lesson-nav" aria-label="Lesson order">
+            <a class="secondary" href="architecture.html">Previous: Architecture</a>
+            <a href="data-loading.html">Next: Data loading</a>
+        </nav>
     </div>
-    <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        document.querySelectorAll('.section:not(.visible)').forEach(function(s) {
-            new IntersectionObserver(function(e) { if (e[0].isIntersecting) e[0].target.classList.add('visible'); }, {threshold:0.1}).observe(s);
-        });
-    });
-    </script>
+
     <script src="../js/code-copy.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="../js/supabase-config.js"></script>
     <script src="../js/supabase-auth.js"></script>
     <script src="../js/paywall.js"></script>
+    <script src="../js/progress.js"></script>
+    <script src="../js/lesson-common.js"></script>
+    <script src="../js/quiz.js"></script>
+    <script src="../js/analytics-tracker.js"></script>
+
 </body>
 </html>

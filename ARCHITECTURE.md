@@ -58,8 +58,8 @@ Course folders, each with its own `index.html` and usually a `hub.html`:
 | `airflow_course/` | Apache Airflow |
 | `dbt_course/` | dbt |
 | `clickhouse_course/` | ClickHouse |
-| `redshift_course/` | Amazon Redshift |
-| `metabase_course/` | Metabase |
+| `redshift_course/` | Amazon Redshift. The hub lessons are canonical. `index.html` stays as the older single-page course and links to those lessons. |
+| `metabase_course/` | Metabase. Hub lessons use the shared shell. Meet Metabase is free. The other eight lessons are Pro. |
 | `kubernetes_course/` | Kubernetes |
 | `terraform_course/` | Terraform |
 | `llm_course/` | Large language models |
@@ -136,7 +136,7 @@ Added 13 October 2026. These files are the shared shell for new lessons. Existin
 | `js/quiz.js` | Opt-in `[data-dfd-quiz]` checks. Does not bind old `checkQuiz`, `checkQ`, or `[data-quiz]` markup. |
 | `templates/lesson-shell.html` | Copy-from page. Not a hub lesson. |
 | `docs/LESSON_SHELL.md` | CSS and script order. |
-| `scripts/verify_site.py` | Crawls HTML. Baseline stubs, known missing anchors, and `python_course/s13-dataviz.html` (Pro markup, paywall scripts not in the file) are warnings. New breaks exit 1. |
+| `scripts/verify_site.py` | Crawls HTML. Baseline stubs and known missing anchors are warnings. A `hub.html` course map is not treated as a lesson stub. New breaks exit 1. |
 | `scripts/viewport_audit.mjs` | Playwright pass for HTTP errors, console errors, page errors, and document overflow. |
 
 Head order for a new lesson: the family stylesheet, then the page accent, then `dfd-system.css` last. Script order: `code-copy.js`, Supabase CDN, `supabase-config.js`, `supabase-auth.js`, `paywall.js`, `progress.js`, `lesson-common.js`, `quiz.js`, `analytics-tracker.js`. Do not load `hub-script.js` on a lesson. It already owns the home-page nav and scroll handlers.
@@ -144,6 +144,8 @@ Head order for a new lesson: the family stylesheet, then the page accent, then `
 `css/course-light-theme.css`, `css/hub-light.css`, and `css/dfd-system.css` gained additive `.dfd-*` classes for diagrams, knowledge checks, progress, 48px targets, safe-area padding, and scrolling tables, SVG, and code. Syntax color classes and paywall `display` rules are unchanged.
 
 `snowflake_course/` is the first course built on that shell. Each lesson sets `data-course-id="snowflake"` and its own `data-lesson-id`. `css/dfd-system.css` is last. Scripts are `code-copy.js`, the account and paywall files, `progress.js`, `lesson-common.js`, and `quiz.js`. The mark in `snowflake_course/logo.svg` is an original hexagon, not the Snowflake Inc. logo.
+
+Metabase, the Redshift hub lessons, the PostgreSQL replication lesson, and the SQL Server practice-dataset page use the same shell. Redshift's canonical URLs are the files linked from `redshift_course/hub.html`. `redshift_course/index.html` remains the older single-page course and points at those lessons. Meet Metabase and Meet Redshift stay free. The other hub lessons in those two courses are Pro.
 
 ## Local run
 

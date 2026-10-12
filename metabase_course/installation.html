@@ -3,47 +3,149 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>Installation & Setup | Metabase Course</title>
-    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <title>Installation and setup | Data For Dummies</title>
     <link rel="stylesheet" href="styles.css">
+    
     <link rel="stylesheet" href="../css/dfd-system.css">
 </head>
-<body data-access="pro">
-    <div class="page-bg-particles" aria-hidden="true"><div class="orb"></div><div class="orb"></div><div class="orb"></div></div>
+<body class="dfd-safe" data-course-id="metabase" data-lesson-id="installation" data-lesson-label="Installation and setup" data-total-lessons="9" data-access="pro">
     <div class="container">
-        <nav class="nav">
-            <a href="hub.html"><i class="fas fa-arrow-left"></i> Course Hub</a>
-            <a href="questions.html">Asking Questions <i class="fas fa-arrow-right"></i></a>
+        <nav class="nav" aria-label="Course">
+            <a href="hub.html">Course hub</a>
+            <a href="../index.html">Home</a>
+            <a href="#check">Knowledge check</a>
         </nav>
-        <div class="lesson-hero">
-            <h1>Installation & Setup</h1>
-            <p>Install Metabase via Docker, JAR, or Cloud. Connect to your database in minutes.</p>
-        </div>
-        <div class="section visible">
-            <h2>📚 Installation & Setup</h2>
-            <p>Install Metabase via Docker, JAR, or Cloud. Connect to your database in minutes.</p>
-            <div class="eli5-box">
-                <h4>🧒 ELI5</h4>
-                <p>This lesson covers installation & setup with detailed explanations, real-world examples, code snippets, and interactive exercises. Every concept is broken down into simple analogies that anyone can understand.</p>
+        <header class="lesson-hero" id="top">
+            <p class="course-kicker">Pro · Lesson 2 of 9</p>
+            <h1>Installation and setup</h1>
+            <p>Stand up Metabase Cloud or a self-hosted instance, and keep the application database separate from the warehouse.</p>
+        </header>
+        <div class="dfd-lesson-progress" data-dfd-progress>
+            <p class="dfd-lesson-progress-label" data-dfd-progress-label>Sign in to save your place.</p>
+            <div class="dfd-lesson-progress-track" data-dfd-progress-bar role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-label="Course progress">
+                <div class="dfd-lesson-progress-fill" data-dfd-progress-fill></div>
             </div>
         </div>
-        <div class="lesson-nav">
-            <a href="meet-metabase.html" class="secondary"><i class="fas fa-arrow-left"></i> Meet Metabase</a>
-            <a href="questions.html">Asking Questions <i class="fas fa-arrow-right"></i></a>
-        </div>
+        <section class="section" data-dfd-reveal><div class="eli5-box"><h4>Picture it this way</h4><p>Installing Metabase is like setting up a reception desk. The desk has its own filing cabinet, which is the application database. The warehouse is the building next door. The desk can look things up in the warehouse. It does not become the warehouse.</p></div></section>
+<section class="section" data-dfd-reveal><h2>Pick a home</h2>
+<p>Use Metabase Cloud when you want Metabase to run the servers. Use Docker or the JAR when the application must run in your network. Both speak to the same kinds of databases.</p>
+<table class="comparison-table dfd-scroll">
+<thead>
+<tr><th>Choice</th><th>You operate</th><th>Good fit</th></tr>
+</thead>
+<tbody>
+<tr><td>Metabase Cloud</td><td>Users, connections, and content</td><td>Most teams</td></tr>
+<tr><td>Docker</td><td>The container, the app database, and upgrades</td><td>A network you control</td></tr>
+<tr><td>JAR</td><td>A Java process plus the app database</td><td>A simple single host</td></tr>
+</tbody>
+</table>
+<p>The environment variable <code>MB_DB_TYPE</code> chooses where Metabase stores its own data. Leave it unset only for a trial. H2 keeps that data in a local file, often <code>metabase.db.mv.db</code>. That file is easy to lose, and it is a poor fit for more than one application instance.</p>
+<div class="code-block"><pre><code>docker run -d -p 3000:3000 --name metabase \
+  -e MB_DB_TYPE=postgres \
+  -e MB_DB_DBNAME=metabase \
+  -e MB_DB_PORT=5432 \
+  -e MB_DB_USER=metabase \
+  -e MB_DB_PASS=use-a-real-secret \
+  -e MB_DB_HOST=metabase-db.internal \
+  metabase/metabase</code></pre></div>
+<div class="important-box"><h4>Do not point MB_DB at the warehouse</h4><p>MB_DB_* is Metabase's notebook: users, questions, and dashboards. The warehouse connection is added later in the admin screen, with different credentials.</p></div>
+</section>
+<section class="section" data-dfd-reveal><h2>First admin and first connection</h2>
+<p>Open the site, create the first admin, and invite people by email instead of sharing that admin password. Then add a database. For PostgreSQL you need host, port, database name, user, and password. Use SSL when the host offers it. If the database is on a private network, the Metabase server must be able to open that port. Your laptop being able to connect does not mean the container can.</p>
+<p>After the first sync, Metabase reads table and column names. You can hide technical columns, rename them for readers, and set a semantic type such as City or Email. That metadata lives in the application database. It does not alter the warehouse.</p>
+<div class="code-block"><pre><code>-- A warehouse user for charts. Run this on the warehouse, not on MB_DB.
+CREATE ROLE metabase_reader LOGIN PASSWORD &#x27;replace-me&#x27;;
+GRANT CONNECT ON DATABASE analytics TO metabase_reader;
+GRANT USAGE ON SCHEMA public TO metabase_reader;
+GRANT SELECT ON ALL TABLES IN SCHEMA public TO metabase_reader;</code></pre></div>
+</section>
+<section class="section dfd-diagram" data-dfd-diagram data-dfd-reveal><h2>Two databases, on purpose</h2><div data-dfd-diagram-panel="one">
+<svg class="dfd-responsive" viewBox="0 0 360 100" role="img" aria-label="Application database highlighted">
+<rect x="12" y="26" width="104" height="48" rx="8" fill="#0f172a"></rect>
+<text x="64" y="54" text-anchor="middle" font-size="13" fill="#ffffff" font-family="Nunito,sans-serif">App DB</text>
+<rect x="128" y="26" width="104" height="48" rx="8" fill="#e2e8f0"></rect>
+<text x="180" y="54" text-anchor="middle" font-size="13" fill="#0f172a" font-family="Nunito,sans-serif">Metabase</text>
+<rect x="244" y="26" width="104" height="48" rx="8" fill="#e2e8f0"></rect>
+<text x="296" y="54" text-anchor="middle" font-size="13" fill="#0f172a" font-family="Nunito,sans-serif">Warehouse</text>
+</svg>
+</div><div data-dfd-diagram-panel="two" hidden>
+<svg class="dfd-responsive" viewBox="0 0 360 100" role="img" aria-label="Metabase highlighted">
+<rect x="12" y="26" width="104" height="48" rx="8" fill="#e2e8f0"></rect>
+<text x="64" y="54" text-anchor="middle" font-size="13" fill="#0f172a" font-family="Nunito,sans-serif">App DB</text>
+<rect x="128" y="26" width="104" height="48" rx="8" fill="#0f172a"></rect>
+<text x="180" y="54" text-anchor="middle" font-size="13" fill="#ffffff" font-family="Nunito,sans-serif">Metabase</text>
+<rect x="244" y="26" width="104" height="48" rx="8" fill="#e2e8f0"></rect>
+<text x="296" y="54" text-anchor="middle" font-size="13" fill="#0f172a" font-family="Nunito,sans-serif">Warehouse</text>
+</svg>
+</div><div data-dfd-diagram-panel="three" hidden>
+<svg class="dfd-responsive" viewBox="0 0 360 100" role="img" aria-label="Warehouse highlighted">
+<rect x="12" y="26" width="104" height="48" rx="8" fill="#e2e8f0"></rect>
+<text x="64" y="54" text-anchor="middle" font-size="13" fill="#0f172a" font-family="Nunito,sans-serif">App DB</text>
+<rect x="128" y="26" width="104" height="48" rx="8" fill="#e2e8f0"></rect>
+<text x="180" y="54" text-anchor="middle" font-size="13" fill="#0f172a" font-family="Nunito,sans-serif">Metabase</text>
+<rect x="244" y="26" width="104" height="48" rx="8" fill="#0f172a"></rect>
+<text x="296" y="54" text-anchor="middle" font-size="13" fill="#ffffff" font-family="Nunito,sans-serif">Warehouse</text>
+</svg>
+</div><div class="dfd-diagram-controls"><button type="button" data-dfd-diagram-step="one" aria-pressed="true">App database</button><button type="button" data-dfd-diagram-step="two" aria-pressed="false">Metabase</button><button type="button" data-dfd-diagram-step="three" aria-pressed="false">Warehouse</button></div></section>
+<section class="section" data-dfd-reveal><h2>Check the install</h2>
+<p>You are done with this lesson when an admin can sign in, a non-admin can sign in, and a sample question returns rows from the warehouse. If sync shows no tables, check the search path and the grants before you rebuild the container.</p>
+<p><button type="button" data-dfd-complete>Mark lesson complete</button></p><p data-dfd-complete-status></p>
+</section>
+        <section class="section" id="check" data-dfd-reveal>
+<h2>Knowledge check</h2>
+<section class="dfd-quiz" data-dfd-quiz data-explanation="It selects the database that stores Metabase itself, not the data people chart.">
+<h3 data-dfd-prompt>What does MB_DB_TYPE choose?</h3>
+<div data-dfd-choices>
+<button type="button" data-correct="false">The warehouse Metabase will chart</button>
+<button type="button" data-correct="true">Where Metabase stores users and saved questions</button>
+<button type="button" data-correct="false">The chart type for new questions</button>
+</div>
+<p class="dfd-quiz-feedback" data-dfd-feedback hidden></p>
+<p class="dfd-quiz-explain" data-dfd-explain hidden></p>
+</section>
+<section class="dfd-quiz" data-dfd-quiz data-explanation="H2 is a local file. It is fine for a trial and a poor place for the only copy of your questions.">
+<h3 data-dfd-prompt>Why avoid H2 for a real instance?</h3>
+<div data-dfd-choices>
+<button type="button" data-correct="false">H2 cannot store questions</button>
+<button type="button" data-correct="true">A file-backed app database is easy to lose and hard to share</button>
+<button type="button" data-correct="false">H2 is required for Metabase Cloud</button>
+</div>
+<p class="dfd-quiz-feedback" data-dfd-feedback hidden></p>
+<p class="dfd-quiz-explain" data-dfd-explain hidden></p>
+</section>
+<section class="dfd-quiz" data-dfd-quiz data-explanation="Charts read rows. They do not need to create tables or delete them.">
+<h3 data-dfd-prompt>Which privilege does the warehouse user need?</h3>
+<div data-dfd-choices>
+<button type="button" data-correct="false">Superuser</button>
+<button type="button" data-correct="true">SELECT on the tables people may query</button>
+<button type="button" data-correct="false">No login, because Metabase uses the operating system</button>
+</div>
+<p class="dfd-quiz-feedback" data-dfd-feedback hidden></p>
+<p class="dfd-quiz-explain" data-dfd-explain hidden></p>
+</section>
+</section>
+        <section class="section" data-dfd-reveal>
+            <h2>Official sources</h2>
+            <p>Checked against vendor documentation in October 2026. Screens and plan names still change, so confirm the control in your own instance.</p>
+            <ul class="source-list"><li><a href="https://www.metabase.com/docs/latest/installation-and-operation/installing-metabase" target="_blank" rel="noopener noreferrer">Installing Metabase</a></li>
+<li><a href="https://www.metabase.com/docs/latest/installation-and-operation/running-metabase-on-docker" target="_blank" rel="noopener noreferrer">Running on Docker</a></li>
+<li><a href="https://www.metabase.com/docs/latest/installation-and-operation/configuring-application-database" target="_blank" rel="noopener noreferrer">Configuring the application database</a></li></ul>
+        </section>
+        <nav class="lesson-nav" aria-label="Lesson order">
+            <a class="secondary" href="meet-metabase.html">Previous: Meet Metabase</a>
+            <a href="questions.html">Next: Asking questions</a>
+        </nav>
     </div>
-    <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        document.querySelectorAll('.section:not(.visible)').forEach(function(s) {
-            new IntersectionObserver(function(e) { if (e[0].isIntersecting) e[0].target.classList.add('visible'); }, {threshold:0.1}).observe(s);
-        });
-    });
-    </script>
+
     <script src="../js/code-copy.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="../js/supabase-config.js"></script>
     <script src="../js/supabase-auth.js"></script>
     <script src="../js/paywall.js"></script>
+    <script src="../js/progress.js"></script>
+    <script src="../js/lesson-common.js"></script>
+    <script src="../js/quiz.js"></script>
+    <script src="../js/analytics-tracker.js"></script>
+
 </body>
 </html>

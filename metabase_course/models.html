@@ -3,47 +3,142 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>Models & Metrics | Metabase Course</title>
-    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <title>Models and metrics | Data For Dummies</title>
     <link rel="stylesheet" href="styles.css">
+    
     <link rel="stylesheet" href="../css/dfd-system.css">
 </head>
-<body data-access="pro">
-    <div class="page-bg-particles" aria-hidden="true"><div class="orb"></div><div class="orb"></div><div class="orb"></div></div>
+<body class="dfd-safe" data-course-id="metabase" data-lesson-id="models" data-lesson-label="Models and metrics" data-total-lessons="9" data-access="pro">
     <div class="container">
-        <nav class="nav">
-            <a href="hub.html"><i class="fas fa-arrow-left"></i> Course Hub</a>
-            <a href="sharing.html">Sharing & Embedding <i class="fas fa-arrow-right"></i></a>
+        <nav class="nav" aria-label="Course">
+            <a href="hub.html">Course hub</a>
+            <a href="../index.html">Home</a>
+            <a href="#check">Knowledge check</a>
         </nav>
-        <div class="lesson-hero">
-            <h1>Models & Metrics</h1>
-            <p>Define reusable models, create metrics, and build a semantic layer.</p>
-        </div>
-        <div class="section visible">
-            <h2>📚 Models & Metrics</h2>
-            <p>Define reusable models, create metrics, and build a semantic layer.</p>
-            <div class="eli5-box">
-                <h4>🧒 ELI5</h4>
-                <p>This lesson covers models & metrics with detailed explanations, real-world examples, code snippets, and interactive exercises. Every concept is broken down into simple analogies that anyone can understand.</p>
+        <header class="lesson-hero" id="top">
+            <p class="course-kicker">Pro · Lesson 6 of 9</p>
+            <h1>Models and metrics</h1>
+            <p>Models curate columns. Metrics name a measure once. Questions should start there.</p>
+        </header>
+        <div class="dfd-lesson-progress" data-dfd-progress>
+            <p class="dfd-lesson-progress-label" data-dfd-progress-label>Sign in to save your place.</p>
+            <div class="dfd-lesson-progress-track" data-dfd-progress-bar role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-label="Course progress">
+                <div class="dfd-lesson-progress-fill" data-dfd-progress-fill></div>
             </div>
         </div>
-        <div class="lesson-nav">
-            <a href="sql-queries.html" class="secondary"><i class="fas fa-arrow-left"></i> SQL Queries in Metabase</a>
-            <a href="sharing.html">Sharing & Embedding <i class="fas fa-arrow-right"></i></a>
-        </div>
+        <section class="section" data-dfd-reveal><div class="eli5-box"><h4>Picture it this way</h4><p>A model is the cleaned shelf you want people to pull from. The raw table may have ten date columns and three amount columns. The model keeps the ones with agreed names. A metric is the label on the jar, such as Revenue, so two people do not invent two sums.</p></div></section>
+<section class="section" data-dfd-reveal><h2>Models are the starting point</h2>
+<p>A model is a saved question you mark as a model, or a model you build in the editor. People start new questions from it instead of from the raw table. You set display names, descriptions, visibility, and semantic types on its columns. Hidden columns stay out of the picker. That metadata is the beginning of a semantic layer: one meaning, used in many charts.</p>
+<p>Put the joins and the business filters that everyone shares inside the model. Leave the local filter, such as "this team" or "this month", to the question. If every question repeats the same three joins, those joins belong in the model.</p>
+<table class="comparison-table dfd-scroll">
+<thead>
+<tr><th>Layer</th><th>Owns</th><th>Does not own</th></tr>
+</thead>
+<tbody>
+<tr><td>Warehouse table</td><td>Grain and stored rows</td><td>Chart titles</td></tr>
+<tr><td>Model</td><td>Columns people may use, and shared logic</td><td>One team's date range</td></tr>
+<tr><td>Metric</td><td>One named aggregation</td><td>The dashboard layout</td></tr>
+<tr><td>Question</td><td>A specific cut of a model</td><td>A second definition of revenue</td></tr>
+</tbody>
+</table>
+</section>
+<section class="section" data-dfd-reveal><h2>Metrics, and the older screen</h2>
+<p>Define a metric when a measure must mean the same thing everywhere. Revenue might be the sum of amount where status is paid. Once that metric exists on the model, the query builder can use it instead of asking each author to retype the sum and the filter.</p>
+<p>Older Metabase versions had a separate Metrics admin that was removed. If you still see that legacy screen, treat it as history and move the definition onto a model. Do not maintain two formulas. The semantic layer is the model plus its metrics and column metadata, not a second warehouse.</p>
+<div class="code-block"><pre><code>-- The idea of a metric, written out so you can check it.
+-- In Metabase you define this once on the model.
+SELECT SUM(amount) AS revenue
+FROM orders
+WHERE status = &#x27;paid&#x27;;</code></pre></div>
+<div class="pro-tip"><h4>Describe the grain in the model description</h4><p>Write "one row per paid order" where a colleague will see it. A perfect chart on the wrong grain is still wrong.</p></div>
+</section>
+<section class="section dfd-diagram" data-dfd-diagram data-dfd-reveal><h2>Start from the model</h2><div data-dfd-diagram-panel="one">
+<svg class="dfd-responsive" viewBox="0 0 360 100" role="img" aria-label="Model highlighted">
+<rect x="12" y="26" width="104" height="48" rx="8" fill="#0f172a"></rect>
+<text x="64" y="54" text-anchor="middle" font-size="13" fill="#ffffff" font-family="Nunito,sans-serif">Model</text>
+<rect x="128" y="26" width="104" height="48" rx="8" fill="#e2e8f0"></rect>
+<text x="180" y="54" text-anchor="middle" font-size="13" fill="#0f172a" font-family="Nunito,sans-serif">Metric</text>
+<rect x="244" y="26" width="104" height="48" rx="8" fill="#e2e8f0"></rect>
+<text x="296" y="54" text-anchor="middle" font-size="13" fill="#0f172a" font-family="Nunito,sans-serif">Question</text>
+</svg>
+</div><div data-dfd-diagram-panel="two" hidden>
+<svg class="dfd-responsive" viewBox="0 0 360 100" role="img" aria-label="Metric highlighted">
+<rect x="12" y="26" width="104" height="48" rx="8" fill="#e2e8f0"></rect>
+<text x="64" y="54" text-anchor="middle" font-size="13" fill="#0f172a" font-family="Nunito,sans-serif">Model</text>
+<rect x="128" y="26" width="104" height="48" rx="8" fill="#0f172a"></rect>
+<text x="180" y="54" text-anchor="middle" font-size="13" fill="#ffffff" font-family="Nunito,sans-serif">Metric</text>
+<rect x="244" y="26" width="104" height="48" rx="8" fill="#e2e8f0"></rect>
+<text x="296" y="54" text-anchor="middle" font-size="13" fill="#0f172a" font-family="Nunito,sans-serif">Question</text>
+</svg>
+</div><div data-dfd-diagram-panel="three" hidden>
+<svg class="dfd-responsive" viewBox="0 0 360 100" role="img" aria-label="Question highlighted">
+<rect x="12" y="26" width="104" height="48" rx="8" fill="#e2e8f0"></rect>
+<text x="64" y="54" text-anchor="middle" font-size="13" fill="#0f172a" font-family="Nunito,sans-serif">Model</text>
+<rect x="128" y="26" width="104" height="48" rx="8" fill="#e2e8f0"></rect>
+<text x="180" y="54" text-anchor="middle" font-size="13" fill="#0f172a" font-family="Nunito,sans-serif">Metric</text>
+<rect x="244" y="26" width="104" height="48" rx="8" fill="#0f172a"></rect>
+<text x="296" y="54" text-anchor="middle" font-size="13" fill="#ffffff" font-family="Nunito,sans-serif">Question</text>
+</svg>
+</div><div class="dfd-diagram-controls"><button type="button" data-dfd-diagram-step="one" aria-pressed="true">Model</button><button type="button" data-dfd-diagram-step="two" aria-pressed="false">Metric</button><button type="button" data-dfd-diagram-step="three" aria-pressed="false">Question</button></div></section>
+<section class="section" data-dfd-reveal><h2>Practice</h2>
+<p>Turn one trusted question into a model. Rename two columns, hide one technical key, and write a one-sentence description of the grain. If your Metabase version offers metrics on models, add one named measure and build a question that uses it without retyping the formula.</p>
+<p><button type="button" data-dfd-complete>Mark lesson complete</button></p><p data-dfd-complete-status></p>
+</section>
+        <section class="section" id="check" data-dfd-reveal>
+<h2>Knowledge check</h2>
+<section class="dfd-quiz" data-dfd-quiz data-explanation="It gives people one curated starting point instead of every raw column.">
+<h3 data-dfd-prompt>What problem does a model solve?</h3>
+<div data-dfd-choices>
+<button type="button" data-correct="false">It stores a second copy of the warehouse</button>
+<button type="button" data-correct="true">It is the curated table or question people should query</button>
+<button type="button" data-correct="false">It emails the dashboard</button>
+</div>
+<p class="dfd-quiz-feedback" data-dfd-feedback hidden></p>
+<p class="dfd-quiz-explain" data-dfd-explain hidden></p>
+</section>
+<section class="dfd-quiz" data-dfd-quiz data-explanation="A metric is one agreed aggregation, reused by questions.">
+<h3 data-dfd-prompt>What is a metric for?</h3>
+<div data-dfd-choices>
+<button type="button" data-correct="false">A chart color</button>
+<button type="button" data-correct="true">A named measure so revenue is not redefined in every question</button>
+<button type="button" data-correct="false">A public link</button>
+</div>
+<p class="dfd-quiz-feedback" data-dfd-feedback hidden></p>
+<p class="dfd-quiz-explain" data-dfd-explain hidden></p>
+</section>
+<section class="dfd-quiz" data-dfd-quiz data-explanation="Shared logic belongs on the model. A one-off filter belongs on the question.">
+<h3 data-dfd-prompt>Where should a join that every question repeats live?</h3>
+<div data-dfd-choices>
+<button type="button" data-correct="true">On the model</button>
+<button type="button" data-correct="false">Only in a dashboard subscription</button>
+<button type="button" data-correct="false">In the browser cache</button>
+</div>
+<p class="dfd-quiz-feedback" data-dfd-feedback hidden></p>
+<p class="dfd-quiz-explain" data-dfd-explain hidden></p>
+</section>
+</section>
+        <section class="section" data-dfd-reveal>
+            <h2>Official sources</h2>
+            <p>Checked against vendor documentation in October 2026. Screens and plan names still change, so confirm the control in your own instance.</p>
+            <ul class="source-list"><li><a href="https://www.metabase.com/docs/latest/data-modeling/models" target="_blank" rel="noopener noreferrer">Models</a></li>
+<li><a href="https://www.metabase.com/docs/latest/data-modeling/metrics" target="_blank" rel="noopener noreferrer">Metrics</a></li>
+<li><a href="https://www.metabase.com/docs/latest/data-modeling/metadata-editing" target="_blank" rel="noopener noreferrer">Table metadata</a></li></ul>
+        </section>
+        <nav class="lesson-nav" aria-label="Lesson order">
+            <a class="secondary" href="sql-queries.html">Previous: SQL queries</a>
+            <a href="sharing.html">Next: Sharing and embedding</a>
+        </nav>
     </div>
-    <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        document.querySelectorAll('.section:not(.visible)').forEach(function(s) {
-            new IntersectionObserver(function(e) { if (e[0].isIntersecting) e[0].target.classList.add('visible'); }, {threshold:0.1}).observe(s);
-        });
-    });
-    </script>
+
     <script src="../js/code-copy.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="../js/supabase-config.js"></script>
     <script src="../js/supabase-auth.js"></script>
     <script src="../js/paywall.js"></script>
+    <script src="../js/progress.js"></script>
+    <script src="../js/lesson-common.js"></script>
+    <script src="../js/quiz.js"></script>
+    <script src="../js/analytics-tracker.js"></script>
+
 </body>
 </html>

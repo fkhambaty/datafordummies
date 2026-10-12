@@ -3,47 +3,140 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>Sharing & Embedding | Metabase Course</title>
-    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <title>Sharing and embedding | Data For Dummies</title>
     <link rel="stylesheet" href="styles.css">
+    
     <link rel="stylesheet" href="../css/dfd-system.css">
 </head>
-<body data-access="pro">
-    <div class="page-bg-particles" aria-hidden="true"><div class="orb"></div><div class="orb"></div><div class="orb"></div></div>
+<body class="dfd-safe" data-course-id="metabase" data-lesson-id="sharing" data-lesson-label="Sharing and embedding" data-total-lessons="9" data-access="pro">
     <div class="container">
-        <nav class="nav">
-            <a href="hub.html"><i class="fas fa-arrow-left"></i> Course Hub</a>
-            <a href="admin.html">Administration <i class="fas fa-arrow-right"></i></a>
+        <nav class="nav" aria-label="Course">
+            <a href="hub.html">Course hub</a>
+            <a href="../index.html">Home</a>
+            <a href="#check">Knowledge check</a>
         </nav>
-        <div class="lesson-hero">
-            <h1>Sharing & Embedding</h1>
-            <p>Public links, subscriptions, Slack alerts, and embedding dashboards in your app.</p>
-        </div>
-        <div class="section visible">
-            <h2>📚 Sharing & Embedding</h2>
-            <p>Public links, subscriptions, Slack alerts, and embedding dashboards in your app.</p>
-            <div class="eli5-box">
-                <h4>🧒 ELI5</h4>
-                <p>This lesson covers sharing & embedding with detailed explanations, real-world examples, code snippets, and interactive exercises. Every concept is broken down into simple analogies that anyone can understand.</p>
+        <header class="lesson-hero" id="top">
+            <p class="course-kicker">Pro · Lesson 7 of 9</p>
+            <h1>Sharing and embedding</h1>
+            <p>Signed-in sharing, public links, and embedding move the same rows to different audiences.</p>
+        </header>
+        <div class="dfd-lesson-progress" data-dfd-progress>
+            <p class="dfd-lesson-progress-label" data-dfd-progress-label>Sign in to save your place.</p>
+            <div class="dfd-lesson-progress-track" data-dfd-progress-bar role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-label="Course progress">
+                <div class="dfd-lesson-progress-fill" data-dfd-progress-fill></div>
             </div>
         </div>
-        <div class="lesson-nav">
-            <a href="models.html" class="secondary"><i class="fas fa-arrow-left"></i> Models & Metrics</a>
-            <a href="admin.html">Administration <i class="fas fa-arrow-right"></i></a>
-        </div>
+        <section class="section" data-dfd-reveal><div class="eli5-box"><h4>Picture it this way</h4><p>Sharing with a signed-in colleague is handing them a key to a room they are allowed to enter. A public link is leaving the door open and posting the address. Embedding is putting one window of that room inside another building. The window still shows real rows.</p></div></section>
+<section class="section" data-dfd-reveal><h2>Three ways out of Metabase</h2>
+<p>A collection share lets another Metabase user open the question or dashboard. Their group permissions still apply. This is the default you want inside a company.</p>
+<p>A public link and a public embed have no login. Anyone with the URL can see the result. Turn public sharing off unless the data is already public. If you enable it for one chart, check the filters. A public dashboard filter can let a stranger pivot into columns you did not mean to publish.</p>
+<p>Signed embedding puts a chart in your own application. Your server signs a token with the embedding secret. The browser receives the token. It must not receive the secret. Interactive embedding and the embedded analytics SDK, which let people explore inside your product, are paid features. Confirm the plan before you promise them.</p>
+<table class="comparison-table dfd-scroll">
+<thead>
+<tr><th>Method</th><th>Who can open it</th><th>Secret involved</th></tr>
+</thead>
+<tbody>
+<tr><td>Collection permission</td><td>Signed-in people in the right group</td><td>Their Metabase login</td></tr>
+<tr><td>Public link</td><td>Anyone with the URL</td><td>None. That is the risk</td></tr>
+<tr><td>Static embed</td><td>Whoever your app gives a token</td><td>Embedding secret stays on the server</td></tr>
+<tr><td>Interactive embed or SDK</td><td>People in your app, with more exploration</td><td>Paid plan, plus the signing secret</td></tr>
+</tbody>
+</table>
+</section>
+<section class="section" data-dfd-reveal><h2>Lock the filters you do not want changed</h2>
+<p>An embed can pass parameters, such as a customer id, and lock them so the viewer cannot switch to another customer. If you leave the parameter editable, the chart is only as private as the viewer's curiosity. Test with a token for customer A and confirm customer B's rows do not appear.</p>
+<div class="code-block"><pre><code># The shape of a signed embed. Sign this on the server.
+# Never put METABASE_EMBEDDING_SECRET in frontend code.
+# payload: resource dashboard id, params, expiry</code></pre></div>
+<div class="important-box"><h4>Public links ignore the login</h4><p>Row-level sandboxes and collection permissions do not protect a public URL. If the chart must stay inside the company, do not publish it.</p></div>
+</section>
+<section class="section dfd-diagram" data-dfd-diagram data-dfd-reveal><h2>How a reader gets in</h2><div data-dfd-diagram-panel="one">
+<svg class="dfd-responsive" viewBox="0 0 360 100" role="img" aria-label="Signed-in sharing highlighted">
+<rect x="12" y="26" width="104" height="48" rx="8" fill="#0f172a"></rect>
+<text x="64" y="54" text-anchor="middle" font-size="13" fill="#ffffff" font-family="Nunito,sans-serif">Login</text>
+<rect x="128" y="26" width="104" height="48" rx="8" fill="#e2e8f0"></rect>
+<text x="180" y="54" text-anchor="middle" font-size="13" fill="#0f172a" font-family="Nunito,sans-serif">Public</text>
+<rect x="244" y="26" width="104" height="48" rx="8" fill="#e2e8f0"></rect>
+<text x="296" y="54" text-anchor="middle" font-size="13" fill="#0f172a" font-family="Nunito,sans-serif">Embed</text>
+</svg>
+</div><div data-dfd-diagram-panel="two" hidden>
+<svg class="dfd-responsive" viewBox="0 0 360 100" role="img" aria-label="Public link highlighted">
+<rect x="12" y="26" width="104" height="48" rx="8" fill="#e2e8f0"></rect>
+<text x="64" y="54" text-anchor="middle" font-size="13" fill="#0f172a" font-family="Nunito,sans-serif">Login</text>
+<rect x="128" y="26" width="104" height="48" rx="8" fill="#0f172a"></rect>
+<text x="180" y="54" text-anchor="middle" font-size="13" fill="#ffffff" font-family="Nunito,sans-serif">Public</text>
+<rect x="244" y="26" width="104" height="48" rx="8" fill="#e2e8f0"></rect>
+<text x="296" y="54" text-anchor="middle" font-size="13" fill="#0f172a" font-family="Nunito,sans-serif">Embed</text>
+</svg>
+</div><div data-dfd-diagram-panel="three" hidden>
+<svg class="dfd-responsive" viewBox="0 0 360 100" role="img" aria-label="Embedding highlighted">
+<rect x="12" y="26" width="104" height="48" rx="8" fill="#e2e8f0"></rect>
+<text x="64" y="54" text-anchor="middle" font-size="13" fill="#0f172a" font-family="Nunito,sans-serif">Login</text>
+<rect x="128" y="26" width="104" height="48" rx="8" fill="#e2e8f0"></rect>
+<text x="180" y="54" text-anchor="middle" font-size="13" fill="#0f172a" font-family="Nunito,sans-serif">Public</text>
+<rect x="244" y="26" width="104" height="48" rx="8" fill="#0f172a"></rect>
+<text x="296" y="54" text-anchor="middle" font-size="13" fill="#ffffff" font-family="Nunito,sans-serif">Embed</text>
+</svg>
+</div><div class="dfd-diagram-controls"><button type="button" data-dfd-diagram-step="one" aria-pressed="true">Login</button><button type="button" data-dfd-diagram-step="two" aria-pressed="false">Public</button><button type="button" data-dfd-diagram-step="three" aria-pressed="false">Embed</button></div></section>
+<section class="section" data-dfd-reveal><h2>Practice</h2>
+<p>List one question that is safe to show a signed-in colleague and one that must never have a public link. If you enable embedding in a trial, create the token on a server you control and set an expiry. Then disable public sharing again if you turned it on to look.</p>
+<p><button type="button" data-dfd-complete>Mark lesson complete</button></p><p data-dfd-complete-status></p>
+</section>
+        <section class="section" id="check" data-dfd-reveal>
+<h2>Knowledge check</h2>
+<section class="dfd-quiz" data-dfd-quiz data-explanation="Nothing. The URL is the access.">
+<h3 data-dfd-prompt>What does a public link require from the viewer?</h3>
+<div data-dfd-choices>
+<button type="button" data-correct="false">A Metabase password</button>
+<button type="button" data-correct="true">Nothing but the URL</button>
+<button type="button" data-correct="false">An embedding secret in the browser</button>
+</div>
+<p class="dfd-quiz-feedback" data-dfd-feedback hidden></p>
+<p class="dfd-quiz-explain" data-dfd-explain hidden></p>
+</section>
+<section class="dfd-quiz" data-dfd-quiz data-explanation="The server signs tokens. The browser only receives a token.">
+<h3 data-dfd-prompt>Where does the embedding secret belong?</h3>
+<div data-dfd-choices>
+<button type="button" data-correct="false">In frontend JavaScript</button>
+<button type="button" data-correct="true">On the server that signs tokens</button>
+<button type="button" data-correct="false">In the warehouse table</button>
+</div>
+<p class="dfd-quiz-feedback" data-dfd-feedback hidden></p>
+<p class="dfd-quiz-explain" data-dfd-explain hidden></p>
+</section>
+<section class="dfd-quiz" data-dfd-quiz data-explanation="Lock the parameter so one token cannot browse another customer.">
+<h3 data-dfd-prompt>What should you do with a customer id in an embed?</h3>
+<div data-dfd-choices>
+<button type="button" data-correct="false">Leave it editable so the chart is flexible</button>
+<button type="button" data-correct="true">Lock it in the token and test a second customer</button>
+<button type="button" data-correct="false">Put it in a public link instead</button>
+</div>
+<p class="dfd-quiz-feedback" data-dfd-feedback hidden></p>
+<p class="dfd-quiz-explain" data-dfd-explain hidden></p>
+</section>
+</section>
+        <section class="section" data-dfd-reveal>
+            <h2>Official sources</h2>
+            <p>Checked against vendor documentation in October 2026. Screens and plan names still change, so confirm the control in your own instance.</p>
+            <ul class="source-list"><li><a href="https://www.metabase.com/docs/latest/embedding/introduction" target="_blank" rel="noopener noreferrer">Embedding introduction</a></li>
+<li><a href="https://www.metabase.com/docs/latest/embedding/public-links" target="_blank" rel="noopener noreferrer">Public sharing</a></li>
+<li><a href="https://www.metabase.com/docs/latest/embedding/securing-embeds" target="_blank" rel="noopener noreferrer">Securing embeds</a></li></ul>
+        </section>
+        <nav class="lesson-nav" aria-label="Lesson order">
+            <a class="secondary" href="models.html">Previous: Models and metrics</a>
+            <a href="admin.html">Next: Administration</a>
+        </nav>
     </div>
-    <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        document.querySelectorAll('.section:not(.visible)').forEach(function(s) {
-            new IntersectionObserver(function(e) { if (e[0].isIntersecting) e[0].target.classList.add('visible'); }, {threshold:0.1}).observe(s);
-        });
-    });
-    </script>
+
     <script src="../js/code-copy.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="../js/supabase-config.js"></script>
     <script src="../js/supabase-auth.js"></script>
     <script src="../js/paywall.js"></script>
+    <script src="../js/progress.js"></script>
+    <script src="../js/lesson-common.js"></script>
+    <script src="../js/quiz.js"></script>
+    <script src="../js/analytics-tracker.js"></script>
+
 </body>
 </html>

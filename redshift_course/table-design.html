@@ -3,67 +3,145 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>Table Design | Redshift Course</title>
-    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <title>Redshift table design | Data For Dummies</title>
     <link rel="stylesheet" href="styles.css">
+    
     <link rel="stylesheet" href="../css/dfd-system.css">
 </head>
-<body data-access="pro">
-    <div class="page-bg-particles" aria-hidden="true"><div class="orb"></div><div class="orb"></div><div class="orb"></div></div>
+<body class="dfd-safe" data-course-id="redshift" data-lesson-id="table-design" data-lesson-label="Table design" data-total-lessons="9" data-access="pro">
     <div class="container">
-        <nav class="nav">
-            <a href="hub.html"><i class="fas fa-arrow-left"></i> Course Hub</a>
-            <a href="performance.html">Performance <i class="fas fa-arrow-right"></i></a>
+        <nav class="nav" aria-label="Course">
+            <a href="hub.html">Course hub</a>
+            <a href="../index.html">Home</a>
+            <a href="#check">Knowledge check</a>
         </nav>
-        <div class="lesson-hero">
-            <h1>Table Design</h1>
-            <p>Distribution keys, sort keys, compression encoding — the three pillars of Redshift table design that make or break performance.</p>
-        </div>
-
-        <div class="section visible">
-            <h2>📚 Table Design</h2>
-            <p>Distribution keys, sort keys, compression encoding — the three pillars of Redshift table design that make or break performance.</p>
-            <div class="eli5-box">
-                <h4>🧒 ELI5 Coming Up!</h4>
-                <p>This lesson covers table design in depth with real-world examples, code snippets, animated diagrams, and hands-on exercises. Every concept is explained like you're 5 years old with layman analogies.</p>
+        <header class="lesson-hero" id="top">
+            <p class="course-kicker">Pro · Lesson 6 of 9</p>
+            <h1>Table design</h1>
+            <p>Start with AUTO distribution, sort, and encoding. Override them when you can name the join, the filter, and the skew.</p>
+        </header>
+        <div class="dfd-lesson-progress" data-dfd-progress>
+            <p class="dfd-lesson-progress-label" data-dfd-progress-label>Sign in to save your place.</p>
+            <div class="dfd-lesson-progress-track" data-dfd-progress-bar role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-label="Course progress">
+                <div class="dfd-lesson-progress-fill" data-dfd-progress-fill></div>
             </div>
         </div>
-        <div class="section">
-            <h2>🔑 The Three Pillars of Table Design</h2>
-            <h3>1. Distribution Key (DISTKEY)</h3>
-            <p>Determines which node stores each row. Choose the column you JOIN on most often.</p>
-            <div class="code-block"><pre><span class="keyword">CREATE TABLE</span> orders (
-    order_id <span class="function">BIGINT</span>,
-    customer_id <span class="function">BIGINT</span> <span class="keyword">DISTKEY</span>,
-    order_date <span class="function">DATE</span> <span class="keyword">SORTKEY</span>,
-    total <span class="function">DECIMAL</span>(10,2)
-);</pre></div>
-            <h3>2. Sort Key (SORTKEY)</h3>
-            <p>Determines the physical order of rows on disk. Choose the column you filter (WHERE) on most often.</p>
-            <h3>3. Compression Encoding</h3>
-            <p>Redshift auto-selects the best compression. Use <code>ANALYZE COMPRESSION</code> to verify.</p>
-            <div class="eli5-box">
-                <h4>🧒 ELI5: The Library System</h4>
-                <p><strong>DISTKEY</strong> = Which building (node) to store the book in. <strong>SORTKEY</strong> = How to arrange books on the shelf (by date? by author?). <strong>Compression</strong> = How tightly to pack the books. Get all three right and finding any book is instant!</p>
-            </div>
-        </div>
-        <div class="lesson-nav">
-            <a href="data-loading.html" class="secondary"><i class="fas fa-arrow-left"></i> Data Loading</a>
-            <a href="performance.html">Performance <i class="fas fa-arrow-right"></i></a>
-        </div>
+        <section class="section" data-dfd-reveal><div class="eli5-box"><h4>Picture it this way</h4><p>Distribution is which waiter holds which orders. If two waiters must trade every plate to answer a question, dinner is slow. A sort key is the order of plates on one waiter's arm, so they can skip the ones that are obviously wrong. AUTO means you let Redshift watch the real questions and adjust those choices.</p></div></section>
+<section class="section" data-dfd-reveal><h2>AUTO first, then a reason to override</h2>
+<p>New tables should start with automatic table optimization: <code>DISTSTYLE AUTO</code>, <code>SORTKEY AUTO</code>, and <code>ENCODE AUTO</code>. Redshift can change distribution and sort as it sees queries. That is the 2026 default, not a hint you add after a crisis. Override it when you already know the join key and the filter, and you have looked at skew.</p>
+<div class="code-block"><pre><code>CREATE TABLE analytics.orders (
+    order_id BIGINT,
+    customer_id BIGINT,
+    ordered_at DATE,
+    amount NUMERIC(12, 2)
+)
+DISTSTYLE AUTO
+SORTKEY AUTO
+ENCODE AUTO;</code></pre></div>
+<table class="comparison-table dfd-scroll">
+<thead>
+<tr><th>Style</th><th>Rows go</th><th>Use when</th></tr>
+</thead>
+<tbody>
+<tr><td>AUTO</td><td>Redshift chooses, and can change</td><td>You are not sure yet</td></tr>
+<tr><td>KEY</td><td>Rows with the same key share a slice</td><td>Large tables join on that key</td></tr>
+<tr><td>EVEN</td><td>Rows are spread round-robin</td><td>There is no good join key</td></tr>
+<tr><td>ALL</td><td>A full copy on every node</td><td>A small dimension that everyone joins</td></tr>
+</tbody>
+</table>
+<p>Interleaved sort keys are a legacy option. Prefer a compound sort on the columns you filter in order, or leave sort on AUTO. A sort key helps a <code>WHERE</code> on a prefix of that key. It does not help a function wrapped around the column.</p>
+</section>
+<section class="section" data-dfd-reveal><h2>Skew and encodings</h2>
+<p>Key distribution on a column that is almost always the same value parks the rows on one slice. That slice works while the others wait. Check skew before you congratulate yourself on a key. <code>ALL</code> is only for tables small enough to copy everywhere. A fact table marked ALL will waste storage and load time.</p>
+<p>Encoding compresses columns. AUTO picks encodings. Do not hand-tune encodings on day one. Vacuum and analyze are largely automatic on current RA3 and Serverless warehouses. You still need to know the words, because an old cluster or a deleted-row heavy table can need a manual vacuum. Design the table so the load does not depend on a weekly rescue.</p>
+</section>
+<section class="section dfd-diagram" data-dfd-diagram data-dfd-reveal><h2>Three choices on a table</h2><div data-dfd-diagram-panel="one">
+<svg class="dfd-responsive" viewBox="0 0 360 100" role="img" aria-label="Distribution highlighted">
+<rect x="12" y="26" width="104" height="48" rx="8" fill="#0f172a"></rect>
+<text x="64" y="54" text-anchor="middle" font-size="13" fill="#ffffff" font-family="Nunito,sans-serif">Dist</text>
+<rect x="128" y="26" width="104" height="48" rx="8" fill="#e2e8f0"></rect>
+<text x="180" y="54" text-anchor="middle" font-size="13" fill="#0f172a" font-family="Nunito,sans-serif">Sort</text>
+<rect x="244" y="26" width="104" height="48" rx="8" fill="#e2e8f0"></rect>
+<text x="296" y="54" text-anchor="middle" font-size="13" fill="#0f172a" font-family="Nunito,sans-serif">Encode</text>
+</svg>
+</div><div data-dfd-diagram-panel="two" hidden>
+<svg class="dfd-responsive" viewBox="0 0 360 100" role="img" aria-label="Sort highlighted">
+<rect x="12" y="26" width="104" height="48" rx="8" fill="#e2e8f0"></rect>
+<text x="64" y="54" text-anchor="middle" font-size="13" fill="#0f172a" font-family="Nunito,sans-serif">Dist</text>
+<rect x="128" y="26" width="104" height="48" rx="8" fill="#0f172a"></rect>
+<text x="180" y="54" text-anchor="middle" font-size="13" fill="#ffffff" font-family="Nunito,sans-serif">Sort</text>
+<rect x="244" y="26" width="104" height="48" rx="8" fill="#e2e8f0"></rect>
+<text x="296" y="54" text-anchor="middle" font-size="13" fill="#0f172a" font-family="Nunito,sans-serif">Encode</text>
+</svg>
+</div><div data-dfd-diagram-panel="three" hidden>
+<svg class="dfd-responsive" viewBox="0 0 360 100" role="img" aria-label="Encoding highlighted">
+<rect x="12" y="26" width="104" height="48" rx="8" fill="#e2e8f0"></rect>
+<text x="64" y="54" text-anchor="middle" font-size="13" fill="#0f172a" font-family="Nunito,sans-serif">Dist</text>
+<rect x="128" y="26" width="104" height="48" rx="8" fill="#e2e8f0"></rect>
+<text x="180" y="54" text-anchor="middle" font-size="13" fill="#0f172a" font-family="Nunito,sans-serif">Sort</text>
+<rect x="244" y="26" width="104" height="48" rx="8" fill="#0f172a"></rect>
+<text x="296" y="54" text-anchor="middle" font-size="13" fill="#ffffff" font-family="Nunito,sans-serif">Encode</text>
+</svg>
+</div><div class="dfd-diagram-controls"><button type="button" data-dfd-diagram-step="one" aria-pressed="true">Dist</button><button type="button" data-dfd-diagram-step="two" aria-pressed="false">Sort</button><button type="button" data-dfd-diagram-step="three" aria-pressed="false">Encode</button></div></section>
+<section class="section" data-dfd-reveal><h2>Practice</h2>
+<p>Create one table with AUTO for distribution, sort, and encoding. Write one sentence that says which column you would switch to KEY if the automatic choice proved wrong, and why that column is not a constant.</p>
+<p><button type="button" data-dfd-complete>Mark lesson complete</button></p><p data-dfd-complete-status></p>
+</section>
+        <section class="section" id="check" data-dfd-reveal>
+<h2>Knowledge check</h2>
+<section class="dfd-quiz" data-dfd-quiz data-explanation="AUTO lets Redshift adjust from real queries.">
+<h3 data-dfd-prompt>What should a new table use when you are unsure?</h3>
+<div data-dfd-choices>
+<button type="button" data-correct="true">DISTSTYLE AUTO and SORTKEY AUTO</button>
+<button type="button" data-correct="false">Interleaved sort on every column</button>
+<button type="button" data-correct="false">ALL distribution for every fact</button>
+</div>
+<p class="dfd-quiz-feedback" data-dfd-feedback hidden></p>
+<p class="dfd-quiz-explain" data-dfd-explain hidden></p>
+</section>
+<section class="dfd-quiz" data-dfd-quiz data-explanation="A key that has one common value piles rows onto one slice.">
+<h3 data-dfd-prompt>When is KEY distribution a mistake?</h3>
+<div data-dfd-choices>
+<button type="button" data-correct="true">When the key is nearly constant and the table is large</button>
+<button type="button" data-correct="false">When two large tables join on that key</button>
+<button type="button" data-correct="false">When the table is under a thousand rows</button>
+</div>
+<p class="dfd-quiz-feedback" data-dfd-feedback hidden></p>
+<p class="dfd-quiz-explain" data-dfd-explain hidden></p>
+</section>
+<section class="dfd-quiz" data-dfd-quiz data-explanation="A small table copied to every node, so joins do not move it.">
+<h3 data-dfd-prompt>What is ALL distribution for?</h3>
+<div data-dfd-choices>
+<button type="button" data-correct="false">The largest fact table</button>
+<button type="button" data-correct="true">A small dimension everyone joins</button>
+<button type="button" data-correct="false">Files still sitting in S3</button>
+</div>
+<p class="dfd-quiz-feedback" data-dfd-feedback hidden></p>
+<p class="dfd-quiz-explain" data-dfd-explain hidden></p>
+</section>
+</section>
+        <section class="section" data-dfd-reveal>
+            <h2>Official sources</h2>
+            <p>Checked against vendor documentation in October 2026. Screens and plan names still change, so confirm the control in your own instance.</p>
+            <ul class="source-list"><li><a href="https://docs.aws.amazon.com/redshift/latest/dg/c_designing-tables-best-practices.html" target="_blank" rel="noopener noreferrer">Table design</a></li>
+<li><a href="https://docs.aws.amazon.com/redshift/latest/dg/c_choosing_dist_sort.html" target="_blank" rel="noopener noreferrer">Distribution styles</a></li>
+<li><a href="https://docs.aws.amazon.com/redshift/latest/dg/t_Creating_tables.html" target="_blank" rel="noopener noreferrer">Automatic table optimization</a></li></ul>
+        </section>
+        <nav class="lesson-nav" aria-label="Lesson order">
+            <a class="secondary" href="data-loading.html">Previous: Data loading</a>
+            <a href="performance.html">Next: Performance</a>
+        </nav>
     </div>
-    <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        document.querySelectorAll('.section:not(.visible)').forEach(function(s) {
-            new IntersectionObserver(function(e) { if (e[0].isIntersecting) e[0].target.classList.add('visible'); }, {threshold:0.1}).observe(s);
-        });
-    });
-    </script>
+
     <script src="../js/code-copy.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="../js/supabase-config.js"></script>
     <script src="../js/supabase-auth.js"></script>
     <script src="../js/paywall.js"></script>
+    <script src="../js/progress.js"></script>
+    <script src="../js/lesson-common.js"></script>
+    <script src="../js/quiz.js"></script>
+    <script src="../js/analytics-tracker.js"></script>
+
 </body>
 </html>

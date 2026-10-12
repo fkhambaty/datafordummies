@@ -3,47 +3,137 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>SQL Queries in Metabase | Metabase Course</title>
-    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <title>SQL queries in Metabase | Data For Dummies</title>
     <link rel="stylesheet" href="styles.css">
+    
     <link rel="stylesheet" href="../css/dfd-system.css">
 </head>
-<body data-access="pro">
-    <div class="page-bg-particles" aria-hidden="true"><div class="orb"></div><div class="orb"></div><div class="orb"></div></div>
+<body class="dfd-safe" data-course-id="metabase" data-lesson-id="sql-queries" data-lesson-label="SQL queries" data-total-lessons="9" data-access="pro">
     <div class="container">
-        <nav class="nav">
-            <a href="hub.html"><i class="fas fa-arrow-left"></i> Course Hub</a>
-            <a href="models.html">Models & Metrics <i class="fas fa-arrow-right"></i></a>
+        <nav class="nav" aria-label="Course">
+            <a href="hub.html">Course hub</a>
+            <a href="../index.html">Home</a>
+            <a href="#check">Knowledge check</a>
         </nav>
-        <div class="lesson-hero">
-            <h1>SQL Queries in Metabase</h1>
-            <p>Write native SQL, use variables, create SQL snippets, and build parameterized queries.</p>
-        </div>
-        <div class="section visible">
-            <h2>📚 SQL Queries in Metabase</h2>
-            <p>Write native SQL, use variables, create SQL snippets, and build parameterized queries.</p>
-            <div class="eli5-box">
-                <h4>🧒 ELI5</h4>
-                <p>This lesson covers sql queries in metabase with detailed explanations, real-world examples, code snippets, and interactive exercises. Every concept is broken down into simple analogies that anyone can understand.</p>
+        <header class="lesson-hero" id="top">
+            <p class="course-kicker">Pro · Lesson 5 of 9</p>
+            <h1>SQL queries in Metabase</h1>
+            <p>Native questions use variables, field filters, and optional clauses so a dashboard can drive SQL safely.</p>
+        </header>
+        <div class="dfd-lesson-progress" data-dfd-progress>
+            <p class="dfd-lesson-progress-label" data-dfd-progress-label>Sign in to save your place.</p>
+            <div class="dfd-lesson-progress-track" data-dfd-progress-bar role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-label="Course progress">
+                <div class="dfd-lesson-progress-fill" data-dfd-progress-fill></div>
             </div>
         </div>
-        <div class="lesson-nav">
-            <a href="dashboards.html" class="secondary"><i class="fas fa-arrow-left"></i> Building Dashboards</a>
-            <a href="models.html">Models & Metrics <i class="fas fa-arrow-right"></i></a>
-        </div>
+        <section class="section" data-dfd-reveal><div class="eli5-box"><h4>Picture it this way</h4><p>A SQL question is a letter with blanks. {{status}} is a blank the reader fills in. A field filter is a smarter blank: Metabase knows it is a real column, so it can offer a date picker or a dropdown. Double brackets around a line mean 'leave this line out if the blank is empty'.</p></div></section>
+<section class="section" data-dfd-reveal><h2>Native questions and variables</h2>
+<p>Use the query builder when a reader should change the steps. Use a native SQL question when the logic needs a join, a window, or a warehouse function the builder does not express. Save it in a collection like any other question. It can still sit on a dashboard.</p>
+<p>A variable is written as <code>&#123;&#123;variable&#125;&#125;</code>. In the variable sidebar, set the type. Text, number, and date variables are substituted as values, not as raw SQL fragments, so a reader cannot end the statement and start a new one by typing into the box. That is the point of the widget.</p>
+<div class="code-block"><pre><code>SELECT country, SUM(amount) AS revenue
+FROM orders
+WHERE status = {{status}}
+  AND ordered_at &gt;= {{start_date}}
+GROUP BY country
+ORDER BY revenue DESC</code></pre></div>
+</section>
+<section class="section" data-dfd-reveal><h2>Field filters and optional lines</h2>
+<p>A field filter connects the widget to a real column. You write the column once and let Metabase build the predicate, including "is empty" and date ranges. The SQL names the field, and the widget decides the operator.</p>
+<div class="code-block"><pre><code>SELECT id, country, amount
+FROM orders
+WHERE {{created_at}}
+  [[AND country = {{country}}]]</code></pre></div>
+<p>The line inside <code>[[ ]]</code> is omitted when Country is empty. Without those brackets, an empty widget becomes a filter for blank country, or the query fails. Use optional clauses for filters people are allowed to skip.</p>
+<p>Snippets are reusable SQL fragments saved in Metabase. Use them for a join you repeat. Do not hide a permission check inside a snippet and assume it is security. Permissions are the admin lesson. A snippet is only text.</p>
+<div class="important-box"><h4>Do not concatenate SQL in the warehouse call</h4><p>If you need a dynamic identifier such as a schema name, that is not a value variable. Keep identifiers in the saved SQL. Let widgets pass values only.</p></div>
+</section>
+<section class="section dfd-diagram" data-dfd-diagram data-dfd-reveal><h2>Three kinds of blank</h2><div data-dfd-diagram-panel="one">
+<svg class="dfd-responsive" viewBox="0 0 360 100" role="img" aria-label="Text variable highlighted">
+<rect x="12" y="26" width="104" height="48" rx="8" fill="#0f172a"></rect>
+<text x="64" y="54" text-anchor="middle" font-size="13" fill="#ffffff" font-family="Nunito,sans-serif">Text</text>
+<rect x="128" y="26" width="104" height="48" rx="8" fill="#e2e8f0"></rect>
+<text x="180" y="54" text-anchor="middle" font-size="13" fill="#0f172a" font-family="Nunito,sans-serif">Field</text>
+<rect x="244" y="26" width="104" height="48" rx="8" fill="#e2e8f0"></rect>
+<text x="296" y="54" text-anchor="middle" font-size="13" fill="#0f172a" font-family="Nunito,sans-serif">Optional</text>
+</svg>
+</div><div data-dfd-diagram-panel="two" hidden>
+<svg class="dfd-responsive" viewBox="0 0 360 100" role="img" aria-label="Field filter highlighted">
+<rect x="12" y="26" width="104" height="48" rx="8" fill="#e2e8f0"></rect>
+<text x="64" y="54" text-anchor="middle" font-size="13" fill="#0f172a" font-family="Nunito,sans-serif">Text</text>
+<rect x="128" y="26" width="104" height="48" rx="8" fill="#0f172a"></rect>
+<text x="180" y="54" text-anchor="middle" font-size="13" fill="#ffffff" font-family="Nunito,sans-serif">Field</text>
+<rect x="244" y="26" width="104" height="48" rx="8" fill="#e2e8f0"></rect>
+<text x="296" y="54" text-anchor="middle" font-size="13" fill="#0f172a" font-family="Nunito,sans-serif">Optional</text>
+</svg>
+</div><div data-dfd-diagram-panel="three" hidden>
+<svg class="dfd-responsive" viewBox="0 0 360 100" role="img" aria-label="Optional clause highlighted">
+<rect x="12" y="26" width="104" height="48" rx="8" fill="#e2e8f0"></rect>
+<text x="64" y="54" text-anchor="middle" font-size="13" fill="#0f172a" font-family="Nunito,sans-serif">Text</text>
+<rect x="128" y="26" width="104" height="48" rx="8" fill="#e2e8f0"></rect>
+<text x="180" y="54" text-anchor="middle" font-size="13" fill="#0f172a" font-family="Nunito,sans-serif">Field</text>
+<rect x="244" y="26" width="104" height="48" rx="8" fill="#0f172a"></rect>
+<text x="296" y="54" text-anchor="middle" font-size="13" fill="#ffffff" font-family="Nunito,sans-serif">Optional</text>
+</svg>
+</div><div class="dfd-diagram-controls"><button type="button" data-dfd-diagram-step="one" aria-pressed="true">Value</button><button type="button" data-dfd-diagram-step="two" aria-pressed="false">Field</button><button type="button" data-dfd-diagram-step="three" aria-pressed="false">Optional</button></div></section>
+<section class="section" data-dfd-reveal><h2>Practice</h2>
+<p>Save a native question with one required text variable and one optional clause. Run it with the optional filter empty, then filled. Both runs should succeed, and only the second should restrict that column.</p>
+<p><button type="button" data-dfd-complete>Mark lesson complete</button></p><p data-dfd-complete-status></p>
+</section>
+        <section class="section" id="check" data-dfd-reveal>
+<h2>Knowledge check</h2>
+<section class="dfd-quiz" data-dfd-quiz data-explanation="Widgets pass values. They are not a place to paste extra SQL.">
+<h3 data-dfd-prompt>What does {{status}} pass into the query?</h3>
+<div data-dfd-choices>
+<button type="button" data-correct="false">Any SQL the reader types</button>
+<button type="button" data-correct="true">A typed value, bound by Metabase</button>
+<button type="button" data-correct="false">A new database password</button>
+</div>
+<p class="dfd-quiz-feedback" data-dfd-feedback hidden></p>
+<p class="dfd-quiz-explain" data-dfd-explain hidden></p>
+</section>
+<section class="dfd-quiz" data-dfd-quiz data-explanation="The wrapped clause is included only when its variable is set.">
+<h3 data-dfd-prompt>What do [[ and ]] do?</h3>
+<div data-dfd-choices>
+<button type="button" data-correct="false">They comment the line out forever</button>
+<button type="button" data-correct="true">They make the clause optional</button>
+<button type="button" data-correct="false">They grant access to the table</button>
+</div>
+<p class="dfd-quiz-feedback" data-dfd-feedback hidden></p>
+<p class="dfd-quiz-explain" data-dfd-explain hidden></p>
+</section>
+<section class="dfd-quiz" data-dfd-quiz data-explanation="Use it when the widget should know the real column and offer the right control.">
+<h3 data-dfd-prompt>When should you prefer a field filter?</h3>
+<div data-dfd-choices>
+<button type="button" data-correct="true">When the filter is a real column with a proper widget</button>
+<button type="button" data-correct="false">When you want the reader to rename tables</button>
+<button type="button" data-correct="false">When the SQL must run with no database connection</button>
+</div>
+<p class="dfd-quiz-feedback" data-dfd-feedback hidden></p>
+<p class="dfd-quiz-explain" data-dfd-explain hidden></p>
+</section>
+</section>
+        <section class="section" data-dfd-reveal>
+            <h2>Official sources</h2>
+            <p>Checked against vendor documentation in October 2026. Screens and plan names still change, so confirm the control in your own instance.</p>
+            <ul class="source-list"><li><a href="https://www.metabase.com/docs/latest/questions/native-editor/sql-parameters" target="_blank" rel="noopener noreferrer">SQL parameters</a></li>
+<li><a href="https://www.metabase.com/docs/latest/questions/native-editor/field-filters" target="_blank" rel="noopener noreferrer">Field filters</a></li>
+<li><a href="https://www.metabase.com/docs/latest/questions/native-editor/sql-snippets" target="_blank" rel="noopener noreferrer">SQL snippets</a></li></ul>
+        </section>
+        <nav class="lesson-nav" aria-label="Lesson order">
+            <a class="secondary" href="dashboards.html">Previous: Dashboards</a>
+            <a href="models.html">Next: Models and metrics</a>
+        </nav>
     </div>
-    <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        document.querySelectorAll('.section:not(.visible)').forEach(function(s) {
-            new IntersectionObserver(function(e) { if (e[0].isIntersecting) e[0].target.classList.add('visible'); }, {threshold:0.1}).observe(s);
-        });
-    });
-    </script>
+
     <script src="../js/code-copy.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="../js/supabase-config.js"></script>
     <script src="../js/supabase-auth.js"></script>
     <script src="../js/paywall.js"></script>
+    <script src="../js/progress.js"></script>
+    <script src="../js/lesson-common.js"></script>
+    <script src="../js/quiz.js"></script>
+    <script src="../js/analytics-tracker.js"></script>
+
 </body>
 </html>

@@ -6,3 +6,18 @@
     --course-accent:  #4169E1;
     --bg-page: linear-gradient(160deg, #f0f4ff 0%, #e8eeff 40%, #f5f3ff 70%, #eef2ff 100%);
 }
+
+.source-list { margin: 12px 0 0 1.2rem; color: var(--text-secondary); }
+.source-list a { color: var(--course-primary); font-weight: 700; }
+
+.course-kicker {
+    display: inline-block;
+    margin-bottom: 12px;
+    padding: 4px 12px;
+    border-radius: 999px;
+    background: rgba(65, 105, 225, 0.14);
+    color: var(--course-primary);
+    font-size: 0.78rem;
+    font-weight: 800;
+    letter-spacing: 0.04em;
+}

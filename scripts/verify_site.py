@@ -75,10 +75,9 @@ BASELINE_FRAGMENTS = frozenset({
     "terraform_course/hub.html -> index.html#workspaces",
 })
 
-# Full lesson that already had data-access="pro" without the paywall scripts.
-BASELINE_PAYWALL_GAPS = frozenset({
-    "python_course/s13-dataviz.html",
-})
+# Pro pages that already lacked paywall scripts before this checker existed.
+# Empty once python_course/s13-dataviz.html gained the scripts.
+BASELINE_PAYWALL_GAPS = frozenset()
 
 
 class PageParser(HTMLParser):
@@ -269,6 +268,11 @@ def check_site(root: Path) -> dict[str, list[str] | int]:
                 continue
             if target.resolve() not in parsed:
                 continue
+            # A hub is a course map. ClickHouse and Redshift link each other's
+            # short hubs. That is not an unfinished lesson. Lesson pages stay
+            # subject to the line and boilerplate checks.
+            if target.name == "hub.html":
+                continue
             target_text, _parser = parsed[target.resolve()]
             lines = len(target_text.splitlines())
             phrases = boilerplate_hits(target_text)
@@ -338,7 +342,17 @@ def self_test() -> int:
             """<!DOCTYPE html><html><head>
             <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
             <link rel="stylesheet" href="css/dfd-system.css"></head>
-            <body><a href="tiny.html">Tiny</a></body></html>""",
+            <body><a href="tiny.html">Tiny</a>
+            <a href="clickhouse_course/hub.html">ClickHouse hub</a></body></html>""",
+            encoding="utf-8",
+        )
+        short_hub = root / "clickhouse_course"
+        short_hub.mkdir()
+        (short_hub / "hub.html").write_text(
+            """<!DOCTYPE html><html><head>
+            <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+            <link rel="stylesheet" href="../css/dfd-system.css"></head>
+            <body><p>Course map.</p></body></html>""",
             encoding="utf-8",
         )
         (root / "tiny.html").write_text(
@@ -398,6 +412,8 @@ def self_test() -> int:
             problems.append("clean pages were marked failed")
         if any("tiny.html" in line and line.startswith("FAIL") for line in result["failures"]):
             problems.append("stub was a hard failure")
+        if any("clickhouse_course/hub.html" in line for line in result["warnings"]):
+            problems.append("short hub was treated as a lesson stub")
         if problems:
             print("SELF-TEST fail")
             print("\n".join(problems))

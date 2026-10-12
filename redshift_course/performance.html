@@ -3,75 +3,140 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>Performance Tuning | Redshift Course</title>
-    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <title>Redshift performance | Data For Dummies</title>
     <link rel="stylesheet" href="styles.css">
+    
     <link rel="stylesheet" href="../css/dfd-system.css">
 </head>
-<body data-access="pro">
-    <div class="page-bg-particles" aria-hidden="true"><div class="orb"></div><div class="orb"></div><div class="orb"></div></div>
+<body class="dfd-safe" data-course-id="redshift" data-lesson-id="performance" data-lesson-label="Performance" data-total-lessons="9" data-access="pro">
     <div class="container">
-        <nav class="nav">
-            <a href="hub.html"><i class="fas fa-arrow-left"></i> Course Hub</a>
-            <a href="spectrum-serverless.html">Spectrum <i class="fas fa-arrow-right"></i></a>
+        <nav class="nav" aria-label="Course">
+            <a href="hub.html">Course hub</a>
+            <a href="../index.html">Home</a>
+            <a href="#check">Knowledge check</a>
         </nav>
-        <div class="lesson-hero">
-            <h1>Performance Tuning</h1>
-            <p>EXPLAIN plans, WLM queues, concurrency scaling, query optimization, and the STL/SVL system tables.</p>
-        </div>
-
-        <div class="section visible">
-            <h2>📚 Performance Tuning</h2>
-            <p>EXPLAIN plans, WLM queues, concurrency scaling, query optimization, and the STL/SVL system tables.</p>
-            <div class="eli5-box">
-                <h4>🧒 ELI5 Coming Up!</h4>
-                <p>This lesson covers performance tuning in depth with real-world examples, code snippets, animated diagrams, and hands-on exercises. Every concept is explained like you're 5 years old with layman analogies.</p>
+        <header class="lesson-hero" id="top">
+            <p class="course-kicker">Pro · Lesson 7 of 9</p>
+            <h1>Performance</h1>
+            <p>Separate queue time, scan time, and data movement. Automatic WLM and materialized views come after the query is honest.</p>
+        </header>
+        <div class="dfd-lesson-progress" data-dfd-progress>
+            <p class="dfd-lesson-progress-label" data-dfd-progress-label>Sign in to save your place.</p>
+            <div class="dfd-lesson-progress-track" data-dfd-progress-bar role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-label="Course progress">
+                <div class="dfd-lesson-progress-fill" data-dfd-progress-fill></div>
             </div>
         </div>
-        <div class="section">
-            <h2>⚡ Performance Tuning</h2>
-            <div class="code-block"><pre><span class="comment">-- Check query execution plan</span>
-<span class="keyword">EXPLAIN</span> <span class="keyword">SELECT</span> * <span class="keyword">FROM</span> orders <span class="keyword">WHERE</span> order_date > <span class="string">'2024-01-01'</span>;
-
-<span class="comment">-- Find slow queries</span>
-<span class="keyword">SELECT</span> query, elapsed, substring
-<span class="keyword">FROM</span> svl_qlog
-<span class="keyword">ORDER BY</span> elapsed <span class="keyword">DESC</span>
-<span class="keyword">LIMIT</span> 10;
-
-<span class="comment">-- Check table statistics</span>
-<span class="keyword">SELECT</span> * <span class="keyword">FROM</span> svv_table_info <span class="keyword">WHERE</span> "table" = <span class="string">'orders'</span>;
-
-<span class="comment">-- Vacuum and analyze (maintenance)</span>
-<span class="keyword">VACUUM</span> orders;
-<span class="keyword">ANALYZE</span> orders;</pre></div>
-            <div class="important-box">
-                <h4>⚠️ Top Performance Killers</h4>
-                <ul style="padding-left: 20px; color: #cbd5e1; margin-top: 10px;">
-                    <li>Wrong DISTKEY → data skew → one node does all the work</li>
-                    <li>Missing SORTKEY → full table scans on filtered queries</li>
-                    <li>Not running VACUUM → dead rows waste space</li>
-                    <li>Too many concurrent queries → use WLM queues</li>
-                </ul>
-            </div>
-        </div>
-        <div class="lesson-nav">
-            <a href="table-design.html" class="secondary"><i class="fas fa-arrow-left"></i> Table Design</a>
-            <a href="spectrum-serverless.html">Spectrum <i class="fas fa-arrow-right"></i></a>
-        </div>
+        <section class="section" data-dfd-reveal><div class="eli5-box"><h4>Picture it this way</h4><p>A slow query is either waiting in line, reading too much, or moving data between slices. Workload management is the line. Sort and encoding are how much gets read. Distribution is how often slices pass plates. A result cache is a plate that was already served, useful only if the question did not change.</p></div></section>
+<section class="section" data-dfd-reveal><h2>Look at the query before you resize</h2>
+<p>Read <code>SYS_QUERY_HISTORY</code> and the query plan. <code>EXPLAIN</code> shows the planned slices and joins. A long time spent in a queue is workload management, not a missing sort key. Automatic WLM is the right start: short queries and long queries get separate slots, and you add a query monitoring rule when one pattern must be aborted or hopped.</p>
+<p>Concurrency scaling adds transient capacity for queued queries on clusters that support it. It is a pressure valve, not a design. If every dashboard queues at 9am, the dashboards are doing too much work, or the schedule is stacked.</p>
+<div class="code-block"><pre><code>EXPLAIN
+SELECT customer_id, SUM(amount)
+FROM analytics.orders
+WHERE ordered_at &gt;= DATE &#x27;2026-01-01&#x27;
+GROUP BY 1;</code></pre></div>
+</section>
+<section class="section" data-dfd-reveal><h2>Materialized views and the result cache</h2>
+<p>A materialized view stores the result of a heavy aggregation. Refresh it on a schedule you can explain. Querying the view is then a read of a smaller table. The result cache can skip work when the same SQL returns and the underlying data has not changed. Do not design a dashboard that depends on the cache being warm. Write SQL that is cheap enough when the cache misses.</p>
+<table class="comparison-table dfd-scroll">
+<thead>
+<tr><th>Symptom</th><th>Likely layer</th><th>First check</th></tr>
+</thead>
+<tbody>
+<tr><td>Queued, not running</td><td>WLM</td><td>Queue time in the history view</td></tr>
+<tr><td>Scanning most of a sorted table</td><td>Sort key or filter</td><td>EXPLAIN and the WHERE clause</td></tr>
+<tr><td>High network or redistribute</td><td>Distribution</td><td>Join keys versus DISTKEY</td></tr>
+<tr><td>Fine alone, slow at 9am</td><td>Concurrency</td><td>How many dashboards start together</td></tr>
+</tbody>
+</table>
+</section>
+<section class="section dfd-diagram" data-dfd-diagram data-dfd-reveal><h2>Three places time goes</h2><div data-dfd-diagram-panel="one">
+<svg class="dfd-responsive" viewBox="0 0 360 100" role="img" aria-label="Queue highlighted">
+<rect x="12" y="26" width="104" height="48" rx="8" fill="#0f172a"></rect>
+<text x="64" y="54" text-anchor="middle" font-size="13" fill="#ffffff" font-family="Nunito,sans-serif">Queue</text>
+<rect x="128" y="26" width="104" height="48" rx="8" fill="#e2e8f0"></rect>
+<text x="180" y="54" text-anchor="middle" font-size="13" fill="#0f172a" font-family="Nunito,sans-serif">Scan</text>
+<rect x="244" y="26" width="104" height="48" rx="8" fill="#e2e8f0"></rect>
+<text x="296" y="54" text-anchor="middle" font-size="13" fill="#0f172a" font-family="Nunito,sans-serif">Cache</text>
+</svg>
+</div><div data-dfd-diagram-panel="two" hidden>
+<svg class="dfd-responsive" viewBox="0 0 360 100" role="img" aria-label="Scan highlighted">
+<rect x="12" y="26" width="104" height="48" rx="8" fill="#e2e8f0"></rect>
+<text x="64" y="54" text-anchor="middle" font-size="13" fill="#0f172a" font-family="Nunito,sans-serif">Queue</text>
+<rect x="128" y="26" width="104" height="48" rx="8" fill="#0f172a"></rect>
+<text x="180" y="54" text-anchor="middle" font-size="13" fill="#ffffff" font-family="Nunito,sans-serif">Scan</text>
+<rect x="244" y="26" width="104" height="48" rx="8" fill="#e2e8f0"></rect>
+<text x="296" y="54" text-anchor="middle" font-size="13" fill="#0f172a" font-family="Nunito,sans-serif">Cache</text>
+</svg>
+</div><div data-dfd-diagram-panel="three" hidden>
+<svg class="dfd-responsive" viewBox="0 0 360 100" role="img" aria-label="Cache highlighted">
+<rect x="12" y="26" width="104" height="48" rx="8" fill="#e2e8f0"></rect>
+<text x="64" y="54" text-anchor="middle" font-size="13" fill="#0f172a" font-family="Nunito,sans-serif">Queue</text>
+<rect x="128" y="26" width="104" height="48" rx="8" fill="#e2e8f0"></rect>
+<text x="180" y="54" text-anchor="middle" font-size="13" fill="#0f172a" font-family="Nunito,sans-serif">Scan</text>
+<rect x="244" y="26" width="104" height="48" rx="8" fill="#0f172a"></rect>
+<text x="296" y="54" text-anchor="middle" font-size="13" fill="#ffffff" font-family="Nunito,sans-serif">Cache</text>
+</svg>
+</div><div class="dfd-diagram-controls"><button type="button" data-dfd-diagram-step="one" aria-pressed="true">Queue</button><button type="button" data-dfd-diagram-step="two" aria-pressed="false">Scan</button><button type="button" data-dfd-diagram-step="three" aria-pressed="false">Cache</button></div></section>
+<section class="section" data-dfd-reveal><h2>Practice</h2>
+<p>Explain one aggregation. Write down whether you expect a queue, a large scan, or a redistribute. Then look at a recent row in <code>SYS_QUERY_HISTORY</code> and see which of those the warehouse recorded. Change the SQL before you change the cluster size.</p>
+<p><button type="button" data-dfd-complete>Mark lesson complete</button></p><p data-dfd-complete-status></p>
+</section>
+        <section class="section" id="check" data-dfd-reveal>
+<h2>Knowledge check</h2>
+<section class="dfd-quiz" data-dfd-quiz data-explanation="Queue time is workload management, not a sort key.">
+<h3 data-dfd-prompt>A query that sits queued is which problem?</h3>
+<div data-dfd-choices>
+<button type="button" data-correct="true">Workload management</button>
+<button type="button" data-correct="false">A missing encoding on one column</button>
+<button type="button" data-correct="false">A public security group</button>
+</div>
+<p class="dfd-quiz-feedback" data-dfd-feedback hidden></p>
+<p class="dfd-quiz-explain" data-dfd-explain hidden></p>
+</section>
+<section class="dfd-quiz" data-dfd-quiz data-explanation="The plan and the history tell you whether size is the issue.">
+<h3 data-dfd-prompt>What should you read before you add nodes?</h3>
+<div data-dfd-choices>
+<button type="button" data-correct="true">EXPLAIN and SYS_QUERY_HISTORY</button>
+<button type="button" data-correct="false">Only the monthly bill</button>
+<button type="button" data-correct="false">The browser console</button>
+</div>
+<p class="dfd-quiz-feedback" data-dfd-feedback hidden></p>
+<p class="dfd-quiz-explain" data-dfd-explain hidden></p>
+</section>
+<section class="dfd-quiz" data-dfd-quiz data-explanation="It stores an aggregation so readers do not repeat the heavy query.">
+<h3 data-dfd-prompt>What is a materialized view for?</h3>
+<div data-dfd-choices>
+<button type="button" data-correct="true">A stored result you refresh</button>
+<button type="button" data-correct="false">A second leader node</button>
+<button type="button" data-correct="false">A public link to S3</button>
+</div>
+<p class="dfd-quiz-feedback" data-dfd-feedback hidden></p>
+<p class="dfd-quiz-explain" data-dfd-explain hidden></p>
+</section>
+</section>
+        <section class="section" data-dfd-reveal>
+            <h2>Official sources</h2>
+            <p>Checked against vendor documentation in October 2026. Screens and plan names still change, so confirm the control in your own instance.</p>
+            <ul class="source-list"><li><a href="https://docs.aws.amazon.com/redshift/latest/dg/c_workload_mngmt_classification.html" target="_blank" rel="noopener noreferrer">Workload management</a></li>
+<li><a href="https://docs.aws.amazon.com/redshift/latest/dg/cm-c-wlm-query-monitoring-rules.html" target="_blank" rel="noopener noreferrer">Query monitoring rules</a></li>
+<li><a href="https://docs.aws.amazon.com/redshift/latest/dg/materialized-view-overview.html" target="_blank" rel="noopener noreferrer">Materialized views</a></li></ul>
+        </section>
+        <nav class="lesson-nav" aria-label="Lesson order">
+            <a class="secondary" href="table-design.html">Previous: Table design</a>
+            <a href="spectrum-serverless.html">Next: Spectrum and Serverless</a>
+        </nav>
     </div>
-    <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        document.querySelectorAll('.section:not(.visible)').forEach(function(s) {
-            new IntersectionObserver(function(e) { if (e[0].isIntersecting) e[0].target.classList.add('visible'); }, {threshold:0.1}).observe(s);
-        });
-    });
-    </script>
+
     <script src="../js/code-copy.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="../js/supabase-config.js"></script>
     <script src="../js/supabase-auth.js"></script>
     <script src="../js/paywall.js"></script>
+    <script src="../js/progress.js"></script>
+    <script src="../js/lesson-common.js"></script>
+    <script src="../js/quiz.js"></script>
+    <script src="../js/analytics-tracker.js"></script>
+
 </body>
 </html>

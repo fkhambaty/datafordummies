@@ -3,47 +3,138 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>Asking Questions | Metabase Course</title>
-    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <title>Asking questions | Data For Dummies</title>
     <link rel="stylesheet" href="styles.css">
+    
     <link rel="stylesheet" href="../css/dfd-system.css">
 </head>
-<body data-access="pro">
-    <div class="page-bg-particles" aria-hidden="true"><div class="orb"></div><div class="orb"></div><div class="orb"></div></div>
+<body class="dfd-safe" data-course-id="metabase" data-lesson-id="questions" data-lesson-label="Asking questions" data-total-lessons="9" data-access="pro">
     <div class="container">
-        <nav class="nav">
-            <a href="hub.html"><i class="fas fa-arrow-left"></i> Course Hub</a>
-            <a href="dashboards.html">Building Dashboards <i class="fas fa-arrow-right"></i></a>
+        <nav class="nav" aria-label="Course">
+            <a href="hub.html">Course hub</a>
+            <a href="../index.html">Home</a>
+            <a href="#check">Knowledge check</a>
         </nav>
-        <div class="lesson-hero">
-            <h1>Asking Questions</h1>
-            <p>The Simple, Custom, and Native query modes. Build charts without writing SQL.</p>
-        </div>
-        <div class="section visible">
-            <h2>📚 Asking Questions</h2>
-            <p>The Simple, Custom, and Native query modes. Build charts without writing SQL.</p>
-            <div class="eli5-box">
-                <h4>🧒 ELI5</h4>
-                <p>This lesson covers asking questions with detailed explanations, real-world examples, code snippets, and interactive exercises. Every concept is broken down into simple analogies that anyone can understand.</p>
+        <header class="lesson-hero" id="top">
+            <p class="course-kicker">Pro · Lesson 3 of 9</p>
+            <h1>Asking questions</h1>
+            <p>The query builder is a notebook: filter rows, summarize them, and draw the result.</p>
+        </header>
+        <div class="dfd-lesson-progress" data-dfd-progress>
+            <p class="dfd-lesson-progress-label" data-dfd-progress-label>Sign in to save your place.</p>
+            <div class="dfd-lesson-progress-track" data-dfd-progress-bar role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-label="Course progress">
+                <div class="dfd-lesson-progress-fill" data-dfd-progress-fill></div>
             </div>
         </div>
-        <div class="lesson-nav">
-            <a href="installation.html" class="secondary"><i class="fas fa-arrow-left"></i> Installation & Setup</a>
-            <a href="dashboards.html">Building Dashboards <i class="fas fa-arrow-right"></i></a>
-        </div>
+        <section class="section" data-dfd-reveal><div class="eli5-box"><h4>Picture it this way</h4><p>The query builder is a stack of instructions. First you point at a table. Then you throw away rows you do not want. Then you squash the remaining rows into a number or a group. The chart is only the last instruction, drawn on screen.</p></div></section>
+<section class="section" data-dfd-reveal><h2>Build a question without SQL</h2>
+<p>Open New, then Question, and pick a table. The notebook editor adds steps. A filter keeps rows. Summarize turns many rows into fewer rows: a count, a sum, an average, or a distinct count. Group by decides the buckets. Sort and row limit decide what the chart is allowed to show.</p>
+<p>Save the question into a collection as soon as it answers something a colleague would ask again. An unsaved question disappears with the tab.</p>
+<table class="comparison-table dfd-scroll">
+<thead>
+<tr><th>Step</th><th>Changes</th><th>Example</th></tr>
+</thead>
+<tbody>
+<tr><td>Filter</td><td>Which rows</td><td>Status is paid</td></tr>
+<tr><td>Summarize</td><td>How to squash rows</td><td>Sum of amount</td></tr>
+<tr><td>Group by</td><td>The buckets</td><td>Month, or country</td></tr>
+<tr><td>Sort and limit</td><td>What is visible</td><td>Top 10 products</td></tr>
+<tr><td>Visualize</td><td>How it is drawn</td><td>Bar, line, number, map, table</td></tr>
+</tbody>
+</table>
+</section>
+<section class="section" data-dfd-reveal><h2>Pick a chart that matches the grain</h2>
+<p>A single number is right when the question is one measure, such as revenue this month. A line is right when the group is time. A bar is right when the group is a category. A table is right when the reader needs the rows, not a picture of them. A map needs a geographic column Metabase recognizes.</p>
+<p>If the number looks wrong, check the filter and the grain before you restyle the chart. Summing an amount that is already a monthly total will double-count. Counting orders when the table is order lines will over-count orders.</p>
+<div class="pro-tip"><h4>Name the question as the answer</h4><p>"Paid revenue by month" is a question a person can find. "Query 3" is a question they will rebuild.</p></div>
+</section>
+<section class="section dfd-diagram" data-dfd-diagram data-dfd-reveal><h2>Three steps, in order</h2><div data-dfd-diagram-panel="one">
+<svg class="dfd-responsive" viewBox="0 0 360 100" role="img" aria-label="Filter step highlighted">
+<rect x="12" y="26" width="104" height="48" rx="8" fill="#0f172a"></rect>
+<text x="64" y="54" text-anchor="middle" font-size="13" fill="#ffffff" font-family="Nunito,sans-serif">Filter</text>
+<rect x="128" y="26" width="104" height="48" rx="8" fill="#e2e8f0"></rect>
+<text x="180" y="54" text-anchor="middle" font-size="13" fill="#0f172a" font-family="Nunito,sans-serif">Summarize</text>
+<rect x="244" y="26" width="104" height="48" rx="8" fill="#e2e8f0"></rect>
+<text x="296" y="54" text-anchor="middle" font-size="13" fill="#0f172a" font-family="Nunito,sans-serif">Chart</text>
+</svg>
+</div><div data-dfd-diagram-panel="two" hidden>
+<svg class="dfd-responsive" viewBox="0 0 360 100" role="img" aria-label="Summarize step highlighted">
+<rect x="12" y="26" width="104" height="48" rx="8" fill="#e2e8f0"></rect>
+<text x="64" y="54" text-anchor="middle" font-size="13" fill="#0f172a" font-family="Nunito,sans-serif">Filter</text>
+<rect x="128" y="26" width="104" height="48" rx="8" fill="#0f172a"></rect>
+<text x="180" y="54" text-anchor="middle" font-size="13" fill="#ffffff" font-family="Nunito,sans-serif">Summarize</text>
+<rect x="244" y="26" width="104" height="48" rx="8" fill="#e2e8f0"></rect>
+<text x="296" y="54" text-anchor="middle" font-size="13" fill="#0f172a" font-family="Nunito,sans-serif">Chart</text>
+</svg>
+</div><div data-dfd-diagram-panel="three" hidden>
+<svg class="dfd-responsive" viewBox="0 0 360 100" role="img" aria-label="Chart step highlighted">
+<rect x="12" y="26" width="104" height="48" rx="8" fill="#e2e8f0"></rect>
+<text x="64" y="54" text-anchor="middle" font-size="13" fill="#0f172a" font-family="Nunito,sans-serif">Filter</text>
+<rect x="128" y="26" width="104" height="48" rx="8" fill="#e2e8f0"></rect>
+<text x="180" y="54" text-anchor="middle" font-size="13" fill="#0f172a" font-family="Nunito,sans-serif">Summarize</text>
+<rect x="244" y="26" width="104" height="48" rx="8" fill="#0f172a"></rect>
+<text x="296" y="54" text-anchor="middle" font-size="13" fill="#ffffff" font-family="Nunito,sans-serif">Chart</text>
+</svg>
+</div><div class="dfd-diagram-controls"><button type="button" data-dfd-diagram-step="one" aria-pressed="true">Filter</button><button type="button" data-dfd-diagram-step="two" aria-pressed="false">Summarize</button><button type="button" data-dfd-diagram-step="three" aria-pressed="false">Chart</button></div></section>
+<section class="section" data-dfd-reveal><h2>Practice</h2>
+<p>On a table you are allowed to read, build one question that filters to a single status, groups by a date or a category, and saves a bar or a line. Open it again from the collection. If you cannot find it, it was not saved.</p>
+<p><button type="button" data-dfd-complete>Mark lesson complete</button></p><p data-dfd-complete-status></p>
+</section>
+        <section class="section" id="check" data-dfd-reveal>
+<h2>Knowledge check</h2>
+<section class="dfd-quiz" data-dfd-quiz data-explanation="Summarize aggregates rows. It does not keep every source row.">
+<h3 data-dfd-prompt>What does Summarize do?</h3>
+<div data-dfd-choices>
+<button type="button" data-correct="false">It copies the table into a spreadsheet</button>
+<button type="button" data-correct="true">It turns many rows into a measure, often by group</button>
+<button type="button" data-correct="false">It grants database access</button>
+</div>
+<p class="dfd-quiz-feedback" data-dfd-feedback hidden></p>
+<p class="dfd-quiz-explain" data-dfd-explain hidden></p>
+</section>
+<section class="dfd-quiz" data-dfd-quiz data-explanation="A line shows a measure across time. A category list is usually a bar or a table.">
+<h3 data-dfd-prompt>When is a line chart the right default?</h3>
+<div data-dfd-choices>
+<button type="button" data-correct="true">When the grouped column is a date</button>
+<button type="button" data-correct="false">When you need every raw column</button>
+<button type="button" data-correct="false">When the question has not been saved</button>
+</div>
+<p class="dfd-quiz-feedback" data-dfd-feedback hidden></p>
+<p class="dfd-quiz-explain" data-dfd-explain hidden></p>
+</section>
+<section class="dfd-quiz" data-dfd-quiz data-explanation="The builder session is not the collection. Save before you close the tab.">
+<h3 data-dfd-prompt>Where does an unsaved question go?</h3>
+<div data-dfd-choices>
+<button type="button" data-correct="false">Into the warehouse automatically</button>
+<button type="button" data-correct="true">Nowhere durable. Save it into a collection</button>
+<button type="button" data-correct="false">Into every dashboard</button>
+</div>
+<p class="dfd-quiz-feedback" data-dfd-feedback hidden></p>
+<p class="dfd-quiz-explain" data-dfd-explain hidden></p>
+</section>
+</section>
+        <section class="section" data-dfd-reveal>
+            <h2>Official sources</h2>
+            <p>Checked against vendor documentation in October 2026. Screens and plan names still change, so confirm the control in your own instance.</p>
+            <ul class="source-list"><li><a href="https://www.metabase.com/docs/latest/questions/introduction" target="_blank" rel="noopener noreferrer">Asking questions</a></li>
+<li><a href="https://www.metabase.com/docs/latest/questions/query-builder/editor" target="_blank" rel="noopener noreferrer">Query builder</a></li>
+<li><a href="https://www.metabase.com/docs/latest/questions/visualizations/visualizing-results" target="_blank" rel="noopener noreferrer">Visualizing results</a></li></ul>
+        </section>
+        <nav class="lesson-nav" aria-label="Lesson order">
+            <a class="secondary" href="installation.html">Previous: Installation and setup</a>
+            <a href="dashboards.html">Next: Dashboards</a>
+        </nav>
     </div>
-    <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        document.querySelectorAll('.section:not(.visible)').forEach(function(s) {
-            new IntersectionObserver(function(e) { if (e[0].isIntersecting) e[0].target.classList.add('visible'); }, {threshold:0.1}).observe(s);
-        });
-    });
-    </script>
+
     <script src="../js/code-copy.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="../js/supabase-config.js"></script>
     <script src="../js/supabase-auth.js"></script>
     <script src="../js/paywall.js"></script>
+    <script src="../js/progress.js"></script>
+    <script src="../js/lesson-common.js"></script>
+    <script src="../js/quiz.js"></script>
+    <script src="../js/analytics-tracker.js"></script>
+
 </body>
 </html>

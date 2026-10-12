@@ -3,47 +3,137 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>Administration | Metabase Course</title>
-    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <title>Administration | Data For Dummies</title>
     <link rel="stylesheet" href="styles.css">
+    
     <link rel="stylesheet" href="../css/dfd-system.css">
 </head>
-<body data-access="pro">
-    <div class="page-bg-particles" aria-hidden="true"><div class="orb"></div><div class="orb"></div><div class="orb"></div></div>
+<body class="dfd-safe" data-course-id="metabase" data-lesson-id="admin" data-lesson-label="Administration" data-total-lessons="9" data-access="pro">
     <div class="container">
-        <nav class="nav">
-            <a href="hub.html"><i class="fas fa-arrow-left"></i> Course Hub</a>
-            <a href="production.html">Production Deployment <i class="fas fa-arrow-right"></i></a>
+        <nav class="nav" aria-label="Course">
+            <a href="hub.html">Course hub</a>
+            <a href="../index.html">Home</a>
+            <a href="#check">Knowledge check</a>
         </nav>
-        <div class="lesson-hero">
+        <header class="lesson-hero" id="top">
+            <p class="course-kicker">Pro · Lesson 8 of 9</p>
             <h1>Administration</h1>
-            <p>User management, permissions, data sandboxing, caching, and performance tuning.</p>
-        </div>
-        <div class="section visible">
-            <h2>📚 Administration</h2>
-            <p>User management, permissions, data sandboxing, caching, and performance tuning.</p>
-            <div class="eli5-box">
-                <h4>🧒 ELI5</h4>
-                <p>This lesson covers administration with detailed explanations, real-world examples, code snippets, and interactive exercises. Every concept is broken down into simple analogies that anyone can understand.</p>
+            <p>Groups, data permissions, collection permissions, sandboxes, and the audit log decide who sees which rows.</p>
+        </header>
+        <div class="dfd-lesson-progress" data-dfd-progress>
+            <p class="dfd-lesson-progress-label" data-dfd-progress-label>Sign in to save your place.</p>
+            <div class="dfd-lesson-progress-track" data-dfd-progress-bar role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-label="Course progress">
+                <div class="dfd-lesson-progress-fill" data-dfd-progress-fill></div>
             </div>
         </div>
-        <div class="lesson-nav">
-            <a href="sharing.html" class="secondary"><i class="fas fa-arrow-left"></i> Sharing & Embedding</a>
-            <a href="production.html">Production Deployment <i class="fas fa-arrow-right"></i></a>
-        </div>
+        <section class="section" data-dfd-reveal><div class="eli5-box"><h4>Picture it this way</h4><p>Administration is the door list. Groups are the clubs. Data permissions say which tables a club may read. Collection permissions say which folders of questions they may open. A sandbox is a rule that a person only sees their own rows, even on a table the club can query.</p></div></section>
+<section class="section" data-dfd-reveal><h2>People, groups, and two permission layers</h2>
+<p>Put people in groups. Grant access to groups, not to a long list of individuals. Data permissions control the database: which schemas and tables a group can view, and whether they can build native SQL or download results. Collection permissions control the saved content: view or curate.</p>
+<p>A person can be allowed to query a table and still be blocked from a collection. Both layers have to say yes before they see a chart that uses that table. Admins bypass these layers. Keep the admin group small.</p>
+<table class="comparison-table dfd-scroll">
+<thead>
+<tr><th>Permission</th><th>Controls</th><th>Typical grant</th></tr>
+</thead>
+<tbody>
+<tr><td>Data access</td><td>Tables and native SQL</td><td>Analysts on the models schema</td></tr>
+<tr><td>Download</td><td>Export of results</td><td>Only groups that need a file</td></tr>
+<tr><td>Collection curate</td><td>Who can edit questions</td><td>The team that owns the folder</td></tr>
+<tr><td>Collection view</td><td>Who can open questions</td><td>The readers of that team</td></tr>
+</tbody>
+</table>
+</section>
+<section class="section" data-dfd-reveal><h2>Sandboxes, SSO, and the audit</h2>
+<p>A sandbox, sometimes called row-level security in the product, adds a filter Metabase enforces for a group. Use it when one table holds many customers and each user may see only their rows. Test with a user in that group. An admin preview is not the test, because admins are not sandboxed.</p>
+<p>SSO with SAML or JWT, sandboxes, and the audit log are paid features. The audit log answers who viewed or changed what. Turn it on when the data is sensitive enough that you will be asked. Impersonation, where Metabase connects to the warehouse as a database role that matches the viewer, is another paid path. Use it when the warehouse, not Metabase, should be the enforcement point.</p>
+<div class="important-box"><h4>Downloading is a copy</h4><p>A group that can download results can walk away with those rows. Turn download off for groups that only need to look.</p></div>
+</section>
+<section class="section dfd-diagram" data-dfd-diagram data-dfd-reveal><h2>What an admin sets</h2><div data-dfd-diagram-panel="one">
+<svg class="dfd-responsive" viewBox="0 0 360 100" role="img" aria-label="People highlighted">
+<rect x="12" y="26" width="104" height="48" rx="8" fill="#0f172a"></rect>
+<text x="64" y="54" text-anchor="middle" font-size="13" fill="#ffffff" font-family="Nunito,sans-serif">People</text>
+<rect x="128" y="26" width="104" height="48" rx="8" fill="#e2e8f0"></rect>
+<text x="180" y="54" text-anchor="middle" font-size="13" fill="#0f172a" font-family="Nunito,sans-serif">Data</text>
+<rect x="244" y="26" width="104" height="48" rx="8" fill="#e2e8f0"></rect>
+<text x="296" y="54" text-anchor="middle" font-size="13" fill="#0f172a" font-family="Nunito,sans-serif">Audit</text>
+</svg>
+</div><div data-dfd-diagram-panel="two" hidden>
+<svg class="dfd-responsive" viewBox="0 0 360 100" role="img" aria-label="Data permissions highlighted">
+<rect x="12" y="26" width="104" height="48" rx="8" fill="#e2e8f0"></rect>
+<text x="64" y="54" text-anchor="middle" font-size="13" fill="#0f172a" font-family="Nunito,sans-serif">People</text>
+<rect x="128" y="26" width="104" height="48" rx="8" fill="#0f172a"></rect>
+<text x="180" y="54" text-anchor="middle" font-size="13" fill="#ffffff" font-family="Nunito,sans-serif">Data</text>
+<rect x="244" y="26" width="104" height="48" rx="8" fill="#e2e8f0"></rect>
+<text x="296" y="54" text-anchor="middle" font-size="13" fill="#0f172a" font-family="Nunito,sans-serif">Audit</text>
+</svg>
+</div><div data-dfd-diagram-panel="three" hidden>
+<svg class="dfd-responsive" viewBox="0 0 360 100" role="img" aria-label="Audit highlighted">
+<rect x="12" y="26" width="104" height="48" rx="8" fill="#e2e8f0"></rect>
+<text x="64" y="54" text-anchor="middle" font-size="13" fill="#0f172a" font-family="Nunito,sans-serif">People</text>
+<rect x="128" y="26" width="104" height="48" rx="8" fill="#e2e8f0"></rect>
+<text x="180" y="54" text-anchor="middle" font-size="13" fill="#0f172a" font-family="Nunito,sans-serif">Data</text>
+<rect x="244" y="26" width="104" height="48" rx="8" fill="#0f172a"></rect>
+<text x="296" y="54" text-anchor="middle" font-size="13" fill="#ffffff" font-family="Nunito,sans-serif">Audit</text>
+</svg>
+</div><div class="dfd-diagram-controls"><button type="button" data-dfd-diagram-step="one" aria-pressed="true">People</button><button type="button" data-dfd-diagram-step="two" aria-pressed="false">Data</button><button type="button" data-dfd-diagram-step="three" aria-pressed="false">Audit</button></div></section>
+<section class="section" data-dfd-reveal><h2>Practice</h2>
+<p>Create a group that can view one collection and one schema, and cannot download. Sign in as a user in that group. Confirm a curated question opens and a question in another collection does not. If you use sandboxes, confirm another customer's key returns no rows.</p>
+<p><button type="button" data-dfd-complete>Mark lesson complete</button></p><p data-dfd-complete-status></p>
+</section>
+        <section class="section" id="check" data-dfd-reveal>
+<h2>Knowledge check</h2>
+<section class="dfd-quiz" data-dfd-quiz data-explanation="People change jobs. Groups keep the permission attached to the role.">
+<h3 data-dfd-prompt>Why grant access to groups?</h3>
+<div data-dfd-choices>
+<button type="button" data-correct="false">Because individual grants are impossible</button>
+<button type="button" data-correct="true">So access follows the role, not a one-off person</button>
+<button type="button" data-correct="false">Because groups bypass the audit log</button>
+</div>
+<p class="dfd-quiz-feedback" data-dfd-feedback hidden></p>
+<p class="dfd-quiz-explain" data-dfd-explain hidden></p>
+</section>
+<section class="dfd-quiz" data-dfd-quiz data-explanation="Use a non-admin in the sandboxed group and ask for someone else&#x27;s key.">
+<h3 data-dfd-prompt>Which test proves a sandbox?</h3>
+<div data-dfd-choices>
+<button type="button" data-correct="false">Open the question as an admin</button>
+<button type="button" data-correct="true">Sign in as a sandboxed user and request another customer&#x27;s rows</button>
+<button type="button" data-correct="false">Turn on a public link</button>
+</div>
+<p class="dfd-quiz-feedback" data-dfd-feedback hidden></p>
+<p class="dfd-quiz-explain" data-dfd-explain hidden></p>
+</section>
+<section class="dfd-quiz" data-dfd-quiz data-explanation="It lets that group export the rows the question returned.">
+<h3 data-dfd-prompt>What does download permission allow?</h3>
+<div data-dfd-choices>
+<button type="button" data-correct="true">A copy of the result set</button>
+<button type="button" data-correct="false">Editing the application database</button>
+<button type="button" data-correct="false">Creating warehouse tables</button>
+</div>
+<p class="dfd-quiz-feedback" data-dfd-feedback hidden></p>
+<p class="dfd-quiz-explain" data-dfd-explain hidden></p>
+</section>
+</section>
+        <section class="section" data-dfd-reveal>
+            <h2>Official sources</h2>
+            <p>Checked against vendor documentation in October 2026. Screens and plan names still change, so confirm the control in your own instance.</p>
+            <ul class="source-list"><li><a href="https://www.metabase.com/docs/latest/permissions/introduction" target="_blank" rel="noopener noreferrer">Permissions</a></li>
+<li><a href="https://www.metabase.com/docs/latest/permissions/data" target="_blank" rel="noopener noreferrer">Data permissions</a></li>
+<li><a href="https://www.metabase.com/docs/latest/permissions/row-and-column-security" target="_blank" rel="noopener noreferrer">Row and column security</a></li></ul>
+        </section>
+        <nav class="lesson-nav" aria-label="Lesson order">
+            <a class="secondary" href="sharing.html">Previous: Sharing and embedding</a>
+            <a href="production.html">Next: Production</a>
+        </nav>
     </div>
-    <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        document.querySelectorAll('.section:not(.visible)').forEach(function(s) {
-            new IntersectionObserver(function(e) { if (e[0].isIntersecting) e[0].target.classList.add('visible'); }, {threshold:0.1}).observe(s);
-        });
-    });
-    </script>
+
     <script src="../js/code-copy.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="../js/supabase-config.js"></script>
     <script src="../js/supabase-auth.js"></script>
     <script src="../js/paywall.js"></script>
+    <script src="../js/progress.js"></script>
+    <script src="../js/lesson-common.js"></script>
+    <script src="../js/quiz.js"></script>
+    <script src="../js/analytics-tracker.js"></script>
+
 </body>
 </html>

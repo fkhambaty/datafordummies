@@ -3,69 +3,137 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>Cluster Setup | Redshift Course</title>
-    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <title>Redshift setup | Data For Dummies</title>
     <link rel="stylesheet" href="styles.css">
+    
     <link rel="stylesheet" href="../css/dfd-system.css">
 </head>
-<body data-access="pro">
-    <div class="page-bg-particles" aria-hidden="true"><div class="orb"></div><div class="orb"></div><div class="orb"></div></div>
+<body class="dfd-safe" data-course-id="redshift" data-lesson-id="setup" data-lesson-label="Cluster setup" data-total-lessons="9" data-access="pro">
     <div class="container">
-        <nav class="nav">
-            <a href="hub.html"><i class="fas fa-arrow-left"></i> Course Hub</a>
-            <a href="architecture.html">Architecture <i class="fas fa-arrow-right"></i></a>
+        <nav class="nav" aria-label="Course">
+            <a href="hub.html">Course hub</a>
+            <a href="../index.html">Home</a>
+            <a href="#check">Knowledge check</a>
         </nav>
-        <div class="lesson-hero">
-            <h1>Cluster Setup</h1>
-            <p>Create your first Redshift cluster, choose node types, configure VPC, and connect with SQL clients.</p>
-        </div>
-
-        <div class="section visible">
-            <h2>📚 Cluster Setup</h2>
-            <p>Create your first Redshift cluster, choose node types, configure VPC, and connect with SQL clients.</p>
-            <div class="eli5-box">
-                <h4>🧒 ELI5 Coming Up!</h4>
-                <p>This lesson covers cluster setup in depth with real-world examples, code snippets, animated diagrams, and hands-on exercises. Every concept is explained like you're 5 years old with layman analogies.</p>
+        <header class="lesson-hero" id="top">
+            <p class="course-kicker">Pro · Lesson 2 of 9</p>
+            <h1>Cluster setup</h1>
+            <p>Create a Serverless workgroup or an RA3 cluster, then connect without leaving the endpoint open to the world.</p>
+        </header>
+        <div class="dfd-lesson-progress" data-dfd-progress>
+            <p class="dfd-lesson-progress-label" data-dfd-progress-label>Sign in to save your place.</p>
+            <div class="dfd-lesson-progress-track" data-dfd-progress-bar role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-label="Course progress">
+                <div class="dfd-lesson-progress-fill" data-dfd-progress-fill></div>
             </div>
         </div>
-        <div class="section">
-            <h2>⚙️ Creating Your First Cluster</h2>
-            <div class="eli5-box">
-                <h4>🧒 ELI5: Renting Computers</h4>
-                <p>Creating a Redshift cluster is like renting a team of computers from Amazon. You choose how many computers (nodes) you want and how powerful they should be. Amazon sets them up, connects them together, and gives you a URL to connect.</p>
-            </div>
-            <div style="counter-reset: step-counter;">
-                <div class="step-box"><h4 style="color: #e47911;">Go to AWS Console</h4><p>Navigate to Amazon Redshift in the AWS Management Console. Click "Create cluster."</p></div>
-                <div class="step-box"><h4 style="color: #e47911;">Choose Node Type</h4><p><strong>dc2.large</strong> ($0.25/hr) for testing. <strong>ra3.xlplus</strong> for production — separates compute from storage.</p></div>
-                <div class="step-box"><h4 style="color: #e47911;">Configure Network</h4><p>Choose your VPC, subnet, and security group. Enable "Publicly accessible" for learning (disable in production!).</p></div>
-                <div class="step-box"><h4 style="color: #e47911;">Set Credentials</h4><p>Create an admin user and password. You'll use these to connect from SQL clients.</p></div>
-                <div class="step-box"><h4 style="color: #e47911;">Connect!</h4><p>Use the JDBC/ODBC endpoint to connect from DBeaver, DataGrip, or psql.</p></div>
-            </div>
-            <div class="code-block"><pre><span class="comment">-- Connect using psql (Redshift is PostgreSQL-compatible!)</span>
-psql -h my-cluster.abc123.us-east-1.redshift.amazonaws.com \
-     -p 5439 -U admin -d dev</pre></div>
-            <div class="important-box">
-                <h4>⚠️ Cost Warning</h4>
-                <p>Redshift clusters cost money even when idle! Always pause or delete your cluster when not using it. For learning, use <strong>Redshift Serverless</strong> — you only pay for what you query.</p>
-            </div>
-        </div>
-        <div class="lesson-nav">
-            <a href="meet-redshift.html" class="secondary"><i class="fas fa-arrow-left"></i> Meet Redshift</a>
-            <a href="architecture.html">Architecture <i class="fas fa-arrow-right"></i></a>
-        </div>
+        <section class="section" data-dfd-reveal><div class="eli5-box"><h4>Picture it this way</h4><p>A Redshift warehouse is a room full of people who each own a slice of the filing cabinets. You either rent a fixed room, a provisioned cluster, or you ask Amazon to open a room only while you are asking questions, which is Redshift Serverless. Both rooms read the same kind of SQL. The bill and the knobs differ.</p></div></section>
+<section class="section" data-dfd-reveal><h2>Serverless or a provisioned cluster</h2>
+<p>Start in the AWS console in the region where the data already lives. Redshift Serverless creates a workgroup and a namespace. You set a base capacity in Redshift Processing Units and a maximum so a curious query cannot scale the bill without a ceiling. A provisioned cluster is a leader node plus compute nodes that exist until you pause or delete them. New work should use RA3 nodes, which keep compute and managed storage separate, or Serverless. DC2 is a previous dense-compute generation. Do not copy an old tutorial that starts you on DC2 unless you are maintaining a cluster that already uses it.</p>
+<p>This course does not quote a price. Node sizes, RPU rates, and regions change. Read the current Amazon Redshift pricing page before you leave a warehouse running.</p>
+<table class="comparison-table dfd-scroll">
+<thead>
+<tr><th>Choice</th><th>You size</th><th>Idle behavior</th></tr>
+</thead>
+<tbody>
+<tr><td>Serverless workgroup</td><td>Base and max RPU</td><td>Scales with usage, within the limits you set</td></tr>
+<tr><td>RA3 provisioned</td><td>Node type and node count</td><td>The cluster exists until you pause or delete it</td></tr>
+<tr><td>DC2 provisioned</td><td>Older fixed local disks</td><td>Keep it only if you already run it</td></tr>
+</tbody>
+</table>
+</section>
+<section class="section" data-dfd-reveal><h2>Network, identity, and the first query</h2>
+<p>Put the warehouse in a VPC subnet group. For a lesson, a publicly reachable endpoint plus a security group that allows your IP on port 5439 is enough. For anything real, keep it private and reach it through a bastion, a VPN, or the Query Editor v2 inside AWS. Create an admin password or use IAM, and do not reuse a personal password from another system.</p>
+<p>Query Editor v2 is the fastest first client. DBeaver, DataGrip, and psql also work because the wire protocol is PostgreSQL-like. The default database name on a new cluster is often <code>dev</code>. Rename your real database to something you can say out loud.</p>
+<div class="code-block"><pre><code>psql &quot;host=your-workgroup.account.region.redshift-serverless.amazonaws.com port=5439 dbname=dev user=admin sslmode=require&quot;</code></pre></div>
+<div class="important-box"><h4>Turn it off when the lesson ends</h4><p>A provisioned cluster bills while it exists. Pause or delete it. On Serverless, set a low base and a max, and delete the workgroup if you will not return this week.</p></div>
+</section>
+<section class="section dfd-diagram" data-dfd-diagram data-dfd-reveal><h2>Three gates before SQL</h2><div data-dfd-diagram-panel="one">
+<svg class="dfd-responsive" viewBox="0 0 360 100" role="img" aria-label="Account highlighted">
+<rect x="12" y="26" width="104" height="48" rx="8" fill="#0f172a"></rect>
+<text x="64" y="54" text-anchor="middle" font-size="13" fill="#ffffff" font-family="Nunito,sans-serif">Account</text>
+<rect x="128" y="26" width="104" height="48" rx="8" fill="#e2e8f0"></rect>
+<text x="180" y="54" text-anchor="middle" font-size="13" fill="#0f172a" font-family="Nunito,sans-serif">Network</text>
+<rect x="244" y="26" width="104" height="48" rx="8" fill="#e2e8f0"></rect>
+<text x="296" y="54" text-anchor="middle" font-size="13" fill="#0f172a" font-family="Nunito,sans-serif">Query</text>
+</svg>
+</div><div data-dfd-diagram-panel="two" hidden>
+<svg class="dfd-responsive" viewBox="0 0 360 100" role="img" aria-label="Network highlighted">
+<rect x="12" y="26" width="104" height="48" rx="8" fill="#e2e8f0"></rect>
+<text x="64" y="54" text-anchor="middle" font-size="13" fill="#0f172a" font-family="Nunito,sans-serif">Account</text>
+<rect x="128" y="26" width="104" height="48" rx="8" fill="#0f172a"></rect>
+<text x="180" y="54" text-anchor="middle" font-size="13" fill="#ffffff" font-family="Nunito,sans-serif">Network</text>
+<rect x="244" y="26" width="104" height="48" rx="8" fill="#e2e8f0"></rect>
+<text x="296" y="54" text-anchor="middle" font-size="13" fill="#0f172a" font-family="Nunito,sans-serif">Query</text>
+</svg>
+</div><div data-dfd-diagram-panel="three" hidden>
+<svg class="dfd-responsive" viewBox="0 0 360 100" role="img" aria-label="Query highlighted">
+<rect x="12" y="26" width="104" height="48" rx="8" fill="#e2e8f0"></rect>
+<text x="64" y="54" text-anchor="middle" font-size="13" fill="#0f172a" font-family="Nunito,sans-serif">Account</text>
+<rect x="128" y="26" width="104" height="48" rx="8" fill="#e2e8f0"></rect>
+<text x="180" y="54" text-anchor="middle" font-size="13" fill="#0f172a" font-family="Nunito,sans-serif">Network</text>
+<rect x="244" y="26" width="104" height="48" rx="8" fill="#0f172a"></rect>
+<text x="296" y="54" text-anchor="middle" font-size="13" fill="#ffffff" font-family="Nunito,sans-serif">Query</text>
+</svg>
+</div><div class="dfd-diagram-controls"><button type="button" data-dfd-diagram-step="one" aria-pressed="true">Account</button><button type="button" data-dfd-diagram-step="two" aria-pressed="false">Network</button><button type="button" data-dfd-diagram-step="three" aria-pressed="false">Query</button></div></section>
+<section class="section" data-dfd-reveal><h2>You are in when this works</h2>
+<p>Run <code>SELECT current_user, current_database();</code> from Query Editor v2. If it hangs, the security group or the route is wrong. If it refuses the password, fix the credential before you change the node type.</p>
+<p><button type="button" data-dfd-complete>Mark lesson complete</button></p><p data-dfd-complete-status></p>
+</section>
+        <section class="section" id="check" data-dfd-reveal>
+<h2>Knowledge check</h2>
+<section class="dfd-quiz" data-dfd-quiz data-explanation="RA3 and Serverless are the current choices. DC2 is a previous generation.">
+<h3 data-dfd-prompt>What should a new warehouse use?</h3>
+<div data-dfd-choices>
+<button type="button" data-correct="false">A new DC2 cluster, because tutorials say so</button>
+<button type="button" data-correct="true">Redshift Serverless or RA3</button>
+<button type="button" data-correct="false">A laptop install of Redshift</button>
+</div>
+<p class="dfd-quiz-feedback" data-dfd-feedback hidden></p>
+<p class="dfd-quiz-explain" data-dfd-explain hidden></p>
+</section>
+<section class="dfd-quiz" data-dfd-quiz data-explanation="Redshift listens on 5439 unless you have changed it.">
+<h3 data-dfd-prompt>Which port do SQL clients use?</h3>
+<div data-dfd-choices>
+<button type="button" data-correct="true">5439</button>
+<button type="button" data-correct="false">3306</button>
+<button type="button" data-correct="false">80</button>
+</div>
+<p class="dfd-quiz-feedback" data-dfd-feedback hidden></p>
+<p class="dfd-quiz-explain" data-dfd-explain hidden></p>
+</section>
+<section class="dfd-quiz" data-dfd-quiz data-explanation="The max is a ceiling on how far a query can scale the bill.">
+<h3 data-dfd-prompt>Why set a maximum RPU on Serverless?</h3>
+<div data-dfd-choices>
+<button type="button" data-correct="true">So one query cannot scale without a limit</button>
+<button type="button" data-correct="false">So the warehouse can be installed on your laptop</button>
+<button type="button" data-correct="false">So public access turns on automatically</button>
+</div>
+<p class="dfd-quiz-feedback" data-dfd-feedback hidden></p>
+<p class="dfd-quiz-explain" data-dfd-explain hidden></p>
+</section>
+</section>
+        <section class="section" data-dfd-reveal>
+            <h2>Official sources</h2>
+            <p>Checked against vendor documentation in October 2026. Screens and plan names still change, so confirm the control in your own instance.</p>
+            <ul class="source-list"><li><a href="https://docs.aws.amazon.com/redshift/latest/mgmt/serverless-whatis.html" target="_blank" rel="noopener noreferrer">Redshift Serverless</a></li>
+<li><a href="https://docs.aws.amazon.com/redshift/latest/mgmt/working-with-clusters.html" target="_blank" rel="noopener noreferrer">Provisioned clusters</a></li>
+<li><a href="https://docs.aws.amazon.com/redshift/latest/mgmt/query-editor-v2.html" target="_blank" rel="noopener noreferrer">Query Editor v2</a></li></ul>
+        </section>
+        <nav class="lesson-nav" aria-label="Lesson order">
+            <a class="secondary" href="meet-redshift.html">Previous: Meet Redshift</a>
+            <a href="architecture.html">Next: Architecture</a>
+        </nav>
     </div>
-    <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        document.querySelectorAll('.section:not(.visible)').forEach(function(s) {
-            new IntersectionObserver(function(e) { if (e[0].isIntersecting) e[0].target.classList.add('visible'); }, {threshold:0.1}).observe(s);
-        });
-    });
-    </script>
+
     <script src="../js/code-copy.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="../js/supabase-config.js"></script>
     <script src="../js/supabase-auth.js"></script>
     <script src="../js/paywall.js"></script>
+    <script src="../js/progress.js"></script>
+    <script src="../js/lesson-common.js"></script>
+    <script src="../js/quiz.js"></script>
+    <script src="../js/analytics-tracker.js"></script>
+
 </body>
 </html>

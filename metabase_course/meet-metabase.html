@@ -3,43 +3,140 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>Meet Metabase | Metabase Course</title>
-    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <title>Meet Metabase | Data For Dummies</title>
     <link rel="stylesheet" href="styles.css">
+    
     <link rel="stylesheet" href="../css/dfd-system.css">
 </head>
-<body>
-    <div class="page-bg-particles" aria-hidden="true"><div class="orb"></div><div class="orb"></div><div class="orb"></div></div>
+<body class="dfd-safe" data-course-id="metabase" data-lesson-id="meet-metabase" data-lesson-label="Meet Metabase" data-total-lessons="9">
     <div class="container">
-        <nav class="nav">
-            <a href="hub.html"><i class="fas fa-arrow-left"></i> Course Hub</a>
-            <a href="installation.html">Installation & Setup <i class="fas fa-arrow-right"></i></a>
+        <nav class="nav" aria-label="Course">
+            <a href="hub.html">Course hub</a>
+            <a href="../index.html">Home</a>
+            <a href="#check">Knowledge check</a>
         </nav>
-        <div class="lesson-hero">
+        <header class="lesson-hero" id="top">
+            <p class="course-kicker">Free · Lesson 1 of 9</p>
             <h1>Meet Metabase</h1>
-            <p>What is Metabase, why it's the easiest BI tool, and how it turns SQL into beautiful dashboards.</p>
-        </div>
-        <div class="section visible">
-            <h2>📚 Meet Metabase</h2>
-            <p>What is Metabase, why it's the easiest BI tool, and how it turns SQL into beautiful dashboards.</p>
-            <div class="eli5-box">
-                <h4>🧒 ELI5</h4>
-                <p>This lesson covers meet metabase with detailed explanations, real-world examples, code snippets, and interactive exercises. Every concept is broken down into simple analogies that anyone can understand.</p>
+            <p>Metabase turns a database you already trust into questions and dashboards people can open without writing SQL.</p>
+        </header>
+        <div class="dfd-lesson-progress" data-dfd-progress>
+            <p class="dfd-lesson-progress-label" data-dfd-progress-label>Sign in to save your place.</p>
+            <div class="dfd-lesson-progress-track" data-dfd-progress-bar role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-label="Course progress">
+                <div class="dfd-lesson-progress-fill" data-dfd-progress-fill></div>
             </div>
         </div>
-        <div class="lesson-nav">
-            <a href="hub.html" class="secondary"><i class="fas fa-arrow-left"></i> Hub</a>
-            <a href="installation.html">Installation & Setup <i class="fas fa-arrow-right"></i></a>
-        </div>
+        <section class="section" data-dfd-reveal><div class="eli5-box"><h4>Picture it this way</h4><p>Metabase is the shop window. The database is the stockroom. People ask questions at the window. They do not walk into the stockroom and rearrange the shelves. A question is one saved request. A dashboard is a wall of those requests, with knobs that change the request for everyone looking at that wall.</p></div></section>
+<section class="section" data-dfd-reveal><h2>What you are looking at</h2>
+<p>Metabase is a business-intelligence application. It connects to a database you already have, such as PostgreSQL, MySQL, SQL Server, BigQuery, Snowflake, or Redshift, and lets people explore that data. It does not replace the warehouse. Your tables, backups, and query engine stay where they are.</p>
+<p>You can run Metabase Cloud, which Metabase hosts, or you can run the same application yourself with Docker or the JAR file. The open-source application is free to run. Paid plans add sign-in with your company identity provider, row-level sandboxes, a usage audit, and deeper embedding. This first lesson is free. The rest of the course is Pro.</p>
+<table class="comparison-table dfd-scroll">
+<thead>
+<tr><th>Piece</th><th>What it is</th><th>Where it lives</th></tr>
+</thead>
+<tbody>
+<tr><td>Question</td><td>A query plus a chart</td><td>A collection</td></tr>
+<tr><td>Model</td><td>A curated question people should start from</td><td>A collection</td></tr>
+<tr><td>Dashboard</td><td>Several questions on one page, with filters</td><td>A collection</td></tr>
+<tr><td>Collection</td><td>A folder with permissions</td><td>Metabase, not the warehouse</td></tr>
+<tr><td>Application database</td><td>Stores questions, dashboards, and users</td><td>Metabase's own database</td></tr>
+</tbody>
+</table>
+<p>The useful habit is to name the grain before you chart it. "Orders" can mean one row per order, one row per line, or one row per day. The chart cannot fix a grain you have not chosen.</p>
+</section>
+<section class="section" data-dfd-reveal><h2>Cloud or your own server</h2>
+<p>Metabase Cloud is the short path: you create an instance, invite people, and add a database connection. You do not patch the application. You do still choose which database Metabase may read, and you still own the credentials you paste in.</p>
+<p>Self-hosting is the path when the data cannot leave your network, or when you want the application database on infrastructure you already operate. A trial can use the built-in H2 file. A real instance should store Metabase's own data in PostgreSQL or MySQL. That application database is not your warehouse. It is the notebook of saved questions. Lose it, and the charts are gone even if the warehouse is fine.</p>
+<div class="code-block"><pre><code># Trial only. Production should set MB_DB_TYPE to postgres.
+docker run -d -p 3000:3000 --name metabase metabase/metabase</code></pre></div>
+</section>
+<section class="section dfd-diagram" data-dfd-diagram data-dfd-reveal><h2>Follow one question</h2><div data-dfd-diagram-panel="one">
+<svg class="dfd-responsive" viewBox="0 0 360 100" role="img" aria-label="Warehouse highlighted">
+<rect x="12" y="26" width="104" height="48" rx="8" fill="#0f172a"></rect>
+<text x="64" y="54" text-anchor="middle" font-size="13" fill="#ffffff" font-family="Nunito,sans-serif">Warehouse</text>
+<rect x="128" y="26" width="104" height="48" rx="8" fill="#e2e8f0"></rect>
+<text x="180" y="54" text-anchor="middle" font-size="13" fill="#0f172a" font-family="Nunito,sans-serif">Metabase</text>
+<rect x="244" y="26" width="104" height="48" rx="8" fill="#e2e8f0"></rect>
+<text x="296" y="54" text-anchor="middle" font-size="13" fill="#0f172a" font-family="Nunito,sans-serif">Reader</text>
+</svg>
+</div><div data-dfd-diagram-panel="two" hidden>
+<svg class="dfd-responsive" viewBox="0 0 360 100" role="img" aria-label="Metabase highlighted">
+<rect x="12" y="26" width="104" height="48" rx="8" fill="#e2e8f0"></rect>
+<text x="64" y="54" text-anchor="middle" font-size="13" fill="#0f172a" font-family="Nunito,sans-serif">Warehouse</text>
+<rect x="128" y="26" width="104" height="48" rx="8" fill="#0f172a"></rect>
+<text x="180" y="54" text-anchor="middle" font-size="13" fill="#ffffff" font-family="Nunito,sans-serif">Metabase</text>
+<rect x="244" y="26" width="104" height="48" rx="8" fill="#e2e8f0"></rect>
+<text x="296" y="54" text-anchor="middle" font-size="13" fill="#0f172a" font-family="Nunito,sans-serif">Reader</text>
+</svg>
+</div><div data-dfd-diagram-panel="three" hidden>
+<svg class="dfd-responsive" viewBox="0 0 360 100" role="img" aria-label="Reader highlighted">
+<rect x="12" y="26" width="104" height="48" rx="8" fill="#e2e8f0"></rect>
+<text x="64" y="54" text-anchor="middle" font-size="13" fill="#0f172a" font-family="Nunito,sans-serif">Warehouse</text>
+<rect x="128" y="26" width="104" height="48" rx="8" fill="#e2e8f0"></rect>
+<text x="180" y="54" text-anchor="middle" font-size="13" fill="#0f172a" font-family="Nunito,sans-serif">Metabase</text>
+<rect x="244" y="26" width="104" height="48" rx="8" fill="#0f172a"></rect>
+<text x="296" y="54" text-anchor="middle" font-size="13" fill="#ffffff" font-family="Nunito,sans-serif">Reader</text>
+</svg>
+</div><div class="dfd-diagram-controls"><button type="button" data-dfd-diagram-step="one" aria-pressed="true">Warehouse</button><button type="button" data-dfd-diagram-step="two" aria-pressed="false">Metabase</button><button type="button" data-dfd-diagram-step="three" aria-pressed="false">Reader</button></div></section>
+<section class="section" data-dfd-reveal><h2>What to do next</h2>
+<p>Open the next lesson and stand up an instance, or open an existing Cloud instance if you already have one. Then connect a database you are allowed to read. Do not connect a production writer account. A read-only user is enough for every lesson in this course.</p>
+<p><button type="button" data-dfd-complete>Mark lesson complete</button></p><p data-dfd-complete-status></p>
+</section>
+        <section class="section" id="check" data-dfd-reveal>
+<h2>Knowledge check</h2>
+<section class="dfd-quiz" data-dfd-quiz data-explanation="Questions are stored in Metabase&#x27;s application database. The warehouse keeps the tables.">
+<h3 data-dfd-prompt>Where do saved questions live?</h3>
+<div data-dfd-choices>
+<button type="button" data-correct="false">In the warehouse tables you chart</button>
+<button type="button" data-correct="true">In Metabase&#x27;s application database</button>
+<button type="button" data-correct="false">Only in the browser of the person who built them</button>
+</div>
+<p class="dfd-quiz-feedback" data-dfd-feedback hidden></p>
+<p class="dfd-quiz-explain" data-dfd-explain hidden></p>
+</section>
+<section class="dfd-quiz" data-dfd-quiz data-explanation="A dashboard is a page of saved questions plus filters that pass into those questions.">
+<h3 data-dfd-prompt>What is a dashboard?</h3>
+<div data-dfd-choices>
+<button type="button" data-correct="false">A second copy of the warehouse</button>
+<button type="button" data-correct="true">A page of questions with shared filters</button>
+<button type="button" data-correct="false">A SQL script that loads data</button>
+</div>
+<p class="dfd-quiz-feedback" data-dfd-feedback hidden></p>
+<p class="dfd-quiz-explain" data-dfd-explain hidden></p>
+</section>
+<section class="dfd-quiz" data-dfd-quiz data-explanation="Metabase reads data for charts. A writer account is more power than the job needs.">
+<h3 data-dfd-prompt>Which database account should Metabase use?</h3>
+<div data-dfd-choices>
+<button type="button" data-correct="false">The database owner, so every chart can change rows</button>
+<button type="button" data-correct="true">A read-only user aimed at the tables people may see</button>
+<button type="button" data-correct="false">No account. Metabase copies the whole database first</button>
+</div>
+<p class="dfd-quiz-feedback" data-dfd-feedback hidden></p>
+<p class="dfd-quiz-explain" data-dfd-explain hidden></p>
+</section>
+</section>
+        <section class="section" data-dfd-reveal>
+            <h2>Official sources</h2>
+            <p>Checked against vendor documentation in October 2026. Screens and plan names still change, so confirm the control in your own instance.</p>
+            <ul class="source-list"><li><a href="https://www.metabase.com/docs/latest/getting-started" target="_blank" rel="noopener noreferrer">Metabase introduction</a></li>
+<li><a href="https://www.metabase.com/docs/latest/questions/introduction" target="_blank" rel="noopener noreferrer">Questions</a></li>
+<li><a href="https://www.metabase.com/docs/latest/installation-and-operation/start" target="_blank" rel="noopener noreferrer">Cloud vs self-hosting</a></li></ul>
+        </section>
+        <nav class="lesson-nav" aria-label="Lesson order">
+            <a class="secondary" href="hub.html">Course hub</a>
+            <a href="installation.html">Next: Installation and setup</a>
+        </nav>
     </div>
-    <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        document.querySelectorAll('.section:not(.visible)').forEach(function(s) {
-            new IntersectionObserver(function(e) { if (e[0].isIntersecting) e[0].target.classList.add('visible'); }, {threshold:0.1}).observe(s);
-        });
-    });
-    </script>
+
     <script src="../js/code-copy.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="../js/supabase-config.js"></script>
+    <script src="../js/supabase-auth.js"></script>
+    <script src="../js/paywall.js"></script>
+    <script src="../js/progress.js"></script>
+    <script src="../js/lesson-common.js"></script>
+    <script src="../js/quiz.js"></script>
+    <script src="../js/analytics-tracker.js"></script>
+
 </body>
 </html>

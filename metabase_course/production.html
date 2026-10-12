@@ -3,47 +3,141 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>Production Deployment | Metabase Course</title>
-    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <title>Production deployment | Data For Dummies</title>
     <link rel="stylesheet" href="styles.css">
+    
     <link rel="stylesheet" href="../css/dfd-system.css">
 </head>
-<body data-access="pro">
-    <div class="page-bg-particles" aria-hidden="true"><div class="orb"></div><div class="orb"></div><div class="orb"></div></div>
+<body class="dfd-safe" data-course-id="metabase" data-lesson-id="production" data-lesson-label="Production deployment" data-total-lessons="9" data-access="pro">
     <div class="container">
-        <nav class="nav">
-            <a href="hub.html"><i class="fas fa-arrow-left"></i> Course Hub</a>
-            <a href="hub.html">Hub <i class="fas fa-arrow-right"></i></a>
+        <nav class="nav" aria-label="Course">
+            <a href="hub.html">Course hub</a>
+            <a href="../index.html">Home</a>
+            <a href="#check">Knowledge check</a>
         </nav>
-        <div class="lesson-hero">
-            <h1>Production Deployment</h1>
-            <p>Docker Compose, environment variables, HTTPS, backups, and scaling Metabase.</p>
-        </div>
-        <div class="section visible">
-            <h2>📚 Production Deployment</h2>
-            <p>Docker Compose, environment variables, HTTPS, backups, and scaling Metabase.</p>
-            <div class="eli5-box">
-                <h4>🧒 ELI5</h4>
-                <p>This lesson covers production deployment with detailed explanations, real-world examples, code snippets, and interactive exercises. Every concept is broken down into simple analogies that anyone can understand.</p>
+        <header class="lesson-hero" id="top">
+            <p class="course-kicker">Pro · Lesson 9 of 9</p>
+            <h1>Production deployment</h1>
+            <p>Back up Metabase&#x27;s own database, upgrade on purpose, and treat slow charts as warehouse queries.</p>
+        </header>
+        <div class="dfd-lesson-progress" data-dfd-progress>
+            <p class="dfd-lesson-progress-label" data-dfd-progress-label>Sign in to save your place.</p>
+            <div class="dfd-lesson-progress-track" data-dfd-progress-bar role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-label="Course progress">
+                <div class="dfd-lesson-progress-fill" data-dfd-progress-fill></div>
             </div>
         </div>
-        <div class="lesson-nav">
-            <a href="admin.html" class="secondary"><i class="fas fa-arrow-left"></i> Administration</a>
-            <a href="hub.html">Hub <i class="fas fa-arrow-right"></i></a>
-        </div>
+        <section class="section" data-dfd-reveal><div class="eli5-box"><h4>Picture it this way</h4><p>Production Metabase is a reception desk you cannot afford to lose. The filing cabinet is the application database. Copy that cabinet before you change the desk. The warehouse can be healthy while the desk has forgotten every saved chart.</p></div></section>
+<section class="section" data-dfd-reveal><h2>Back up the application, then upgrade</h2>
+<p>Back up the application database on a schedule, and take an extra backup before every upgrade. Metabase migrates that database when a new version starts. If the migration fails, the backup is how you return. For Docker, pin the image tag you intend to run. Pull the new tag only after the backup has finished and you know where the file or dump is.</p>
+<p>Put HTTPS in front of Metabase with your reverse proxy. Set a real admin password and store it in your password manager. Health is <code>GET /api/health</code>. A load balancer can use that path. It does not prove the warehouse connection is fast. It proves the application process answered.</p>
+<div class="code-block"><pre><code># Application database, not the warehouse.
+pg_dump -h metabase-db.internal -U metabase -Fc -f metabase-app.dump metabase
+
+# Then move the container to the tag you just backed up for.
+docker pull metabase/metabase:LATEST_YOU_CHOSE</code></pre></div>
+</section>
+<section class="section" data-dfd-reveal><h2>Performance and secrets</h2>
+<p>Slow charts are usually slow warehouse queries. Read the query Metabase sent, then index or model that query in the warehouse. Caching absorbs repeated views. It does not fix a question that scans a year of raw events for a single number. Move that scan into a model or a warehouse table that is already aggregated.</p>
+<p>Connection pools in the database settings limit how many warehouse sessions Metabase opens. Raising the pool because a dashboard is slow often makes the warehouse busier. Cap it, and fix the question.</p>
+<p>Set <code>MB_ENCRYPTION_SECRET_KEY</code> on instances that encrypt stored credentials, and keep that key with the backups. Losing the key can make stored database passwords unreadable even when the dump is fine. Do not commit the key, the embedding secret, or the admin password to the repository that deploys Metabase.</p>
+<table class="comparison-table dfd-scroll">
+<thead>
+<tr><th>Failure</th><th>What still works</th><th>What you restore</th></tr>
+</thead>
+<tbody>
+<tr><td>Warehouse outage</td><td>Saved questions, as definitions</td><td>The warehouse, separately</td></tr>
+<tr><td>Lost app database</td><td>The warehouse rows</td><td>The Metabase dump</td></tr>
+<tr><td>Bad upgrade</td><td>The previous image, if you kept it</td><td>The pre-upgrade dump</td></tr>
+</tbody>
+</table>
+</section>
+<section class="section dfd-diagram" data-dfd-diagram data-dfd-reveal><h2>The production order</h2><div data-dfd-diagram-panel="one">
+<svg class="dfd-responsive" viewBox="0 0 360 100" role="img" aria-label="Backup highlighted">
+<rect x="12" y="26" width="104" height="48" rx="8" fill="#0f172a"></rect>
+<text x="64" y="54" text-anchor="middle" font-size="13" fill="#ffffff" font-family="Nunito,sans-serif">Backup</text>
+<rect x="128" y="26" width="104" height="48" rx="8" fill="#e2e8f0"></rect>
+<text x="180" y="54" text-anchor="middle" font-size="13" fill="#0f172a" font-family="Nunito,sans-serif">Upgrade</text>
+<rect x="244" y="26" width="104" height="48" rx="8" fill="#e2e8f0"></rect>
+<text x="296" y="54" text-anchor="middle" font-size="13" fill="#0f172a" font-family="Nunito,sans-serif">Health</text>
+</svg>
+</div><div data-dfd-diagram-panel="two" hidden>
+<svg class="dfd-responsive" viewBox="0 0 360 100" role="img" aria-label="Upgrade highlighted">
+<rect x="12" y="26" width="104" height="48" rx="8" fill="#e2e8f0"></rect>
+<text x="64" y="54" text-anchor="middle" font-size="13" fill="#0f172a" font-family="Nunito,sans-serif">Backup</text>
+<rect x="128" y="26" width="104" height="48" rx="8" fill="#0f172a"></rect>
+<text x="180" y="54" text-anchor="middle" font-size="13" fill="#ffffff" font-family="Nunito,sans-serif">Upgrade</text>
+<rect x="244" y="26" width="104" height="48" rx="8" fill="#e2e8f0"></rect>
+<text x="296" y="54" text-anchor="middle" font-size="13" fill="#0f172a" font-family="Nunito,sans-serif">Health</text>
+</svg>
+</div><div data-dfd-diagram-panel="three" hidden>
+<svg class="dfd-responsive" viewBox="0 0 360 100" role="img" aria-label="Health highlighted">
+<rect x="12" y="26" width="104" height="48" rx="8" fill="#e2e8f0"></rect>
+<text x="64" y="54" text-anchor="middle" font-size="13" fill="#0f172a" font-family="Nunito,sans-serif">Backup</text>
+<rect x="128" y="26" width="104" height="48" rx="8" fill="#e2e8f0"></rect>
+<text x="180" y="54" text-anchor="middle" font-size="13" fill="#0f172a" font-family="Nunito,sans-serif">Upgrade</text>
+<rect x="244" y="26" width="104" height="48" rx="8" fill="#0f172a"></rect>
+<text x="296" y="54" text-anchor="middle" font-size="13" fill="#ffffff" font-family="Nunito,sans-serif">Health</text>
+</svg>
+</div><div class="dfd-diagram-controls"><button type="button" data-dfd-diagram-step="one" aria-pressed="true">Backup</button><button type="button" data-dfd-diagram-step="two" aria-pressed="false">Upgrade</button><button type="button" data-dfd-diagram-step="three" aria-pressed="false">Health</button></div></section>
+<section class="section" data-dfd-reveal><h2>Leave it runnable</h2>
+<p>Write down the image tag, the app database host, who holds the encryption key, and when the last dump was restored in a drill. A backup you have never restored is a hope. The next lesson is not another Metabase page. Go use a model and a dashboard on data you are allowed to read.</p>
+<p><button type="button" data-dfd-complete>Mark lesson complete</button></p><p data-dfd-complete-status></p>
+</section>
+        <section class="section" id="check" data-dfd-reveal>
+<h2>Knowledge check</h2>
+<section class="dfd-quiz" data-dfd-quiz data-explanation="The application database holds the questions. The warehouse is a different backup.">
+<h3 data-dfd-prompt>What do you back up before an upgrade?</h3>
+<div data-dfd-choices>
+<button type="button" data-correct="false">Only the warehouse</button>
+<button type="button" data-correct="true">The Metabase application database</button>
+<button type="button" data-correct="false">The browser cache</button>
+</div>
+<p class="dfd-quiz-feedback" data-dfd-feedback hidden></p>
+<p class="dfd-quiz-explain" data-dfd-explain hidden></p>
+</section>
+<section class="dfd-quiz" data-dfd-quiz data-explanation="The process answered. It does not time a warehouse query.">
+<h3 data-dfd-prompt>What does /api/health tell you?</h3>
+<div data-dfd-choices>
+<button type="button" data-correct="false">That every dashboard is fast</button>
+<button type="button" data-correct="true">That the Metabase process is answering</button>
+<button type="button" data-correct="false">That public links are disabled</button>
+</div>
+<p class="dfd-quiz-feedback" data-dfd-feedback hidden></p>
+<p class="dfd-quiz-explain" data-dfd-explain hidden></p>
+</section>
+<section class="dfd-quiz" data-dfd-quiz data-explanation="Stored credentials are encrypted with it. A dump without the key can be unreadable.">
+<h3 data-dfd-prompt>Why keep MB_ENCRYPTION_SECRET_KEY with the backup plan?</h3>
+<div data-dfd-choices>
+<button type="button" data-correct="false">It is the warehouse admin password</button>
+<button type="button" data-correct="true">It decrypts secrets stored in the application database</button>
+<button type="button" data-correct="false">It replaces HTTPS</button>
+</div>
+<p class="dfd-quiz-feedback" data-dfd-feedback hidden></p>
+<p class="dfd-quiz-explain" data-dfd-explain hidden></p>
+</section>
+</section>
+        <section class="section" data-dfd-reveal>
+            <h2>Official sources</h2>
+            <p>Checked against vendor documentation in October 2026. Screens and plan names still change, so confirm the control in your own instance.</p>
+            <ul class="source-list"><li><a href="https://www.metabase.com/docs/latest/installation-and-operation/backing-up-metabase-application-data" target="_blank" rel="noopener noreferrer">Backing up Metabase</a></li>
+<li><a href="https://www.metabase.com/docs/latest/installation-and-operation/upgrading-metabase" target="_blank" rel="noopener noreferrer">Upgrading Metabase</a></li>
+<li><a href="https://www.metabase.com/docs/latest/installation-and-operation/observability-with-prometheus" target="_blank" rel="noopener noreferrer">Monitoring Metabase</a></li></ul>
+        </section>
+        <nav class="lesson-nav" aria-label="Lesson order">
+            <a class="secondary" href="admin.html">Previous: Administration</a>
+            <a href="hub.html">Course hub</a>
+        </nav>
     </div>
-    <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        document.querySelectorAll('.section:not(.visible)').forEach(function(s) {
-            new IntersectionObserver(function(e) { if (e[0].isIntersecting) e[0].target.classList.add('visible'); }, {threshold:0.1}).observe(s);
-        });
-    });
-    </script>
+
     <script src="../js/code-copy.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="../js/supabase-config.js"></script>
     <script src="../js/supabase-auth.js"></script>
     <script src="../js/paywall.js"></script>
+    <script src="../js/progress.js"></script>
+    <script src="../js/lesson-common.js"></script>
+    <script src="../js/quiz.js"></script>
+    <script src="../js/analytics-tracker.js"></script>
+
 </body>
 </html>

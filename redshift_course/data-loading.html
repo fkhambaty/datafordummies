@@ -3,69 +3,130 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>Data Loading (COPY) | Redshift Course</title>
-    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <title>Loading data into Redshift | Data For Dummies</title>
     <link rel="stylesheet" href="styles.css">
+    
     <link rel="stylesheet" href="../css/dfd-system.css">
 </head>
-<body data-access="pro">
-    <div class="page-bg-particles" aria-hidden="true"><div class="orb"></div><div class="orb"></div><div class="orb"></div></div>
+<body class="dfd-safe" data-course-id="redshift" data-lesson-id="data-loading" data-lesson-label="Data loading" data-total-lessons="9" data-access="pro">
     <div class="container">
-        <nav class="nav">
-            <a href="hub.html"><i class="fas fa-arrow-left"></i> Course Hub</a>
-            <a href="table-design.html">Table Design <i class="fas fa-arrow-right"></i></a>
+        <nav class="nav" aria-label="Course">
+            <a href="hub.html">Course hub</a>
+            <a href="../index.html">Home</a>
+            <a href="#check">Knowledge check</a>
         </nav>
-        <div class="lesson-hero">
-            <h1>Data Loading (COPY)</h1>
-            <p>The COPY command is the fastest way to load data. Learn S3 integration, Parquet, CSV, JSON, and error handling.</p>
-        </div>
-
-        <div class="section visible">
-            <h2>📚 Data Loading (COPY)</h2>
-            <p>The COPY command is the fastest way to load data. Learn S3 integration, Parquet, CSV, JSON, and error handling.</p>
-            <div class="eli5-box">
-                <h4>🧒 ELI5 Coming Up!</h4>
-                <p>This lesson covers data loading (copy) in depth with real-world examples, code snippets, animated diagrams, and hands-on exercises. Every concept is explained like you're 5 years old with layman analogies.</p>
+        <header class="lesson-hero" id="top">
+            <p class="course-kicker">Pro · Lesson 5 of 9</p>
+            <h1>Data loading</h1>
+            <p>COPY pulls files from S3 in parallel. Zero-ETL replicates supported databases when you should not write that job.</p>
+        </header>
+        <div class="dfd-lesson-progress" data-dfd-progress>
+            <p class="dfd-lesson-progress-label" data-dfd-progress-label>Sign in to save your place.</p>
+            <div class="dfd-lesson-progress-track" data-dfd-progress-bar role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-label="Course progress">
+                <div class="dfd-lesson-progress-fill" data-dfd-progress-fill></div>
             </div>
         </div>
-        <div class="section">
-            <h2>📥 The COPY Command</h2>
-            <p>COPY is the fastest way to load data into Redshift — 10-100x faster than INSERT.</p>
-            <div class="code-block"><pre><span class="comment">-- Load CSV from S3</span>
-<span class="keyword">COPY</span> sales
-<span class="keyword">FROM</span> <span class="string">'s3://my-bucket/data/sales/'</span>
-<span class="keyword">IAM_ROLE</span> <span class="string">'arn:aws:iam::123456:role/RedshiftRole'</span>
-<span class="keyword">FORMAT AS CSV</span>
-<span class="keyword">IGNOREHEADER</span> 1
-<span class="keyword">REGION</span> <span class="string">'us-east-1'</span>;
-
-<span class="comment">-- Load Parquet (fastest!)</span>
-<span class="keyword">COPY</span> events
-<span class="keyword">FROM</span> <span class="string">'s3://my-bucket/data/events/'</span>
-<span class="keyword">IAM_ROLE</span> <span class="string">'arn:aws:iam::123456:role/RedshiftRole'</span>
-<span class="keyword">FORMAT AS PARQUET</span>;</pre></div>
-            <div class="eli5-box">
-                <h4>🧒 ELI5: The Moving Truck</h4>
-                <p>INSERT is like carrying boxes one at a time from the truck to your house. COPY is like backing the truck up to the door and unloading everything at once. Always use COPY for bulk loads!</p>
-            </div>
-        </div>
-        <div class="lesson-nav">
-            <a href="sql-queries.html" class="secondary"><i class="fas fa-arrow-left"></i> SQL Queries</a>
-            <a href="table-design.html">Table Design <i class="fas fa-arrow-right"></i></a>
-        </div>
+        <section class="section" data-dfd-reveal><div class="eli5-box"><h4>Picture it this way</h4><p>COPY is a loading dock. Files sit in S3. Redshift's own workers pick them up in parallel. Inserting a million rows from your laptop is a person carrying boxes through the front door. Zero-ETL is a conveyor Amazon builds from Aurora, RDS, or DynamoDB so you do not staff the dock yourself.</p></div></section>
+<section class="section" data-dfd-reveal><h2>COPY from S3</h2>
+<p>Land files in S3 as CSV, JSON, or Parquet. Give Redshift an IAM role that can read that prefix, and attach the role to the cluster or the Serverless namespace. Do not paste long-lived keys into the SQL. A manifest file lists the objects when the folder contains extras you must not load.</p>
+<div class="code-block"><pre><code>COPY analytics.orders
+FROM &#x27;s3://your-bucket/orders/&#x27;
+IAM_ROLE &#x27;arn:aws:iam::123456789012:role/RedshiftCopy&#x27;
+FORMAT AS PARQUET;</code></pre></div>
+<p>Useful options, used on purpose: <code>MAXERROR</code> to tolerate a few bad lines while you inspect them, and compression that matches the files. After a large copy, confirm the row count against the source. A command that succeeds can still have skipped rows if you allowed errors.</p>
+<div class="important-box"><h4>COPY uses the warehouse's network, not yours</h4><p>Your laptop can read the bucket and the COPY can still fail, because the IAM role on the warehouse is the identity that matters.</p></div>
+</section>
+<section class="section" data-dfd-reveal><h2>Zero-ETL when you should not build a dock</h2>
+<p>Zero-ETL integrations replicate from supported sources, including Aurora, Amazon RDS, and DynamoDB, into Redshift. Use that when the source is already on AWS and you want near-real-time tables without a COPY job. You still design distribution and sort on the Redshift side, and you still decide who may query the replica. Zero-ETL does not replace a modeled mart. It replaces the plumbing that kept the replica full.</p>
+<p>If the source is a file drop from another company, COPY or a pipeline that writes Parquet remains the right door. Mixing both is normal: zero-ETL for operational tables, COPY for files.</p>
+</section>
+<section class="section dfd-diagram" data-dfd-diagram data-dfd-reveal><h2>Two ways in</h2><div data-dfd-diagram-panel="one">
+<svg class="dfd-responsive" viewBox="0 0 360 100" role="img" aria-label="S3 highlighted">
+<rect x="12" y="26" width="104" height="48" rx="8" fill="#0f172a"></rect>
+<text x="64" y="54" text-anchor="middle" font-size="13" fill="#ffffff" font-family="Nunito,sans-serif">S3</text>
+<rect x="128" y="26" width="104" height="48" rx="8" fill="#e2e8f0"></rect>
+<text x="180" y="54" text-anchor="middle" font-size="13" fill="#0f172a" font-family="Nunito,sans-serif">COPY</text>
+<rect x="244" y="26" width="104" height="48" rx="8" fill="#e2e8f0"></rect>
+<text x="296" y="54" text-anchor="middle" font-size="13" fill="#0f172a" font-family="Nunito,sans-serif">Zero-ETL</text>
+</svg>
+</div><div data-dfd-diagram-panel="two" hidden>
+<svg class="dfd-responsive" viewBox="0 0 360 100" role="img" aria-label="COPY highlighted">
+<rect x="12" y="26" width="104" height="48" rx="8" fill="#e2e8f0"></rect>
+<text x="64" y="54" text-anchor="middle" font-size="13" fill="#0f172a" font-family="Nunito,sans-serif">S3</text>
+<rect x="128" y="26" width="104" height="48" rx="8" fill="#0f172a"></rect>
+<text x="180" y="54" text-anchor="middle" font-size="13" fill="#ffffff" font-family="Nunito,sans-serif">COPY</text>
+<rect x="244" y="26" width="104" height="48" rx="8" fill="#e2e8f0"></rect>
+<text x="296" y="54" text-anchor="middle" font-size="13" fill="#0f172a" font-family="Nunito,sans-serif">Zero-ETL</text>
+</svg>
+</div><div data-dfd-diagram-panel="three" hidden>
+<svg class="dfd-responsive" viewBox="0 0 360 100" role="img" aria-label="Zero-ETL highlighted">
+<rect x="12" y="26" width="104" height="48" rx="8" fill="#e2e8f0"></rect>
+<text x="64" y="54" text-anchor="middle" font-size="13" fill="#0f172a" font-family="Nunito,sans-serif">S3</text>
+<rect x="128" y="26" width="104" height="48" rx="8" fill="#e2e8f0"></rect>
+<text x="180" y="54" text-anchor="middle" font-size="13" fill="#0f172a" font-family="Nunito,sans-serif">COPY</text>
+<rect x="244" y="26" width="104" height="48" rx="8" fill="#0f172a"></rect>
+<text x="296" y="54" text-anchor="middle" font-size="13" fill="#ffffff" font-family="Nunito,sans-serif">Zero-ETL</text>
+</svg>
+</div><div class="dfd-diagram-controls"><button type="button" data-dfd-diagram-step="one" aria-pressed="true">Files</button><button type="button" data-dfd-diagram-step="two" aria-pressed="false">COPY</button><button type="button" data-dfd-diagram-step="three" aria-pressed="false">Zero-ETL</button></div></section>
+<section class="section" data-dfd-reveal><h2>Practice</h2>
+<p>If you can create a bucket, write ten rows of CSV and COPY them with an IAM role. If you cannot, read a failed COPY message and name which of these it is: role, path, or file format. Those three cover most first failures.</p>
+<p><button type="button" data-dfd-complete>Mark lesson complete</button></p><p data-dfd-complete-status></p>
+</section>
+        <section class="section" id="check" data-dfd-reveal>
+<h2>Knowledge check</h2>
+<section class="dfd-quiz" data-dfd-quiz data-explanation="COPY is parallel and runs inside the warehouse. Inserts from a laptop are not.">
+<h3 data-dfd-prompt>Why prefer COPY over a million inserts?</h3>
+<div data-dfd-choices>
+<button type="button" data-correct="true">COPY reads S3 in parallel from the warehouse</button>
+<button type="button" data-correct="false">INSERT is blocked in Redshift</button>
+<button type="button" data-correct="false">COPY does not need permission</button>
+</div>
+<p class="dfd-quiz-feedback" data-dfd-feedback hidden></p>
+<p class="dfd-quiz-explain" data-dfd-explain hidden></p>
+</section>
+<section class="dfd-quiz" data-dfd-quiz data-explanation="The IAM role attached to the warehouse reads the bucket.">
+<h3 data-dfd-prompt>Which identity reads the S3 files during COPY?</h3>
+<div data-dfd-choices>
+<button type="button" data-correct="true">The IAM role on the cluster or namespace</button>
+<button type="button" data-correct="false">Whoever is logged into the AWS console in a browser</button>
+<button type="button" data-correct="false">The public internet</button>
+</div>
+<p class="dfd-quiz-feedback" data-dfd-feedback hidden></p>
+<p class="dfd-quiz-explain" data-dfd-explain hidden></p>
+</section>
+<section class="dfd-quiz" data-dfd-quiz data-explanation="It replaces the replication plumbing from a supported source. It does not design your mart.">
+<h3 data-dfd-prompt>What does zero-ETL replace?</h3>
+<div data-dfd-choices>
+<button type="button" data-correct="false">The need for any SQL</button>
+<button type="button" data-correct="true">A hand-built copy from a supported source</button>
+<button type="button" data-correct="false">Sort keys</button>
+</div>
+<p class="dfd-quiz-feedback" data-dfd-feedback hidden></p>
+<p class="dfd-quiz-explain" data-dfd-explain hidden></p>
+</section>
+</section>
+        <section class="section" data-dfd-reveal>
+            <h2>Official sources</h2>
+            <p>Checked against vendor documentation in October 2026. Screens and plan names still change, so confirm the control in your own instance.</p>
+            <ul class="source-list"><li><a href="https://docs.aws.amazon.com/redshift/latest/dg/r_COPY.html" target="_blank" rel="noopener noreferrer">COPY</a></li>
+<li><a href="https://docs.aws.amazon.com/redshift/latest/dg/t_Loading_data.html" target="_blank" rel="noopener noreferrer">Loading data</a></li>
+<li><a href="https://docs.aws.amazon.com/redshift/latest/mgmt/zero-etl-using.html" target="_blank" rel="noopener noreferrer">Zero-ETL integrations</a></li></ul>
+        </section>
+        <nav class="lesson-nav" aria-label="Lesson order">
+            <a class="secondary" href="sql-queries.html">Previous: SQL queries</a>
+            <a href="table-design.html">Next: Table design</a>
+        </nav>
     </div>
-    <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        document.querySelectorAll('.section:not(.visible)').forEach(function(s) {
-            new IntersectionObserver(function(e) { if (e[0].isIntersecting) e[0].target.classList.add('visible'); }, {threshold:0.1}).observe(s);
-        });
-    });
-    </script>
+
     <script src="../js/code-copy.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="../js/supabase-config.js"></script>
     <script src="../js/supabase-auth.js"></script>
     <script src="../js/paywall.js"></script>
+    <script src="../js/progress.js"></script>
+    <script src="../js/lesson-common.js"></script>
+    <script src="../js/quiz.js"></script>
+    <script src="../js/analytics-tracker.js"></script>
+
 </body>
 </html>

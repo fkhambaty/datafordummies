@@ -3,47 +3,137 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>Building Dashboards | Metabase Course</title>
-    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <title>Building dashboards | Data For Dummies</title>
     <link rel="stylesheet" href="styles.css">
+    
     <link rel="stylesheet" href="../css/dfd-system.css">
 </head>
-<body data-access="pro">
-    <div class="page-bg-particles" aria-hidden="true"><div class="orb"></div><div class="orb"></div><div class="orb"></div></div>
+<body class="dfd-safe" data-course-id="metabase" data-lesson-id="dashboards" data-lesson-label="Building dashboards" data-total-lessons="9" data-access="pro">
     <div class="container">
-        <nav class="nav">
-            <a href="hub.html"><i class="fas fa-arrow-left"></i> Course Hub</a>
-            <a href="sql-queries.html">SQL Queries in Metabase <i class="fas fa-arrow-right"></i></a>
+        <nav class="nav" aria-label="Course">
+            <a href="hub.html">Course hub</a>
+            <a href="../index.html">Home</a>
+            <a href="#check">Knowledge check</a>
         </nav>
-        <div class="lesson-hero">
-            <h1>Building Dashboards</h1>
-            <p>Create interactive dashboards with filters, drill-downs, and auto-refresh.</p>
-        </div>
-        <div class="section visible">
-            <h2>📚 Building Dashboards</h2>
-            <p>Create interactive dashboards with filters, drill-downs, and auto-refresh.</p>
-            <div class="eli5-box">
-                <h4>🧒 ELI5</h4>
-                <p>This lesson covers building dashboards with detailed explanations, real-world examples, code snippets, and interactive exercises. Every concept is broken down into simple analogies that anyone can understand.</p>
+        <header class="lesson-hero" id="top">
+            <p class="course-kicker">Pro · Lesson 4 of 9</p>
+            <h1>Building dashboards</h1>
+            <p>A dashboard is saved questions, shared filters, and an optional delivery schedule.</p>
+        </header>
+        <div class="dfd-lesson-progress" data-dfd-progress>
+            <p class="dfd-lesson-progress-label" data-dfd-progress-label>Sign in to save your place.</p>
+            <div class="dfd-lesson-progress-track" data-dfd-progress-bar role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-label="Course progress">
+                <div class="dfd-lesson-progress-fill" data-dfd-progress-fill></div>
             </div>
         </div>
-        <div class="lesson-nav">
-            <a href="questions.html" class="secondary"><i class="fas fa-arrow-left"></i> Asking Questions</a>
-            <a href="sql-queries.html">SQL Queries in Metabase <i class="fas fa-arrow-right"></i></a>
-        </div>
+        <section class="section" data-dfd-reveal><div class="eli5-box"><h4>Picture it this way</h4><p>A dashboard is a noticeboard. Each card is one question pinned to the board. A filter is a sticky note on the board, such as 'only this month', and each card can choose to obey that note. A subscription is the board arriving in someone's inbox on a schedule.</p></div></section>
+<section class="section" data-dfd-reveal><h2>Cards, filters, and tabs</h2>
+<p>Create a dashboard in a collection, then add saved questions. Resize cards so the most important number is readable without scrolling on a laptop. Link a dashboard filter to each card that should obey it. A date filter does nothing until you connect it to a date column on that card. A text filter connected to the wrong field will silently show the unfiltered chart.</p>
+<p>Current Metabase dashboards can use tabs when one page would be too long. Keep one decision on each tab. Click behavior can send a reader from a card to another dashboard or a question, filtered by the value they clicked.</p>
+<table class="comparison-table dfd-scroll">
+<thead>
+<tr><th>Control</th><th>What it changes</th><th>Watch out</th></tr>
+</thead>
+<tbody>
+<tr><td>Dashboard filter</td><td>Values passed into linked cards</td><td>Link it to the right field on every card</td></tr>
+<tr><td>Auto refresh</td><td>How often open browsers re-query</td><td>A short interval loads the warehouse</td></tr>
+<tr><td>Subscription</td><td>A scheduled email or Slack post</td><td>It sends the data to that channel</td></tr>
+<tr><td>Click behavior</td><td>Where a click goes</td><td>Pass the clicked value as a filter</td></tr>
+</tbody>
+</table>
+</section>
+<section class="section" data-dfd-reveal><h2>Subscriptions are a data export</h2>
+<p>A subscription renders the dashboard and sends it. Anyone on that list sees the numbers even if they cannot sign in to Metabase. Treat the recipient list like a permission. Send a filtered subscription when a team should see one region, and confirm the filter is locked so they cannot widen it.</p>
+<p>Alerts belong on a single question that crosses a line, such as a count of failed jobs. A dashboard subscription is the regular report. An alert is the exception.</p>
+<div class="important-box"><h4>Cache with a reason</h4><p>Caching repeats a result so the warehouse is not hit on every view. A cached number can be stale. Set the cache where freshness is allowed to lag, and leave operational alerts uncached or on a short period.</p></div>
+</section>
+<section class="section dfd-diagram" data-dfd-diagram data-dfd-reveal><h2>From a filter to an inbox</h2><div data-dfd-diagram-panel="one">
+<svg class="dfd-responsive" viewBox="0 0 360 100" role="img" aria-label="Filter highlighted">
+<rect x="12" y="26" width="104" height="48" rx="8" fill="#0f172a"></rect>
+<text x="64" y="54" text-anchor="middle" font-size="13" fill="#ffffff" font-family="Nunito,sans-serif">Filter</text>
+<rect x="128" y="26" width="104" height="48" rx="8" fill="#e2e8f0"></rect>
+<text x="180" y="54" text-anchor="middle" font-size="13" fill="#0f172a" font-family="Nunito,sans-serif">Cards</text>
+<rect x="244" y="26" width="104" height="48" rx="8" fill="#e2e8f0"></rect>
+<text x="296" y="54" text-anchor="middle" font-size="13" fill="#0f172a" font-family="Nunito,sans-serif">Inbox</text>
+</svg>
+</div><div data-dfd-diagram-panel="two" hidden>
+<svg class="dfd-responsive" viewBox="0 0 360 100" role="img" aria-label="Cards highlighted">
+<rect x="12" y="26" width="104" height="48" rx="8" fill="#e2e8f0"></rect>
+<text x="64" y="54" text-anchor="middle" font-size="13" fill="#0f172a" font-family="Nunito,sans-serif">Filter</text>
+<rect x="128" y="26" width="104" height="48" rx="8" fill="#0f172a"></rect>
+<text x="180" y="54" text-anchor="middle" font-size="13" fill="#ffffff" font-family="Nunito,sans-serif">Cards</text>
+<rect x="244" y="26" width="104" height="48" rx="8" fill="#e2e8f0"></rect>
+<text x="296" y="54" text-anchor="middle" font-size="13" fill="#0f172a" font-family="Nunito,sans-serif">Inbox</text>
+</svg>
+</div><div data-dfd-diagram-panel="three" hidden>
+<svg class="dfd-responsive" viewBox="0 0 360 100" role="img" aria-label="Inbox highlighted">
+<rect x="12" y="26" width="104" height="48" rx="8" fill="#e2e8f0"></rect>
+<text x="64" y="54" text-anchor="middle" font-size="13" fill="#0f172a" font-family="Nunito,sans-serif">Filter</text>
+<rect x="128" y="26" width="104" height="48" rx="8" fill="#e2e8f0"></rect>
+<text x="180" y="54" text-anchor="middle" font-size="13" fill="#0f172a" font-family="Nunito,sans-serif">Cards</text>
+<rect x="244" y="26" width="104" height="48" rx="8" fill="#0f172a"></rect>
+<text x="296" y="54" text-anchor="middle" font-size="13" fill="#ffffff" font-family="Nunito,sans-serif">Inbox</text>
+</svg>
+</div><div class="dfd-diagram-controls"><button type="button" data-dfd-diagram-step="one" aria-pressed="true">Filter</button><button type="button" data-dfd-diagram-step="two" aria-pressed="false">Cards</button><button type="button" data-dfd-diagram-step="three" aria-pressed="false">Inbox</button></div></section>
+<section class="section" data-dfd-reveal><h2>Practice</h2>
+<p>Put two saved questions on one dashboard. Add a date filter and connect it to both. Open the dashboard, change the filter, and confirm both cards move. Then create a subscription to yourself and check that the filter you intended is the one that was sent.</p>
+<p><button type="button" data-dfd-complete>Mark lesson complete</button></p><p data-dfd-complete-status></p>
+</section>
+        <section class="section" id="check" data-dfd-reveal>
+<h2>Knowledge check</h2>
+<section class="dfd-quiz" data-dfd-quiz data-explanation="The filter must be connected to a field on that card.">
+<h3 data-dfd-prompt>When does a dashboard filter change a card?</h3>
+<div data-dfd-choices>
+<button type="button" data-correct="false">As soon as the filter exists</button>
+<button type="button" data-correct="true">After you link the filter to a field on the card</button>
+<button type="button" data-correct="false">Only if the card is a map</button>
+</div>
+<p class="dfd-quiz-feedback" data-dfd-feedback hidden></p>
+<p class="dfd-quiz-explain" data-dfd-explain hidden></p>
+</section>
+<section class="dfd-quiz" data-dfd-quiz data-explanation="Delivery bypasses the Metabase login. The recipient list is the permission.">
+<h3 data-dfd-prompt>Who can see a subscription email?</h3>
+<div data-dfd-choices>
+<button type="button" data-correct="false">Only people who are Metabase admins</button>
+<button type="button" data-correct="true">The people on the recipient list, even without a login</button>
+<button type="button" data-correct="false">Nobody. Subscriptions only refresh the cache</button>
+</div>
+<p class="dfd-quiz-feedback" data-dfd-feedback hidden></p>
+<p class="dfd-quiz-explain" data-dfd-explain hidden></p>
+</section>
+<section class="dfd-quiz" data-dfd-quiz data-explanation="Every open dashboard repeats the queries.">
+<h3 data-dfd-prompt>What is the risk of a short auto-refresh?</h3>
+<div data-dfd-choices>
+<button type="button" data-correct="false">It deletes the application database</button>
+<button type="button" data-correct="true">It keeps querying the warehouse</button>
+<button type="button" data-correct="false">It turns the dashboard into a public link</button>
+</div>
+<p class="dfd-quiz-feedback" data-dfd-feedback hidden></p>
+<p class="dfd-quiz-explain" data-dfd-explain hidden></p>
+</section>
+</section>
+        <section class="section" data-dfd-reveal>
+            <h2>Official sources</h2>
+            <p>Checked against vendor documentation in October 2026. Screens and plan names still change, so confirm the control in your own instance.</p>
+            <ul class="source-list"><li><a href="https://www.metabase.com/docs/latest/dashboards/introduction" target="_blank" rel="noopener noreferrer">Dashboards</a></li>
+<li><a href="https://www.metabase.com/docs/latest/dashboards/filters" target="_blank" rel="noopener noreferrer">Dashboard filters</a></li>
+<li><a href="https://www.metabase.com/docs/latest/dashboards/subscriptions" target="_blank" rel="noopener noreferrer">Subscriptions and alerts</a></li></ul>
+        </section>
+        <nav class="lesson-nav" aria-label="Lesson order">
+            <a class="secondary" href="questions.html">Previous: Asking questions</a>
+            <a href="sql-queries.html">Next: SQL queries</a>
+        </nav>
     </div>
-    <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        document.querySelectorAll('.section:not(.visible)').forEach(function(s) {
-            new IntersectionObserver(function(e) { if (e[0].isIntersecting) e[0].target.classList.add('visible'); }, {threshold:0.1}).observe(s);
-        });
-    });
-    </script>
+
     <script src="../js/code-copy.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="../js/supabase-config.js"></script>
     <script src="../js/supabase-auth.js"></script>
     <script src="../js/paywall.js"></script>
+    <script src="../js/progress.js"></script>
+    <script src="../js/lesson-common.js"></script>
+    <script src="../js/quiz.js"></script>
+    <script src="../js/analytics-tracker.js"></script>
+
 </body>
 </html>

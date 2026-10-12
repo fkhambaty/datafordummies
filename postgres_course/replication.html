@@ -3,47 +3,165 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>Replication & HA | PostgreSQL Course</title>
-    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <title>Replication and high availability | Data For Dummies</title>
     <link rel="stylesheet" href="styles.css">
+    
     <link rel="stylesheet" href="../css/dfd-system.css">
 </head>
-<body data-access="pro">
-    <div class="page-bg-particles" aria-hidden="true"><div class="orb"></div><div class="orb"></div><div class="orb"></div></div>
+<body class="dfd-safe" data-course-id="postgres" data-lesson-id="replication" data-lesson-label="Replication and HA" data-total-lessons="14" data-access="pro">
     <div class="container">
-        <nav class="nav">
-            <a href="hub.html"><i class="fas fa-arrow-left"></i> Course Hub</a>
-            <a href="production.html">Production Best Practices <i class="fas fa-arrow-right"></i></a>
+        <nav class="nav" aria-label="Course">
+            <a href="hub.html">Course hub</a>
+            <a href="../index.html">Home</a>
+            <a href="#check">Knowledge check</a>
         </nav>
-        <div class="lesson-hero">
-            <h1>Replication & HA</h1>
-            <p>Streaming replication, logical replication, pgBouncer, and high availability.</p>
-        </div>
-        <div class="section visible">
-            <h2>📚 Replication & HA</h2>
-            <p>Streaming replication, logical replication, pgBouncer, and high availability.</p>
-            <div class="eli5-box">
-                <h4>🧒 ELI5</h4>
-                <p>This lesson covers replication & ha with detailed explanations, real-world examples, code snippets, and interactive exercises. Every concept is broken down into simple analogies that anyone can understand.</p>
+        <header class="lesson-hero" id="top">
+            <p class="course-kicker">Pro · Replication</p>
+            <h1>Replication and high availability</h1>
+            <p>Physical copies ship the write-ahead log. Logical copies publish tables. Slots remember how far the copy has read.</p>
+        </header>
+        <div class="dfd-lesson-progress" data-dfd-progress>
+            <p class="dfd-lesson-progress-label" data-dfd-progress-label>Sign in to save your place.</p>
+            <div class="dfd-lesson-progress-track" data-dfd-progress-bar role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-label="Course progress">
+                <div class="dfd-lesson-progress-fill" data-dfd-progress-fill></div>
             </div>
         </div>
-        <div class="lesson-nav">
-            <a href="functions.html" class="secondary"><i class="fas fa-arrow-left"></i> Functions & Triggers</a>
-            <a href="production.html">Production Best Practices <i class="fas fa-arrow-right"></i></a>
-        </div>
+        <section class="section" data-dfd-reveal><div class="eli5-box"><h4>Picture it this way</h4><p>Physical replication photocopies the whole book, page by page, in the order the pages were written. That order is the write-ahead log. Logical replication reads the sentences you care about and sends those sentences to another book, which can be a different edition. A replication slot is a bookmark. Without it, the primary may throw away pages the copy has not read yet.</p></div></section>
+<section class="section" data-dfd-reveal><h2>Physical replication</h2>
+<p>Streaming replication ships WAL from a primary to one or more standbys. The standby is a full copy. It can serve reads when hot standby is on. It cannot take writes until you promote it. The primary process is a <code>walsender</code>. The standby process is a <code>walreceiver</code>.</p>
+<p>Synchronous replication waits until a named standby has flushed the WAL. Asynchronous replication, the default, does not wait. Synchronous mode reduces the chance of losing the last transactions. It also makes commits wait on the network. <code>synchronous_standby_names</code> lists who must confirm. If that standby is down and you required it, commits stall. Plan for that before you turn it on.</p>
+<div class="code-block"><pre><code>-- On the primary, postgresql.conf
+wal_level = replica
+max_wal_senders = 10
+max_replication_slots = 10
+hot_standby = on
+
+-- pg_hba.conf: let the standby connect for replication
+-- host replication replicator 10.0.0.8/32 scram-sha-256</code></pre></div>
+<p>A standby is created from a base backup, then it catches up by streaming. <code>pg_basebackup</code> is the usual tool. File-system snapshots from a volume manager also work when they are crash-consistent. Do not copy the data directory of a running primary with an ordinary file copy and call it a replica.</p>
+</section>
+<section class="section" data-dfd-reveal><h2>Replication slots</h2>
+<p>A physical replication slot remembers how far a consumer has received WAL. The primary will not recycle WAL the slot still needs. That protects the standby. It can also fill the primary disk if the standby stays down and nothing drops the slot. Monitor <code>pg_replication_slots</code> for slots that are not active, and alert on WAL retained because of them.</p>
+<div class="code-block"><pre><code>SELECT slot_name, slot_type, active, restart_lsn
+FROM pg_replication_slots;
+
+SELECT pg_size_pretty(
+    pg_wal_lsn_diff(pg_current_wal_lsn(), restart_lsn)
+) AS retained
+FROM pg_replication_slots;</code></pre></div>
+<p>Logical slots do the same job for logical decoding. PostgreSQL 17 can fail a logical slot over to a new primary when failover slots are configured. On older versions, a promotion can invalidate a logical slot and you rebuild the subscription. Know which version you run before you promise a slot will survive a failover.</p>
+</section>
+<section class="section" data-dfd-reveal><h2>Publications and subscriptions</h2>
+<p>Logical replication copies chosen tables, not the whole cluster. On the publisher you create a publication. On the subscriber you create a subscription that connects to the publisher and lists that publication. Rows that change on the published tables are applied on the subscriber.</p>
+<div class="code-block"><pre><code>-- Publisher
+CREATE PUBLICATION orders_pub FOR TABLE public.orders;
+
+-- Subscriber
+CREATE SUBSCRIPTION orders_sub
+CONNECTION &#x27;host=publisher dbname=shop user=replicator password=replace-me&#x27;
+PUBLICATION orders_pub;</code></pre></div>
+<p>The subscriber is a normal database. You can add indexes, and you can publish onward. Schema changes are not magic. Adding a column in recent PostgreSQL versions can replicate, and a careless <code>ALTER</code> can still break apply. Initial table copy happens when you create the subscription, unless you say otherwise. Sequences, large objects, and some DDL are the usual surprises. Read the current logical-replication chapter for your major version before you migrate with it.</p>
+<p>From PostgreSQL 16 a standby can be a logical publisher, which lets you take decoding load off the primary. Row filters and column lists, added in PostgreSQL 15, keep a table in the publication while sending only some rows or columns. Use them as a data filter, and still lock down the subscriber. A filter is not a security boundary if someone can alter the publication.</p>
+</section>
+<section class="section" data-dfd-reveal><h2>Monitoring and failover</h2>
+<p>On the primary, <code>pg_stat_replication</code> shows each receiver, the sent and flushed positions, and whether the connection is sync. On a standby, replay lag is the clock difference from <code>pg_last_xact_replay_timestamp()</code> when that function returns a time. An idle database can show a null timestamp. Do not page a human for a null that means "no new transactions".</p>
+<div class="code-block"><pre><code>SELECT application_name, state, sync_state,
+       pg_wal_lsn_diff(pg_current_wal_lsn(), replay_lsn) AS replay_bytes
+FROM pg_stat_replication;
+
+SELECT subname, pid, latest_end_time
+FROM pg_stat_subscription;</code></pre></div>
+<p>Failover for physical replication is a promotion. <code>pg_ctl promote</code> or the trigger file your automation uses makes the standby accept writes. After promotion, point applications at the new primary and rebuild standbys from it. Tools such as Patroni do this with a consensus lock so two nodes do not both decide they are primary. Two primaries is a split brain, and it is worse than an outage.</p>
+<p>Connection pooling with PgBouncer sits in front of Postgres. It is not replication. It matters for availability because a promoted primary still needs clients to find it, and a pool pointed at the old host will look like a failed failover.</p>
+<div class="important-box"><h4>Managed services hide some of this</h4><p>Amazon RDS, Aurora, Cloud SQL, and Azure Database for PostgreSQL create replicas and failover for you. You often cannot see <code>walsender</code> settings, and you may not create physical slots yourself. Logical replication is frequently allowed, with limits on which publications and which extensions exist. Read the service's page before you paste a self-hosted runbook into a managed console. A replica you cannot promote on your own schedule is still their replica.</p></div>
+</section>
+<section class="section dfd-diagram" data-dfd-diagram data-dfd-reveal><h2>A page, a bookmark, a copy</h2><div data-dfd-diagram-panel="one">
+<svg class="dfd-responsive" viewBox="0 0 360 100" role="img" aria-label="Primary highlighted">
+<rect x="12" y="26" width="104" height="48" rx="8" fill="#0f172a"></rect>
+<text x="64" y="54" text-anchor="middle" font-size="13" fill="#ffffff" font-family="Nunito,sans-serif">Primary</text>
+<rect x="128" y="26" width="104" height="48" rx="8" fill="#e2e8f0"></rect>
+<text x="180" y="54" text-anchor="middle" font-size="13" fill="#0f172a" font-family="Nunito,sans-serif">Slot</text>
+<rect x="244" y="26" width="104" height="48" rx="8" fill="#e2e8f0"></rect>
+<text x="296" y="54" text-anchor="middle" font-size="13" fill="#0f172a" font-family="Nunito,sans-serif">Standby</text>
+</svg>
+</div><div data-dfd-diagram-panel="two" hidden>
+<svg class="dfd-responsive" viewBox="0 0 360 100" role="img" aria-label="Replication slot highlighted">
+<rect x="12" y="26" width="104" height="48" rx="8" fill="#e2e8f0"></rect>
+<text x="64" y="54" text-anchor="middle" font-size="13" fill="#0f172a" font-family="Nunito,sans-serif">Primary</text>
+<rect x="128" y="26" width="104" height="48" rx="8" fill="#0f172a"></rect>
+<text x="180" y="54" text-anchor="middle" font-size="13" fill="#ffffff" font-family="Nunito,sans-serif">Slot</text>
+<rect x="244" y="26" width="104" height="48" rx="8" fill="#e2e8f0"></rect>
+<text x="296" y="54" text-anchor="middle" font-size="13" fill="#0f172a" font-family="Nunito,sans-serif">Standby</text>
+</svg>
+</div><div data-dfd-diagram-panel="three" hidden>
+<svg class="dfd-responsive" viewBox="0 0 360 100" role="img" aria-label="Standby highlighted">
+<rect x="12" y="26" width="104" height="48" rx="8" fill="#e2e8f0"></rect>
+<text x="64" y="54" text-anchor="middle" font-size="13" fill="#0f172a" font-family="Nunito,sans-serif">Primary</text>
+<rect x="128" y="26" width="104" height="48" rx="8" fill="#e2e8f0"></rect>
+<text x="180" y="54" text-anchor="middle" font-size="13" fill="#0f172a" font-family="Nunito,sans-serif">Slot</text>
+<rect x="244" y="26" width="104" height="48" rx="8" fill="#0f172a"></rect>
+<text x="296" y="54" text-anchor="middle" font-size="13" fill="#ffffff" font-family="Nunito,sans-serif">Standby</text>
+</svg>
+</div><div class="dfd-diagram-controls"><button type="button" data-dfd-diagram-step="one" aria-pressed="true">Primary</button><button type="button" data-dfd-diagram-step="two" aria-pressed="false">Slot</button><button type="button" data-dfd-diagram-step="three" aria-pressed="false">Standby</button></div></section>
+<section class="section" data-dfd-reveal><h2>Practice</h2>
+<p>On a database you are allowed to break, create a publication for one table and a subscription in a second database on the same server. Insert a row on the publisher and select it on the subscriber. Then look at <code>pg_replication_slots</code> and name the slot type. Drop the subscription when you are done so the slot does not hold WAL.</p>
+<p><button type="button" data-dfd-complete>Mark lesson complete</button></p><p data-dfd-complete-status></p>
+</section>
+        <section class="section" id="check" data-dfd-reveal>
+<h2>Knowledge check</h2>
+<section class="dfd-quiz" data-dfd-quiz data-explanation="Streaming replication ships WAL for the whole cluster, not a single table.">
+<h3 data-dfd-prompt>What does a physical standby copy?</h3>
+<div data-dfd-choices>
+<button type="button" data-correct="true">The whole cluster, via the write-ahead log</button>
+<button type="button" data-correct="false">Only the tables you name in a publication</button>
+<button type="button" data-correct="false">Query results, after they are displayed</button>
+</div>
+<p class="dfd-quiz-feedback" data-dfd-feedback hidden></p>
+<p class="dfd-quiz-explain" data-dfd-explain hidden></p>
+</section>
+<section class="dfd-quiz" data-dfd-quiz data-explanation="The primary keeps WAL for that slot and can fill the disk.">
+<h3 data-dfd-prompt>What goes wrong if a slot&#x27;s consumer stays down?</h3>
+<div data-dfd-choices>
+<button type="button" data-correct="true">The primary keeps WAL until the slot moves or is dropped</button>
+<button type="button" data-correct="false">The slot deletes the table</button>
+<button type="button" data-correct="false">Nothing. Slots expire after one minute</button>
+</div>
+<p class="dfd-quiz-feedback" data-dfd-feedback hidden></p>
+<p class="dfd-quiz-explain" data-dfd-explain hidden></p>
+</section>
+<section class="dfd-quiz" data-dfd-quiz data-explanation="A publication is the publisher&#x27;s list of tables sent to subscriptions.">
+<h3 data-dfd-prompt>What is a publication?</h3>
+<div data-dfd-choices>
+<button type="button" data-correct="true">The set of tables logical replication will send</button>
+<button type="button" data-correct="false">A connection pool in front of the primary</button>
+<button type="button" data-correct="false">A promoted standby</button>
+</div>
+<p class="dfd-quiz-feedback" data-dfd-feedback hidden></p>
+<p class="dfd-quiz-explain" data-dfd-explain hidden></p>
+</section>
+</section>
+        <section class="section" data-dfd-reveal>
+            <h2>Official sources</h2>
+            <p>Checked against vendor documentation in October 2026. Screens and plan names still change, so confirm the control in your own instance.</p>
+            <ul class="source-list"><li><a href="https://www.postgresql.org/docs/current/warm-standby.html" target="_blank" rel="noopener noreferrer">Streaming replication</a></li>
+<li><a href="https://www.postgresql.org/docs/current/warm-standby.html#STREAMING-REPLICATION-SLOTS" target="_blank" rel="noopener noreferrer">Replication slots</a></li>
+<li><a href="https://www.postgresql.org/docs/current/logical-replication.html" target="_blank" rel="noopener noreferrer">Logical replication</a></li></ul>
+        </section>
+        <nav class="lesson-nav" aria-label="Lesson order">
+            <a class="secondary" href="functions.html">Previous: Functions and triggers</a>
+            <a href="production.html">Next: Production</a>
+        </nav>
     </div>
-    <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        document.querySelectorAll('.section:not(.visible)').forEach(function(s) {
-            new IntersectionObserver(function(e) { if (e[0].isIntersecting) e[0].target.classList.add('visible'); }, {threshold:0.1}).observe(s);
-        });
-    });
-    </script>
+
     <script src="../js/code-copy.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="../js/supabase-config.js"></script>
     <script src="../js/supabase-auth.js"></script>
     <script src="../js/paywall.js"></script>
+    <script src="../js/progress.js"></script>
+    <script src="../js/lesson-common.js"></script>
+    <script src="../js/quiz.js"></script>
+    <script src="../js/analytics-tracker.js"></script>
+
 </body>
 </html>

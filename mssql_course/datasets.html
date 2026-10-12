@@ -3,89 +3,164 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>Download Datasets &amp; Scripts | SQL Server Course | Data For Dummies</title>
-    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <title>Practice datasets | Data For Dummies</title>
+    <link rel="stylesheet" href="../css/course-light-theme.css">
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Nunito', sans-serif; background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #1e3a5f 100%); min-height: 100vh; padding: 20px; color: #e2e8f0; }
-        .container { max-width: 900px; margin: 0 auto; }
-        .nav { background: rgba(30, 41, 59, 0.9); padding: 15px 30px; border-radius: 15px; margin-bottom: 30px; display: flex; justify-content: space-between; align-items: center; border: 1px solid #475569; }
-        .nav a { color: #60a5fa; text-decoration: none; font-weight: 600; display: flex; align-items: center; gap: 8px; }
-        .nav a:hover { color: #93c5fd; }
-        .header { text-align: center; padding: 40px 20px; margin-bottom: 30px; }
-        .header h1 { font-size: 2em; margin-bottom: 10px; color: white; }
-        .header p { color: #94a3b8; }
-        .tip { background: rgba(59, 130, 246, 0.15); border-left: 4px solid #3b82f6; padding: 16px 20px; border-radius: 0 12px 12px 0; margin-bottom: 28px; color: #e2e8f0; }
-        .card { background: rgba(30, 41, 59, 0.8); border-radius: 16px; padding: 20px 24px; margin-bottom: 16px; border: 2px solid #475569; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px; transition: all 0.3s; }
-        .card:hover { border-color: #3b82f6; }
-        .card-info h3 { font-size: 1.1em; margin-bottom: 6px; color: white; }
-        .card-info p { color: #94a3b8; font-size: 0.95em; }
-        .card a { background: linear-gradient(135deg, #2563eb 0%, #3b82f6 100%); color: white; padding: 10px 18px; border-radius: 10px; text-decoration: none; font-weight: 700; display: inline-flex; align-items: center; gap: 8px; white-space: nowrap; }
-        .card a:hover { opacity: 0.9; transform: translateY(-1px); }
-        .badge { display: inline-block; padding: 4px 10px; border-radius: 20px; font-size: 0.75em; font-weight: 600; margin-left: 8px; }
-        .badge-sql { background: #3b82f6; color: white; }
-        .badge-csv { background: #22c55e; color: white; }
+        :root { --course-primary: #a4262c; --course-accent: #d83b01; --bg-page: linear-gradient(160deg, #fff5f5 0%, #f8fafc 70%, #fff 100%); }
+        .course-kicker { display: inline-block; margin-bottom: 12px; padding: 4px 12px; border-radius: 999px; background: rgba(164, 38, 44, 0.12); color: #a4262c; font-size: 0.78rem; font-weight: 800; }
+        .source-list { margin: 12px 0 0 1.2rem; }
+        .source-list a { color: var(--course-primary); font-weight: 700; }
     </style>
     <link rel="stylesheet" href="../css/dfd-system.css">
 </head>
-<body data-access="pro">
+<body class="dfd-safe" data-course-id="mssql" data-lesson-id="datasets" data-lesson-label="Practice datasets" data-total-lessons="16" data-access="pro">
     <div class="container">
-        <nav class="nav">
-            <a href="../index.html"><i class="fas fa-home"></i> Main Website</a>
-            <a href="index.html"><i class="fas fa-book"></i> SQL Server Course Hub</a>
+        <nav class="nav" aria-label="Course">
+            <a href="hub.html">Course hub</a>
+            <a href="../index.html">Home</a>
+            <a href="#check">Knowledge check</a>
         </nav>
-        <div class="header">
-            <h1><i class="fas fa-database"></i> Download Course Datasets &amp; Scripts</h1>
-            <p>Use these in SQL Server Management Studio (SSMS). Create a new database, then run the .sql scripts to create tables and load sample data. CSV files can be imported via SSMS or used for practice.</p>
-        </div>
-        <div class="tip">
-            <strong>👶 In simple terms:</strong> Each .sql file is a script you can run in SSMS. It will create tables and insert sample rows so you can practice SELECT, JOINs, and more. Put the file somewhere you can find it (e.g. Desktop or Documents), then open it in SSMS and click Execute (F5).
-        </div>
-
-        <div class="card">
-            <div class="card-info">
-                <h3>SampleDB_CreateAndLoad.sql <span class="badge badge-sql">.sql</span></h3>
-                <p>Creates a small database with Customers, Orders, and Products tables plus sample rows. Use with Modules 5–8 (Creating Tables, SELECT, Joins, Aggregations).</p>
+        <header class="lesson-hero" id="top">
+            <p class="course-kicker">Pro · Practice data</p>
+            <h1>Practice datasets</h1>
+            <p>Load the sample scripts in SSMS, then practice filters, joins, and aggregates on tables this course actually ships.</p>
+        </header>
+        <div class="dfd-lesson-progress" data-dfd-progress>
+            <p class="dfd-lesson-progress-label" data-dfd-progress-label>Sign in to save your place.</p>
+            <div class="dfd-lesson-progress-track" data-dfd-progress-bar role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-label="Course progress">
+                <div class="dfd-lesson-progress-fill" data-dfd-progress-fill></div>
             </div>
-            <a href="datasets/SampleDB_CreateAndLoad.sql" download="SampleDB_CreateAndLoad.sql"><i class="fas fa-download"></i> Download</a>
         </div>
+        <section class="section" data-dfd-reveal><div class="eli5-box"><h4>Picture it this way</h4><p>Each file in this lesson is a box of practice parts. A SQL script builds the tables and puts the parts in. You open the box in SQL Server Management Studio, run it, and then write your own questions against those tables. The CSV is the same kind of parts, packed for the import wizard.</p></div></section>
+<section class="section" data-dfd-reveal><h2>Get a database, then run one script</h2>
+<p>In SSMS, create a database named <code>SampleDB</code> if you do not already have a practice database. Open <code>SampleDB_CreateAndLoad.sql</code>, glance at the <code>USE</code> lines, and execute it. The script drops and recreates <code>Products</code>, <code>Customers</code>, and <code>Orders</code>. It is safe to run again. It is not safe to run in a database whose tables of those names you need to keep.</p>
+<table class="comparison-table dfd-scroll">
+<thead>
+<tr><th>File</th><th>Tables</th><th>Practice</th></tr>
+</thead>
+<tbody>
+<tr><td><a href="datasets/SampleDB_CreateAndLoad.sql" download>SampleDB_CreateAndLoad.sql</a></td><td>Products, Customers, Orders</td><td>SELECT, joins, aggregates</td></tr>
+<tr><td><a href="datasets/Employees_Dept_Sample.sql" download>Employees_Dept_Sample.sql</a></td><td>Departments, Employees</td><td>Joins, including a missing department</td></tr>
+<tr><td><a href="datasets/Sales_Data_Sample.sql" download>Sales_Data_Sample.sql</a></td><td>Sales</td><td>SUM and GROUP BY on dates</td></tr>
+<tr><td><a href="datasets/Practice_Exercises_Module6.sql" download>Practice_Exercises_Module6.sql</a></td><td>Uses SampleDB</td><td>Write the answers under each comment</td></tr>
+<tr><td><a href="datasets/customers_orders_sample.csv" download>customers_orders_sample.csv</a></td><td>One flat file</td><td>Import wizard</td></tr>
+</tbody>
+</table>
+<p>Lisa Davis in the employee script has a null department. She is there so a left join still shows her. If your join drops her, you used an inner join.</p>
+</section>
+<section class="section" data-dfd-reveal><h2>Queries to try</h2>
+<p>After SampleDB loads, these three questions match the columns in the script. Write them yourself before you read them as a hint.</p>
+<div class="code-block"><pre><code>-- Products in Electronics, cheapest first.
+SELECT ProductName, UnitPrice
+FROM dbo.Products
+WHERE Category = &#x27;Electronics&#x27;
+ORDER BY UnitPrice;
 
-        <div class="card">
-            <div class="card-info">
-                <h3>Employees_Dept_Sample.sql <span class="badge badge-sql">.sql</span></h3>
-                <p>Creates Employees and Departments tables with sample data. Perfect for practicing JOINs and GROUP BY.</p>
-            </div>
-            <a href="datasets/Employees_Dept_Sample.sql" download="Employees_Dept_Sample.sql"><i class="fas fa-download"></i> Download</a>
-        </div>
+-- How many orders each customer has, including a customer with none
+-- if you loaded only the sample customers who did order.
+SELECT c.CustomerName, COUNT(o.OrderID) AS orders
+FROM dbo.Customers AS c
+LEFT JOIN dbo.Orders AS o ON o.CustomerID = c.CustomerID
+GROUP BY c.CustomerName;
 
-        <div class="card">
-            <div class="card-info">
-                <h3>Sales_Data_Sample.sql <span class="badge badge-sql">.sql</span></h3>
-                <p>Sales transactions with dates and amounts. Use for aggregations (SUM, AVG), dates, and HAVING.</p>
-            </div>
-            <a href="datasets/Sales_Data_Sample.sql" download="Sales_Data_Sample.sql"><i class="fas fa-download"></i> Download</a>
-        </div>
-
-        <div class="card">
-            <div class="card-info">
-                <h3>Practice_Exercises_Module6.sql <span class="badge badge-sql">.sql</span></h3>
-                <p>Empty script with comments: exercises for SELECT, WHERE, ORDER BY. Write your answers in the same file.</p>
-            </div>
-            <a href="datasets/Practice_Exercises_Module6.sql" download="Practice_Exercises_Module6.sql"><i class="fas fa-download"></i> Download</a>
-        </div>
-
-        <div class="card">
-            <div class="card-info">
-                <h3>customers_orders_sample.csv <span class="badge badge-csv">.csv</span></h3>
-                <p>CSV sample for import practice. Use SSMS Import Data Wizard (right-click database → Tasks → Import Data) to load into a table.</p>
-            </div>
-            <a href="datasets/customers_orders_sample.csv" download="customers_orders_sample.csv"><i class="fas fa-download"></i> Download</a>
-        </div>
+-- Revenue by category. Quantity times unit price.
+SELECT p.Category, SUM(o.Quantity * p.UnitPrice) AS revenue
+FROM dbo.Orders AS o
+JOIN dbo.Products AS p ON p.ProductID = o.ProductID
+GROUP BY p.Category;</code></pre></div>
+<p>The exercise file has seven prompts and no answers. Run SampleDB first, then fill the prompts in that file. A correct answer returns rows. An answer that errors is still progress if you can say which object name was wrong.</p>
+</section>
+<section class="section" data-dfd-reveal><h2>Import the CSV</h2>
+<p>The CSV repeats the customer on each order line. That is a flat extract, not the three tables. Right-click the database, choose Tasks, then Import Data, and land it in a new table such as <code>dbo.OrdersFlat</code>. Compare a count of distinct customer names in the flat table with <code>dbo.Customers</code>. They should agree for this sample. If they do not, the import guessed a type and dropped a row, or you imported the header as data.</p>
+<div class="important-box"><h4>These scripts are practice data</h4><p>Do not run the DROP statements against a database that holds work you meant to keep. Create SampleDB and stay inside it.</p></div>
+</section>
+<section class="section dfd-diagram" data-dfd-diagram data-dfd-reveal><h2>Load, then ask</h2><div data-dfd-diagram-panel="one">
+<svg class="dfd-responsive" viewBox="0 0 360 100" role="img" aria-label="Script highlighted">
+<rect x="12" y="26" width="104" height="48" rx="8" fill="#0f172a"></rect>
+<text x="64" y="54" text-anchor="middle" font-size="13" fill="#ffffff" font-family="Nunito,sans-serif">Script</text>
+<rect x="128" y="26" width="104" height="48" rx="8" fill="#e2e8f0"></rect>
+<text x="180" y="54" text-anchor="middle" font-size="13" fill="#0f172a" font-family="Nunito,sans-serif">SSMS</text>
+<rect x="244" y="26" width="104" height="48" rx="8" fill="#e2e8f0"></rect>
+<text x="296" y="54" text-anchor="middle" font-size="13" fill="#0f172a" font-family="Nunito,sans-serif">Check</text>
+</svg>
+</div><div data-dfd-diagram-panel="two" hidden>
+<svg class="dfd-responsive" viewBox="0 0 360 100" role="img" aria-label="SSMS highlighted">
+<rect x="12" y="26" width="104" height="48" rx="8" fill="#e2e8f0"></rect>
+<text x="64" y="54" text-anchor="middle" font-size="13" fill="#0f172a" font-family="Nunito,sans-serif">Script</text>
+<rect x="128" y="26" width="104" height="48" rx="8" fill="#0f172a"></rect>
+<text x="180" y="54" text-anchor="middle" font-size="13" fill="#ffffff" font-family="Nunito,sans-serif">SSMS</text>
+<rect x="244" y="26" width="104" height="48" rx="8" fill="#e2e8f0"></rect>
+<text x="296" y="54" text-anchor="middle" font-size="13" fill="#0f172a" font-family="Nunito,sans-serif">Check</text>
+</svg>
+</div><div data-dfd-diagram-panel="three" hidden>
+<svg class="dfd-responsive" viewBox="0 0 360 100" role="img" aria-label="Check highlighted">
+<rect x="12" y="26" width="104" height="48" rx="8" fill="#e2e8f0"></rect>
+<text x="64" y="54" text-anchor="middle" font-size="13" fill="#0f172a" font-family="Nunito,sans-serif">Script</text>
+<rect x="128" y="26" width="104" height="48" rx="8" fill="#e2e8f0"></rect>
+<text x="180" y="54" text-anchor="middle" font-size="13" fill="#0f172a" font-family="Nunito,sans-serif">SSMS</text>
+<rect x="244" y="26" width="104" height="48" rx="8" fill="#0f172a"></rect>
+<text x="296" y="54" text-anchor="middle" font-size="13" fill="#ffffff" font-family="Nunito,sans-serif">Check</text>
+</svg>
+</div><div class="dfd-diagram-controls"><button type="button" data-dfd-diagram-step="one" aria-pressed="true">Script</button><button type="button" data-dfd-diagram-step="two" aria-pressed="false">SSMS</button><button type="button" data-dfd-diagram-step="three" aria-pressed="false">Check</button></div></section>
+<section class="section" data-dfd-reveal><h2>Done when</h2>
+<p>SampleDB has products, customers, and orders. One join returns a customer and a product name on the same row. One aggregate returns a total. The exercise file has your own statements under at least the first three comments.</p>
+<p><button type="button" data-dfd-complete>Mark lesson complete</button></p><p data-dfd-complete-status></p>
+</section>
+        <section class="section" id="check" data-dfd-reveal>
+<h2>Knowledge check</h2>
+<section class="dfd-quiz" data-dfd-quiz data-explanation="SampleDB_CreateAndLoad.sql builds those three tables.">
+<h3 data-dfd-prompt>Which script creates Products, Customers, and Orders?</h3>
+<div data-dfd-choices>
+<button type="button" data-correct="true">SampleDB_CreateAndLoad.sql</button>
+<button type="button" data-correct="false">Sales_Data_Sample.sql</button>
+<button type="button" data-correct="false">The CSV, by itself, inside SSMS as a query</button>
+</div>
+<p class="dfd-quiz-feedback" data-dfd-feedback hidden></p>
+<p class="dfd-quiz-explain" data-dfd-explain hidden></p>
+</section>
+<section class="dfd-quiz" data-dfd-quiz data-explanation="She is the row an inner join will hide.">
+<h3 data-dfd-prompt>Why does Lisa Davis have a null department?</h3>
+<div data-dfd-choices>
+<button type="button" data-correct="true">So a left join still shows an employee with no department</button>
+<button type="button" data-correct="false">Because the script failed halfway</button>
+<button type="button" data-correct="false">Because SQL Server forbids departments</button>
+</div>
+<p class="dfd-quiz-feedback" data-dfd-feedback hidden></p>
+<p class="dfd-quiz-explain" data-dfd-explain hidden></p>
+</section>
+<section class="dfd-quiz" data-dfd-quiz data-explanation="The scripts drop tables of the same name. Use a practice database.">
+<h3 data-dfd-prompt>Where should you run the DROP statements?</h3>
+<div data-dfd-choices>
+<button type="button" data-correct="true">In a practice database such as SampleDB</button>
+<button type="button" data-correct="false">In production, so the sample replaces live tables</button>
+<button type="button" data-correct="false">They never drop anything</button>
+</div>
+<p class="dfd-quiz-feedback" data-dfd-feedback hidden></p>
+<p class="dfd-quiz-explain" data-dfd-explain hidden></p>
+</section>
+</section>
+        <section class="section" data-dfd-reveal>
+            <h2>Official sources</h2>
+            <p>Checked against vendor documentation in October 2026. Screens and plan names still change, so confirm the control in your own instance.</p>
+            <ul class="source-list"><li><a href="https://learn.microsoft.com/sql/ssms/download-sql-server-management-studio-ssms" target="_blank" rel="noopener noreferrer">SSMS</a></li>
+<li><a href="https://learn.microsoft.com/sql/t-sql/queries/select-transact-sql" target="_blank" rel="noopener noreferrer">SELECT examples</a></li>
+<li><a href="https://learn.microsoft.com/sql/integration-services/import-export-data/start-the-sql-server-import-and-export-wizard" target="_blank" rel="noopener noreferrer">Import data</a></li></ul>
+        </section>
+        <nav class="lesson-nav" aria-label="Lesson order">
+            <a class="secondary" href="security-basics.html">Previous: Security basics</a>
+            <a href="hub.html">Course hub</a>
+        </nav>
     </div>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="../js/supabase-config.js"></script>
-<script src="../js/supabase-auth.js"></script>
-<script src="../js/paywall.js"></script>
+
+    <script src="../js/code-copy.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="../js/supabase-config.js"></script>
+    <script src="../js/supabase-auth.js"></script>
+    <script src="../js/paywall.js"></script>
+    <script src="../js/progress.js"></script>
+    <script src="../js/lesson-common.js"></script>
+    <script src="../js/quiz.js"></script>
+    <script src="../js/analytics-tracker.js"></script>
+
 </body>
 </html>
