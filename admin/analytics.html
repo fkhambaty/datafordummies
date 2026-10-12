@@ -336,8 +336,16 @@
             showAuthError('The account service is unavailable.');
             return;
         }
-        window.FKTI_Auth.getAdminAnalytics(getRangeDate())
+        window.FKTI_Auth.getSession().then(function (sessionResult) {
+            var session = sessionResult.data && sessionResult.data.session;
+            if (!session) {
+                showAuthError('Log in with an owner account.');
+                return null;
+            }
+            return window.FKTI_Auth.getAdminAnalytics(getRangeDate());
+        })
             .then(function (result) {
+                if (!result) return;
                 if (!result.error && result.data && result.data.page_views !== undefined) {
                     isAuthorized = true;
                     document.getElementById('authGate').style.display = 'none';
