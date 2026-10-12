@@ -6,7 +6,8 @@
     <title>Hypothesis Testing | Fakhruddin Khambaty's Learning Hub</title>
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <style>
+    <link rel="stylesheet" href="styles.css">
+<style>
         * {
             margin: 0;
             padding: 0;
@@ -494,8 +495,17 @@
     </style>
     <link rel="stylesheet" href="../css/dfd-system.css">
 </head>
-<body data-access="pro">
+<body data-access="pro" class="dfd-safe" data-course-id="data-science" data-lesson-id="hypothesis-testing" data-lesson-label="Hypothesis Testing | Fakhruddin Khambaty's Learning Hub" data-total-lessons="32">
     <div class="container">
+<div class="dfd-lesson-progress" data-dfd-progress>
+  <p class="dfd-lesson-progress-label" data-dfd-progress-label>Sign in to save your place.</p>
+  <div class="dfd-lesson-progress-track" data-dfd-progress-bar role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-label="Course progress">
+    <div class="dfd-lesson-progress-fill" data-dfd-progress-fill></div>
+  </div>
+  <p><button type="button" data-dfd-complete>Mark lesson complete</button></p>
+  <p data-dfd-complete-status></p>
+</div>
+
         <!-- Navigation -->
         <nav class="nav">
             <a href="../index.html"><i class="fas fa-home"></i><span>Home</span></a>
@@ -514,8 +524,8 @@
 
         <div class="example-box" style="margin-bottom: 30px;">
             <h4>📥 Dataset for this lesson</h4>
-            <p>Examples use the Hotel Reservations dataset. Download and save it in the same folder as your script so <code>pd.read_csv("Hotel Reservations.csv")</code> works.</p>
-            <p style="margin-top: 10px;"><a href="datasets/hotel_reservations.csv" download="Hotel Reservations.csv" style="color: #1d4ed8; font-weight: 700; text-decoration: none;"><i class="fas fa-download"></i> Download Hotel Reservations.csv (3.1 MB)</a></p>
+            <p>Examples use the Hotel Reservations dataset. Download and save it in the same folder as your script so <code>pd.read_csv("hotel_reservations.csv")</code> works.</p>
+            <p style="margin-top: 10px;"><a href="datasets/hotel_reservations.csv" download="hotel_reservations.csv" style="color: #1d4ed8; font-weight: 700; text-decoration: none;"><i class="fas fa-download"></i> Download Hotel Reservations.csv (3.1 MB)</a></p>
         </div>
 
         <!-- Part 1: The Detective Framework -->
@@ -633,7 +643,7 @@
 <span class="keyword">from</span> scipy.stats <span class="keyword">import</span> chi2_contingency
 
 <span class="comment"># Load hotel reservations data</span>
-data = pd.<span class="function">read_csv</span>(<span class="string">"Hotel Reservations.csv"</span>)
+data = pd.<span class="function">read_csv</span>(<span class="string">"hotel_reservations.csv"</span>)
 
 <span class="comment"># Create contingency table</span>
 contingency_table = pd.<span class="function">crosstab</span>(
@@ -751,7 +761,7 @@ categorical_features = [<span class="string">'type_of_meal_plan'</span>, <span c
 <span class="keyword">import</span> pandas <span class="keyword">as</span> pd
 
 <span class="comment"># Load data</span>
-data = pd.<span class="function">read_csv</span>(<span class="string">"Hotel Reservations.csv"</span>)
+data = pd.<span class="function">read_csv</span>(<span class="string">"hotel_reservations.csv"</span>)
 
 <span class="comment"># Separate the two groups</span>
 canceled = data[data[<span class="string">'booking_status'</span>] == <span class="string">'Canceled'</span>][<span class="string">'lead_time'</span>]
@@ -964,7 +974,7 @@ numerical_features = [<span class="string">'lead_time'</span>, <span class="stri
 <span class="keyword">from</span> scipy.stats <span class="keyword">import</span> chi2_contingency, ttest_ind
 
 <span class="comment"># Load data</span>
-data = pd.<span class="function">read_csv</span>(<span class="string">"Hotel Reservations.csv"</span>)
+data = pd.<span class="function">read_csv</span>(<span class="string">"hotel_reservations.csv"</span>)
 
 <span class="comment"># Define feature types</span>
 categorical_features = [<span class="string">'type_of_meal_plan'</span>, <span class="string">'room_type_reserved'</span>]
@@ -1051,7 +1061,7 @@ h3 { color: blue !important; }
 import pandas as pd
 
 # --- Code cell 3 ---
-data = pd.read_csv("Hotel Reservations.csv")
+data = pd.read_csv("hotel_reservations.csv")
 
 # --- Code cell 4 ---
 data.head(10)
@@ -1279,7 +1289,18 @@ print("")
         </div>
 
         <!-- Navigation Buttons -->
-        <div class="nav-buttons">
+        
+<section class="section dfd-quiz" id="check" data-dfd-quiz data-explanation="Report the effect size next to the p-value.">
+  <h2 data-dfd-prompt>Knowledge check</h2>
+  <p>A p-value of 0.04 means what, at a 0.05 cutoff?</p>
+  <div data-dfd-choices>
+    <button type="button" data-correct="false">The effect is large and important</button>
+    <button type="button" data-correct="true">The result is surprising if the null were true. It does not state the size of the effect.</button>
+  </div>
+  <p class="dfd-quiz-feedback" data-dfd-feedback hidden></p>
+  <p class="dfd-quiz-explain" data-dfd-explain hidden></p>
+</section>
+<div class="nav-buttons">
             <a href="missing-values-outliers.html" class="nav-btn prev">
                 <i class="fas fa-arrow-left"></i>
                 Previous: Statistics Foundations
@@ -1317,6 +1338,9 @@ print("")
     <script src="../js/supabase-config.js"></script>
     <script src="../js/supabase-auth.js"></script>
     <script src="../js/paywall.js"></script>
-    <script src="../js/analytics-tracker.js"></script>
+    <script src="../js/progress.js"></script>
+<script src="../js/lesson-common.js"></script>
+<script src="../js/quiz.js"></script>
+<script src="../js/analytics-tracker.js"></script>
 </body>
 </html>

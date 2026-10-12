@@ -6,7 +6,8 @@
     <title>Decision Trees & Random Forest | Fakhruddin Khambaty's Learning Hub</title>
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <style>
+    <link rel="stylesheet" href="styles.css">
+<style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         
         body {
@@ -179,8 +180,17 @@
     </style>
     <link rel="stylesheet" href="../css/dfd-system.css">
 </head>
-<body data-access="pro">
+<body data-access="pro" class="dfd-safe" data-course-id="data-science" data-lesson-id="decision-trees" data-lesson-label="Decision Trees & Random Forest | Fakhruddin Khambaty's Learning Hub" data-total-lessons="32">
     <div class="container">
+<div class="dfd-lesson-progress" data-dfd-progress>
+  <p class="dfd-lesson-progress-label" data-dfd-progress-label>Sign in to save your place.</p>
+  <div class="dfd-lesson-progress-track" data-dfd-progress-bar role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-label="Course progress">
+    <div class="dfd-lesson-progress-fill" data-dfd-progress-fill></div>
+  </div>
+  <p><button type="button" data-dfd-complete>Mark lesson complete</button></p>
+  <p data-dfd-complete-status></p>
+</div>
+
         <nav class="nav">
             <a href="../index.html"><i class="fas fa-home"></i><span>Home</span></a>
             <a href="k-nearest-neighbors.html"><i class="fas fa-arrow-left"></i><span>Previous: k-Nearest Neighbors</span></a>
@@ -648,7 +658,18 @@ importance = pd.<span class="function">DataFrame</span>({
             </div>
         </div>
 
-        <div class="nav-buttons">
+        
+<section class="section dfd-quiz" id="check" data-dfd-quiz data-explanation="Limit depth, or use a forest, and check the test fold.">
+  <h2 data-dfd-prompt>Knowledge check</h2>
+  <p>Why can one deep decision tree look perfect on training data?</p>
+  <div data-dfd-choices>
+    <button type="button" data-correct="false">Trees cannot overfit</button>
+    <button type="button" data-correct="true">It can keep splitting until each leaf memorizes a few rows</button>
+  </div>
+  <p class="dfd-quiz-feedback" data-dfd-feedback hidden></p>
+  <p class="dfd-quiz-explain" data-dfd-explain hidden></p>
+</section>
+<div class="nav-buttons">
             <a href="linear-regression.html" class="nav-btn prev"><i class="fas fa-arrow-left"></i> Previous: Linear Regression</a>
             <a href="index.html" class="nav-btn next">Back to Course Hub <i class="fas fa-arrow-right"></i></a>
         </div>
@@ -668,6 +689,9 @@ importance = pd.<span class="function">DataFrame</span>({
     <script src="../js/supabase-config.js"></script>
     <script src="../js/supabase-auth.js"></script>
     <script src="../js/paywall.js"></script>
-    <script src="../js/analytics-tracker.js"></script>
+    <script src="../js/progress.js"></script>
+<script src="../js/lesson-common.js"></script>
+<script src="../js/quiz.js"></script>
+<script src="../js/analytics-tracker.js"></script>
 </body>
 </html>

@@ -6,7 +6,8 @@
     <title>K-Means Clustering Code – Line by Line | Data Science Course</title>
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <style>
+    <link rel="stylesheet" href="styles.css">
+<style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: 'Nunito', sans-serif; background: linear-gradient(135deg, #f8fafc 0%, #e0f2fe 50%, #fdf4ff 100%); min-height: 100vh; padding: 20px; color: #1e293b; line-height: 1.8; }
         .container { max-width: 900px; margin: 0 auto; }
@@ -65,8 +66,17 @@
     </style>
     <link rel="stylesheet" href="../css/dfd-system.css">
 </head>
-<body data-access="pro">
+<body data-access="pro" class="dfd-safe" data-course-id="data-science" data-lesson-id="kmeans-code-walkthrough" data-lesson-label="K-Means Clustering Code – Line by Line | Data Science Course" data-total-lessons="32">
     <div class="container">
+<div class="dfd-lesson-progress" data-dfd-progress>
+  <p class="dfd-lesson-progress-label" data-dfd-progress-label>Sign in to save your place.</p>
+  <div class="dfd-lesson-progress-track" data-dfd-progress-bar role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-label="Course progress">
+    <div class="dfd-lesson-progress-fill" data-dfd-progress-fill></div>
+  </div>
+  <p><button type="button" data-dfd-complete>Mark lesson complete</button></p>
+  <p data-dfd-complete-status></p>
+</div>
+
         <nav class="nav">
             <a href="../index.html"><i class="fas fa-home"></i> Home</a>
             <a href="index.html"><i class="fas fa-th-large"></i> Course Hub</a>
@@ -79,7 +89,7 @@
         </div>
 
         <div class="download-box">
-            <strong><i class="fas fa-download"></i> Download the dataset first:</strong> <a href="datasets/hotel_reservations.csv" download="Hotel Reservations.csv">Hotel Reservations.csv</a> — Save it in the same folder as your script so <code>pd.read_csv("Hotel Reservations.csv")</code> works.
+            <strong><i class="fas fa-download"></i> Download the dataset first:</strong> <a href="datasets/hotel_reservations.csv" download="hotel_reservations.csv">Hotel Reservations.csv</a> — Save it in the same folder as your script so <code>pd.read_csv("hotel_reservations.csv")</code> works.
         </div>
 
         <!-- Table of Contents -->
@@ -162,19 +172,19 @@ h2 { color: green !important; }
             <p>We read the hotel reservations CSV file and look at what's inside.</p>
 
             <div class="code-block">
-<pre><span class="variable">data</span> = pd.<span class="function">read_csv</span>(<span class="string">"Hotel Reservations.csv"</span>)</pre>
+<pre><span class="variable">data</span> = pd.<span class="function">read_csv</span>(<span class="string">"hotel_reservations.csv"</span>)</pre>
             </div>
 
             <div class="line-explain">
                 <h4>What this does:</h4>
                 <ul>
-                    <li><code>pd.read_csv("Hotel Reservations.csv")</code> — Opens the CSV file (a spreadsheet saved as text, where commas separate each column) and reads every row and column into Python.</li>
+                    <li><code>pd.read_csv("hotel_reservations.csv")</code> — Opens the CSV file (a spreadsheet saved as text, where commas separate each column) and reads every row and column into Python.</li>
                     <li><code>data = ...</code> — We store the entire table in a variable called <code>data</code>. Now <code>data</code> is a <strong>DataFrame</strong> — pandas' word for "a table with rows and columns."</li>
                 </ul>
             </div>
 
             <div class="warning">
-                <p><strong>Common error:</strong> If you get <code>FileNotFoundError</code>, it means the CSV file is not in the same folder as your notebook. Move it there, or use the full path like <code>pd.read_csv("/Users/you/Downloads/Hotel Reservations.csv")</code>.</p>
+                <p><strong>Common error:</strong> If you get <code>FileNotFoundError</code>, it means the CSV file is not in the same folder as your notebook. Move it there, or use the full path like <code>pd.read_csv("hotel_reservations.csv")</code>.</p>
             </div>
 
             <h3>Looking at the Data</h3>
@@ -823,6 +833,21 @@ plt.<span class="function">show</span>()</pre>
     <script src="../js/supabase-config.js"></script>
     <script src="../js/supabase-auth.js"></script>
     <script src="../js/paywall.js"></script>
-    <script src="../js/analytics-tracker.js"></script>
+    <script src="../js/code-copy.js"></script>
+<script src="../js/progress.js"></script>
+<script src="../js/lesson-common.js"></script>
+<script src="../js/quiz.js"></script>
+<script src="../js/analytics-tracker.js"></script>
+
+<section class="section dfd-quiz" id="check" data-dfd-quiz data-explanation="The shipped file uses lowercase underscores.">
+  <h2 data-dfd-prompt>Knowledge check</h2>
+  <p>Which hotel file does this walkthrough load?</p>
+  <div data-dfd-choices>
+    <button type="button" data-correct="false">/Users/you/Downloads/Hotel Reservations.csv</button>
+    <button type="button" data-correct="true">hotel_reservations.csv from the course datasets folder</button>
+  </div>
+  <p class="dfd-quiz-feedback" data-dfd-feedback hidden></p>
+  <p class="dfd-quiz-explain" data-dfd-explain hidden></p>
+</section>
 </body>
 </html>

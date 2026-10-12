@@ -63,6 +63,14 @@ function pagesFromArgs() {
 async function exerciseQuiz(page, problems, label) {
     const quiz = page.locator('[data-dfd-quiz]');
     if (await quiz.count() === 0) return;
+    // A visible Pro overlay is the gate working. Do not click through it.
+    const locked = await page.evaluate(() => {
+        const overlay = document.getElementById('paywall-overlay');
+        if (!overlay) return false;
+        const style = window.getComputedStyle(overlay);
+        return style.display !== 'none' && style.visibility !== 'hidden' && overlay.getAttribute('aria-hidden') !== 'true';
+    });
+    if (locked) return;
     const choices = page.locator('[data-dfd-quiz] [data-correct]');
     if (await choices.count() < 2) {
         problems.push(label + ' quiz has fewer than two choices');

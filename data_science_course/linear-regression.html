@@ -6,7 +6,8 @@
     <title>Linear Regression (Super Detailed) | Fakhruddin Khambaty's Learning Hub</title>
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <style>
+    <link rel="stylesheet" href="styles.css">
+<style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         
         body {
@@ -221,8 +222,17 @@
     </style>
     <link rel="stylesheet" href="../css/dfd-system.css">
 </head>
-<body data-access="pro">
+<body data-access="pro" class="dfd-safe" data-course-id="data-science" data-lesson-id="linear-regression" data-lesson-label="Linear Regression (Super Detailed) | Fakhruddin Khambaty's Learning Hub" data-total-lessons="32">
     <div class="container">
+<div class="dfd-lesson-progress" data-dfd-progress>
+  <p class="dfd-lesson-progress-label" data-dfd-progress-label>Sign in to save your place.</p>
+  <div class="dfd-lesson-progress-track" data-dfd-progress-bar role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-label="Course progress">
+    <div class="dfd-lesson-progress-fill" data-dfd-progress-fill></div>
+  </div>
+  <p><button type="button" data-dfd-complete>Mark lesson complete</button></p>
+  <p data-dfd-complete-status></p>
+</div>
+
         <nav class="nav">
             <a href="../index.html"><i class="fas fa-home"></i><span>Home</span></a>
             <a href="statistics-foundations.html"><i class="fas fa-arrow-left"></i><span>Previous: Statistics</span></a>
@@ -432,7 +442,7 @@ Line = Predicted price for any area
                     <h4 style="color: #166534; margin-bottom: 8px;">📥 Download the Housing Dataset to Follow Along!</h4>
                     <p style="color: #14532d; margin: 0;">Download this CSV file and save it in your working directory to run the code examples.</p>
                 </div>
-                <a href="datasets/housing_dataset.csv" download="Housing.csv" 
+                <a href="datasets/housing_dataset.csv" download="housing_dataset.csv" 
                    style="background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%); 
                           color: white; padding: 15px 30px; border-radius: 12px; 
                           text-decoration: none; font-weight: 700; display: inline-flex; 
@@ -455,7 +465,7 @@ Line = Predicted price for any area
 <span class="keyword">import</span> numpy <span class="keyword">as</span> np
 
 <span class="comment"># Load the housing data</span>
-data = pd.<span class="function">read_csv</span>(<span class="string">"Housing.csv"</span>)
+data = pd.<span class="function">read_csv</span>(<span class="string">"housing_dataset.csv"</span>)
 
 <span class="comment"># Let's see what our data looks like</span>
 <span class="function">print</span>(<span class="string">"First 5 rows:"</span>)
@@ -471,7 +481,7 @@ data = pd.<span class="function">read_csv</span>(<span class="string">"Housing.c
             </div>
             <div class="eli5-box" style="background: linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%); border-left: 4px solid #10b981;">
                 <h4>What each line does (in simple words)</h4>
-                <p><strong>pd.read_csv("Housing.csv")</strong> — Reads the CSV file and stores it in <code>data</code>.</p>
+                <p><strong>pd.read_csv("housing_dataset.csv")</strong> — Reads the CSV file and stores it in <code>data</code>.</p>
                 <p><strong>print(data.head())</strong> — Shows the first 5 rows so you can see the columns (price, area, bedrooms, etc.).</p>
                 <p style="margin-top: 10px;"><a href="linear-regression-code-walkthrough.html">Full line-by-line walkthrough →</a></p>
             </div>
@@ -783,6 +793,7 @@ X_test[numeric_features] = scaler.<span class="function">transform</span>(X_test
                 <p><strong>fit_transform</strong> on training data = "Learn the min/max AND apply scaling"</p>
                 <p><strong>transform</strong> on test data = "Use the SAME min/max learned before"</p>
                 <p>If you fit on test data too, you're "cheating" by peeking at test information!</p>
+                <p>The same rule is easier to keep if the scaler lives inside a <code>sklearn.pipeline.Pipeline</code> with the estimator. <code>pipeline.fit(X_train, y_train)</code> learns the scale from the training fold only. Assign pandas results (<code>frame = frame.drop(...)</code>) instead of <code>inplace=True</code>. Pandas 2.x Copy-on-Write is <code>pd.options.mode.copy_on_write = True</code>.</p>
             </div>
         </div>
 
@@ -1225,6 +1236,9 @@ plt.<span class="function">show</span>()</pre>
     <script src="../js/supabase-config.js"></script>
     <script src="../js/supabase-auth.js"></script>
     <script src="../js/paywall.js"></script>
-    <script src="../js/analytics-tracker.js"></script>
+    <script src="../js/progress.js"></script>
+<script src="../js/lesson-common.js"></script>
+<script src="../js/quiz.js"></script>
+<script src="../js/analytics-tracker.js"></script>
 </body>
 </html>

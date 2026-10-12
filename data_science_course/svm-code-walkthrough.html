@@ -6,7 +6,8 @@
     <title>SVM Code Walkthrough – Bank Churn | Data Science Course</title>
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <style>
+    <link rel="stylesheet" href="styles.css">
+<style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             font-family: 'Nunito', sans-serif;
@@ -154,8 +155,17 @@
     </style>
     <link rel="stylesheet" href="../css/dfd-system.css">
 </head>
-<body data-access="pro">
+<body data-access="pro" class="dfd-safe" data-course-id="data-science" data-lesson-id="svm-code-walkthrough" data-lesson-label="SVM Code Walkthrough – Bank Churn | Data Science Course" data-total-lessons="32">
 <div class="container">
+<div class="dfd-lesson-progress" data-dfd-progress>
+  <p class="dfd-lesson-progress-label" data-dfd-progress-label>Sign in to save your place.</p>
+  <div class="dfd-lesson-progress-track" data-dfd-progress-bar role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-label="Course progress">
+    <div class="dfd-lesson-progress-fill" data-dfd-progress-fill></div>
+  </div>
+  <p><button type="button" data-dfd-complete>Mark lesson complete</button></p>
+  <p data-dfd-complete-status></p>
+</div>
+
     <nav class="nav">
         <a href="../index.html"><i class="fas fa-home"></i> Home</a>
         <a href="index.html"><i class="fas fa-th-large"></i> Course Hub</a>
@@ -673,7 +683,18 @@ plt.<span class="function">show</span>()</pre></div>
     </div>
 
     <!-- NAV BUTTONS -->
-    <div class="nav-buttons">
+    
+<section class="section dfd-quiz" id="check" data-dfd-quiz data-explanation="The lesson links that file. Use the relative path.">
+  <h2 data-dfd-prompt>Knowledge check</h2>
+  <p>Which file is the bank-churn table?</p>
+  <div data-dfd-choices>
+    <button type="button" data-correct="false">A path under /Users/you/Downloads</button>
+    <button type="button" data-correct="true">datasets/BankChurnersData.csv next to this lesson</button>
+  </div>
+  <p class="dfd-quiz-feedback" data-dfd-feedback hidden></p>
+  <p class="dfd-quiz-explain" data-dfd-explain hidden></p>
+</section>
+<div class="nav-buttons">
         <a href="support-vector-machines.html" class="nav-btn prev"><i class="fas fa-arrow-left"></i> SVM Theory</a>
         <a href="decision-trees.html" class="nav-btn next">Decision Trees <i class="fas fa-arrow-right"></i></a>
     </div>
@@ -795,6 +816,10 @@ function showCM(type, title, desc) {
     <script src="../js/supabase-config.js"></script>
     <script src="../js/supabase-auth.js"></script>
     <script src="../js/paywall.js"></script>
-    <script src="../js/analytics-tracker.js"></script>
+    <script src="../js/code-copy.js"></script>
+<script src="../js/progress.js"></script>
+<script src="../js/lesson-common.js"></script>
+<script src="../js/quiz.js"></script>
+<script src="../js/analytics-tracker.js"></script>
 </body>
 </html>

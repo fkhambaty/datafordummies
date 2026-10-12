@@ -1,0 +1,44 @@
+/* Data science family theme. Page <style> blocks stay after this link
+   and keep diagram colors. dfd-system.css still loads last. */
+@import url("../css/course-light-theme.css");
+
+:root {
+    --course-primary: #6d28d9;
+    --course-accent: #a78bfa;
+}
+
+.nav a,
+.nav-btn,
+.lesson-link,
+.quiz-opt,
+.quiz-option,
+.download-btn,
+button {
+    min-height: 48px;
+    min-width: 48px;
+}
+
+.lesson-link,
+.nav-btn {
+    box-sizing: border-box;
+}
+
+svg,
+.visual svg,
+img {
+    max-width: 100%;
+    height: auto;
+}
+
+table {
+    display: block;
+    max-width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+pre,
+.code-block {
+    max-width: 100%;
+    overflow-x: auto;
+}

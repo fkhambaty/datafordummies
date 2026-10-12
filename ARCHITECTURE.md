@@ -51,8 +51,8 @@ Course folders, each with its own `index.html` and usually a `hub.html`:
 
 | Folder | Subject |
 |--------|---------|
-| `python_course/` | Python for data science |
-| `data_science_course/` | Data science and ML |
+| `python_course/` | Python for data science. Fifteen sessions. Sessions 13 and 14 are the visualization lessons. |
+| `data_science_course/` | Data science and ML. `styles.css` imports the shared course theme. |
 | `postgres_course/` | PostgreSQL |
 | `mssql_course/` | Microsoft SQL Server |
 | `airflow_course/` | Apache Airflow |
@@ -62,7 +62,7 @@ Course folders, each with its own `index.html` and usually a `hub.html`:
 | `metabase_course/` | Metabase. Hub lessons use the shared shell. Meet Metabase is free. The other eight lessons are Pro. |
 | `kubernetes_course/` | Kubernetes |
 | `terraform_course/` | Terraform |
-| `llm_course/` | Large language models |
+| `llm_course/` | Large language models. `styles.css` imports the shared course theme. Page animations stay in each lesson. |
 | `dms_course/` | AWS DMS |
 | `snowflake_course/` | Snowflake. Hub at `hub.html` (also copied to `index.html`). Lessons use `styles.css`, which imports `course-light-theme.css`. Two lessons are free (`meet-snowflake`, `trial-account`). The other eleven set `data-access="pro"`. |
 | `interviews/` | Interview practice, including a free `snowflake-interview.html` |
@@ -96,14 +96,16 @@ Family styles sit in front of that file. They own color and layout. The system f
 | Marketing | `css/fkti-light-theme.css`, `css/hub-styles.css`, `styles/ui-upgrade.css` | Home, learning path, founder, projects index, and pages that already share that nav |
 | Course hubs | `css/hub-light.css` | The nine `hub.html` files that already link it. Each hub sets `--hub-color` and `--hub-color2` |
 | Shared lesson shell | `css/course-light-theme.css` | Lessons whose `styles.css` imports it (PostgreSQL, ClickHouse, Metabase, Redshift) |
-| Python | `python_course/light-theme.css` | Python lessons |
+| Python | `python_course/light-theme.css` | Python lessons. October 2026 pass: 15-session nav, visualization on sessions 13 and 14, shared progress and knowledge checks. |
+| Data science | `data_science_course/styles.css` | Imports `css/course-light-theme.css`. Lesson pages keep their own `<style>` blocks for diagrams. |
+| LLM | `llm_course/styles.css` | Imports `css/course-light-theme.css`. Page animations stay in each lesson's `<style>` block. |
 | Accounts | `styles/design-system.css`, `styles/auth.css` | `auth/` |
 | Pricing | `styles/pricing.css` | `pricing.html` |
 | Project walkthroughs | `css/project-pages.css` | `projects/*.html` |
 | Admin | `css/dfd-admin.css` | `admin/analytics.html` only |
 | Tools | `css/dfd-tools.css` | `pipeline-designer.html`, `data-modelling.html`, `bus-matrix.html`, `distributed-computing.html` |
 
-Many data-science, SQL Server, Airflow, dbt, and LLM lessons still carry their own `<style>` block. That is intentional. Those blocks own the course accent. Do not replace them with a blanket theme.
+Data science and LLM lessons link a family `styles.css` and still carry their own `<style>` block for diagrams and accents. SQL Server, Airflow, and dbt lessons still carry only their own block. Do not replace those blocks with a blanket theme.
 
 ### Safe extension rules
 
@@ -146,6 +148,8 @@ Head order for a new lesson: the family stylesheet, then the page accent, then `
 `snowflake_course/` is the first course built on that shell. Each lesson sets `data-course-id="snowflake"` and its own `data-lesson-id`. `css/dfd-system.css` is last. Scripts are `code-copy.js`, the account and paywall files, `progress.js`, `lesson-common.js`, and `quiz.js`. The mark in `snowflake_course/logo.svg` is an original hexagon, not the Snowflake Inc. logo.
 
 Metabase, the Redshift hub lessons, the PostgreSQL replication lesson, and the SQL Server practice-dataset page use the same shell. Redshift's canonical URLs are the files linked from `redshift_course/hub.html`. `redshift_course/index.html` remains the older single-page course and points at those lessons. Meet Metabase and Meet Redshift stay free. The other hub lessons in those two courses are Pro.
+
+Checked 13 October 2026, the Python, data science, and LLM families use that same progress and knowledge-check script. Python sessions 13 and 14 teach matplotlib/seaborn and enhanced charts. `python_course/a4-functions.html` is the function solutions page for `student-assignments.html#assignment4`. Data science `index.html` is the course hub: every card links a real lesson or a section on that hub. LLM lessons distinguish the 2019 GPT-2 decoder from ChatGPT, and the deployment lesson uses a LangChain runnable instead of `RetrievalQA`. Access flags are unchanged. The Terraform hub still warns that `index.html#workspaces` is missing.
 
 ## Local run
 

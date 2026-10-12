@@ -3,992 +3,176 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <title>Session 9: NumPy & Comprehensions | 🐍 Python Mastery</title>
+  <title>Assignment 4 Solutions | 🐍 Python Mastery</title>
   <link rel="stylesheet" href="light-theme.css">
+  <style>
+    .question-card { background: white; border: 2px solid var(--border-color); border-radius: 16px; padding: 1.5rem; margin-bottom: 1.5rem; }
+    .question-header { display: flex; align-items: flex-start; gap: 1rem; margin-bottom: 1rem; }
+    .question-num { background: var(--gradient-python); color: white; min-width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; flex-shrink: 0; }
+    .question-text { font-size: 1.05rem; color: var(--text-primary); font-weight: 600; line-height: 1.5; }
+    .solution-toggle { background: #f1f5f9; border: none; padding: 0.75rem 1.5rem; border-radius: 8px; cursor: pointer; font-weight: 600; color: var(--python-blue); margin-top: 1rem; }
+    .solution-content { display: none; margin-top: 1rem; padding-top: 1rem; border-top: 2px dashed var(--border-color); }
+    .solution-content.show { display: block; }
+  </style>
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="../css/dfd-system.css">
+  <link rel="stylesheet" href="../css/dfd-system.css">
 </head>
-<body data-access="pro">
+<body class="dfd-safe" data-access="pro" data-course-id="python-practice" data-lesson-id="a4-functions" data-lesson-label="Assignment 4: Functions" data-total-lessons="5">
   <nav class="main-nav">
     <div class="nav-content">
-      <a href="../index.html" class="nav-hub" title="Main website" style="display: flex; align-items: center; gap: 6px; padding: 8px 16px; background: linear-gradient(180deg, #ffffff 0%, #f5f5f7 100%); border: 1px solid #d1d5db; border-radius: 10px; color: #1d1d1f; font-size: 13px; font-weight: 600; text-decoration: none; box-shadow: 0 3px 0 #d1d5db, 0 4px 8px rgba(0,0,0,0.1); margin-right: 8px;">
-        <i class="fas fa-home"></i>
-        <span>Home</span>
-      </a>
-      <a href="index.html" class="nav-hub" title="Python course hub" style="display: flex; align-items: center; gap: 6px; padding: 8px 16px; background: linear-gradient(180deg, #ffffff 0%, #f5f5f7 100%); border: 1px solid #d1d5db; border-radius: 10px; color: #1d1d1f; font-size: 13px; font-weight: 600; text-decoration: none; box-shadow: 0 3px 0 #d1d5db, 0 4px 8px rgba(0,0,0,0.1); margin-right: 8px;">
-        <span>←</span><span>Course Hub</span>
-      </a>
-      <a href="complete-course.html" class="logo">🐍 Python Mastery</a>
+      <a href="../index.html" class="nav-hub" title="Main website"><i class="fas fa-home"></i><span>Home</span></a>
+      <a href="index.html" class="nav-hub" title="Python course hub"><span>←</span><span>Course Hub</span></a>
+      <a href="student-assignments.html#assignment4" class="logo">Student questions</a>
       <div class="session-nav">
-        <a href="s1-intro.html" class="nav-link">1</a>
-        <a href="s2-datatypes.html" class="nav-link">2</a>
-        <a href="s3-loops.html" class="nav-link">3</a>
-        <a href="s4-lists.html" class="nav-link">4</a>
-        <a href="s5-datastructures.html" class="nav-link">5</a>
-        <a href="s6-functions1.html" class="nav-link">6</a>
-        <a href="s7-functions2.html" class="nav-link">7</a>
-        <a href="s8-oop.html" class="nav-link">8</a>
-        <a href="s9-numpy.html" class="nav-link active">9</a>
-        <a href="s10-pandas1.html" class="nav-link">10</a>
-        <a href="s11-pandas2.html" class="nav-link">11</a>
-        <a href="s12-api-sql.html" class="nav-link">12</a>
-        <a href="assignments.html" class="nav-link assignment">📝</a>
+        <a href="a1-strings.html" class="nav-link">A1</a>
+        <a href="a2-loops.html" class="nav-link">A2</a>
+        <a href="a3-datastructures.html" class="nav-link">A3</a>
+        <a href="a4-functions.html" class="nav-link active">A4</a>
+        <a href="a5-advanced.html" class="nav-link">A5</a>
       </div>
     </div>
   </nav>
 
   <main>
+<div class="dfd-lesson-progress" data-dfd-progress>
+  <p class="dfd-lesson-progress-label" data-dfd-progress-label>Sign in to save your place.</p>
+  <div class="dfd-lesson-progress-track" data-dfd-progress-bar role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-label="Course progress">
+    <div class="dfd-lesson-progress-fill" data-dfd-progress-fill></div>
+  </div>
+  <p><button type="button" data-dfd-complete>Mark lesson complete</button></p>
+  <p data-dfd-complete-status></p>
+</div>
+
     <header class="session-header">
-      <div class="session-badge">Session 9</div>
-      <h1>🔢 NumPy & List Comprehensions</h1>
-      <p class="session-subtitle">Powerful numerical computing and elegant list creation</p>
-      <div class="progress-info">
-        <span>📚 10 Topics</span>
-        <span>⏱️ 50 min read</span>
-        <span>🎯 Intermediate Level</span>
-      </div>
+      <div class="session-badge" style="background: var(--gradient-success);">Assignment 4 — Solutions</div>
+      <h1>Functions</h1>
+      <p class="session-subtitle">The ten practice questions, with type hints for Python 3.12+</p>
     </header>
+    <p>Practice without these answers is on <a href="student-assignments.html#assignment4">student-assignments.html#assignment4</a>. Hints stay there. Solutions stay here.</p>
 
-    <!-- OVERVIEW -->
-    <section class="overview-card">
-      <h2>🗺️ What You'll Learn</h2>
-      <div class="overview-grid">
-        <div class="overview-item">
-          <span class="overview-icon">📊</span>
-          <span>NumPy Arrays</span>
-        </div>
-        <div class="overview-item">
-          <span class="overview-icon">➕</span>
-          <span>Array Operations</span>
-        </div>
-        <div class="overview-item">
-          <span class="overview-icon">📐</span>
-          <span>Array Reshaping</span>
-        </div>
-        <div class="overview-item">
-          <span class="overview-icon">🔢</span>
-          <span>Mathematical Functions</span>
-        </div>
-        <div class="overview-item">
-          <span class="overview-icon">📝</span>
-          <span>List Comprehensions</span>
-        </div>
-        <div class="overview-item">
-          <span class="overview-icon">📖</span>
-          <span>Dict Comprehensions</span>
-        </div>
-      </div>
-    </section>
-
-    <div class="key-concept" style="background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%); border-left: 5px solid #3b82f6; padding: 1rem 1.25rem; border-radius: 12px; margin: 1.5rem 0;">
-      <h4 style="color: #1e40af;">📘 Same topic in the course notebook</h4>
-      <p style="color: #1e3a8a; margin: 0;">Session_9 has <strong>NumPy</strong>, <strong>List Comprehension</strong>, and <strong>Lambda</strong> notebooks—same topics. Run them to practice arrays and comprehensions.</p>
-    </div>
-
-    <!-- LIST COMPREHENSIONS -->
     <section class="content-section">
-      <h2>📝 List Comprehensions</h2>
+      <article class="question-card">
+        <div class="question-header"><span class="question-num">1</span><span class="question-text">Return the sum, difference, and product of two numbers.</span></div>
+        <button class="solution-toggle" type="button" onclick="toggleSolution(this)">Show solution</button>
+        <div class="solution-content"><div class="code-block"><pre><code>def combine(left: int, right: int) -> tuple[int, int, int]:
+    return left + right, left - right, left * right
 
-      <div class="topic-card">
-        <div class="topic-header">
-          <span class="topic-number">9.1</span>
-          <h3>⚡ Elegant List Creation</h3>
-        </div>
+added, subtracted, multiplied = combine(8, 3)
+print(added, subtracted, multiplied)  # 11 5 24</code></pre></div></div>
+      </article>
+      <article class="question-card">
+        <div class="question-header"><span class="question-num">2</span><span class="question-text">Factorial of 10.</span></div>
+        <button class="solution-toggle" type="button" onclick="toggleSolution(this)">Show solution</button>
+        <div class="solution-content"><div class="code-block"><pre><code>def factorial(n: int) -> int:
+    if n &lt; 0:
+        raise ValueError("factorial is defined here for n &gt;= 0")
+    result = 1
+    for value in range(2, n + 1):
+        result *= value
+    return result
 
-        <div class="explanation">
-          <p>List comprehensions are a concise way to create lists in a single line!</p>
-        </div>
+print(factorial(10))  # 3628800</code></pre></div></div>
+      </article>
+      <article class="question-card">
+        <div class="question-header"><span class="question-num">3</span><span class="question-text">Sort a list of integers descending, without changing the input list.</span></div>
+        <button class="solution-toggle" type="button" onclick="toggleSolution(this)">Show solution</button>
+        <div class="solution-content"><div class="code-block"><pre><code>def descending(values: list[int]) -> list[int]:
+    return sorted(values, reverse=True)
 
-        <div class="visual-box">
-          <h4>🔄 Traditional vs Comprehension</h4>
-          <pre style="text-align: center; font-size: 0.95rem;">
-    TRADITIONAL (4 lines)              LIST COMPREHENSION (1 line)
-    ─────────────────────              ─────────────────────────────
-    squares = []                       squares = [x**2 for x in range(5)]
-    for x in range(5):
-        squares.append(x**2)
-    
-    Same result: [0, 1, 4, 9, 16]
-    
-    Syntax: [expression for item in iterable]
-          </pre>
-        </div>
+print(descending([3, 1, 2]))  # [3, 2, 1]</code></pre></div></div>
+      </article>
+      <article class="question-card">
+        <div class="question-header"><span class="question-num">4</span><span class="question-text">Count vowels in a string.</span></div>
+        <button class="solution-toggle" type="button" onclick="toggleSolution(this)">Show solution</button>
+        <div class="solution-content"><div class="code-block"><pre><code>def vowel_count(text: str) -> int:
+    return sum(1 for char in text.lower() if char in "aeiou")
 
-        <div class="code-block">
-          <div class="code-header">
-            <span>Python</span>
-            <span class="code-badge">From Source</span>
-          </div>
-          <pre><code><span class="comment"># List comprehensions from Session 9</span>
+print(vowel_count("Data"))  # 2</code></pre></div></div>
+      </article>
+      <article class="question-card">
+        <div class="question-header"><span class="question-num">5</span><span class="question-text">Say whether a number is even or odd.</span></div>
+        <button class="solution-toggle" type="button" onclick="toggleSolution(this)">Show solution</button>
+        <div class="solution-content"><div class="code-block"><pre><code>def even_or_odd(number: int) -> str:
+    return "Even" if number % 2 == 0 else "Odd"
 
-<span class="comment"># Basic list comprehension</span>
-<span class="variable">squares</span> = [x**<span class="number">2</span> <span class="keyword">for</span> x <span class="keyword">in</span> <span class="function">range</span>(<span class="number">1</span>, <span class="number">6</span>)]
-<span class="function">print</span>(<span class="string">"Squares:"</span>, squares)
+print(even_or_odd(10))</code></pre></div></div>
+      </article>
+      <article class="question-card">
+        <div class="question-header"><span class="question-num">6</span><span class="question-text">Sum the even numbers in [12, 2, 33, 11, 45, 8].</span></div>
+        <button class="solution-toggle" type="button" onclick="toggleSolution(this)">Show solution</button>
+        <div class="solution-content"><div class="code-block"><pre><code>def sum_evens(values: list[int]) -> int:
+    return sum(number for number in values if number % 2 == 0)
 
-<span class="comment"># With condition (filter)</span>
-<span class="variable">even_squares</span> = [x**<span class="number">2</span> <span class="keyword">for</span> x <span class="keyword">in</span> <span class="function">range</span>(<span class="number">1</span>, <span class="number">11</span>) <span class="keyword">if</span> x % <span class="number">2</span> == <span class="number">0</span>]
-<span class="function">print</span>(<span class="string">"Even squares:"</span>, even_squares)
+print(sum_evens([12, 2, 33, 11, 45, 8]))  # 22</code></pre></div></div>
+      </article>
+      <article class="question-card">
+        <div class="question-header"><span class="question-num">7</span><span class="question-text">Remove duplicates and keep the first-seen order.</span></div>
+        <button class="solution-toggle" type="button" onclick="toggleSolution(this)">Show solution</button>
+        <div class="solution-content"><div class="code-block"><pre><code>def unique(values: list[int]) -> list[int]:
+    return list(dict.fromkeys(values))
 
-<span class="comment"># Transform strings</span>
-<span class="variable">names</span> = [<span class="string">"alice"</span>, <span class="string">"bob"</span>, <span class="string">"charlie"</span>]
-<span class="variable">upper_names</span> = [name.upper() <span class="keyword">for</span> name <span class="keyword">in</span> names]
-<span class="function">print</span>(<span class="string">"Uppercase:"</span>, upper_names)
+print(unique([1, 2, 1, 3]))  # [1, 2, 3]</code></pre></div></div>
+      </article>
+      <article class="question-card">
+        <div class="question-header"><span class="question-num">8</span><span class="question-text">Reverse a string.</span></div>
+        <button class="solution-toggle" type="button" onclick="toggleSolution(this)">Show solution</button>
+        <div class="solution-content"><div class="code-block"><pre><code>def reverse_text(text: str) -> str:
+    return text[::-1]
 
-<span class="comment"># With if-else</span>
-<span class="variable">numbers</span> = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>]
-<span class="variable">labels</span> = [<span class="string">"even"</span> <span class="keyword">if</span> x % <span class="number">2</span> == <span class="number">0</span> <span class="keyword">else</span> <span class="string">"odd"</span> <span class="keyword">for</span> x <span class="keyword">in</span> numbers]
-<span class="function">print</span>(<span class="string">"Labels:"</span>, labels)
+print(reverse_text("data"))  # atad</code></pre></div></div>
+      </article>
+      <article class="question-card">
+        <div class="question-header"><span class="question-num">9</span><span class="question-text">greet_user prints Hello, [Name]! and Hello, Guest! when no name is passed.</span></div>
+        <button class="solution-toggle" type="button" onclick="toggleSolution(this)">Show solution</button>
+        <div class="solution-content"><div class="code-block"><pre><code>def greet_user(name: str = "Guest") -> None:
+    print(f"Hello, {name}!")
 
-<span class="comment"># Nested list comprehension (flattening)</span>
-<span class="variable">matrix</span> = [[<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>], [<span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>], [<span class="number">7</span>, <span class="number">8</span>, <span class="number">9</span>]]
-<span class="variable">flat</span> = [num <span class="keyword">for</span> row <span class="keyword">in</span> matrix <span class="keyword">for</span> num <span class="keyword">in</span> row]
-<span class="function">print</span>(<span class="string">"Flattened:"</span>, flat)</code></pre>
-        </div>
+greet_user("Asha")
+greet_user()</code></pre></div></div>
+      </article>
+      <article class="question-card">
+        <div class="question-header"><span class="question-num">10</span><span class="question-text">Return the cube of an integer.</span></div>
+        <button class="solution-toggle" type="button" onclick="toggleSolution(this)">Show solution</button>
+        <div class="solution-content"><div class="code-block"><pre><code>def cube(number: int) -> int:
+    return number ** 3
 
-        <div class="output-block">
-          <div class="output-header">Output</div>
-          <pre>Squares: [1, 4, 9, 16, 25]
-Even squares: [4, 16, 36, 64, 100]
-Uppercase: ['ALICE', 'BOB', 'CHARLIE']
-Labels: ['odd', 'even', 'odd', 'even', 'odd']
-Flattened: [1, 2, 3, 4, 5, 6, 7, 8, 9]</pre>
-        </div>
-      </div>
-
-      <div class="topic-card">
-        <div class="topic-header">
-          <span class="topic-number">9.2</span>
-          <h3>📖 Dictionary & Set Comprehensions</h3>
-        </div>
-
-        <div class="code-block">
-          <div class="code-header">
-            <span>Python</span>
-            <span class="code-badge">From Source</span>
-          </div>
-          <pre><code><span class="comment"># Dictionary comprehension</span>
-<span class="variable">squares_dict</span> = {x: x**<span class="number">2</span> <span class="keyword">for</span> x <span class="keyword">in</span> <span class="function">range</span>(<span class="number">1</span>, <span class="number">6</span>)}
-<span class="function">print</span>(<span class="string">"Squares dict:"</span>, squares_dict)
-
-<span class="comment"># From two lists</span>
-<span class="variable">names</span> = [<span class="string">"Alice"</span>, <span class="string">"Bob"</span>, <span class="string">"Charlie"</span>]
-<span class="variable">ages</span> = [<span class="number">25</span>, <span class="number">30</span>, <span class="number">35</span>]
-<span class="variable">people</span> = {name: age <span class="keyword">for</span> name, age <span class="keyword">in</span> <span class="function">zip</span>(names, ages)}
-<span class="function">print</span>(<span class="string">"People:"</span>, people)
-
-<span class="comment"># Set comprehension (removes duplicates)</span>
-<span class="variable">numbers</span> = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">3</span>, <span class="number">3</span>]
-<span class="variable">unique_squares</span> = {x**<span class="number">2</span> <span class="keyword">for</span> x <span class="keyword">in</span> numbers}
-<span class="function">print</span>(<span class="string">"Unique squares:"</span>, unique_squares)</code></pre>
-        </div>
-
-        <div class="output-block">
-          <div class="output-header">Output</div>
-          <pre>Squares dict: {1: 1, 2: 4, 3: 9, 4: 16, 5: 25}
-People: {'Alice': 25, 'Bob': 30, 'Charlie': 35}
-Unique squares: {1, 4, 9}</pre>
-        </div>
-      </div>
+print(cube(3))  # 27</code></pre></div></div>
+      </article>
     </section>
 
-    <!-- NUMPY SECTION -->
-    <section class="content-section">
-      <h2>🔢 NumPy - Numerical Python</h2>
-
-      <div class="topic-card">
-        <div class="topic-header">
-          <span class="topic-number">9.3</span>
-          <h3>📊 What is NumPy?</h3>
-        </div>
-
-        <div class="explanation">
-          <p>NumPy is the foundation for numerical computing in Python. It provides powerful array objects and mathematical functions!</p>
-        </div>
-
-        <div class="visual-box">
-          <h4>⚡ Why NumPy?</h4>
-          <pre style="text-align: center; font-size: 1rem;">
-    Python List              NumPy Array
-    ─────────────            ───────────
-    [1, 2, 3, 4, 5]         np.array([1, 2, 3, 4, 5])
-    
-    ❌ Slow loops            ✅ Fast vectorized operations
-    ❌ Element-by-element    ✅ Whole-array operations
-    ❌ Memory inefficient    ✅ Memory efficient
-    
-    NumPy can be 10-100x faster! 🚀
-          </pre>
-        </div>
-
-        <div class="code-block">
-          <div class="code-header">
-            <span>Python</span>
-            <span class="code-badge">From Source</span>
-          </div>
-          <pre><code><span class="comment"># NumPy basics from Session 9</span>
-<span class="keyword">import</span> numpy <span class="keyword">as</span> np
-
-<span class="comment"># Create arrays</span>
-<span class="variable">arr1</span> = np.array([<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>])
-<span class="function">print</span>(<span class="string">"Array:"</span>, arr1)
-<span class="function">print</span>(<span class="string">"Type:"</span>, <span class="function">type</span>(arr1))
-<span class="function">print</span>(<span class="string">"Shape:"</span>, arr1.shape)
-<span class="function">print</span>(<span class="string">"Data type:"</span>, arr1.dtype)
-
-<span class="comment"># 2D array</span>
-<span class="variable">arr2d</span> = np.array([[<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>], [<span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>]])
-<span class="function">print</span>(<span class="string">"\\n2D Array:"</span>)
-<span class="function">print</span>(arr2d)
-<span class="function">print</span>(<span class="string">"Shape:"</span>, arr2d.shape)</code></pre>
-        </div>
-
-        <div class="output-block">
-          <div class="output-header">Output</div>
-          <pre>Array: [1 2 3 4 5]
-Type: &lt;class 'numpy.ndarray'&gt;
-Shape: (5,)
-Data type: int64
-
-2D Array:
-[[1 2 3]
- [4 5 6]]
-Shape: (2, 3)</pre>
-        </div>
+    <section class="content-section dfd-quiz" id="check" data-dfd-quiz data-explanation="A function can return several values. Python packs them into one tuple.">
+      <h2 data-dfd-prompt>Knowledge check</h2>
+      <p>Question 1 asks for three results. What does the return line actually hand back?</p>
+      <div data-dfd-choices>
+        <button type="button" data-correct="false">Three separate return statements that all run</button>
+        <button type="button" data-correct="true">One tuple, which the caller can unpack into three names</button>
       </div>
-
-      <!-- CREATING ARRAYS -->
-      <div class="topic-card">
-        <div class="topic-header">
-          <span class="topic-number">9.4</span>
-          <h3>🏗️ Creating Arrays</h3>
-        </div>
-
-        <div class="code-block">
-          <div class="code-header">
-            <span>Python</span>
-            <span class="code-badge">From Source</span>
-          </div>
-          <pre><code><span class="comment"># Array creation functions from Session 9</span>
-<span class="keyword">import</span> numpy <span class="keyword">as</span> np
-
-<span class="comment"># zeros - array of all zeros</span>
-<span class="variable">zeros</span> = np.zeros(<span class="number">5</span>)
-<span class="function">print</span>(<span class="string">"Zeros:"</span>, zeros)
-
-<span class="comment"># ones - array of all ones</span>
-<span class="variable">ones</span> = np.ones((<span class="number">2</span>, <span class="number">3</span>))  <span class="comment"># 2x3 matrix</span>
-<span class="function">print</span>(<span class="string">"Ones:\\n"</span>, ones)
-
-<span class="comment"># arange - like range but returns array</span>
-<span class="variable">range_arr</span> = np.arange(<span class="number">0</span>, <span class="number">10</span>, <span class="number">2</span>)
-<span class="function">print</span>(<span class="string">"Arange:"</span>, range_arr)
-
-<span class="comment"># linspace - evenly spaced numbers</span>
-<span class="variable">linspace_arr</span> = np.linspace(<span class="number">0</span>, <span class="number">1</span>, <span class="number">5</span>)  <span class="comment"># 5 numbers from 0 to 1</span>
-<span class="function">print</span>(<span class="string">"Linspace:"</span>, linspace_arr)
-
-<span class="comment"># random arrays</span>
-<span class="variable">random_arr</span> = np.random.rand(<span class="number">3</span>)  <span class="comment"># 3 random numbers [0, 1)</span>
-<span class="function">print</span>(<span class="string">"Random:"</span>, random_arr)
-
-<span class="variable">random_int</span> = np.random.randint(<span class="number">1</span>, <span class="number">10</span>, size=<span class="number">5</span>)  <span class="comment"># 5 random integers 1-9</span>
-<span class="function">print</span>(<span class="string">"Random integers:"</span>, random_int)
-
-<span class="comment"># Identity matrix</span>
-<span class="variable">identity</span> = np.eye(<span class="number">3</span>)
-<span class="function">print</span>(<span class="string">"Identity matrix:\\n"</span>, identity)</code></pre>
-        </div>
-
-        <div class="output-block">
-          <div class="output-header">Output</div>
-          <pre>Zeros: [0. 0. 0. 0. 0.]
-Ones:
- [[1. 1. 1.]
- [1. 1. 1.]]
-Arange: [0 2 4 6 8]
-Linspace: [0.   0.25 0.5  0.75 1.  ]
-Random: [0.123... 0.456... 0.789...]
-Random integers: [3 7 2 9 1]
-Identity matrix:
- [[1. 0. 0.]
- [0. 1. 0.]
- [0. 0. 1.]]</pre>
-        </div>
-      </div>
-
-      <!-- ARRAY OPERATIONS -->
-      <div class="topic-card">
-        <div class="topic-header">
-          <span class="topic-number">9.5</span>
-          <h3>➕ Array Operations</h3>
-        </div>
-
-        <div class="code-block">
-          <div class="code-header">
-            <span>Python</span>
-            <span class="code-badge">From Source</span>
-          </div>
-          <pre><code><span class="comment"># Array operations from Session 9</span>
-<span class="keyword">import</span> numpy <span class="keyword">as</span> np
-
-<span class="variable">arr</span> = np.array([<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>])
-
-<span class="comment"># Element-wise operations</span>
-<span class="function">print</span>(<span class="string">"Original:"</span>, arr)
-<span class="function">print</span>(<span class="string">"arr + 10:"</span>, arr + <span class="number">10</span>)
-<span class="function">print</span>(<span class="string">"arr * 2:"</span>, arr * <span class="number">2</span>)
-<span class="function">print</span>(<span class="string">"arr ** 2:"</span>, arr ** <span class="number">2</span>)
-<span class="function">print</span>(<span class="string">"arr / 2:"</span>, arr / <span class="number">2</span>)
-
-<span class="comment"># Operations between arrays</span>
-<span class="variable">arr2</span> = np.array([<span class="number">10</span>, <span class="number">20</span>, <span class="number">30</span>, <span class="number">40</span>, <span class="number">50</span>])
-<span class="function">print</span>(<span class="string">"\\narr + arr2:"</span>, arr + arr2)
-<span class="function">print</span>(<span class="string">"arr * arr2:"</span>, arr * arr2)
-
-<span class="comment"># Comparison operations</span>
-<span class="function">print</span>(<span class="string">"\\narr > 2:"</span>, arr > <span class="number">2</span>)
-<span class="function">print</span>(<span class="string">"arr == 3:"</span>, arr == <span class="number">3</span>)</code></pre>
-        </div>
-
-        <div class="output-block">
-          <div class="output-header">Output</div>
-          <pre>Original: [1 2 3 4 5]
-arr + 10: [11 12 13 14 15]
-arr * 2: [ 2  4  6  8 10]
-arr ** 2: [ 1  4  9 16 25]
-arr / 2: [0.5 1.  1.5 2.  2.5]
-
-arr + arr2: [11 22 33 44 55]
-arr * arr2: [ 10  40  90 160 250]
-
-arr > 2: [False False  True  True  True]
-arr == 3: [False False  True False False]</pre>
-        </div>
-      </div>
-
-      <!-- INDEXING AND SLICING -->
-      <div class="topic-card">
-        <div class="topic-header">
-          <span class="topic-number">9.6</span>
-          <h3>🔍 Indexing & Slicing</h3>
-        </div>
-
-        <div class="code-block">
-          <div class="code-header">
-            <span>Python</span>
-            <span class="code-badge">From Source</span>
-          </div>
-          <pre><code><span class="comment"># NumPy indexing from Session 9</span>
-<span class="keyword">import</span> numpy <span class="keyword">as</span> np
-
-<span class="variable">arr</span> = np.array([<span class="number">10</span>, <span class="number">20</span>, <span class="number">30</span>, <span class="number">40</span>, <span class="number">50</span>])
-
-<span class="comment"># Basic indexing</span>
-<span class="function">print</span>(<span class="string">"First element:"</span>, arr[<span class="number">0</span>])
-<span class="function">print</span>(<span class="string">"Last element:"</span>, arr[-<span class="number">1</span>])
-<span class="function">print</span>(<span class="string">"Slice [1:4]:"</span>, arr[<span class="number">1</span>:<span class="number">4</span>])
-
-<span class="comment"># 2D array indexing</span>
-<span class="variable">matrix</span> = np.array([[<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>], [<span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>], [<span class="number">7</span>, <span class="number">8</span>, <span class="number">9</span>]])
-<span class="function">print</span>(<span class="string">"\\nMatrix:"</span>)
-<span class="function">print</span>(matrix)
-<span class="function">print</span>(<span class="string">"Row 0:"</span>, matrix[<span class="number">0</span>])
-<span class="function">print</span>(<span class="string">"Element [1,2]:"</span>, matrix[<span class="number">1</span>, <span class="number">2</span>])
-<span class="function">print</span>(<span class="string">"Column 1:"</span>, matrix[:, <span class="number">1</span>])
-
-<span class="comment"># Boolean indexing (filtering)</span>
-<span class="function">print</span>(<span class="string">"\\nElements > 30:"</span>, arr[arr > <span class="number">30</span>])
-<span class="function">print</span>(<span class="string">"Even elements:"</span>, arr[arr % <span class="number">20</span> == <span class="number">0</span>])</code></pre>
-        </div>
-
-        <div class="output-block">
-          <div class="output-header">Output</div>
-          <pre>First element: 10
-Last element: 50
-Slice [1:4]: [20 30 40]
-
-Matrix:
-[[1 2 3]
- [4 5 6]
- [7 8 9]]
-Row 0: [1 2 3]
-Element [1,2]: 6
-Column 1: [2 5 8]
-
-Elements > 30: [40 50]
-Even elements: [20 40]</pre>
-        </div>
-      </div>
-
-      <!-- MATHEMATICAL FUNCTIONS -->
-      <div class="topic-card">
-        <div class="topic-header">
-          <span class="topic-number">9.7</span>
-          <h3>📐 Mathematical Functions</h3>
-        </div>
-
-        <div class="code-block">
-          <div class="code-header">
-            <span>Python</span>
-            <span class="code-badge">From Source</span>
-          </div>
-          <pre><code><span class="comment"># NumPy math functions from Session 9</span>
-<span class="keyword">import</span> numpy <span class="keyword">as</span> np
-
-<span class="variable">arr</span> = np.array([<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>])
-
-<span class="comment"># Aggregation functions</span>
-<span class="function">print</span>(<span class="string">"Sum:"</span>, np.sum(arr))
-<span class="function">print</span>(<span class="string">"Mean:"</span>, np.mean(arr))
-<span class="function">print</span>(<span class="string">"Max:"</span>, np.max(arr))
-<span class="function">print</span>(<span class="string">"Min:"</span>, np.min(arr))
-<span class="function">print</span>(<span class="string">"Std Dev:"</span>, np.std(arr))
-
-<span class="comment"># Mathematical functions</span>
-<span class="function">print</span>(<span class="string">"\\nSquare root:"</span>, np.sqrt(arr))
-<span class="function">print</span>(<span class="string">"Exponential:"</span>, np.exp(arr))
-<span class="function">print</span>(<span class="string">"Log:"</span>, np.log(arr))
-
-<span class="comment"># Matrix operations</span>
-<span class="variable">A</span> = np.array([[<span class="number">1</span>, <span class="number">2</span>], [<span class="number">3</span>, <span class="number">4</span>]])
-<span class="variable">B</span> = np.array([[<span class="number">5</span>, <span class="number">6</span>], [<span class="number">7</span>, <span class="number">8</span>]])
-
-<span class="function">print</span>(<span class="string">"\\nMatrix A:"</span>)
-<span class="function">print</span>(A)
-<span class="function">print</span>(<span class="string">"Matrix B:"</span>)
-<span class="function">print</span>(B)
-<span class="function">print</span>(<span class="string">"A @ B (matrix multiplication):"</span>)
-<span class="function">print</span>(np.dot(A, B))</code></pre>
-        </div>
-
-        <div class="output-block">
-          <div class="output-header">Output</div>
-          <pre>Sum: 15
-Mean: 3.0
-Max: 5
-Min: 1
-Std Dev: 1.4142135...
-
-Square root: [1.   1.41 1.73 2.   2.24]
-Exponential: [  2.72   7.39  20.09  54.60 148.41]
-Log: [0.   0.69 1.10 1.39 1.61]
-
-Matrix A:
-[[1 2]
- [3 4]]
-Matrix B:
-[[5 6]
- [7 8]]
-A @ B (matrix multiplication):
-[[19 22]
- [43 50]]</pre>
-        </div>
-      </div>
-
-      <!-- RESHAPING -->
-      <div class="topic-card">
-        <div class="topic-header">
-          <span class="topic-number">9.8</span>
-          <h3>🔄 Reshaping Arrays</h3>
-        </div>
-
-        <div class="code-block">
-          <div class="code-header">
-            <span>Python</span>
-            <span class="code-badge">From Source</span>
-          </div>
-          <pre><code><span class="comment"># Reshaping arrays from Session 9</span>
-<span class="keyword">import</span> numpy <span class="keyword">as</span> np
-
-<span class="variable">arr</span> = np.arange(<span class="number">1</span>, <span class="number">13</span>)  <span class="comment"># [1, 2, 3, ..., 12]</span>
-<span class="function">print</span>(<span class="string">"Original:"</span>, arr)
-<span class="function">print</span>(<span class="string">"Shape:"</span>, arr.shape)
-
-<span class="comment"># Reshape to 3x4</span>
-<span class="variable">reshaped</span> = arr.reshape(<span class="number">3</span>, <span class="number">4</span>)
-<span class="function">print</span>(<span class="string">"\\nReshaped to 3x4:"</span>)
-<span class="function">print</span>(reshaped)
-
-<span class="comment"># Reshape to 4x3</span>
-<span class="variable">reshaped2</span> = arr.reshape(<span class="number">4</span>, <span class="number">3</span>)
-<span class="function">print</span>(<span class="string">"\\nReshaped to 4x3:"</span>)
-<span class="function">print</span>(reshaped2)
-
-<span class="comment"># Flatten back to 1D</span>
-<span class="variable">flat</span> = reshaped.flatten()
-<span class="function">print</span>(<span class="string">"\\nFlattened:"</span>, flat)
-
-<span class="comment"># Transpose</span>
-<span class="function">print</span>(<span class="string">"\\nTransposed:"</span>)
-<span class="function">print</span>(reshaped.T)</code></pre>
-        </div>
-
-        <div class="output-block">
-          <div class="output-header">Output</div>
-          <pre>Original: [ 1  2  3  4  5  6  7  8  9 10 11 12]
-Shape: (12,)
-
-Reshaped to 3x4:
-[[ 1  2  3  4]
- [ 5  6  7  8]
- [ 9 10 11 12]]
-
-Reshaped to 4x3:
-[[ 1  2  3]
- [ 4  5  6]
- [ 7  8  9]
- [10 11 12]]
-
-Flattened: [ 1  2  3  4  5  6  7  8  9 10 11 12]
-
-Transposed:
-[[ 1  5  9]
- [ 2  6 10]
- [ 3  7 11]
- [ 4  8 12]]</pre>
-        </div>
-      </div>
+      <p class="dfd-quiz-feedback" data-dfd-feedback hidden></p>
+      <p class="dfd-quiz-explain" data-dfd-explain hidden></p>
     </section>
 
-    <!-- QUICK REFERENCE -->
-    <section class="content-section">
-      <h2>📋 Quick Reference</h2>
-      
-      <div class="reference-card">
-        <h4>📝 List Comprehension Syntax</h4>
-        <table class="reference-table">
-          <thead>
-            <tr><th>Pattern</th><th>Example</th></tr>
-          </thead>
-          <tbody>
-            <tr><td>Basic</td><td>[x**2 for x in range(5)]</td></tr>
-            <tr><td>With filter</td><td>[x for x in range(10) if x%2==0]</td></tr>
-            <tr><td>With if-else</td><td>["even" if x%2==0 else "odd" for x in nums]</td></tr>
-            <tr><td>Dict</td><td>{k: v for k, v in zip(keys, vals)}</td></tr>
-            <tr><td>Set</td><td>{x**2 for x in nums}</td></tr>
-          </tbody>
-        </table>
-
-        <h4 style="margin-top: 1.5rem;">🔢 NumPy Functions</h4>
-        <table class="reference-table">
-          <thead>
-            <tr><th>Function</th><th>Description</th></tr>
-          </thead>
-          <tbody>
-            <tr><td>np.array()</td><td>Create array</td></tr>
-            <tr><td>np.zeros(n)</td><td>Array of zeros</td></tr>
-            <tr><td>np.ones(n)</td><td>Array of ones</td></tr>
-            <tr><td>np.arange()</td><td>Range as array</td></tr>
-            <tr><td>np.linspace()</td><td>Evenly spaced</td></tr>
-            <tr><td>arr.reshape()</td><td>Change shape</td></tr>
-            <tr><td>np.sum/mean/max</td><td>Aggregations</td></tr>
-          </tbody>
-        </table>
-      </div>
-    </section>
-
-    <div class="important-box" style="background: linear-gradient(135deg, #fef2f2 0%, #fecaca 100%); border-radius: 16px; padding: 24px; margin: 25px 0; border-left: 5px solid #ef4444;">
-      <h4 style="color: #b91c1c;">🚫 Common Mistakes (NumPy)</h4>
-      <ul style="margin-left: 20px; color: #7f1d1d;">
-        <li><strong>Shape mismatch in operations</strong> — Element-wise math needs same shape or broadcastable; check <code>arr.shape</code> before adding/multiplying arrays.</li>
-        <li><strong>Modifying a view thinking it's a copy</strong> — Slicing returns a view; changes affect the original; use <code>.copy()</code> if you need an independent array.</li>
-        <li><strong>Using lists where arrays are expected</strong> — Many functions expect NumPy arrays; convert with <code>np.array(my_list)</code> for correct behavior.</li>
-      </ul>
-    </div>
-
-    <div class="reflection-prompt" style="background: linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%); border-radius: 16px; padding: 24px; margin: 25px 0; border-left: 5px solid #10b981;">
-      <h4 style="color: #047857;">💭 Short reflection</h4>
-      <p style="color: #064e3b;">In one sentence: why is NumPy faster than using Python lists for numerical operations on large arrays?</p>
-    </div>
-    <div class="core-box" style="background: linear-gradient(135deg, #dcfce7 0%, #bbf7d0 100%); border: 2px solid #22c55e; border-radius: 16px; padding: 24px; margin: 20px 0;">
-      <h4 style="color: #166534;">✅ CORE (Must know)</h4>
-      <ul style="margin-left: 20px;">
-        <li><code>np.array()</code>, <code>np.zeros()</code>, <code>np.ones()</code>, <code>np.arange()</code>, <code>np.linspace()</code>.</li>
-        <li>Shape, <code>reshape()</code>; indexing and slicing; element-wise and aggregate operations.</li>
-        <li>Broadcasting: operations across dimensions without explicit loops.</li>
-      </ul>
-    </div>
-    <div class="noncore-box" style="background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%); border: 2px solid #f59e0b; border-radius: 16px; padding: 24px; margin: 20px 0;">
-      <h4 style="color: #92400e;">📚 NON-CORE (Good to know)</h4>
-      <ul style="margin-left: 20px;">
-        <li>Linear algebra (dot, matmul); random; stacking/splitting.</li>
-      </ul>
-    </div>
-
-
-    <section class="content-section" style="margin-top: 2rem;">
-      <h2>Complete code from course notebook: numpy1.ipynb</h2>
-      <p>Every line of code from the course notebook (verbatim).</p>
-      <div class="code-block" style="max-height: 500px; overflow: auto; background: #1e293b; color: #e2e8f0; padding: 1rem; border-radius: 12px;">
-        <pre style="white-space: pre; font-size: 0.85em;"># --- Code cell 2 ---
-modules/packages/libraries---3rd party lib--they have no connection base python
-
-# --- Code cell 4 ---
-! pip install numpy
-
-# --- Code cell 5 ---
-import numpy as np # importing numpy package using alias np for easy reference
-#import numpy as num # this is fine as well but not widely used
-
-# --- Code cell 7 ---
-list1=[1,2,3,4]
-
-# --- Code cell 8 ---
-array = np.array(list1) # create numpy array
-print(type(array))
-print(array)
-
-# --- Code cell 9 ---
-array.ndim
-
-# --- Code cell 11 ---
-
-gross = np.array([[1, 2, 3, 4], [5, 6, 7, 8]])
-
-print(gross)
-
-# --- Code cell 12 ---
-print(gross.shape)
-
-# --- Code cell 13 ---
-gross.ndim
-
-# --- Code cell 14 ---
-gross.size
-
-# --- Code cell 15 ---
-# np array is useful for matrix operations
-array = np.array([[1, 2, 3, 4], [5, 6, 7, 8],[50, 60, 70, 80]])
-
-print(array.shape)
-
-# --- Code cell 16 ---
-print(array)
-
-# --- Code cell 17 ---
-# syntax for indexing-2D
-array[row_ind,col_ind]
-
-# --- Code cell 18 ---
-print(array[2][2])
-
-# --- Code cell 19 ---
-print(array[1,1])
-
-# --- Code cell 21 ---
-array.shape
-
-# --- Code cell 22 ---
-array
-
-# --- Code cell 23 ---
-new_array = array.reshape(4, 3)
-print(new_array)
-
-# --- Code cell 24 ---
-#Flattening array: Converting multidimensional array to 1 D
-new_array = array.reshape(-1)
-print(new_array)
-
-# --- Code cell 25 ---
-#Flattening array: Converting multidimensional array to 1 D
-new_array = array.flatten()
-print(new_array)
-
-# --- Code cell 26 ---
-#Sort array
-array = np.array([23,43,5,8,90,100]) # ascending order
-print(np.sort(array))
-
-# --- Code cell 27 ---
-print(np.sort(array)[::-1])    # descending
-
-# --- Code cell 28 ---
-otp---random otps
-
-# --- Code cell 30 ---
-#4 digit otp---using random
-
-# --- Code cell 31 ---
-# Generate random number
-from numpy import random
-number = random.randint(100000,999999)
-print(number)
-
-# --- Code cell 32 ---
-# Generate random number
-from numpy import random
-number = random.randint(low=1000,high=9999,size=(12,12))
-print(number)
-
-# --- Code cell 33 ---
-# Generate random number
-from numpy import random
-np.random.seed(9)
-number = random.uniform(1000,9999,size=[2,2]) # random float values
-print(number)
-
-# --- Code cell 34 ---
-list1=[1,2,3,4]
-array=np.array(list1)
-print(type(array))
-print(array)
-print(array.shape)
-print(array.ndim)
-print(np.random.randint(100,999))
-
-# --- Code cell 36 ---
-# Dot product using numpy array
-
-import numpy as np
-
-# Vectors as 1D numpy arrays
-a = np.array([[1, 2, 3],[4,2,6]])
-b = np.array([[4, 5, 6],[5,1,9]])
-
-# 4*1 + 5*2 + 3*6
-print("dot product output:", np.dot(a, b.T))
-
-# --- Code cell 38 ---
-#Tranpose
-array = np.array([[1, 2, 3, 4], [5, 6, 7, 8],[50, 60, 70, 80]])
-print(array)
-print(array.shape)
-
-# --- Code cell 39 ---
-new_array = array.transpose()
-print(new_array)
-print(new_array.shape)
-
-# --- Code cell 40 ---
-new_array = array.T
-print(new_array)
-print(new_array.shape)
-</pre>
-      </div>
-    </section>
-
-    <section class="content-section" style="margin-top: 2rem;">
-      <h2>Complete code from course notebook: List_Comprehension (1).ipynb</h2>
-      <p>Every line of code from the course notebook (verbatim).</p>
-      <div class="code-block" style="max-height: 500px; overflow: auto; background: #1e293b; color: #e2e8f0; padding: 1rem; border-radius: 12px;">
-        <pre style="white-space: pre; font-size: 0.85em;"># --- Code cell 1 ---
-# list comprehensions
-# lambda func
-# numpy
-
-# --- Code cell 2 ---
-what is list comprehension?
-# it is a concise way to create lists in python.
-# it provides a shorter,more readable and efficient way to generate lists compared to using loops
-
-# --- Code cell 3 ---
-# traditional list creation using loops
-numbers=[]
-for i in range(1,6):
-  numbers.append(i)
-print(numbers)
-
-# --- Code cell 4 ---
-# syntax for list comprehension
-# [expression for item in iterable if condition(optional)]
-
-# expression---operation performed on each element---x*2
-# item---each element in the iterable--x
-# iterable---The data structure being iterated---range(1,6)
-# condition---opitional filter to include only specific elements
-
-# --- Code cell 5 ---
-# list comprehension(same output in one line)
-numbers=[i**2 for i in range(1,6) if i%2==0]
-print(numbers)
-
-# --- Code cell 6 ---
-# create a list from range
-
-numbers=[i for i in range(1,11)]
-print(numbers)
-
-# --- Code cell 7 ---
-# create a list of squares
-squares=[x**2 for x in range(1,13)]
-print(squares)
-
-# --- Code cell 8 ---
-# filter even numbers
-even_num=[(x*2,x**4)for x in range(1,11) if x%2==0]
-print(even_num)
-
-# --- Code cell 9 ---
-# filtering words based on length
-words=["apple","banana","cherry","date","machine","learning"]
-short_words=[word for word in words if len(word)&lt;=5]
-print(short_words)
-
-# --- Code cell 10 ---
-#using if else in list comprehension
-# replace even numbers with "even"and odd numbers with ""odd""
-labels=[ "even" if x%2==0 else "odd" for x in range(1,11)  ]
-print(labels)
-
-# --- Code cell 11 ---
-scores=[82,80,26,75,60,55,44,67]
-result=["pass" if score&gt;=50 else "fail" for score in scores]
-print(result)
-
-# --- Code cell 12 ---
-# converting dictionary into list
-students={"alice":34,"grace":45}
-names=[name for name in students]
-print(names)
-
-# --- Code cell 13 ---
-users=["alice@outlook.com","bob@gmail.com","charlie@yahoo.com","david@outlook.com"]
-outlook_users=[user for user in users if "@outlook.com" in user]
-print(outlook_users)
-</pre>
-      </div>
-    </section>
-
-    <section class="content-section" style="margin-top: 2rem;">
-      <h2>Complete code from course notebook: Python_Lambda_Functions.ipynb</h2>
-      <p>Every line of code from the course notebook (verbatim).</p>
-      <div class="code-block" style="max-height: 500px; overflow: auto; background: #1e293b; color: #e2e8f0; padding: 1rem; border-radius: 12px;">
-        <pre style="white-space: pre; font-size: 0.85em;"># --- Code cell 8 ---
-square=lambda x:x**2
-result=square(5)
-result
-
-# --- Code cell 9 ---
-square=lambda x,y:x**2
-result=square(5)
-result
-
-# --- Code cell 10 ---
-square=lambda x,y:x**2
-result=square(5,6)
-result
-
-# --- Code cell 11 ---
-square=lambda x,y:x+y
-result=square(5,6)
-result
-
-# --- Code cell 12 ---
-# syntax for map
-# map(function,iterable1,iterable2.....)
-
-# --- Code cell 13 ---
-numbers=(2,4,6,8)
-double_num=list(map(lambda x:x*2,numbers))
-print(double_num)
-
-# --- Code cell 14 ---
-add=lambda a,b:a+b
-add(5,3)
-
-# --- Code cell 16 ---
-# Program to show the use of lambda functions
-double = lambda x : x ** 2
-print(double(5))
-
-# --- Code cell 19 ---
-def double(x):
-   return x * 2
-
-# --- Code cell 20 ---
-double(10)
-
-# --- Code cell 23 ---
-# Program to filter out only the even items from a list
-my_list = [1, 5, 4, 6, 8, 11, 3, 12]
-
-new_list = tuple(filter(lambda x : (x%2 == 0), my_list))
-
-print(new_list)
-
-# --- Code cell 25 ---
-# Program to double each item in a list using map()
-my_list1 = [1, 5, 4, 6, 8, 11, 3, 12]
-
-new_list1 = list(map(lambda x : (x * 2), my_list1))
-
-new_list1
-
-# --- Code cell 26 ---
-a = [1, 2, 3]
-b = [10, 20, 30]
-result = list(map(lambda x, y: x + y, a, b))
-print(result)
-
-# --- Code cell 27 ---
-zip---that combines (or zips) multiple iterables (like lists, tuples, strings, etc.) element by element into tuples.
-
-Think of it as “pairing up” items that share the same position.
-
-# --- Code cell 28 ---
-names = ['Alice', 'Bob', 'Charlie']
-scores = [85, 90, 88,99]
-
-combined = dict(zip(names, scores))
-print(combined)
-
-# --- Code cell 29 ---
-keys = ['name', 'age', 'name']  # 'name' appears twice
-values = ['Alice', 25, 'Bob']
-
-result = dict(zip(keys, values))
-print(result)
-
-# --- Code cell 30 ---
-keys = ['name', 'age', 'city']
-values = ['Alice', 25, 'New York']
-result = dict(zip(keys, values))
-print(result)
-</pre>
-      </div>
-    </section>
-
-        <!-- NAVIGATION -->
     <nav class="page-navigation">
-      <a href="s8-oop.html" class="nav-prev">
-        <span class="nav-arrow">←</span>
-        <span class="nav-text">
-          <span class="nav-label">Previous</span>
-          <span class="nav-title">OOP</span>
-        </span>
-      </a>
-      <a href="complete-course.html" class="nav-home">🏠</a>
-      <a href="s10-pandas1.html" class="nav-next">
-        <span class="nav-text">
-          <span class="nav-label">Next</span>
-          <span class="nav-title">Pandas Part I</span>
-        </span>
-        <span class="nav-arrow">→</span>
-      </a>
+      <a href="a3-datastructures.html" class="nav-prev"><span class="nav-arrow">←</span><span class="nav-text"><span class="nav-label">Previous</span><span class="nav-title">Assignment 3</span></span></a>
+      <a href="assignments.html" class="nav-home">🏠</a>
+      <a href="a5-advanced.html" class="nav-next"><span class="nav-text"><span class="nav-label">Next</span><span class="nav-title">Assignment 5</span></span><span class="nav-arrow">→</span></a>
     </nav>
   </main>
-
-  <footer>
-    <p>🐍 Python Mastery | Learn. Code. Create.</p>
-  </footer>
-
-  <!-- Back to Top Button -->
-  <button class="back-to-top" id="backToTop" onclick="window.scrollTo({top: 0, behavior: 'smooth'})" aria-label="Back to top">
-    <i class="fas fa-arrow-up"></i>
-  </button>
+  <footer><p>🐍 Python Mastery | Solutions stay on the assignment pages.</p></footer>
   <script>
-    const backToTopBtn = document.getElementById('backToTop');
-    window.addEventListener('scroll', () => {
-      backToTopBtn.classList.toggle('show', window.pageYOffset > 300);
-    });
+    function toggleSolution(button) {
+      var content = button.nextElementSibling;
+      content.classList.toggle("show");
+      button.textContent = content.classList.contains("show") ? "Hide solution" : "Show solution";
+    }
   </script>
-    <script src="../js/code-copy.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <script src="../js/supabase-config.js"></script>
-    <script src="../js/supabase-auth.js"></script>
-    <script src="../js/paywall.js"></script>
-    <script src="../js/analytics-tracker.js"></script>
+  <script src="../js/code-copy.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="../js/supabase-config.js"></script>
+  <script src="../js/supabase-auth.js"></script>
+  <script src="../js/paywall.js"></script>
+  <script src="../js/progress.js"></script>
+  <script src="../js/lesson-common.js"></script>
+  <script src="../js/quiz.js"></script>
+  <script src="../js/analytics-tracker.js"></script>
 </body>
 </html>
-

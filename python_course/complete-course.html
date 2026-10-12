@@ -203,7 +203,7 @@
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <link rel="stylesheet" href="../css/dfd-system.css">
 </head>
-<body data-access="pro">
+<body data-access="pro" class="dfd-safe" data-course-id="python" data-lesson-id="complete-course" data-lesson-label="🐍 Python Mastery - Complete Interactive Course">
   <div class="bg-pattern"></div>
 
   <!-- Progress Bar -->
@@ -222,6 +222,15 @@
   </nav>
 
   <main>
+<div class="dfd-lesson-progress" data-dfd-progress>
+  <p class="dfd-lesson-progress-label" data-dfd-progress-label>Sign in to save your place.</p>
+  <div class="dfd-lesson-progress-track" data-dfd-progress-bar role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-label="Course progress">
+    <div class="dfd-lesson-progress-fill" data-dfd-progress-fill></div>
+  </div>
+  <p><button type="button" data-dfd-complete>Mark lesson complete</button></p>
+  <p data-dfd-complete-status></p>
+</div>
+
     <!-- Hero Section -->
     <header class="hero">
       <h1>🐍 Python Mastery</h1>
@@ -516,7 +525,18 @@
       <div class="mascot">🐍</div>
       <p class="mascot-text">"The best time to start learning Python was yesterday.<br>The second best time is NOW!"</p>
     </section>
-  </main>
+  
+<section class="section dfd-quiz" id="check" data-dfd-quiz data-explanation="Sessions 13 and 14 are visualization. Session 15 is scraping.">
+  <h2 data-dfd-prompt>Knowledge check</h2>
+  <p>How many numbered sessions does the Python course hub list?</p>
+  <div data-dfd-choices>
+    <button type="button" data-correct="false">12, ending at APIs</button>
+    <button type="button" data-correct="true">15, from introduction through web scraping</button>
+  </div>
+  <p class="dfd-quiz-feedback" data-dfd-feedback hidden></p>
+  <p class="dfd-quiz-explain" data-dfd-explain hidden></p>
+</section>
+</main>
 
   <footer>
     <div class="footer-mascot">🐍</div>
@@ -549,7 +569,10 @@
     <script src="../js/supabase-config.js"></script>
     <script src="../js/supabase-auth.js"></script>
     <script src="../js/paywall.js"></script>
-    <script src="../js/analytics-tracker.js"></script>
+    <script src="../js/progress.js"></script>
+<script src="../js/lesson-common.js"></script>
+<script src="../js/quiz.js"></script>
+<script src="../js/analytics-tracker.js"></script>
 </body>
 </html>
 

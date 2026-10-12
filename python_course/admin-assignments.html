@@ -108,7 +108,7 @@
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <link rel="stylesheet" href="../css/dfd-system.css">
 </head>
-<body>
+<body class="dfd-safe" data-course-id="python" data-lesson-id="admin-assignments" data-lesson-label="🔐 Instructor Solutions | Python Mastery">
   <nav class="main-nav">
     <div class="nav-content">
       <a href="../index.html" class="nav-hub" title="Main website"><i class="fas fa-home"></i><span>Home</span></a>
@@ -122,6 +122,15 @@
   </nav>
 
   <main>
+<div class="dfd-lesson-progress" data-dfd-progress>
+  <p class="dfd-lesson-progress-label" data-dfd-progress-label>Sign in to save your place.</p>
+  <div class="dfd-lesson-progress-track" data-dfd-progress-bar role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-label="Course progress">
+    <div class="dfd-lesson-progress-fill" data-dfd-progress-fill></div>
+  </div>
+  <p><button type="button" data-dfd-complete>Mark lesson complete</button></p>
+  <p data-dfd-complete-status></p>
+</div>
+
     <div class="admin-banner">
       <div class="admin-banner-icon">🔐</div>
       <div>
@@ -234,7 +243,18 @@
         <span class="nav-arrow">→</span>
       </a>
     </nav>
-  </main>
+  
+<section class="section dfd-quiz" id="check" data-dfd-quiz data-explanation="Students use student-assignments.html.">
+  <h2 data-dfd-prompt>Knowledge check</h2>
+  <p>Who is this page for?</p>
+  <div data-dfd-choices>
+    <button type="button" data-correct="false">Every student, as the place to type answers</button>
+    <button type="button" data-correct="true">An instructor opening the solution pages</button>
+  </div>
+  <p class="dfd-quiz-feedback" data-dfd-feedback hidden></p>
+  <p class="dfd-quiz-explain" data-dfd-explain hidden></p>
+</section>
+</main>
 
   <footer>
     <p>🐍 Python Mastery | Instructor Portal</p>
@@ -254,6 +274,12 @@
   <script src="../js/supabase-config.js"></script>
   <script src="../js/supabase-auth.js"></script>
   <script src="../js/admin-guard.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="../js/paywall.js"></script>
+<script src="../js/progress.js"></script>
+<script src="../js/lesson-common.js"></script>
+<script src="../js/quiz.js"></script>
+<script src="../js/analytics-tracker.js"></script>
 </body>
 </html>
 

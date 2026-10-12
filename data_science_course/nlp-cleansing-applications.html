@@ -6,7 +6,8 @@
     <title>NLP: Data Cleansing & Applications | Fakhruddin Khambaty's Learning Hub</title>
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <style>
+    <link rel="stylesheet" href="styles.css">
+<style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: 'Nunito', sans-serif; background: linear-gradient(135deg, #fef3c7 0%, #fde68a 50%, #fcd34d 100%); min-height: 100vh; padding: 20px; color: #1e293b; line-height: 2; font-size: 18px; }
         .container { max-width: 900px; margin: 0 auto; }
@@ -41,8 +42,17 @@
     </style>
     <link rel="stylesheet" href="../css/dfd-system.css">
 </head>
-<body data-access="pro">
+<body data-access="pro" class="dfd-safe" data-course-id="data-science" data-lesson-id="nlp-cleansing-applications" data-lesson-label="NLP: Data Cleansing & Applications | Fakhruddin Khambaty's Learning Hub" data-total-lessons="32">
     <div class="container">
+<div class="dfd-lesson-progress" data-dfd-progress>
+  <p class="dfd-lesson-progress-label" data-dfd-progress-label>Sign in to save your place.</p>
+  <div class="dfd-lesson-progress-track" data-dfd-progress-bar role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-label="Course progress">
+    <div class="dfd-lesson-progress-fill" data-dfd-progress-fill></div>
+  </div>
+  <p><button type="button" data-dfd-complete>Mark lesson complete</button></p>
+  <p data-dfd-complete-status></p>
+</div>
+
         <nav class="nav">
             <a href="../index.html"><i class="fas fa-home"></i><span>Home</span></a>
             <a href="nlp-basics.html"><i class="fas fa-arrow-left"></i><span>Previous: NLP Basics</span></a>
@@ -164,7 +174,18 @@ lemmatizer = <span class="function">WordNetLemmatizer</span>()
                 </ul>
             </div>
 
-        <div class="nav-buttons">
+        
+<section class="section dfd-quiz" id="check" data-dfd-quiz data-explanation="running and run can share a feature. That is not translation.">
+  <h2 data-dfd-prompt>Knowledge check</h2>
+  <p>Stemming and lemmatization are used to do what?</p>
+  <div data-dfd-choices>
+    <button type="button" data-correct="false">Translate the text into another language</button>
+    <button type="button" data-correct="true">Collapse related word forms so counts are less sparse</button>
+  </div>
+  <p class="dfd-quiz-feedback" data-dfd-feedback hidden></p>
+  <p class="dfd-quiz-explain" data-dfd-explain hidden></p>
+</section>
+<div class="nav-buttons">
             <a href="nlp-basics.html" class="nav-btn prev"><i class="fas fa-arrow-left"></i> Previous: NLP Basics</a>
             <a href="index.html" class="nav-btn next">Course Hub <i class="fas fa-arrow-right"></i></a>
         </div>
@@ -184,6 +205,9 @@ lemmatizer = <span class="function">WordNetLemmatizer</span>()
     <script src="../js/supabase-config.js"></script>
     <script src="../js/supabase-auth.js"></script>
     <script src="../js/paywall.js"></script>
-    <script src="../js/analytics-tracker.js"></script>
+    <script src="../js/progress.js"></script>
+<script src="../js/lesson-common.js"></script>
+<script src="../js/quiz.js"></script>
+<script src="../js/analytics-tracker.js"></script>
 </body>
 </html>

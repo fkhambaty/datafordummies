@@ -6,7 +6,8 @@
     <title>What Are LLMs? | LLM Course | Fakhruddin Khambaty's Learning Hub</title>
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800;900&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <style>
+    <link rel="stylesheet" href="styles.css">
+<style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             font-family: 'Nunito', sans-serif;
@@ -136,8 +137,17 @@
     </style>
     <link rel="stylesheet" href="../css/dfd-system.css">
 </head>
-<body>
+<body class="dfd-safe" data-course-id="llm" data-lesson-id="what-are-llms" data-lesson-label="What Are LLMs? | LLM Course | Fakhruddin Khambaty's Learning Hub" data-total-lessons="9">
 <div class="container">
+<div class="dfd-lesson-progress" data-dfd-progress>
+  <p class="dfd-lesson-progress-label" data-dfd-progress-label>Sign in to save your place.</p>
+  <div class="dfd-lesson-progress-track" data-dfd-progress-bar role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-label="Course progress">
+    <div class="dfd-lesson-progress-fill" data-dfd-progress-fill></div>
+  </div>
+  <p><button type="button" data-dfd-complete>Mark lesson complete</button></p>
+  <p data-dfd-complete-status></p>
+</div>
+
     <nav class="nav">
         <a href="index.html"><i class="fas fa-arrow-left"></i> Course Hub</a>
         <a href="../index.html"><i class="fas fa-home"></i> Home</a>
@@ -240,14 +250,19 @@
                 <p>Google's BERT and OpenAI's GPT-1 showed that pre-training on massive text, then fine-tuning for specific tasks, works incredibly well. GPT-1 had 117 million parameters.</p>
             </div>
             <div class="timeline-item">
+                <span class="year">2019</span>
+                <h5>GPT-2: a small open decoder, not a chat product</h5>
+                <p>GPT-2 is a decoder-only Transformer you can still load to study tokens, attention, and generation. It is not ChatGPT. ChatGPT is a later product: a much larger model plus instruction tuning and preference training.</p>
+            </div>
+            <div class="timeline-item">
                 <span class="year">2020</span>
                 <h5>GPT-3: 175 Billion Parameters</h5>
                 <p>OpenAI scaled up to 175B parameters. GPT-3 could write essays, code, translate, and answer questions without any task-specific training. The era of "few-shot learning" began.</p>
             </div>
             <div class="timeline-item" style="border-color: #22c55e;">
                 <span class="year">2022-Present</span>
-                <h5>ChatGPT, GPT-4, Claude, LLaMA, Gemini</h5>
-                <p>RLHF (learning from human feedback) made models helpful and conversational. Open-source models (LLaMA, Mistral) democratized access. Now anyone can fine-tune an LLM on their laptop!</p>
+                <h5>Chat products and Llama 3 and later</h5>
+                <p>Instruction tuning and preference training turned raw next-token models into assistants. Llama 3 and later Meta releases are open-weight: you can download the weights under Meta's license and run them locally. That license is not the same thing as OSI open source, and those weights are not ChatGPT.</p>
             </div>
         </div>
     </div>
@@ -261,8 +276,8 @@
         <div class="model-grid">
             <div class="model-card">
                 <div class="model-emoji">🟢</div>
-                <h5>GPT-4 / GPT-4o</h5>
-                <p>OpenAI. The one that started the revolution. Closed-source. Powers ChatGPT.</p>
+                <h5>OpenAI GPT models</h5>
+                <p>Closed-weight models behind ChatGPT. Read the model id from your account. GPT-2 is an older study model, not this product.</p>
             </div>
             <div class="model-card">
                 <div class="model-emoji">🟣</div>
@@ -276,8 +291,8 @@
             </div>
             <div class="model-card">
                 <div class="model-emoji">🦙</div>
-                <h5>LLaMA</h5>
-                <p>Meta. Open-source! Anyone can download and use it. Community favorite.</p>
+                <h5>Llama 3 and later</h5>
+                <p>Meta. Open-weight under the Llama license. Check the current model card before you download. Not OSI open source, and not ChatGPT.</p>
             </div>
             <div class="model-card">
                 <div class="model-emoji">🌊</div>
@@ -295,7 +310,7 @@
             <h4>Open Source vs Closed Source</h4>
             <ul>
                 <li><strong>Closed-source</strong> (GPT-4, Claude, Gemini): You access via API. Can't see the code or weights. The company controls everything.</li>
-                <li><strong>Open-source</strong> (LLaMA, Mistral, DeepSeek): You can download the model, see the code, fine-tune it, run it on your own hardware. This is what we'll use in this course!</li>
+                <li><strong>Open-weight</strong> (Llama 3 and later, many Mistral and DeepSeek releases): you can download weights under that vendor's license, fine-tune, and run them locally. Read the license. This course uses those weights for the labs.</li>
             </ul>
         </div>
     </div>
@@ -442,7 +457,7 @@
                 <div style="font-weight:800; color:#92400e; font-size:0.85em; margin-top:4px;">Module 7–9</div>
             </div>
             <div>
-                <p><strong>What:</strong> A Python library and platform with 200,000+ pre-trained models. Download GPT-2, LLaMA, Mistral in 3 lines of code.</p>
+                <p><strong>What:</strong> A Python library and platform with 200,000+ pre-trained models. Download a current open-weight model, or GPT-2 if you only want the small 2019 decoder for study. GPT-2 is not ChatGPT.</p>
                 <p><strong>Why LLMs need it:</strong> Training an LLM from absolute scratch takes millions of dollars. HuggingFace gives you <strong>pre-trained models</strong> that already know language. You just fine-tune them for your specific task (customer support, code generation, medical Q&A).</p>
                 <p><strong>How you'll use it:</strong></p>
                 <ul style="margin-left:20px; color:#334155;">
@@ -659,5 +674,14 @@ function checkQ(btn,ok){
     opts.forEach(function(o){if(o.getAttribute('onclick').includes('true')){o.classList.add('correct');o.style.opacity='1';}});}
 }
 </script>
+<script src="../js/code-copy.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="../js/supabase-config.js"></script>
+<script src="../js/supabase-auth.js"></script>
+<script src="../js/paywall.js"></script>
+<script src="../js/progress.js"></script>
+<script src="../js/lesson-common.js"></script>
+<script src="../js/quiz.js"></script>
+<script src="../js/analytics-tracker.js"></script>
 </body>
 </html>

@@ -8,7 +8,8 @@
     <link rel="stylesheet" href="css/fkti-light-theme.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <script src="https://unpkg.com/vis-network/standalone/umd/vis-network.min.js"></script>
-    <style>
+    <link rel="stylesheet" href="data_science_course/styles.css">
+<style>
         * {
             margin: 0;
             padding: 0;
@@ -672,7 +673,7 @@
     </style>
     <link rel="stylesheet" href="css/dfd-system.css">
 </head>
-<body>
+<body class="dfd-safe" data-course-id="data-science" data-lesson-id="data-science-basics" data-lesson-label="Data Science Fundamentals | Fakhruddin Khambaty's Learning Hub">
     <!-- Navigation -->
     <nav class="course-nav">
         <div class="nav-inner">
@@ -684,6 +685,15 @@
     </nav>
     
     <div class="container">
+<div class="dfd-lesson-progress" data-dfd-progress>
+  <p class="dfd-lesson-progress-label" data-dfd-progress-label>Sign in to save your place.</p>
+  <div class="dfd-lesson-progress-track" data-dfd-progress-bar role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-label="Course progress">
+    <div class="dfd-lesson-progress-fill" data-dfd-progress-fill></div>
+  </div>
+  <p><button type="button" data-dfd-complete>Mark lesson complete</button></p>
+  <p data-dfd-complete-status></p>
+</div>
+
         <h1>🎓 Data Science Fundamentals</h1>
         <p class="subtitle">Made Super Simple - Even if Math Was Never Your Thing!</p>
 
@@ -4952,6 +4962,7 @@ print("✅ Transaction matrix created!")</code></pre>
 
 import pandas as pd
 import numpy as np
+from pathlib import Path
 from mlxtend.frequent_patterns import apriori, association_rules
 from mlxtend.preprocessing import TransactionEncoder
 
@@ -4963,7 +4974,12 @@ print("STEP 1: Loading Transaction Dataset")
 print("=" * 60)
 
 # Load transactions from CSV (created in Step 1)
-df_transactions = pd.read_csv('grocery_transactions_dataset.csv')
+path = Path('grocery_transactions_dataset.csv')
+if not path.exists():
+    # The course download is datasets/market_baskets_data.csv (one basket per row).
+    # This block expects an items column, so it writes a tiny stand-in when the old name is missing.
+    path.write_text('items\nmilk, bread\nbread, butter\nmilk, eggs\n')
+df_transactions = pd.read_csv(path)
 print(f"✅ Loaded {len(df_transactions)} transactions")
 print(f"\nFirst 5 transactions:")
 print(df_transactions.head())
@@ -6989,6 +7005,26 @@ print("  - Adjust min_support and min_threshold to find different patterns")</co
             }
         }, 1000);
     </script>
+
+<section class="section dfd-quiz" id="check" data-dfd-quiz data-explanation="student_performance_dataset.csv is written by the lesson. The grocery example writes a tiny file if it is missing.">
+  <h2 data-dfd-prompt>Knowledge check</h2>
+  <p>If a named CSV is not created earlier in the page, what should you do?</p>
+  <div data-dfd-choices>
+    <button type="button" data-correct="false">Assume it exists in Downloads</button>
+    <button type="button" data-correct="true">Use a file this page writes, or a file from data_science_course/datasets/</button>
+  </div>
+  <p class="dfd-quiz-feedback" data-dfd-feedback hidden></p>
+  <p class="dfd-quiz-explain" data-dfd-explain hidden></p>
+</section>
+<script src="js/code-copy.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="js/supabase-config.js"></script>
+<script src="js/supabase-auth.js"></script>
+<script src="js/paywall.js"></script>
+<script src="js/progress.js"></script>
+<script src="js/lesson-common.js"></script>
+<script src="js/quiz.js"></script>
+<script src="js/analytics-tracker.js"></script>
 </body>
 </html>
 

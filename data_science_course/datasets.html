@@ -6,7 +6,8 @@
     <title>Download Datasets | Data Science Course | Data For Dummies</title>
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <style>
+    <link rel="stylesheet" href="styles.css">
+<style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: 'Nunito', sans-serif; background: linear-gradient(160deg, #f5f3ff 0%, #ede9fe 40%, #faf5ff 100%); min-height: 100vh; padding: 20px; color: #1e293b; }
         .container { max-width: 900px; margin: 0 auto; }
@@ -26,8 +27,17 @@
     </style>
     <link rel="stylesheet" href="../css/dfd-system.css">
 </head>
-<body data-access="pro">
+<body data-access="pro" class="dfd-safe" data-course-id="data-science" data-lesson-id="datasets" data-lesson-label="Download Datasets | Data Science Course | Data For Dummies" data-total-lessons="32">
     <div class="container">
+<div class="dfd-lesson-progress" data-dfd-progress>
+  <p class="dfd-lesson-progress-label" data-dfd-progress-label>Sign in to save your place.</p>
+  <div class="dfd-lesson-progress-track" data-dfd-progress-bar role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-label="Course progress">
+    <div class="dfd-lesson-progress-fill" data-dfd-progress-fill></div>
+  </div>
+  <p><button type="button" data-dfd-complete>Mark lesson complete</button></p>
+  <p data-dfd-complete-status></p>
+</div>
+
         <nav class="nav">
             <a href="../index.html"><i class="fas fa-home"></i> Main Website</a>
             <a href="index.html"><i class="fas fa-book"></i> Data Science Course Hub</a>
@@ -45,21 +55,21 @@
                 <h3>Housing.csv</h3>
                 <p>House prices and features (area, bedrooms, bathrooms, mainroad, guestroom, etc.). Used in Linear Regression and Statistics.</p>
             </div>
-            <a href="datasets/housing_dataset.csv" download="Housing.csv"><i class="fas fa-download"></i> Download</a>
+            <a href="datasets/housing_dataset.csv" download="housing_dataset.csv"><i class="fas fa-download"></i> Download</a>
         </div>
         <div class="card">
             <div class="card-info">
                 <h3>Hotel Reservations.csv</h3>
                 <p>Hotel booking data. Used in Statistics (Chi-Square, T-Test), Hypothesis Testing, Missing Values & Outliers, Clustering.</p>
             </div>
-            <a href="datasets/hotel_reservations.csv" download="Hotel Reservations.csv"><i class="fas fa-download"></i> Download</a>
+            <a href="datasets/hotel_reservations.csv" download="hotel_reservations.csv"><i class="fas fa-download"></i> Download</a>
         </div>
         <div class="card">
             <div class="card-info">
                 <h3>AB_testing_data.csv</h3>
                 <p>A/B test results (conversion fractions for variant A and B over days). Used in A/B Testing lesson.</p>
             </div>
-            <a href="datasets/ab_testing_data.csv" download="AB_testing_data.csv"><i class="fas fa-download"></i> Download</a>
+            <a href="datasets/ab_testing_data.csv" download="ab_testing_data.csv"><i class="fas fa-download"></i> Download</a>
         </div>
         <div class="card">
             <div class="card-info">
@@ -139,6 +149,20 @@
     <script src="../js/supabase-config.js"></script>
     <script src="../js/supabase-auth.js"></script>
     <script src="../js/paywall.js"></script>
-    <script src="../js/analytics-tracker.js"></script>
+    <script src="../js/progress.js"></script>
+<script src="../js/lesson-common.js"></script>
+<script src="../js/quiz.js"></script>
+<script src="../js/analytics-tracker.js"></script>
+
+<section class="section dfd-quiz" id="check" data-dfd-quiz data-explanation="Download from this page and keep the filename the lesson uses.">
+  <h2 data-dfd-prompt>Knowledge check</h2>
+  <p>Where do the lesson scripts expect the CSV files?</p>
+  <div data-dfd-choices>
+    <button type="button" data-correct="false">On an absolute path under /Users/you/Downloads</button>
+    <button type="button" data-correct="true">In this datasets folder, referenced by the filename the lesson names</button>
+  </div>
+  <p class="dfd-quiz-feedback" data-dfd-feedback hidden></p>
+  <p class="dfd-quiz-explain" data-dfd-explain hidden></p>
+</section>
 </body>
 </html>

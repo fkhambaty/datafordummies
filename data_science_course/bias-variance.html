@@ -6,7 +6,8 @@
     <title>Bias, Variance & Gradient Descent | Fakhruddin Khambaty's Learning Hub</title>
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <style>
+    <link rel="stylesheet" href="styles.css">
+<style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             font-family: 'Nunito', sans-serif;
@@ -213,8 +214,17 @@
     </style>
     <link rel="stylesheet" href="../css/dfd-system.css">
 </head>
-<body data-access="pro">
+<body data-access="pro" class="dfd-safe" data-course-id="data-science" data-lesson-id="bias-variance" data-lesson-label="Bias, Variance & Gradient Descent | Fakhruddin Khambaty's Learning Hub" data-total-lessons="32">
     <div class="container">
+<div class="dfd-lesson-progress" data-dfd-progress>
+  <p class="dfd-lesson-progress-label" data-dfd-progress-label>Sign in to save your place.</p>
+  <div class="dfd-lesson-progress-track" data-dfd-progress-bar role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-label="Course progress">
+    <div class="dfd-lesson-progress-fill" data-dfd-progress-fill></div>
+  </div>
+  <p><button type="button" data-dfd-complete>Mark lesson complete</button></p>
+  <p data-dfd-complete-status></p>
+</div>
+
         <nav class="nav">
             <a href="../index.html"><i class="fas fa-home"></i><span>Home</span></a>
             <a href="linear-regression.html"><i class="fas fa-arrow-left"></i><span>Previous: Linear Regression</span></a>
@@ -690,7 +700,7 @@ cv_scores = <span class="function">cross_val_score</span>(model, X, y, cv=<span 
 
             <div class="important-box" style="background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%); border-radius: 16px; padding: 24px; margin: 25px 0; border-left: 5px solid #3b82f6;">
                 <h4 style="color: #1e40af;">📘 From the course notebook (Regularization)</h4>
-                <p style="color: #1e3a8a; margin-bottom: 10px;">The course source uses <strong>auto-mpg.csv</strong>: <code>data = pd.read_csv("auto-mpg.csv")</code>; <code>LinearRegression</code>, <code>Ridge(alpha=...)</code>, <code>Lasso(alpha=...)</code>. Ridge = L2 penalty; Lasso = L1 (can shrink coefficients to zero). Download <a href="datasets/auto_mpg.csv" download>auto_mpg.csv</a> from the <a href="datasets.html">datasets page</a>. See <strong>Regularization.pdf</strong> in the course source for slides.</p>
+                <p style="color: #1e3a8a; margin-bottom: 10px;">The course source uses <strong>auto-mpg.csv</strong>: <code>data = pd.read_csv("auto_mpg.csv")</code>; <code>LinearRegression</code>, <code>Ridge(alpha=...)</code>, <code>Lasso(alpha=...)</code>. Ridge = L2 penalty; Lasso = L1 (can shrink coefficients to zero). Download <a href="datasets/auto_mpg.csv" download>auto_mpg.csv</a> from the <a href="datasets.html">datasets page</a>. See <strong>Regularization.pdf</strong> in the course source for slides.</p>
             </div>
 
             
@@ -719,7 +729,7 @@ import warnings
 warnings.filterwarnings("ignore")
 
 # --- Code cell 5 ---
-data = pd.read_csv("auto-mpg.csv")
+data = pd.read_csv("auto_mpg.csv")
 
 # --- Code cell 6 ---
 #Features in data set
@@ -944,7 +954,18 @@ for i, l in enumerate(lambdas):
             </div>
         </div>
 
-        <div class="nav-buttons">
+        
+<section class="section dfd-quiz" id="check" data-dfd-quiz data-explanation="The model memorized the training fold.">
+  <h2 data-dfd-prompt>Knowledge check</h2>
+  <p>High training score and a much worse test score is a sign of what?</p>
+  <div data-dfd-choices>
+    <button type="button" data-correct="false">Underfitting</button>
+    <button type="button" data-correct="true">Overfitting, high variance</button>
+  </div>
+  <p class="dfd-quiz-feedback" data-dfd-feedback hidden></p>
+  <p class="dfd-quiz-explain" data-dfd-explain hidden></p>
+</section>
+<div class="nav-buttons">
             <a href="linear-regression.html" class="nav-btn prev"><i class="fas fa-arrow-left"></i> Previous: Linear Regression</a>
             <a href="logistic-regression.html" class="nav-btn next">Next: Logistic Regression <i class="fas fa-arrow-right"></i></a>
         </div>
@@ -964,6 +985,9 @@ for i, l in enumerate(lambdas):
     <script src="../js/supabase-config.js"></script>
     <script src="../js/supabase-auth.js"></script>
     <script src="../js/paywall.js"></script>
-    <script src="../js/analytics-tracker.js"></script>
+    <script src="../js/progress.js"></script>
+<script src="../js/lesson-common.js"></script>
+<script src="../js/quiz.js"></script>
+<script src="../js/analytics-tracker.js"></script>
 </body>
 </html>

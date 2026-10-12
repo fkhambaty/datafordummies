@@ -8,7 +8,7 @@
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <link rel="stylesheet" href="../css/dfd-system.css">
 </head>
-<body data-access="pro" data-course-id="python" data-lesson-id="s6-functions1" data-lesson-label="Session 6: Functions Part I">
+<body data-access="pro" data-course-id="python" data-lesson-id="s6-functions1" data-lesson-label="Session 6: Functions Part I" class="dfd-safe" data-total-lessons="15">
   <nav class="main-nav">
     <div class="nav-content">
             <a href="../index.html" class="nav-hub" title="Main website" style="display: flex; align-items: center; gap: 6px; padding: 8px 16px; background: linear-gradient(180deg, #ffffff 0%, #f5f5f7 100%); border: 1px solid #d1d5db; border-radius: 10px; color: #1d1d1f; font-size: 13px; font-weight: 600; text-decoration: none; box-shadow: 0 3px 0 #d1d5db, 0 4px 8px rgba(0,0,0,0.1); margin-right: 8px;">
@@ -41,6 +41,15 @@
   </nav>
 
   <main>
+<div class="dfd-lesson-progress" data-dfd-progress>
+  <p class="dfd-lesson-progress-label" data-dfd-progress-label>Sign in to save your place.</p>
+  <div class="dfd-lesson-progress-track" data-dfd-progress-bar role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-label="Course progress">
+    <div class="dfd-lesson-progress-fill" data-dfd-progress-fill></div>
+  </div>
+  <p><button type="button" data-dfd-complete>Mark lesson complete</button></p>
+  <p data-dfd-complete-status></p>
+</div>
+
     <header class="session-header">
       <div class="session-badge">Session 6</div>
       <h1>⚙️ Functions Part I</h1>
@@ -84,7 +93,7 @@
     </section>
 
     <div class="key-concept" style="background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%); border-left: 5px solid #3b82f6; padding: 1rem 1.25rem; border-radius: 12px; margin: 1.5rem 0;">
-      <h4 style="color: #1e40af;">📘 Same topic in the course notebook</h4>
+      <h4 style="color: #1e40af;">Run this on the page</h4>
       <p style="color: #1e3a8a; margin: 0;">Session_6 <strong>Functions Part I</strong> covers def, return, parameters, and scope—same as here. Practice in the notebook.</p>
     </div>
 
@@ -737,6 +746,13 @@ Hello!</pre>
 
     <!-- QUICK REFERENCE -->
     <section class="content-section">
+      <h2>Type hints</h2>
+      <p>Python 3.12 does not require hints, and it does not check them while the function runs. They document the contract for the next reader. Use <code>list[int]</code> and <code>int | None</code>. You do not need <code>from typing import List, Optional</code> for those.</p>
+      <div class="code-block"><pre><code>def add(left: int, right: int) -> int:
+    return left + right
+
+def first_or_none(values: list[str]) -> str | None:
+    return values[0] if values else None</code></pre></div>
       <h2>📋 Quick Reference</h2>
       
       <div class="reference-card">
@@ -814,8 +830,8 @@ Hello!</pre>
 
 
     <section class="content-section" style="margin-top: 2rem;">
-      <h2>Complete code from course notebook: Functions_Part_I.ipynb</h2>
-      <p>Every line of code from the course notebook (verbatim).</p>
+      <h2>Worked example (source note: Functions_Part_I.ipynb). Run it as a .py file. A notebook is optional.</h2>
+      <p>Worked example. Lines that start with ! or % are notebook-only and are not valid in a .py file.</p>
       <div class="code-block" style="max-height: 500px; overflow: auto; background: #1e293b; color: #e2e8f0; padding: 1rem; border-radius: 12px;">
         <pre style="white-space: pre; font-size: 0.85em;"># --- Code cell 1 ---
 # what is function?
@@ -1002,7 +1018,18 @@ student(name="rahul",marks=90) # positional and keyword arguments
         <span class="nav-arrow">→</span>
       </a>
     </nav>
-  </main>
+  
+<section class="section dfd-quiz" id="check" data-dfd-quiz data-explanation="print shows text. return is what the caller can store.">
+  <h2 data-dfd-prompt>Knowledge check</h2>
+  <p>A function prints a number and does not use return. What does the caller receive?</p>
+  <div data-dfd-choices>
+    <button type="button" data-correct="false">The printed number</button>
+    <button type="button" data-correct="true">None</button>
+  </div>
+  <p class="dfd-quiz-feedback" data-dfd-feedback hidden></p>
+  <p class="dfd-quiz-explain" data-dfd-explain hidden></p>
+</section>
+</main>
 
   <footer>
     <p>🐍 Python Mastery | Learn. Code. Create.</p>
@@ -1027,7 +1054,9 @@ student(name="rahul",marks=90) # positional and keyword arguments
     <script>
       (function(){var b=document.body;var c=b.getAttribute('data-course-id');var l=b.getAttribute('data-lesson-id');var t=b.getAttribute('data-lesson-label');if(c&&window.FKTI_Progress)FKTI_Progress.recordPage(c,l,t);})();
     </script>
-    <script src="../js/analytics-tracker.js"></script>
+    <script src="../js/lesson-common.js"></script>
+<script src="../js/quiz.js"></script>
+<script src="../js/analytics-tracker.js"></script>
 </body>
 </html>
 

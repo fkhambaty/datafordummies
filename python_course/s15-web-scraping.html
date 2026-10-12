@@ -35,7 +35,7 @@
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <link rel="stylesheet" href="../css/dfd-system.css">
 </head>
-<body data-access="pro">
+<body data-access="pro" class="dfd-safe" data-course-id="python" data-lesson-id="s15-web-scraping" data-lesson-label="Session 15: Web Scraping with Python | 🐍 Python Mastery" data-total-lessons="15">
   <div class="bg-pattern"></div>
 
   <nav class="course-nav">
@@ -64,12 +64,25 @@
   </nav>
 
   <main>
+<div class="dfd-lesson-progress" data-dfd-progress>
+  <p class="dfd-lesson-progress-label" data-dfd-progress-label>Sign in to save your place.</p>
+  <div class="dfd-lesson-progress-track" data-dfd-progress-bar role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-label="Course progress">
+    <div class="dfd-lesson-progress-fill" data-dfd-progress-fill></div>
+  </div>
+  <p><button type="button" data-dfd-complete>Mark lesson complete</button></p>
+  <p data-dfd-complete-status></p>
+</div>
+
     <header class="session-header">
       <span class="achievement-badge">🌟 Session 15</span>
       <div class="session-number">Session 15</div>
       <h1>Web Scraping Using Python</h1>
       <p class="session-subtitle">Extract data from websites automatically with <code>requests</code> and BeautifulSoup.</p>
     </header>
+    <section class="content-section modern-note">
+      <h2>Scrape only when an API is not the right door</h2>
+      <p>Session 12 is the first choice: a documented API returns JSON and states the rules. Scrape HTML when the page is public, the terms allow it, and you have read <code>robots.txt</code>. Name yourself in the User-Agent. Wait between requests. Do not collect account data, and do not bypass a login. <code>books.toscrape.com</code> is a practice site built for this. <code>!pip</code> works only in a notebook. In a project, run <code>uv add requests beautifulsoup4</code>.</p>
+    </section>
 
     <div class="scrape-hero">
       <h2>🕷️ What is Web Scraping?</h2>
@@ -120,7 +133,8 @@
     <section class="content-section">
       <h2>✏️ Minimal Code (Same idea as the course notebook)</h2>
       <p>In the course source notebook (<strong>Web_Scraping_Using_Python</strong>), you'll see:</p>
-      <div class="code-block">import requests<br>from bs4 import BeautifulSoup<br><br>url = "https://books.toscrape.com/catalogue/category/books_1/index.html"<br>response = requests.get(url)   # Download the page<br># response.status_code 200 means OK<br>html = response.content<br>soup = BeautifulSoup(html, "html.parser")   # Parse HTML<br># Then use soup.find("tag") or soup.find_all("tag") to get elements</div>
+      <div class="code-block">import requests<br>from bs4 import BeautifulSoup<br><br>url = "https://books.toscrape.com/catalogue/category/books_1/index.html"<br>response = requests.get(url, timeout=10)
+response.raise_for_status()<br># response.status_code 200 means OK<br>html = response.content<br>soup = BeautifulSoup(html, "html.parser")   # Parse HTML<br># Then use soup.find("tag") or soup.find_all("tag") to get elements</div>
       <p><strong>In simple terms:</strong> <code>requests.get(url)</code> brings the page; <code>BeautifulSoup(html, "html.parser")</code> turns it into a searchable tree; then you use <code>.find()</code> or <code>.find_all()</code> to get the parts you need and <code>.text</code> or <code>["href"]</code> to get text or links.</p>
     </section>
 
@@ -135,13 +149,13 @@
 
     
     <section class="content-section" style="margin-top: 2rem;">
-      <h2>Complete code from course notebook: Web_Scraping_Using_Python (1).ipynb</h2>
-      <p>Every line of code from the course notebook (verbatim).</p>
+      <h2>Worked example (source note: Web_Scraping_Using_Python (1).ipynb). Run it as a .py file. A notebook is optional.</h2>
+      <p>Worked example. Lines that start with ! or % are notebook-only and are not valid in a .py file.</p>
       <div class="code-block" style="max-height: 500px; overflow: auto; background: #1e293b; color: #e2e8f0; padding: 1rem; border-radius: 12px;">
         <pre style="white-space: pre; font-size: 0.85em;"># --- Code cell 3 ---
 # Install required libraries (if not already installed)
-!pip install requests
-!pip install beautifulsoup4
+# notebook-only: uv add requests
+# notebook-only: uv add beautifulsoup4
 
 # --- Code cell 10 ---
 import requests
@@ -273,13 +287,13 @@ df
 
     
     <section class="content-section" style="margin-top: 2rem;">
-      <h2>Complete code from course notebook: Web_Scraping_Using_Python_new.ipynb</h2>
-      <p>Every line of code from the course notebook (verbatim).</p>
+      <h2>Worked example (source note: Web_Scraping_Using_Python_new.ipynb). Run it as a .py file. A notebook is optional.</h2>
+      <p>Worked example. Lines that start with ! or % are notebook-only and are not valid in a .py file.</p>
       <div class="code-block" style="max-height: 500px; overflow: auto; background: #1e293b; color: #e2e8f0; padding: 1rem; border-radius: 12px;">
         <pre style="white-space: pre; font-size: 0.85em;"># --- Code cell 3 ---
 # Install required libraries (if not already installed)
-!pip install requests
-!pip install beautifulsoup4
+# notebook-only: uv add requests
+# notebook-only: uv add beautifulsoup4
 
 # --- Code cell 4 ---
 import sys
@@ -433,12 +447,26 @@ df
       <a href="s14-enhanced-viz.html" class="nav-prev"><i class="fas fa-arrow-left"></i> Session 14: Enhanced Viz</a>
       <a href="index.html" class="nav-next">Course index <i class="fas fa-arrow-right"></i></a>
     </nav>
-  </main>
+  
+<section class="section dfd-quiz" id="check" data-dfd-quiz data-explanation="Session 12 is the preferred path. Scraping is the fallback, with robots.txt and a named User-Agent.">
+  <h2 data-dfd-prompt>Knowledge check</h2>
+  <p>A site publishes a JSON API for the same table you wanted to scrape. What should you do first?</p>
+  <div data-dfd-choices>
+    <button type="button" data-correct="false">Scrape the HTML anyway because BeautifulSoup is the topic of this session</button>
+    <button type="button" data-correct="true">Use the API. Scrape only if the terms allow it and no API covers the data.</button>
+  </div>
+  <p class="dfd-quiz-feedback" data-dfd-feedback hidden></p>
+  <p class="dfd-quiz-explain" data-dfd-explain hidden></p>
+</section>
+</main>
     <script src="../js/code-copy.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="../js/supabase-config.js"></script>
     <script src="../js/supabase-auth.js"></script>
     <script src="../js/paywall.js"></script>
-    <script src="../js/analytics-tracker.js"></script>
+    <script src="../js/progress.js"></script>
+<script src="../js/lesson-common.js"></script>
+<script src="../js/quiz.js"></script>
+<script src="../js/analytics-tracker.js"></script>
 </body>
 </html>

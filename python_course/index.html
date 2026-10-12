@@ -60,8 +60,17 @@
     </style>
     <link rel="stylesheet" href="../css/dfd-system.css">
 </head>
-<body>
+<body class="dfd-safe" data-course-id="python" data-lesson-id="index" data-lesson-label="Python Course Hub | Fakhruddin Khambaty's Learning Hub">
     <div class="container">
+<div class="dfd-lesson-progress" data-dfd-progress>
+  <p class="dfd-lesson-progress-label" data-dfd-progress-label>Sign in to save your place.</p>
+  <div class="dfd-lesson-progress-track" data-dfd-progress-bar role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-label="Course progress">
+    <div class="dfd-lesson-progress-fill" data-dfd-progress-fill></div>
+  </div>
+  <p><button type="button" data-dfd-complete>Mark lesson complete</button></p>
+  <p data-dfd-complete-status></p>
+</div>
+
         <nav class="nav">
             <a href="../index.html"><i class="fas fa-home"></i><span>Main Website</span></a>
             <a href="../data_science_course/index.html"><span>Data Science Course</span><i class="fas fa-arrow-right"></i></a>
@@ -176,7 +185,17 @@
             </div>
         </div>
 
-        <div class="footer">
+        <section class="section dfd-quiz" id="check" data-dfd-quiz data-explanation="The URL, the hub label, and the page now all teach charts.">
+  <h2 data-dfd-prompt>Knowledge check</h2>
+  <p>Which session is the matplotlib and seaborn lesson?</p>
+  <div data-dfd-choices>
+    <button type="button" data-correct="false">Session 8, because the file used to repeat the OOP page</button>
+    <button type="button" data-correct="true">Session 13, s13-dataviz.html</button>
+  </div>
+  <p class="dfd-quiz-feedback" data-dfd-feedback hidden></p>
+  <p class="dfd-quiz-explain" data-dfd-explain hidden></p>
+</section>
+<div class="footer">
             <p>📚 Python Mastery · Same teaching philosophy as Data Science: simple, step-by-step, hands-on</p>
             <p>Created by <a href="../index.html">Fakhruddin Khambaty</a></p>
         </div>
@@ -192,6 +211,15 @@
         });
     </script>
     <script src="../js/code-copy.js"></script>
-    <script src="../js/analytics-tracker.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="../js/supabase-config.js"></script>
+<script src="../js/supabase-auth.js"></script>
+<script src="../js/paywall.js"></script>
+<script src="../js/progress.js"></script>
+<script src="../js/lesson-common.js"></script>
+<script src="../js/quiz.js"></script>
+<script src="../js/analytics-tracker.js"></script>
+
+
 </body>
 </html>

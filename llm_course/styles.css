@@ -1,0 +1,40 @@
+/* LLM family theme. Page <style> blocks and their animations stay.
+   This file loads first; dfd-system.css still loads last. */
+@import url("../css/course-light-theme.css");
+
+:root {
+    --course-primary: #6d28d9;
+    --course-accent: #c4b5fd;
+}
+
+.nav a,
+.nav-btn,
+.lesson-link,
+.quiz-opt,
+.quiz-option,
+.toggle-btn,
+.copy-btn,
+button {
+    min-height: 48px;
+    min-width: 48px;
+}
+
+svg,
+.visual svg,
+img {
+    max-width: 100%;
+    height: auto;
+}
+
+table {
+    display: block;
+    max-width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+pre,
+.code-block {
+    max-width: 100%;
+    overflow-x: auto;
+}

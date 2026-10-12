@@ -3,21 +3,16 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <title>Session 13 of 15 | 🐍 Python Mastery</title>
+  <title>Session 13: Data Visualization | 🐍 Python Mastery</title>
   <link rel="stylesheet" href="light-theme.css">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="../css/dfd-system.css">
+  <link rel="stylesheet" href="../css/dfd-system.css">
 </head>
-<body data-access="pro">
+<body class="dfd-safe" data-access="pro" data-course-id="python" data-lesson-id="s13-dataviz" data-lesson-label="Session 13: Data Visualization" data-total-lessons="15">
   <nav class="main-nav">
     <div class="nav-content">
-            <a href="../index.html" class="nav-hub" title="Main website" style="display: flex; align-items: center; gap: 6px; padding: 8px 16px; background: linear-gradient(180deg, #ffffff 0%, #f5f5f7 100%); border: 1px solid #d1d5db; border-radius: 10px; color: #1d1d1f; font-size: 13px; font-weight: 600; text-decoration: none; box-shadow: 0 3px 0 #d1d5db, 0 4px 8px rgba(0,0,0,0.1); margin-right: 8px;">
-        <i class="fas fa-home"></i>
-        <span>Home</span>
-      </a>
-      <a href="index.html" class="nav-hub" title="Python course hub" style="display: flex; align-items: center; gap: 6px; padding: 8px 16px; background: linear-gradient(180deg, #ffffff 0%, #f5f5f7 100%); border: 1px solid #d1d5db; border-radius: 10px; color: #1d1d1f; font-size: 13px; font-weight: 600; text-decoration: none; box-shadow: 0 3px 0 #d1d5db, 0 4px 8px rgba(0,0,0,0.1); margin-right: 8px;">
-        <span>←</span><span>Course Hub</span>
-      </a>
+      <a href="../index.html" class="nav-hub" title="Main website"><i class="fas fa-home"></i><span>Home</span></a>
+      <a href="index.html" class="nav-hub" title="Python course hub"><span>←</span><span>Course Hub</span></a>
       <a href="complete-course.html" class="logo">🐍 Python Mastery</a>
       <div class="session-nav">
         <a href="s1-intro.html" class="nav-link">1</a>
@@ -43,942 +38,137 @@
   <main>
     <header class="session-header">
       <div class="session-badge">Session 13 of 15</div>
-      <h1>🏗️ Object-Oriented Programming</h1>
-      <p class="session-subtitle">Building with classes and objects</p>
-      <div class="progress-info">
-        <span>📚 8 Topics</span>
-        <span>⏱️ 55 min read</span>
-        <span>🎯 Intermediate Level</span>
-      </div>
+      <h1>Data Visualization</h1>
+      <p class="session-subtitle">Matplotlib and seaborn charts you can run from a <code>.py</code> file</p>
     </header>
 
-    <!-- OVERVIEW -->
-    <section class="overview-card">
-      <h2>🗺️ What You'll Learn</h2>
-      <div class="overview-grid">
-        <div class="overview-item">
-          <span class="overview-icon">🏗️</span>
-          <span>What is OOP?</span>
-        </div>
-        <div class="overview-item">
-          <span class="overview-icon">📦</span>
-          <span>Classes & Objects</span>
-        </div>
-        <div class="overview-item">
-          <span class="overview-icon">🎭</span>
-          <span>The self Parameter</span>
-        </div>
-        <div class="overview-item">
-          <span class="overview-icon">🔧</span>
-          <span>__init__ Constructor</span>
-        </div>
-        <div class="overview-item">
-          <span class="overview-icon">📝</span>
-          <span>Instance Methods</span>
-        </div>
-        <div class="overview-item">
-          <span class="overview-icon">🎯</span>
-          <span>__repr__ Method</span>
-        </div>
+    <div class="dfd-lesson-progress" data-dfd-progress>
+      <p class="dfd-lesson-progress-label" data-dfd-progress-label>Sign in to save your place.</p>
+      <div class="dfd-lesson-progress-track" data-dfd-progress-bar role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-label="Course progress">
+        <div class="dfd-lesson-progress-fill" data-dfd-progress-fill></div>
       </div>
-    </section>
-
-    <div class="key-concept" style="background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%); border-left: 5px solid #3b82f6; padding: 1rem 1.25rem; border-radius: 12px; margin: 1.5rem 0;">
-      <h4 style="color: #1e40af;">📘 Same topic in the course notebook</h4>
-      <p style="color: #1e3a8a; margin: 0;">Session_8 <strong>OOPs in Python</strong> covers classes, __init__, self, inheritance—same as this lesson. Use the OOPs notebook to code along.</p>
+      <p><button type="button" data-dfd-complete>Mark lesson complete</button></p>
+      <p data-dfd-complete-status></p>
     </div>
 
-    <!-- ANALOGY -->
-    <section class="analogy-card">
-      <div class="analogy-header">
-        <span class="analogy-icon">🏠</span>
-        <h3>Classes are Like Blueprints!</h3>
-      </div>
-      <div class="analogy-content">
-        <div class="visual-box">
-          <pre style="text-align: center; font-size: 1.1rem;">
-    📐 BLUEPRINT (Class)          🏠 HOUSES (Objects)
-    ─────────────────           ─────────────────────
-    
-    class House:                house1 = House("Blue")
-      color                     house2 = House("Red")
-      rooms                     house3 = House("Green")
-      door_count
-                               Each house is a UNIQUE OBJECT
-    Defines the structure       created from the SAME BLUEPRINT
-    
-    One blueprint → Many houses! 🏘️
-          </pre>
-        </div>
-        <p class="analogy-moral">A Class is a template, Objects are the actual things built from that template!</p>
-      </div>
-    </section>
-
-    <!-- WHAT IS OOP -->
     <section class="content-section">
-      <h2>❓ What is OOP?</h2>
-
-      <div class="topic-card">
-        <div class="topic-header">
-          <span class="topic-number">8.1</span>
-          <h3>🎯 Why Object-Oriented Programming?</h3>
+      <h2>Pick the chart that matches the question</h2>
+      <p>A chart is a sentence about data. Compare categories with a bar chart. Show change over time with a line. Show how two numbers move together with a scatter plot. Show one distribution with a histogram. Show how several numeric columns rise and fall together with a heatmap.</p>
+      <div class="dfd-diagram" data-dfd-diagram>
+        <div data-dfd-diagram-panel="bar">
+          <svg class="dfd-responsive" viewBox="0 0 320 120" role="img" aria-label="Bar chart of four months">
+            <rect x="40" y="70" width="40" height="30" fill="#f9a8d4"></rect>
+            <rect x="100" y="40" width="40" height="60" fill="#db2777"></rect>
+            <rect x="160" y="55" width="40" height="45" fill="#f9a8d4"></rect>
+            <rect x="220" y="25" width="40" height="75" fill="#db2777"></rect>
+            <text x="160" y="16" text-anchor="middle" font-size="14" fill="#1e293b">Revenue by month</text>
+          </svg>
         </div>
-
-        <div class="visual-box">
-          <h4>🔄 Programming Paradigms</h4>
-          <pre style="text-align: center; font-size: 1rem;">
-    PROCEDURAL                      OBJECT-ORIENTED
-    ────────────                    ────────────────
-    Step-by-step instructions       Objects with data + behavior
-    
-    Functions work on data          Data and functions bundled together
-    
-    # Procedural                    # OOP
-    name = "Alice"                  class Person:
-    age = 25                            def __init__(self, name, age):
-    def greet(name):                        self.name = name
-        print(f"Hi {name}")                 self.age = age
-                                        def greet(self):
-                                            print(f"Hi {self.name}")
-          </pre>
+        <div data-dfd-diagram-panel="line" hidden>
+          <svg class="dfd-responsive" viewBox="0 0 320 120" role="img" aria-label="Line chart rising then dipping">
+            <polyline points="30,90 90,60 150,70 210,35 280,45" fill="none" stroke="#db2777" stroke-width="4"></polyline>
+            <text x="160" y="16" text-anchor="middle" font-size="14" fill="#1e293b">Revenue over time</text>
+          </svg>
         </div>
-
-        <div class="info-box tip">
-          <div class="info-header">
-            <span class="info-icon">💡</span>
-            <span>Benefits of OOP</span>
-          </div>
-          <div class="info-content">
-            <ul>
-              <li><strong>Organization:</strong> Group related data and functions together</li>
-              <li><strong>Reusability:</strong> Create objects from the same class</li>
-              <li><strong>Modularity:</strong> Changes in one class don't affect others</li>
-              <li><strong>Real-world modeling:</strong> Model real things as objects</li>
-            </ul>
-          </div>
+        <div data-dfd-diagram-panel="heat" hidden>
+          <svg class="dfd-responsive" viewBox="0 0 320 120" role="img" aria-label="Three by three heatmap">
+            <rect x="70" y="30" width="40" height="24" fill="#fce7f3"></rect>
+            <rect x="114" y="30" width="40" height="24" fill="#f9a8d4"></rect>
+            <rect x="158" y="30" width="40" height="24" fill="#db2777"></rect>
+            <rect x="70" y="58" width="40" height="24" fill="#fbcfe8"></rect>
+            <rect x="114" y="58" width="40" height="24" fill="#db2777"></rect>
+            <rect x="158" y="58" width="40" height="24" fill="#9d174d"></rect>
+            <text x="160" y="16" text-anchor="middle" font-size="14" fill="#1e293b">Correlation heatmap</text>
+          </svg>
+        </div>
+        <div class="dfd-diagram-controls">
+          <button type="button" data-dfd-diagram-step="bar" aria-pressed="true">Bar: compare groups</button>
+          <button type="button" data-dfd-diagram-step="line">Line: change over time</button>
+          <button type="button" data-dfd-diagram-step="heat">Heatmap: many numbers</button>
         </div>
       </div>
     </section>
 
-    <!-- CLASSES AND OBJECTS -->
     <section class="content-section">
-      <h2>📦 Classes & Objects</h2>
+      <h2>Matplotlib from a script</h2>
+      <p>Install into the project environment from session 1: <code>uv add matplotlib pandas</code>. <code>plt.show()</code> opens a window. <code>fig.savefig</code> writes a file you can commit or drop into a report. <code>layout="constrained"</code> keeps labels inside the figure.</p>
+      <div class="code-block"><pre><code>from pathlib import Path
 
-      <div class="topic-card">
-        <div class="topic-header">
-          <span class="topic-number">8.2</span>
-          <h3>🏗️ Creating Your First Class</h3>
-        </div>
+import matplotlib.pyplot as plt
+import pandas as pd
 
-        <div class="explanation">
-          <p>A <strong>class</strong> defines the structure. An <strong>object</strong> (instance) is created from that class.</p>
-        </div>
+sales = pd.DataFrame({
+    "month": ["Jan", "Feb", "Mar", "Apr"],
+    "revenue": [120, 150, 130, 180],
+})
 
-        <div class="code-block">
-          <div class="code-header">
-            <span>Python</span>
-            <span class="code-badge">From Source</span>
-          </div>
-          <pre><code><span class="comment"># Creating a simple class from Session 8</span>
-<span class="keyword">class</span> <span class="class-name">Dog</span>:
-    <span class="string">"""A simple Dog class"""</span>
-    <span class="keyword">pass</span>  <span class="comment"># Empty class for now</span>
-
-<span class="comment"># Create objects (instances) of the class</span>
-<span class="variable">dog1</span> = Dog()
-<span class="variable">dog2</span> = Dog()
-
-<span class="function">print</span>(<span class="string">"dog1:"</span>, dog1)
-<span class="function">print</span>(<span class="string">"dog2:"</span>, dog2)
-<span class="function">print</span>(<span class="string">"Same object?"</span>, dog1 == dog2)  <span class="comment"># False - different objects!</span>
-<span class="function">print</span>(<span class="string">"Type:"</span>, <span class="function">type</span>(dog1))</code></pre>
-        </div>
-
-        <div class="output-block">
-          <div class="output-header">Output</div>
-          <pre>dog1: &lt;__main__.Dog object at 0x...&gt;
-dog2: &lt;__main__.Dog object at 0x...&gt;
-Same object? False
-Type: &lt;class '__main__.Dog'&gt;</pre>
-        </div>
+fig, ax = plt.subplots(figsize=(6, 4), layout="constrained")
+ax.bar(sales["month"], sales["revenue"], color="#db2777")
+ax.set_title("Monthly revenue")
+ax.set_ylabel("Revenue")
+out = Path("revenue.png")
+fig.savefig(out, dpi=120)
+print(f"Wrote {out.resolve()}")</code></pre></div>
+      <div class="modern-note">
+        <h3>Notebook cells are optional</h3>
+        <p>The same lines run in a <code>.py</code> file. A notebook is only a different editor. Do not look for a session-13 <code>.ipynb</code> on this site. The example is the page.</p>
       </div>
     </section>
 
-    <!-- __INIT__ METHOD -->
     <section class="content-section">
-      <h2>🔧 The __init__ Constructor</h2>
+      <h2>Seaborn on the same data</h2>
+      <p>Seaborn 0.13 draws statistical charts from a DataFrame. Pass <code>data=</code>, then column names. <code>sns.distplot</code> was removed. Use <code>sns.histplot</code> for one distribution and <code>sns.heatmap</code> for a grid of numbers.</p>
+      <div class="code-block"><pre><code>import seaborn as sns
 
-      <div class="topic-card">
-        <div class="topic-header">
-          <span class="topic-number">8.3</span>
-          <h3>🎬 Initializing Objects</h3>
-        </div>
+fig, ax = plt.subplots(figsize=(6, 4), layout="constrained")
+sns.barplot(data=sales, x="month", y="revenue", ax=ax, color="#db2777")
+ax.set_title("Same bars, seaborn API")
 
-        <div class="explanation">
-          <p><code>__init__</code> is a special method that runs automatically when you create a new object. It's called the <strong>constructor</strong>!</p>
-        </div>
-
-        <div class="visual-box">
-          <h4>🎬 __init__ = The Birth of an Object</h4>
-          <pre style="text-align: center; font-size: 1rem;">
-    dog1 = Dog("Buddy", 3)
-              │
-              ▼
-    ┌─────────────────────────────────┐
-    │  __init__(self, name, age)      │
-    │                                 │
-    │  1. Creates empty object (self) │
-    │  2. Sets self.name = "Buddy"    │
-    │  3. Sets self.age = 3           │
-    │  4. Returns the object          │
-    └─────────────────────────────────┘
-              │
-              ▼
-    dog1 is now ready to use! 🐕
-          </pre>
-        </div>
-
-        <div class="code-block">
-          <div class="code-header">
-            <span>Python</span>
-            <span class="code-badge">From Source</span>
-          </div>
-          <pre><code><span class="comment"># __init__ method from Session 8</span>
-<span class="keyword">class</span> <span class="class-name">Dog</span>:
-    <span class="string">"""A Dog class with attributes"""</span>
-    
-    <span class="keyword">def</span> <span class="function">__init__</span>(self, name, age, breed):
-        <span class="string">"""Initialize a new Dog object"""</span>
-        self.name = name      <span class="comment"># Instance attribute</span>
-        self.age = age        <span class="comment"># Instance attribute</span>
-        self.breed = breed    <span class="comment"># Instance attribute</span>
-        <span class="function">print</span>(<span class="string">f"A new dog '{name}' has been created! 🐕"</span>)
-
-<span class="comment"># Create dog objects</span>
-<span class="variable">buddy</span> = Dog(<span class="string">"Buddy"</span>, <span class="number">3</span>, <span class="string">"Golden Retriever"</span>)
-<span class="variable">max</span> = Dog(<span class="string">"Max"</span>, <span class="number">5</span>, <span class="string">"German Shepherd"</span>)
-
-<span class="comment"># Access attributes</span>
-<span class="function">print</span>(<span class="string">f"\\n{buddy.name} is a {buddy.age}-year-old {buddy.breed}"</span>)
-<span class="function">print</span>(<span class="string">f"{max.name} is a {max.age}-year-old {max.breed}"</span>)</code></pre>
-        </div>
-
-        <div class="output-block">
-          <div class="output-header">Output</div>
-          <pre>A new dog 'Buddy' has been created! 🐕
-A new dog 'Max' has been created! 🐕
-
-Buddy is a 3-year-old Golden Retriever
-Max is a 5-year-old German Shepherd</pre>
-        </div>
-      </div>
+scores = pd.DataFrame(
+    [[1.0, 0.4, -0.2], [0.4, 1.0, 0.7], [-0.2, 0.7, 1.0]],
+    index=["hours", "score", "sleep"],
+    columns=["hours", "score", "sleep"],
+)
+fig, ax = plt.subplots(figsize=(5, 4), layout="constrained")
+sns.heatmap(scores, annot=True, cmap="magma", ax=ax, vmin=-1, vmax=1)
+ax.set_title("How the columns move together")</code></pre></div>
+      <p>A heatmap of correlations is a map of relationships, not a proof that one column causes another. Read the numbers, then go back to the table.</p>
     </section>
 
-    <!-- THE SELF PARAMETER -->
-    <section class="content-section">
-      <h2>🎭 The self Parameter</h2>
-
-      <div class="topic-card">
-        <div class="topic-header">
-          <span class="topic-number">8.4</span>
-          <h3>🪞 What is self?</h3>
-        </div>
-
-        <div class="explanation">
-          <p><code>self</code> refers to the current object instance. It's how the object refers to itself!</p>
-        </div>
-
-        <div class="visual-box">
-          <h4>🪞 self = "Me, Myself"</h4>
-          <pre style="text-align: center; font-size: 1rem;">
-    When you call: buddy.bark()
-    
-    Python secretly does: Dog.bark(buddy)
-                                    │
-                                    └── This becomes 'self'
-    
-    Inside the method:
-        self.name = buddy's name
-        self.age = buddy's age
-    
-    'self' is a reference to the object calling the method!
-          </pre>
-        </div>
-
-        <div class="code-block">
-          <div class="code-header">
-            <span>Python</span>
-            <span class="code-badge">From Source</span>
-          </div>
-          <pre><code><span class="comment"># Understanding self from Session 8</span>
-<span class="keyword">class</span> <span class="class-name">Person</span>:
-    <span class="keyword">def</span> <span class="function">__init__</span>(self, name):
-        <span class="function">print</span>(<span class="string">f"self is: {self}"</span>)
-        self.name = name
-    
-    <span class="keyword">def</span> <span class="function">introduce</span>(self):
-        <span class="function">print</span>(<span class="string">f"Hi, I'm {self.name}!"</span>)
-        <span class="function">print</span>(<span class="string">f"self inside method: {self}"</span>)
-
-<span class="comment"># Create objects</span>
-<span class="variable">alice</span> = Person(<span class="string">"Alice"</span>)
-<span class="function">print</span>(<span class="string">f"alice variable: {alice}"</span>)
-<span class="function">print</span>()
-alice.introduce()
-
-<span class="function">print</span>(<span class="string">"\\n--- Another person ---"</span>)
-<span class="variable">bob</span> = Person(<span class="string">"Bob"</span>)
-bob.introduce()</code></pre>
-        </div>
-
-        <div class="output-block">
-          <div class="output-header">Output</div>
-          <pre>self is: &lt;__main__.Person object at 0x...&gt;
-alice variable: &lt;__main__.Person object at 0x...&gt;
-
-Hi, I'm Alice!
-self inside method: &lt;__main__.Person object at 0x...&gt;
-
---- Another person ---
-self is: &lt;__main__.Person object at 0x...&gt;
-Hi, I'm Bob!</pre>
-        </div>
-
-        <div class="info-box tip">
-          <div class="info-header">
-            <span class="info-icon">💡</span>
-            <span>Key Point</span>
-          </div>
-          <div class="info-content">
-            <p><code>self</code> is just a convention - you could use any name, but <strong>always use self</strong> for readability!</p>
-          </div>
-        </div>
+    <section class="content-section dfd-quiz" id="check" data-dfd-quiz data-explanation="A bar chart compares categories. A line is for change over an ordered axis such as time.">
+      <h2 data-dfd-prompt>Knowledge check</h2>
+      <p>You have revenue for four product names and no time column. Which chart should you start with?</p>
+      <div data-dfd-choices>
+        <button type="button" data-correct="false">A line chart, because every chart about money is a time series</button>
+        <button type="button" data-correct="true">A bar chart, because you are comparing categories</button>
+        <button type="button" data-correct="false">A heatmap, because revenue is a number</button>
       </div>
+      <p class="dfd-quiz-feedback" data-dfd-feedback hidden></p>
+      <p class="dfd-quiz-explain" data-dfd-explain hidden></p>
     </section>
 
-    <!-- INSTANCE METHODS -->
-    <section class="content-section">
-      <h2>📝 Instance Methods</h2>
-
-      <div class="topic-card">
-        <div class="topic-header">
-          <span class="topic-number">8.5</span>
-          <h3>🎬 Methods = Object Actions</h3>
-        </div>
-
-        <div class="explanation">
-          <p>Methods are functions that belong to a class. They define what objects can <strong>do</strong>!</p>
-        </div>
-
-        <div class="code-block">
-          <div class="code-header">
-            <span>Python</span>
-            <span class="code-badge">From Source</span>
-          </div>
-          <pre><code><span class="comment"># Instance methods from Session 8</span>
-<span class="keyword">class</span> <span class="class-name">Dog</span>:
-    <span class="keyword">def</span> <span class="function">__init__</span>(self, name, age):
-        self.name = name
-        self.age = age
-        self.energy = <span class="number">100</span>
-    
-    <span class="keyword">def</span> <span class="function">bark</span>(self):
-        <span class="string">"""Make the dog bark"""</span>
-        <span class="function">print</span>(<span class="string">f"{self.name} says: Woof! Woof! 🐕"</span>)
-    
-    <span class="keyword">def</span> <span class="function">sleep</span>(self):
-        <span class="string">"""Make the dog sleep"""</span>
-        self.energy = <span class="number">100</span>
-        <span class="function">print</span>(<span class="string">f"{self.name} is sleeping... 💤"</span>)
-        <span class="function">print</span>(<span class="string">f"Energy restored to {self.energy}!"</span>)
-    
-    <span class="keyword">def</span> <span class="function">play</span>(self, minutes):
-        <span class="string">"""Play and use energy"""</span>
-        <span class="variable">energy_used</span> = minutes * <span class="number">2</span>
-        <span class="keyword">if</span> energy_used <= self.energy:
-            self.energy -= energy_used
-            <span class="function">print</span>(<span class="string">f"{self.name} played for {minutes} minutes! 🎾"</span>)
-            <span class="function">print</span>(<span class="string">f"Energy left: {self.energy}"</span>)
-        <span class="keyword">else</span>:
-            <span class="function">print</span>(<span class="string">f"{self.name} is too tired to play! 😴"</span>)
-    
-    <span class="keyword">def</span> <span class="function">birthday</span>(self):
-        <span class="string">"""Increase dog's age by 1"""</span>
-        self.age += <span class="number">1</span>
-        <span class="function">print</span>(<span class="string">f"🎂 Happy Birthday {self.name}! Now {self.age} years old!"</span>)
-
-<span class="comment"># Create a dog and use methods</span>
-<span class="variable">buddy</span> = Dog(<span class="string">"Buddy"</span>, <span class="number">3</span>)
-buddy.bark()
-buddy.play(<span class="number">30</span>)
-buddy.play(<span class="number">20</span>)
-buddy.sleep()
-buddy.birthday()</code></pre>
-        </div>
-
-        <div class="output-block">
-          <div class="output-header">Output</div>
-          <pre>Buddy says: Woof! Woof! 🐕
-Buddy played for 30 minutes! 🎾
-Energy left: 40
-Buddy played for 20 minutes! 🎾
-Energy left: 0
-Buddy is sleeping... 💤
-Energy restored to 100!
-🎂 Happy Birthday Buddy! Now 4 years old!</pre>
-        </div>
-      </div>
-    </section>
-
-    <!-- __REPR__ METHOD -->
-    <section class="content-section">
-      <h2>🎯 The __repr__ Method</h2>
-
-      <div class="topic-card">
-        <div class="topic-header">
-          <span class="topic-number">8.6</span>
-          <h3>📋 String Representation</h3>
-        </div>
-
-        <div class="explanation">
-          <p><code>__repr__</code> defines how an object is displayed when printed. Without it, you get something like <code>&lt;Dog object at 0x...&gt;</code>!</p>
-        </div>
-
-        <div class="code-block">
-          <div class="code-header">
-            <span>Python</span>
-            <span class="code-badge">From Source</span>
-          </div>
-          <pre><code><span class="comment"># __repr__ method from Session 8</span>
-<span class="keyword">class</span> <span class="class-name">Dog</span>:
-    <span class="keyword">def</span> <span class="function">__init__</span>(self, name, age, breed):
-        self.name = name
-        self.age = age
-        self.breed = breed
-    
-    <span class="keyword">def</span> <span class="function">__repr__</span>(self):
-        <span class="string">"""Return a nice string representation"""</span>
-        <span class="keyword">return</span> <span class="string">f"Dog(name='{self.name}', age={self.age}, breed='{self.breed}')"</span>
-
-<span class="comment"># Without __repr__: &lt;Dog object at 0x...&gt;</span>
-<span class="comment"># With __repr__: Dog(name='Buddy', age=3, breed='Golden Retriever')</span>
-
-<span class="variable">buddy</span> = Dog(<span class="string">"Buddy"</span>, <span class="number">3</span>, <span class="string">"Golden Retriever"</span>)
-<span class="function">print</span>(buddy)
-
-<span class="comment"># Also works in lists!</span>
-<span class="variable">dogs</span> = [
-    Dog(<span class="string">"Max"</span>, <span class="number">5</span>, <span class="string">"German Shepherd"</span>),
-    Dog(<span class="string">"Luna"</span>, <span class="number">2</span>, <span class="string">"Labrador"</span>)
-]
-<span class="function">print</span>(<span class="string">"\\nList of dogs:"</span>, dogs)</code></pre>
-        </div>
-
-        <div class="output-block">
-          <div class="output-header">Output</div>
-          <pre>Dog(name='Buddy', age=3, breed='Golden Retriever')
-
-List of dogs: [Dog(name='Max', age=5, breed='German Shepherd'), Dog(name='Luna', age=2, breed='Labrador')]</pre>
-        </div>
-      </div>
-    </section>
-
-    <!-- PRACTICAL EXAMPLE -->
-    <section class="content-section">
-      <h2>🎯 Practical Example: Bank Account</h2>
-
-      <div class="topic-card">
-        <div class="topic-header">
-          <span class="topic-number">8.7</span>
-          <h3>🏦 Building a Bank Account Class</h3>
-        </div>
-
-        <div class="code-block">
-          <div class="code-header">
-            <span>Python</span>
-            <span class="code-badge">From Source</span>
-          </div>
-          <pre><code><span class="comment"># Bank Account class from Session 8</span>
-<span class="keyword">class</span> <span class="class-name">BankAccount</span>:
-    <span class="string">"""A simple bank account"""</span>
-    
-    <span class="keyword">def</span> <span class="function">__init__</span>(self, owner, balance=<span class="number">0</span>):
-        self.owner = owner
-        self.balance = balance
-        <span class="function">print</span>(<span class="string">f"Account created for {owner} with ${balance:.2f}"</span>)
-    
-    <span class="keyword">def</span> <span class="function">deposit</span>(self, amount):
-        <span class="string">"""Add money to account"""</span>
-        <span class="keyword">if</span> amount > <span class="number">0</span>:
-            self.balance += amount
-            <span class="function">print</span>(<span class="string">f"✅ Deposited ${amount:.2f}. New balance: ${self.balance:.2f}"</span>)
-        <span class="keyword">else</span>:
-            <span class="function">print</span>(<span class="string">"❌ Deposit amount must be positive!"</span>)
-    
-    <span class="keyword">def</span> <span class="function">withdraw</span>(self, amount):
-        <span class="string">"""Remove money from account"""</span>
-        <span class="keyword">if</span> amount > self.balance:
-            <span class="function">print</span>(<span class="string">f"❌ Insufficient funds! Balance: ${self.balance:.2f}"</span>)
-        <span class="keyword">elif</span> amount <= <span class="number">0</span>:
-            <span class="function">print</span>(<span class="string">"❌ Withdrawal amount must be positive!"</span>)
-        <span class="keyword">else</span>:
-            self.balance -= amount
-            <span class="function">print</span>(<span class="string">f"✅ Withdrew ${amount:.2f}. New balance: ${self.balance:.2f}"</span>)
-    
-    <span class="keyword">def</span> <span class="function">get_balance</span>(self):
-        <span class="string">"""Return current balance"""</span>
-        <span class="keyword">return</span> self.balance
-    
-    <span class="keyword">def</span> <span class="function">__repr__</span>(self):
-        <span class="keyword">return</span> <span class="string">f"BankAccount(owner='{self.owner}', balance=${self.balance:.2f})"</span>
-
-<span class="comment"># Test the bank account</span>
-<span class="variable">account</span> = BankAccount(<span class="string">"Alice"</span>, <span class="number">1000</span>)
-<span class="function">print</span>()
-account.deposit(<span class="number">500</span>)
-account.withdraw(<span class="number">200</span>)
-account.withdraw(<span class="number">2000</span>)  <span class="comment"># Insufficient funds</span>
-<span class="function">print</span>(<span class="string">f"\\nCurrent balance: ${account.get_balance():.2f}"</span>)
-<span class="function">print</span>(account)</code></pre>
-        </div>
-
-        <div class="output-block">
-          <div class="output-header">Output</div>
-          <pre>Account created for Alice with $1000.00
-
-✅ Deposited $500.00. New balance: $1500.00
-✅ Withdrew $200.00. New balance: $1300.00
-❌ Insufficient funds! Balance: $1300.00
-
-Current balance: $1300.00
-BankAccount(owner='Alice', balance=$1300.00)</pre>
-        </div>
-      </div>
-    </section>
-
-    <!-- CIRCLE CLASS -->
-    <section class="content-section">
-      <h2>⭕ Another Example: Circle Class</h2>
-
-      <div class="topic-card">
-        <div class="topic-header">
-          <span class="topic-number">8.8</span>
-          <h3>📐 Geometric Calculations</h3>
-        </div>
-
-        <div class="code-block">
-          <div class="code-header">
-            <span>Python</span>
-            <span class="code-badge">From Source</span>
-          </div>
-          <pre><code><span class="comment"># Circle class from Session 8</span>
-<span class="keyword">import</span> math
-
-<span class="keyword">class</span> <span class="class-name">Circle</span>:
-    <span class="string">"""A class to represent a circle"""</span>
-    
-    <span class="keyword">def</span> <span class="function">__init__</span>(self, radius):
-        self.radius = radius
-    
-    <span class="keyword">def</span> <span class="function">area</span>(self):
-        <span class="string">"""Calculate the area of the circle"""</span>
-        <span class="keyword">return</span> math.pi * self.radius ** <span class="number">2</span>
-    
-    <span class="keyword">def</span> <span class="function">circumference</span>(self):
-        <span class="string">"""Calculate the circumference"""</span>
-        <span class="keyword">return</span> <span class="number">2</span> * math.pi * self.radius
-    
-    <span class="keyword">def</span> <span class="function">diameter</span>(self):
-        <span class="string">"""Return the diameter"""</span>
-        <span class="keyword">return</span> self.radius * <span class="number">2</span>
-    
-    <span class="keyword">def</span> <span class="function">__repr__</span>(self):
-        <span class="keyword">return</span> <span class="string">f"Circle(radius={self.radius})"</span>
-
-<span class="comment"># Create circles and calculate</span>
-<span class="variable">circle1</span> = Circle(<span class="number">5</span>)
-<span class="variable">circle2</span> = Circle(<span class="number">10</span>)
-
-<span class="function">print</span>(<span class="string">f"Circle 1: {circle1}"</span>)
-<span class="function">print</span>(<span class="string">f"  Area: {circle1.area():.2f}"</span>)
-<span class="function">print</span>(<span class="string">f"  Circumference: {circle1.circumference():.2f}"</span>)
-<span class="function">print</span>(<span class="string">f"  Diameter: {circle1.diameter()}"</span>)
-
-<span class="function">print</span>(<span class="string">f"\\nCircle 2: {circle2}"</span>)
-<span class="function">print</span>(<span class="string">f"  Area: {circle2.area():.2f}"</span>)</code></pre>
-        </div>
-
-        <div class="output-block">
-          <div class="output-header">Output</div>
-          <pre>Circle 1: Circle(radius=5)
-  Area: 78.54
-  Circumference: 31.42
-  Diameter: 10
-
-Circle 2: Circle(radius=10)
-  Area: 314.16</pre>
-        </div>
-      </div>
-    </section>
-
-    <!-- QUICK REFERENCE -->
-    <section class="content-section">
-      <h2>📋 Quick Reference</h2>
-      
-      <div class="reference-card">
-        <table class="reference-table">
-          <thead>
-            <tr>
-              <th>Concept</th>
-              <th>Syntax</th>
-              <th>Description</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>Define Class</td>
-              <td><code>class MyClass:</code></td>
-              <td>Create a new class (blueprint)</td>
-            </tr>
-            <tr>
-              <td>Create Object</td>
-              <td><code>obj = MyClass()</code></td>
-              <td>Instantiate an object</td>
-            </tr>
-            <tr>
-              <td>Constructor</td>
-              <td><code>def __init__(self):</code></td>
-              <td>Initialize new objects</td>
-            </tr>
-            <tr>
-              <td>self</td>
-              <td><code>self.attribute</code></td>
-              <td>Reference to current object</td>
-            </tr>
-            <tr>
-              <td>Method</td>
-              <td><code>def method(self):</code></td>
-              <td>Function inside a class</td>
-            </tr>
-            <tr>
-              <td>String Rep</td>
-              <td><code>def __repr__(self):</code></td>
-              <td>How object displays</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </section>
-
-    <div class="important-box" style="background: linear-gradient(135deg, #fef2f2 0%, #fecaca 100%); border-radius: 16px; padding: 24px; margin: 25px 0; border-left: 5px solid #ef4444;">
-      <h4 style="color: #b91c1c;">🚫 Common Mistakes (OOP)</h4>
-      <ul style="margin-left: 20px; color: #7f1d1d;">
-        <li><strong>Forgetting self</strong> — Instance methods must have <code>self</code> as the first parameter; and call attributes as <code>self.attr</code>.</li>
-        <li><strong>Forgetting to call __init__</strong> — When you define <code>__init__</code>, make sure you're not overwriting it by mistake; create objects with <code>ClassName()</code> so __init__ runs.</li>
-        <li><strong>Using class attributes when you mean instance</strong> — If every object should have its own value, set it in <code>__init__</code> as <code>self.x = ...</code>, not on the class.</li>
-      </ul>
-    </div>
-
-    <div class="reflection-prompt" style="background: linear-gradient(135deg, #fce7f3 0%, #fbcfe8 100%); border-radius: 16px; padding: 24px; margin: 25px 0; border-left: 5px solid #ec4899;">
-      <h4 style="color: #9d174d;">💭 Short reflection</h4>
-      <p style="color: #831843;">In one sentence: why do we use <code>self</code> as the first parameter in every instance method?</p>
-    </div>
-    <div class="core-box" style="background: linear-gradient(135deg, #dcfce7 0%, #bbf7d0 100%); border: 2px solid #22c55e; border-radius: 16px; padding: 24px; margin: 20px 0;">
-      <h4 style="color: #166534;">✅ CORE (Must know)</h4>
-      <ul style="margin-left: 20px;">
-        <li><strong>Class</strong>: blueprint; <code>__init__(self)</code> constructor; instance attributes.</li>
-        <li>Methods take <code>self</code>; create object with <code>ClassName()</code>.</li>
-        <li>Encapsulation: keep data and behavior together; <code>__str__</code> / <code>__repr__</code> for display.</li>
-      </ul>
-    </div>
-    <div class="noncore-box" style="background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%); border: 2px solid #f59e0b; border-radius: 16px; padding: 24px; margin: 20px 0;">
-      <h4 style="color: #92400e;">📚 NON-CORE (Good to know)</h4>
-      <ul style="margin-left: 20px;">
-        <li>Inheritance, super(); private by convention (_name).</li>
-      </ul>
-    </div>
-
-
-    <section class="content-section" style="margin-top: 2rem;">
-      <h2>Complete code from course notebook: OOPs.ipynb</h2>
-      <p>Every line of code from the course notebook (verbatim).</p>
-      <div class="code-block" style="max-height: 500px; overflow: auto; background: #1e293b; color: #e2e8f0; padding: 1rem; border-radius: 12px;">
-        <pre style="white-space: pre; font-size: 0.85em;"># --- Code cell 2 ---
-# python language----intrepreted,high-level language and object oriented programming language
-
-# --- Code cell 3 ---
-# oops---- object oriented programming language
-# oops---  classes and objects
-
-# --- Code cell 4 ---
-# classes and objects are bascially used in other programming like java,c++----organized and reusable code
-
-# --- Code cell 5 ---
-# class--is a blue print for creating objects
-# it has a set of attributes(variables) and methods(functions)  that are instances(created objects) of a classes
-
-# --- Code cell 6 ---
-# object----is an instance of a class
-# when you create an object,you use the class as a templete
-# attributes(variables) and methods(functions)  that are instances(created objects) of a classes
-
-# --- Code cell 7 ---
-#syntax
-
-class class_name:
-  attributes=34
-  def function_name(self):
-    print("my name is aravind")
-
-# --- Code cell 8 ---
-object=class_name() # instance of a class
-object.attributes
-object.function_name()
-
-# --- Code cell 9 ---
-# basic program
-# define a class
-#feature="mammel"
-class dog:
-  # attributes
-  species="carlies"
-
-  # methods
-  def bark(self):
-    return "wolf"
-
-# --- Code cell 10 ---
-dog1=dog() # instance of a class
-
-# --- Code cell 11 ---
-dog1.species
-
-# --- Code cell 12 ---
-dog1.bark()
-
-# --- Code cell 13 ---
-def bark():
-    return "wolf"
-
-bark()
-
-# --- Code cell 14 ---
-# basic program
-# define a class
-#feature="mammel"
-class dog:
-  # attributes
-  species="carlies"
-
-  # methods
-  def bark(aravind,ryujj,fhhj):
-    return "wolf"
-
-# --- Code cell 15 ---
-yellow=dog()
-
-# --- Code cell 16 ---
-yellow.species
-
-# --- Code cell 17 ---
-yellow.bark()
-
-# --- Code cell 18 ---
-class dog1:
-  species="carlies"
-  def bark(self):
-    return "wolf"
-
-# --- Code cell 19 ---
-dog2=dog1()
-
-# --- Code cell 20 ---
-
-dog2.bark()
-
-# --- Code cell 21 ---
-# self----refrence to the current instance of a class and also used to acess variables in a class
-
-# --- Code cell 22 ---
-#__init__----constructor to intialize a attributes --
-#    is a special method in oops
-
-# --- Code cell 23 ---
-class student:
-  def __init__(priya,name,age):
-    # initalizing the attributes
-    priya.name=name
-    priya.age=age
-
-  # methods
-  def introduce(priya):
-    return f"my name is{priya.name} and i am {priya.age} years old"
-
-# --- Code cell 24 ---
-student1=student("rahul",33)
-
-# --- Code cell 25 ---
-student1.name
-
-# --- Code cell 26 ---
-student1.age
-
-# --- Code cell 27 ---
-student1.introduce()
-
-# --- Code cell 28 ---
-student2=student("aravind",33)
-
-# --- Code cell 29 ---
-student2.introduce1()
-
-# --- Code cell 30 ---
-class Person:
-    def __init__(self, name, age):
-        self.name = name
-        self.age = age
-
-    def __repr__(self):
-            return f"I'm {self.name}, and I'm {self.age} years old."
-
-# --- Code cell 31 ---
-person1=Person("tarun",33)
-print(person1)
-
-# --- Code cell 32 ---
-person2=Person("rahul",36)
-person2
-
-# --- Code cell 33 ---
-class person:
-  def __init__(goor,name,age=30):
-    goor.name=name
-    goor.age=age
-  def introduce(goor):
-    return f"Hi I'm {goor.name}and my {goor.age}"
-
-door=person("aravind")
-door.introduce()
-
-# --- Code cell 35 ---
-class Book:
-    def __init__(self, title, author, copies):
-        self.title = title
-        self.author = author
-        self.copies = copies
-
-    def display_details(self):
-        print(f"Title: {self.title}, Author: {self.author}, Available Copies: {self.copies}")
-
-    def borrow(self):
-        if self.copies &gt; 0:
-            self.copies -= 1
-            print(f"You borrowed '{self.title}'. Remaining copies: {self.copies}")
-        else:
-            print(f"Sorry, '{self.title}' is not available right now.")
-
-    def return_book(self):
-        self.copies += 1
-        print(f"You returned '{self.title}'. Available copies: {self.copies}")
-
-
-class Library:
-    def __init__(self):
-        self.books = []
-
-    # add new book
-    def add_book(self, book):
-        self.books.append(book)
-        print(f"Book '{book.title}' added to the library.")
-
-    # search for a book
-    def search_book(self, title):
-        for book in self.books:
-            if book.title.lower() == title.lower():
-                print("Book found:")
-                book.display_details()
-                return book
-        print("Book not found in the library.")
-        return None
-
-    # display all books
-    def display_all_books(self):
-        print("\n--- Library Books ---")
-        if not self.books:
-            print("No books available.")
-        else:
-            for book in self.books:
-                book.display_details()
-
-# --- Code cell 36 ---
-# ---------------- Real-time usage ----------------
-library = Library()
-
-# Adding books to library
-book1 = Book("The Alchemist", "Paulo Coelho", 3)
-book2 = Book("Python Programming", "Guido van Rossum", 2)
-book3 = Book("Clean Code", "Robert C. Martin", 4)
-
-library.add_book(book1)
-library.add_book(book2)
-library.add_book(book3)
-
-# --- Code cell 37 ---
-# Display all books
-library.display_all_books()
-
-# --- Code cell 38 ---
-library.search_book("The Alchemist")
-
-# --- Code cell 39 ---
-# Search and borrow
-found_book = library.search_book("The Alchemist")
-if found_book:
-    found_book.return_book()
-</pre>
-      </div>
-    </section>
-
-        <!-- NAVIGATION -->
     <nav class="page-navigation">
       <a href="s12-api-sql.html" class="nav-prev">
         <span class="nav-arrow">←</span>
-        <span class="nav-text">
-          <span class="nav-label">Previous</span>
-          <span class="nav-title">APIs and SQL</span>
-        </span>
+        <span class="nav-text"><span class="nav-label">Previous</span><span class="nav-title">APIs &amp; SQL</span></span>
       </a>
       <a href="complete-course.html" class="nav-home">🏠</a>
       <a href="s14-enhanced-viz.html" class="nav-next">
-        <span class="nav-text">
-          <span class="nav-label">Next</span>
-          <span class="nav-title">Enhanced visualization</span>
-        </span>
+        <span class="nav-text"><span class="nav-label">Next</span><span class="nav-title">Enhanced Visualization</span></span>
         <span class="nav-arrow">→</span>
       </a>
     </nav>
   </main>
 
-  <footer>
-    <p>🐍 Python Mastery | Learn. Code. Create.</p>
-  </footer>
-
-  <!-- Back to Top Button -->
-  <button class="back-to-top" id="backToTop" onclick="window.scrollTo({top: 0, behavior: 'smooth'})" aria-label="Back to top">
-    <i class="fas fa-arrow-up"></i>
-  </button>
-  <script>
-    const backToTopBtn = document.getElementById('backToTop');
-    window.addEventListener('scroll', () => {
-      backToTopBtn.classList.toggle('show', window.pageYOffset > 300);
-    });
-  </script>
-    <script src="../js/code-copy.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <script src="../js/supabase-config.js"></script>
-    <script src="../js/supabase-auth.js"></script>
-    <script src="../js/paywall.js"></script>
-    <script src="../js/analytics-tracker.js"></script>
+  <footer><p>🐍 Python Mastery | Learn. Code. Create.</p></footer>
+  <script src="../js/code-copy.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="../js/supabase-config.js"></script>
+  <script src="../js/supabase-auth.js"></script>
+  <script src="../js/paywall.js"></script>
+  <script src="../js/progress.js"></script>
+  <script src="../js/lesson-common.js"></script>
+  <script src="../js/quiz.js"></script>
+  <script src="../js/analytics-tracker.js"></script>
 </body>
 </html>
-

@@ -6,7 +6,8 @@
     <title>Clustering | Fakhruddin Khambaty's Learning Hub</title>
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <style>
+    <link rel="stylesheet" href="styles.css">
+<style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             font-family: 'Nunito', sans-serif;
@@ -303,8 +304,17 @@
     </style>
     <link rel="stylesheet" href="../css/dfd-system.css">
 </head>
-<body data-access="pro">
+<body data-access="pro" class="dfd-safe" data-course-id="data-science" data-lesson-id="clustering" data-lesson-label="Clustering | Fakhruddin Khambaty's Learning Hub" data-total-lessons="32">
     <div class="container">
+<div class="dfd-lesson-progress" data-dfd-progress>
+  <p class="dfd-lesson-progress-label" data-dfd-progress-label>Sign in to save your place.</p>
+  <div class="dfd-lesson-progress-track" data-dfd-progress-bar role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-label="Course progress">
+    <div class="dfd-lesson-progress-fill" data-dfd-progress-fill></div>
+  </div>
+  <p><button type="button" data-dfd-complete>Mark lesson complete</button></p>
+  <p data-dfd-complete-status></p>
+</div>
+
         <nav class="nav">
             <a href="../index.html"><i class="fas fa-home"></i><span>Home</span></a>
             <a href="boosting.html"><i class="fas fa-arrow-left"></i><span>Previous: Boosting</span></a>
@@ -1293,7 +1303,7 @@ segment_analysis = customers.<span class="function">groupby</span>(<span class="
 
             <div class="important-box" style="background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%); border-radius: 16px; padding: 24px; margin: 25px 0; border-left: 5px solid #3b82f6;">
                 <h4 style="color: #1e40af;">📘 From the course notebook (Clustering)</h4>
-                <p style="color: #1e3a8a; margin-bottom: 10px;">The course source uses <strong>Hotel Reservations.csv</strong>: <code>data = pd.read_csv("Hotel Reservations.csv")</code>. Use it to cluster customer bookings (e.g. select numeric columns like lead_time, avg_price_per_room, no_of_weekend_nights). Scale with <code>StandardScaler</code>, then <code>KMeans(n_clusters=k).fit(X)</code>; try elbow plot or silhouette to pick k. Download <a href="datasets/hotel_reservations.csv" download="Hotel Reservations.csv">Hotel Reservations.csv</a> from the <a href="datasets.html">datasets page</a>. See <strong>Clustering.pdf</strong> in the course source for slides.</p>
+                <p style="color: #1e3a8a; margin-bottom: 10px;">The course source uses <strong>Hotel Reservations.csv</strong>: <code>data = pd.read_csv("hotel_reservations.csv")</code>. Use it to cluster customer bookings (e.g. select numeric columns like lead_time, avg_price_per_room, no_of_weekend_nights). Scale with <code>StandardScaler</code>, then <code>KMeans(n_clusters=k).fit(X)</code>; try elbow plot or silhouette to pick k. Download <a href="datasets/hotel_reservations.csv" download="hotel_reservations.csv">Hotel Reservations.csv</a> from the <a href="datasets.html">datasets page</a>. See <strong>Clustering.pdf</strong> in the course source for slides.</p>
             </div>
 
             <div class="section" style="margin-top: 2rem;">
@@ -1317,7 +1327,7 @@ import seaborn as sns
 import matplotlib.pyplot as plt
 
 # --- Code cell 3 ---
-data =  pd.read_csv("Hotel Reservations.csv")
+data =  pd.read_csv("hotel_reservations.csv")
 
 # --- Code cell 4 ---
 # We have a data of hotel reservations
@@ -1547,7 +1557,7 @@ import pandas as pd
 
 # --- Code cell 3 ---
 x_train = pd.read_csv("x_train.csv")
-data =  pd.read_csv("Hotel Reservations.csv")
+data =  pd.read_csv("hotel_reservations.csv")
 
 # --- Code cell 4 ---
 # reduce the number of rows in data if you face memory issues
@@ -1737,6 +1747,9 @@ silhouette_score(x_train_copy, clustering.labels_)</pre>
     <script src="../js/supabase-config.js"></script>
     <script src="../js/supabase-auth.js"></script>
     <script src="../js/paywall.js"></script>
-    <script src="../js/analytics-tracker.js"></script>
+    <script src="../js/progress.js"></script>
+<script src="../js/lesson-common.js"></script>
+<script src="../js/quiz.js"></script>
+<script src="../js/analytics-tracker.js"></script>
 </body>
 </html>

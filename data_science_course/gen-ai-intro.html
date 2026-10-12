@@ -6,7 +6,8 @@
     <title>Introduction to Gen AI | Fakhruddin Khambaty's Learning Hub</title>
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <style>
+    <link rel="stylesheet" href="styles.css">
+<style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: 'Nunito', sans-serif; background: linear-gradient(135deg, #e0e7ff 0%, #c7d2fe 50%, #a5b4fc 100%); min-height: 100vh; padding: 20px; color: #1e293b; line-height: 2; font-size: 18px; }
         .container { max-width: 900px; margin: 0 auto; }
@@ -41,8 +42,17 @@
     </style>
     <link rel="stylesheet" href="../css/dfd-system.css">
 </head>
-<body data-access="pro">
+<body data-access="pro" class="dfd-safe" data-course-id="data-science" data-lesson-id="gen-ai-intro" data-lesson-label="Introduction to Gen AI | Fakhruddin Khambaty's Learning Hub" data-total-lessons="32">
     <div class="container">
+<div class="dfd-lesson-progress" data-dfd-progress>
+  <p class="dfd-lesson-progress-label" data-dfd-progress-label>Sign in to save your place.</p>
+  <div class="dfd-lesson-progress-track" data-dfd-progress-bar role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-label="Course progress">
+    <div class="dfd-lesson-progress-fill" data-dfd-progress-fill></div>
+  </div>
+  <p><button type="button" data-dfd-complete>Mark lesson complete</button></p>
+  <p data-dfd-complete-status></p>
+</div>
+
         <nav class="nav">
             <a href="../index.html"><i class="fas fa-home"></i><span>Home</span></a>
             <a href="explainable-ai.html"><i class="fas fa-arrow-left"></i><span>Previous: Explainable AI</span></a>
@@ -67,19 +77,19 @@
             <h2><i class="fas fa-key"></i> Using an API (Concept)</h2>
             <p>You need an <strong>API key</strong> from the provider (OpenAI, Google AI Studio, etc.). Never hardcode the key in code; use environment variables (e.g. <code>OPENAI_API_KEY</code>). Then use their SDK (e.g. <code>openai</code>, <code>google-generativeai</code>) to send a prompt and get a response.</p>
             <div class="code-block">
-<pre><span class="comment"># Example: OpenAI-style call (conceptual)</span>
-<span class="comment"># pip install openai</span>
-<span class="comment"># Set env: export OPENAI_API_KEY="your-key"</span>
+<pre><span class="comment"># uv add openai</span>
+<span class="comment"># OPENAI_API_KEY and OPENAI_MODEL come from the environment.</span>
+<span class="comment"># OPENAI_MODEL is the id shown in your account. This page does not invent one.</span>
 
 <span class="keyword">import</span> os
 <span class="keyword">from</span> openai <span class="keyword">import</span> OpenAI
 
-client = <span class="function">OpenAI</span>(api_key=os.environ.<span class="function">get</span>(<span class="string">"OPENAI_API_KEY"</span>))
-response = client.chat.completions.<span class="function">create</span>(
-    model=<span class="string">"gpt-4"</span>,
-    messages=[{<span class="string">"role"</span>: <span class="string">"user"</span>, <span class="string">"content"</span>: <span class="string">"What is Python in one sentence?"</span>}]
+client = <span class="function">OpenAI</span>()
+response = client.responses.<span class="function">create</span>(
+    model=os.environ[<span class="string">"OPENAI_MODEL"</span>],
+    input=<span class="string">"What is Python in one sentence?"</span>,
 )
-<span class="function">print</span>(response.choices[<span class="number">0</span>].message.content)</pre>
+<span class="function">print</span>(response.output_text)</pre>
             </div>
         </div>
 
@@ -117,7 +127,18 @@ response = client.chat.completions.<span class="function">create</span>(
                 </ul>
             </div>
 
-        <div class="nav-buttons">
+        
+<section class="section dfd-quiz" id="check" data-dfd-quiz data-explanation="The model id comes from your account. The lesson does not invent one.">
+  <h2 data-dfd-prompt>Knowledge check</h2>
+  <p>Which client call matches the current OpenAI style taught here?</p>
+  <div data-dfd-choices>
+    <button type="button" data-correct="false">client.chat.completions.create(model='gpt-4', ...)</button>
+    <button type="button" data-correct="true">client.responses.create(model=os.environ['OPENAI_MODEL'], ...)</button>
+  </div>
+  <p class="dfd-quiz-feedback" data-dfd-feedback hidden></p>
+  <p class="dfd-quiz-explain" data-dfd-explain hidden></p>
+</section>
+<div class="nav-buttons">
             <a href="explainable-ai.html" class="nav-btn prev"><i class="fas fa-arrow-left"></i> Previous: Explainable AI</a>
             <a href="index.html" class="nav-btn next">Course Hub <i class="fas fa-arrow-right"></i></a>
         </div>
@@ -137,6 +158,9 @@ response = client.chat.completions.<span class="function">create</span>(
     <script src="../js/supabase-config.js"></script>
     <script src="../js/supabase-auth.js"></script>
     <script src="../js/paywall.js"></script>
-    <script src="../js/analytics-tracker.js"></script>
+    <script src="../js/progress.js"></script>
+<script src="../js/lesson-common.js"></script>
+<script src="../js/quiz.js"></script>
+<script src="../js/analytics-tracker.js"></script>
 </body>
 </html>

@@ -6,7 +6,8 @@
     <title>Capstone: Build Your Own Mini-ChatGPT | LLM Course</title>
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800;900&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <style>
+    <link rel="stylesheet" href="styles.css">
+<style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             font-family: 'Nunito', sans-serif;
@@ -174,8 +175,17 @@
     </style>
     <link rel="stylesheet" href="../css/dfd-system.css">
 </head>
-<body data-access="pro">
+<body data-access="pro" class="dfd-safe" data-course-id="llm" data-lesson-id="capstone" data-lesson-label="Capstone: Build Your Own Mini-ChatGPT | LLM Course" data-total-lessons="9">
 <div class="container">
+<div class="dfd-lesson-progress" data-dfd-progress>
+  <p class="dfd-lesson-progress-label" data-dfd-progress-label>Sign in to save your place.</p>
+  <div class="dfd-lesson-progress-track" data-dfd-progress-bar role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-label="Course progress">
+    <div class="dfd-lesson-progress-fill" data-dfd-progress-fill></div>
+  </div>
+  <p><button type="button" data-dfd-complete>Mark lesson complete</button></p>
+  <p data-dfd-complete-status></p>
+</div>
+
     <nav class="nav">
         <a href="index.html"><i class="fas fa-arrow-left"></i> Course Hub</a>
         <a href="../index.html"><i class="fas fa-home"></i> Home</a>
@@ -191,7 +201,7 @@
     <div class="section" id="plan">
         <h2><i class="fas fa-drafting-compass"></i> Part 1: Project Plan & Architecture</h2>
 
-        <p>Here's what we're building: a <strong>character-level GPT</strong> trained on Shakespeare that generates new text one character at a time. It's a miniature version of exactly how ChatGPT works — same architecture, same training objective, same generation process.</p>
+        <p>Here's what we're building: a <strong>character-level GPT</strong> trained on Shakespeare that generates new text one character at a time. It is a miniature decoder: next-character prediction, the same family of idea as GPT-2. It is not ChatGPT. ChatGPT adds instruction tuning, preference training, tools, and a much larger model.</p>
 
         <div class="eli5">
             <h4>👶 Like You're 5</h4>
@@ -337,7 +347,7 @@ train_data, val_data = data[:n], data[n:]</pre></div>
     <div class="section" id="model">
         <h2><i class="fas fa-cubes"></i> Part 3: Step 2 — Build the GPT Model</h2>
 
-        <p>Now we assemble everything from the course: <strong>token embeddings + positional encoding + N transformer blocks + final linear head</strong>. This is the exact architecture behind GPT-2 — just smaller.</p>
+        <p>Now we assemble everything from the course: <strong>token embeddings + positional encoding + N transformer blocks + final linear head</strong>. This is the GPT-2 decoder shape — embeddings, blocks, and a linear head — at a smaller size. It is not the ChatGPT product.</p>
 
         <div class="analogy">
             <h4>🧱 The LEGO Analogy</h4>
@@ -718,56 +728,6 @@ model.eval()
         </div>
     </div>
 
-    <!-- ========== QUIZ SECTION ========== -->
-    <div class="section" id="quiz">
-        <h2><i class="fas fa-question-circle"></i> Quiz — Test Your Knowledge</h2>
-
-        <div class="quiz-box">
-            <div class="quiz-q"><strong>Q1:</strong> What is the correct order of steps in the Mini-GPT pipeline built in this capstone?</div>
-            <button class="quiz-opt" onclick="checkQ(this,false)">Model → Tokenizer → Training → Data → Generation</button>
-            <button class="quiz-opt" onclick="checkQ(this,false)">Training → Data → Tokenizer → Generation → Model</button>
-            <button class="quiz-opt" onclick="checkQ(this,true)">Data → Tokenizer → Model → Training → Generation</button>
-            <button class="quiz-opt" onclick="checkQ(this,false)">Generation → Model → Training → Tokenizer → Data</button>
-            <div class="quiz-fb"></div>
-        </div>
-
-        <div class="quiz-box">
-            <div class="quiz-q"><strong>Q2:</strong> What does the character-level tokenizer do in this pipeline?</div>
-            <button class="quiz-opt" onclick="checkQ(this,false)">Compresses the text file to save disk space</button>
-            <button class="quiz-opt" onclick="checkQ(this,true)">Converts each character to a unique integer so the model can process text as numbers</button>
-            <button class="quiz-opt" onclick="checkQ(this,false)">Translates text from English to another language</button>
-            <button class="quiz-opt" onclick="checkQ(this,false)">Removes punctuation and special characters from the text</button>
-            <div class="quiz-fb"></div>
-        </div>
-
-        <div class="quiz-box">
-            <div class="quiz-q"><strong>Q3:</strong> How is the training data prepared for the Mini-GPT model?</div>
-            <button class="quiz-opt" onclick="checkQ(this,false)">Each sentence is classified as positive or negative</button>
-            <button class="quiz-opt" onclick="checkQ(this,false)">The text is split into random word pairs</button>
-            <button class="quiz-opt" onclick="checkQ(this,false)">The text is converted to images for visual processing</button>
-            <button class="quiz-opt" onclick="checkQ(this,true)">The text is encoded into integers, then sliced into input-target pairs where the target is shifted by one position</button>
-            <div class="quiz-fb"></div>
-        </div>
-
-        <div class="quiz-box">
-            <div class="quiz-q"><strong>Q4:</strong> What happens when you set the temperature to a very high value (e.g., 1.5) during text generation?</div>
-            <button class="quiz-opt" onclick="checkQ(this,false)">The model generates text faster</button>
-            <button class="quiz-opt" onclick="checkQ(this,true)">The model produces more random and creative output, but with more nonsense</button>
-            <button class="quiz-opt" onclick="checkQ(this,false)">The model always picks the most probable next token, producing repetitive text</button>
-            <button class="quiz-opt" onclick="checkQ(this,false)">The model switches to a different language</button>
-            <div class="quiz-fb"></div>
-        </div>
-
-        <div class="quiz-box">
-            <div class="quiz-q"><strong>Q5:</strong> What does a decreasing training loss (e.g., from 4.0 to 1.5) indicate?</div>
-            <button class="quiz-opt" onclick="checkQ(this,false)">The model is forgetting what it learned</button>
-            <button class="quiz-opt" onclick="checkQ(this,false)">The dataset is too small for training</button>
-            <button class="quiz-opt" onclick="checkQ(this,false)">The model needs more parameters</button>
-            <button class="quiz-opt" onclick="checkQ(this,true)">The model is becoming better at predicting the next character in the sequence</button>
-            <div class="quiz-fb"></div>
-        </div>
-    </div>
-
     <div class="nav-buttons">
         <a href="deployment.html" class="nav-btn prev"><i class="fas fa-arrow-left"></i> Deployment</a>
         <a href="index.html" class="nav-btn next">Course Hub <i class="fas fa-th-large"></i></a>
@@ -836,14 +796,17 @@ function startTraining() {
 }
 </script>
 <script>
-function checkQ(btn,ok){var box=btn.closest('.quiz-box'),opts=box.querySelectorAll('.quiz-opt'),fb=box.querySelector('.quiz-fb');opts.forEach(function(o){o.disabled=true;});if(ok){btn.classList.add('correct');fb.style.display='block';fb.style.background='rgba(34,197,94,0.15)';fb.style.color='#4ade80';fb.textContent='✅ Correct!';}else{btn.classList.add('wrong');fb.style.display='block';fb.style.background='rgba(239,68,68,0.15)';fb.style.color='#f87171';fb.textContent='❌ Not quite — check the green answer!';opts.forEach(function(o){if(o.getAttribute('onclick').includes('true')){o.classList.add('correct');o.style.opacity='1';}});}}
+function checkQ(btn,ok){var box=btn.closest('.quiz-box'),opts=box.querySelectorAll('.quiz-opt'),fb=box.querySelector('.quiz-fb');opts.forEach(function(o){o.disabled=true;});if(ok){btn.classList.add('correct');fb.style.display='block';fb.style.background='rgba(34,197,94,0.15)';fb.style.color='#166534';fb.textContent='✅ Correct!';}else{btn.classList.add('wrong');fb.style.display='block';fb.style.background='rgba(239,68,68,0.15)';fb.style.color='#991b1b';fb.textContent='❌ Not quite — check the green answer!';opts.forEach(function(o){if(o.getAttribute('onclick').includes('true')){o.classList.add('correct');o.style.opacity='1';}});}}
 </script>
-<script>
-function checkQ(btn,ok){var box=btn.closest('.quiz-box'),opts=box.querySelectorAll('.quiz-opt'),fb=box.querySelector('.quiz-fb');opts.forEach(function(o){o.disabled=true;});if(ok){btn.classList.add('correct');fb.style.display='block';fb.style.background='rgba(34,197,94,0.15)';fb.style.color='#4ade80';fb.textContent='✅ Correct!';}else{btn.classList.add('wrong');fb.style.display='block';fb.style.background='rgba(239,68,68,0.15)';fb.style.color='#f87171';fb.textContent='❌ Not quite — check the green answer!';opts.forEach(function(o){if(o.getAttribute('onclick').includes('true')){o.classList.add('correct');o.style.opacity='1';}});}}
-</script>
+
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="../js/supabase-config.js"></script>
 <script src="../js/supabase-auth.js"></script>
 <script src="../js/paywall.js"></script>
+<script src="../js/code-copy.js"></script>
+<script src="../js/progress.js"></script>
+<script src="../js/lesson-common.js"></script>
+<script src="../js/quiz.js"></script>
+<script src="../js/analytics-tracker.js"></script>
 </body>
 </html>

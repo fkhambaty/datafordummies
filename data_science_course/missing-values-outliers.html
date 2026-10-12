@@ -6,7 +6,8 @@
     <title>Missing Values & Outliers | Fakhruddin Khambaty's Learning Hub</title>
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <style>
+    <link rel="stylesheet" href="styles.css">
+<style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: 'Nunito', sans-serif; background: linear-gradient(135deg, #ede9fe 0%, #ddd6fe 50%, #c4b5fd 100%); min-height: 100vh; padding: 20px; color: #1e293b; line-height: 2; font-size: 18px; }
         .container { max-width: 900px; margin: 0 auto; }
@@ -48,8 +49,17 @@
     </style>
     <link rel="stylesheet" href="../css/dfd-system.css">
 </head>
-<body data-access="pro">
+<body data-access="pro" class="dfd-safe" data-course-id="data-science" data-lesson-id="missing-values-outliers" data-lesson-label="Missing Values & Outliers | Fakhruddin Khambaty's Learning Hub" data-total-lessons="32">
     <div class="container">
+<div class="dfd-lesson-progress" data-dfd-progress>
+  <p class="dfd-lesson-progress-label" data-dfd-progress-label>Sign in to save your place.</p>
+  <div class="dfd-lesson-progress-track" data-dfd-progress-bar role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-label="Course progress">
+    <div class="dfd-lesson-progress-fill" data-dfd-progress-fill></div>
+  </div>
+  <p><button type="button" data-dfd-complete>Mark lesson complete</button></p>
+  <p data-dfd-complete-status></p>
+</div>
+
         <nav class="nav">
             <a href="../index.html"><i class="fas fa-home"></i><span>Home</span></a>
             <a href="index.html"><i class="fas fa-arrow-left"></i><span>Course Hub</span></a>
@@ -238,7 +248,18 @@ data_capped[<span class="string">'MonthlySpend'</span>] = np.<span class="functi
             </ul>
         </div>
 
-        <div class="nav-buttons">
+        
+<section class="section dfd-quiz" id="check" data-dfd-quiz data-explanation="Assign the filled series. That is the default style under Copy-on-Write.">
+  <h2 data-dfd-prompt>Knowledge check</h2>
+  <p>How do you fill missing numbers without inplace=True?</p>
+  <div data-dfd-choices>
+    <button type="button" data-correct="false">series.fillna(series.median(), inplace=True)</button>
+    <button type="button" data-correct="true">series = series.fillna(series.median())</button>
+  </div>
+  <p class="dfd-quiz-feedback" data-dfd-feedback hidden></p>
+  <p class="dfd-quiz-explain" data-dfd-explain hidden></p>
+</section>
+<div class="nav-buttons">
             <a href="statistics-foundations.html" class="nav-btn prev"><i class="fas fa-arrow-left"></i> Previous: Statistics</a>
             <a href="hypothesis-testing.html" class="nav-btn next">Next: Hypothesis Testing <i class="fas fa-arrow-right"></i></a>
         </div>
@@ -258,6 +279,9 @@ data_capped[<span class="string">'MonthlySpend'</span>] = np.<span class="functi
     <script src="../js/supabase-config.js"></script>
     <script src="../js/supabase-auth.js"></script>
     <script src="../js/paywall.js"></script>
-    <script src="../js/analytics-tracker.js"></script>
+    <script src="../js/progress.js"></script>
+<script src="../js/lesson-common.js"></script>
+<script src="../js/quiz.js"></script>
+<script src="../js/analytics-tracker.js"></script>
 </body>
 </html>

@@ -6,7 +6,8 @@
     <title>Statistics for Data Science (Super Simple) | Fakhruddin Khambaty's Learning Hub</title>
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <style>
+    <link rel="stylesheet" href="styles.css">
+<style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         
         body {
@@ -208,8 +209,17 @@
     </style>
     <link rel="stylesheet" href="../css/dfd-system.css">
 </head>
-<body>
+<body class="dfd-safe" data-course-id="data-science" data-lesson-id="statistics-foundations" data-lesson-label="Statistics for Data Science (Super Simple) | Fakhruddin Khambaty's Learning Hub" data-total-lessons="32">
     <div class="container">
+<div class="dfd-lesson-progress" data-dfd-progress>
+  <p class="dfd-lesson-progress-label" data-dfd-progress-label>Sign in to save your place.</p>
+  <div class="dfd-lesson-progress-track" data-dfd-progress-bar role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-label="Course progress">
+    <div class="dfd-lesson-progress-fill" data-dfd-progress-fill></div>
+  </div>
+  <p><button type="button" data-dfd-complete>Mark lesson complete</button></p>
+  <p data-dfd-complete-status></p>
+</div>
+
         <nav class="nav">
             <a href="../index.html"><i class="fas fa-home"></i><span>Home</span></a>
             <a href="math-foundations.html"><i class="fas fa-arrow-left"></i><span>Previous: Math</span></a>
@@ -482,11 +492,11 @@ correlation = df[<span class="string">'study_hours'</span>].<span class="functio
                     <p style="color: #14532d; margin: 0;">Hotel Reservations (Chi-Square & T-Test), Housing, Titanic, and Practice exercises.</p>
                 </div>
                 <div style="display: flex; flex-wrap: wrap; gap: 10px; align-items: center;">
-                    <a href="datasets/hotel_reservations.csv" download="Hotel Reservations.csv" 
+                    <a href="datasets/hotel_reservations.csv" download="hotel_reservations.csv" 
                        style="background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%); color: white; padding: 12px 20px; border-radius: 12px; text-decoration: none; font-weight: 700; display: inline-flex; align-items: center; gap: 8px;">
                         <i class="fas fa-download"></i> Hotel Reservations.csv
                     </a>
-                    <a href="datasets/housing_dataset.csv" download="Housing.csv" 
+                    <a href="datasets/housing_dataset.csv" download="housing_dataset.csv" 
                        style="background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%); color: white; padding: 12px 20px; border-radius: 12px; text-decoration: none; font-weight: 700; display: inline-flex; align-items: center; gap: 8px;">
                         <i class="fas fa-download"></i> Housing.csv
                     </a>
@@ -590,7 +600,7 @@ correlation = df[<span class="string">'study_hours'</span>].<span class="functio
 <span class="keyword">from</span> scipy.stats <span class="keyword">import</span> chi2_contingency
 
 <span class="comment"># Load the hotel data</span>
-data = pd.<span class="function">read_csv</span>(<span class="string">"Hotel Reservations.csv"</span>)
+data = pd.<span class="function">read_csv</span>(<span class="string">"hotel_reservations.csv"</span>)
 
 <span class="comment"># Step 1: Create contingency table</span>
 <span class="comment"># pd.crosstab counts combinations of two categorical variables</span>
@@ -667,7 +677,7 @@ chi2, p_value, dof, expected = <span class="function">chi2_contingency</span>(ta
 <span class="keyword">from</span> scipy <span class="keyword">import</span> stats
 
 <span class="comment"># Load data</span>
-data = pd.<span class="function">read_csv</span>(<span class="string">"Hotel Reservations.csv"</span>)
+data = pd.<span class="function">read_csv</span>(<span class="string">"hotel_reservations.csv"</span>)
 
 <span class="comment"># Step 1: Separate the two groups</span>
 canceled = data[data[<span class="string">'booking_status'</span>] == <span class="string">'Canceled'</span>]
@@ -824,7 +834,7 @@ sns.distplot(data['age'], hist = True, kde = False,color ="green")
     # Take business logic into consideration for data imputation
 
 # --- Code cell 35 ---
-data = pd.read_csv("Housing.csv")
+data = pd.read_csv("housing_dataset.csv")
 
 # --- Code cell 36 ---
 data = data[['price','area']]
@@ -1018,7 +1028,18 @@ plt.show()
             </div>
         </div>
 
-        <div class="nav-buttons">
+        
+<section class="section dfd-quiz" id="check" data-dfd-quiz data-explanation="Correlation is not a cause.">
+  <h2 data-dfd-prompt>Knowledge check</h2>
+  <p>Two columns move together. What have you shown?</p>
+  <div data-dfd-choices>
+    <button type="button" data-correct="false">That one causes the other</button>
+    <button type="button" data-correct="true">Association. Causation needs a design such as an experiment.</button>
+  </div>
+  <p class="dfd-quiz-feedback" data-dfd-feedback hidden></p>
+  <p class="dfd-quiz-explain" data-dfd-explain hidden></p>
+</section>
+<div class="nav-buttons">
             <a href="math-foundations.html" class="nav-btn prev"><i class="fas fa-arrow-left"></i> Previous: Math Basics</a>
             <a href="missing-values-outliers.html" class="nav-btn next">Next: Missing Values & Outliers <i class="fas fa-arrow-right"></i></a>
         </div>
@@ -1034,6 +1055,13 @@ plt.show()
         backToTopButton.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
     </script>
     <script src="../js/code-copy.js"></script>
-    <script src="../js/analytics-tracker.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="../js/supabase-config.js"></script>
+<script src="../js/supabase-auth.js"></script>
+<script src="../js/paywall.js"></script>
+<script src="../js/progress.js"></script>
+<script src="../js/lesson-common.js"></script>
+<script src="../js/quiz.js"></script>
+<script src="../js/analytics-tracker.js"></script>
 </body>
 </html>

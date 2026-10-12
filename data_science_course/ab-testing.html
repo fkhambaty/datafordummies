@@ -6,7 +6,8 @@
     <title>A/B Testing (Split Testing) | Fakhruddin Khambaty's Learning Hub</title>
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <style>
+    <link rel="stylesheet" href="styles.css">
+<style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         
         body {
@@ -191,8 +192,17 @@
     </style>
     <link rel="stylesheet" href="../css/dfd-system.css">
 </head>
-<body data-access="pro">
+<body data-access="pro" class="dfd-safe" data-course-id="data-science" data-lesson-id="ab-testing" data-lesson-label="A/B Testing (Split Testing) | Fakhruddin Khambaty's Learning Hub" data-total-lessons="32">
     <div class="container">
+<div class="dfd-lesson-progress" data-dfd-progress>
+  <p class="dfd-lesson-progress-label" data-dfd-progress-label>Sign in to save your place.</p>
+  <div class="dfd-lesson-progress-track" data-dfd-progress-bar role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-label="Course progress">
+    <div class="dfd-lesson-progress-fill" data-dfd-progress-fill></div>
+  </div>
+  <p><button type="button" data-dfd-complete>Mark lesson complete</button></p>
+  <p data-dfd-complete-status></p>
+</div>
+
         <nav class="nav">
             <a href="../index.html"><i class="fas fa-home"></i><span>Home</span></a>
             <a href="index.html"><i class="fas fa-arrow-left"></i><span>Course Hub</span></a>
@@ -386,7 +396,7 @@
                     <h4 style="color: #166534; margin-bottom: 8px;">📥 Download the A/B Testing Dataset!</h4>
                     <p style="color: #14532d; margin: 0;">Download this CSV to follow along with the code examples below.</p>
                 </div>
-                <a href="datasets/ab_testing_data.csv" download="AB_testing_data.csv" 
+                <a href="datasets/ab_testing_data.csv" download="ab_testing_data.csv" 
                    style="background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%); 
                           color: white; padding: 15px 30px; border-radius: 12px; 
                           text-decoration: none; font-weight: 700; display: inline-flex; 
@@ -403,7 +413,7 @@
 
 <span class="comment"># Load A/B test data (download from link above!)</span>
 <span class="comment"># This data has conversion rates for 35 days</span>
-data = pd.<span class="function">read_csv</span>(<span class="string">"AB_testing_data.csv"</span>)
+data = pd.<span class="function">read_csv</span>(<span class="string">"ab_testing_data.csv"</span>)
 
 <span class="comment"># Let's look at the data</span>
 <span class="function">print</span>(data.<span class="function">head</span>(<span class="number">10</span>))
@@ -419,7 +429,7 @@ data = pd.<span class="function">read_csv</span>(<span class="string">"AB_testin
                 <h4 style="color: #065f46; margin-bottom: 8px;">What each line does (in simple words)</h4>
                 <p><strong>import pandas as pd</strong> — Lets us use DataFrames and read CSV.</p>
                 <p><strong>from scipy import stats</strong> — For the statistical test (chi-square or t-test) later.</p>
-                <p><strong>pd.read_csv("AB_testing_data.csv")</strong> — Loads the A/B test file: columns are Day, Conversion fraction A, Conversion fraction B.</p>
+                <p><strong>pd.read_csv("ab_testing_data.csv")</strong> — Loads the A/B test file: columns are Day, Conversion fraction A, Conversion fraction B.</p>
                 <p><strong>print(data.head(10))</strong> — Shows the first 10 rows so you can see the conversion rates for each day.</p>
             </div>
 
@@ -572,7 +582,7 @@ import pandas as pd
 from scipy import stats
 
 # --- Code cell 5 ---
-data = pd.read_csv("AB_testing_data.csv")
+data = pd.read_csv("ab_testing_data.csv")
 
 # --- Code cell 6 ---
 len(data)
@@ -682,7 +692,18 @@ print("")
             </div>
         </div>
 
-        <div class="nav-buttons">
+        
+<section class="section dfd-quiz" id="check" data-dfd-quiz data-explanation="Decide the sample size, or use a sequential test, before you look.">
+  <h2 data-dfd-prompt>Knowledge check</h2>
+  <p>You peeked at the test every hour and stopped when p dropped below 0.05. What is wrong?</p>
+  <div data-dfd-choices>
+    <button type="button" data-correct="false">Nothing. Early stopping makes the p-value more trustworthy.</button>
+    <button type="button" data-correct="true">Repeated peeks inflate false positives unless the plan accounts for them</button>
+  </div>
+  <p class="dfd-quiz-feedback" data-dfd-feedback hidden></p>
+  <p class="dfd-quiz-explain" data-dfd-explain hidden></p>
+</section>
+<div class="nav-buttons">
             <a href="index.html" class="nav-btn prev"><i class="fas fa-arrow-left"></i> Back to Course Hub</a>
             <a href="index.html" class="nav-btn next">Explore More <i class="fas fa-arrow-right"></i></a>
         </div>
@@ -702,6 +723,9 @@ print("")
     <script src="../js/supabase-config.js"></script>
     <script src="../js/supabase-auth.js"></script>
     <script src="../js/paywall.js"></script>
-    <script src="../js/analytics-tracker.js"></script>
+    <script src="../js/progress.js"></script>
+<script src="../js/lesson-common.js"></script>
+<script src="../js/quiz.js"></script>
+<script src="../js/analytics-tracker.js"></script>
 </body>
 </html>

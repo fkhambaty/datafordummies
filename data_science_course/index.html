@@ -6,7 +6,8 @@
     <title>Data Science Course Hub | Fakhruddin Khambaty's Learning Hub</title>
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <style>
+    <link rel="stylesheet" href="styles.css">
+<style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         
         body {
@@ -273,8 +274,17 @@
     </style>
     <link rel="stylesheet" href="../css/dfd-system.css">
 </head>
-<body>
+<body class="dfd-safe" data-course-id="data-science" data-lesson-id="index" data-lesson-label="Data Science Course Hub | Fakhruddin Khambaty's Learning Hub">
     <div class="container">
+<div class="dfd-lesson-progress" data-dfd-progress>
+  <p class="dfd-lesson-progress-label" data-dfd-progress-label>Sign in to save your place.</p>
+  <div class="dfd-lesson-progress-track" data-dfd-progress-bar role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-label="Course progress">
+    <div class="dfd-lesson-progress-fill" data-dfd-progress-fill></div>
+  </div>
+  <p><button type="button" data-dfd-complete>Mark lesson complete</button></p>
+  <p data-dfd-complete-status></p>
+</div>
+
         <nav class="nav">
             <a href="../index.html"><i class="fas fa-home"></i><span>Main Website</span></a>
             <a href="../data-science.html"><span>Data Science Intro</span><i class="fas fa-arrow-right"></i></a>
@@ -310,7 +320,7 @@
                 <div class="module-lessons">
                     <span class="lesson-wrap"><a href="python-basics.html" class="lesson-link" data-subtopics="What is Python?|Variables|Data Types|Strings|Operators|If Statements|Loops|Summary"><i class="fas fa-play-circle"></i> Python Fundamentals (Start Here!)</a><div class="subtopics-popover"><span class="popover-title">In this lesson</span><ul class="popover-list"></ul></div></span>
                     <span class="lesson-wrap"><a href="python-data-structures.html" class="lesson-link" data-subtopics="The 4 Data Structures|Lists|Tuples|Sets|Dictionaries|Summary"><i class="fas fa-play-circle"></i> Data Structures (Lists, Tuples, Sets, Dicts)</a><div class="subtopics-popover"><span class="popover-title">In this lesson</span><ul class="popover-list"></ul></div></span>
-                    <a href="#" class="lesson-link" style="opacity: 0.5;"><i class="fas fa-lock"></i> Functions (Coming Soon)</a>
+                    <span class="lesson-wrap"><a href="../python_course/s6-functions1.html" class="lesson-link lesson-link-pro"><i class="fas fa-lock"></i> Functions (Python course)<span class="pro-badge">Pro</span></a></span>
                 </div>
             </div>
 
@@ -345,6 +355,7 @@
                 <h3>Module 4: Machine Learning Basics</h3>
                 <p>Your first ML algorithms! Linear & Logistic Regression, kNN, and Support Vector Machines.</p>
                 <div class="module-lessons">
+                    <span class="lesson-wrap"><a href="ml-introduction.html" class="lesson-link"><i class="fas fa-play-circle"></i> Introduction to Machine Learning</a></span>
                     <span class="lesson-wrap"><a href="linear-regression.html" class="lesson-link lesson-link-pro" data-subtopics="What is Linear Regression?|Cost Function (MSE)|Preparing Data|Converting Yes/No|Train-Test Split|Scaling Data|Building the Model|Making Predictions|Model Evaluation|Residual Analysis|Summary"><i class="fas fa-lock"></i> Linear Regression (Predict Numbers)<span class="pro-badge">Pro</span></a><div class="subtopics-popover"><span class="popover-title">In this lesson</span><ul class="popover-list"></ul></div></span>
                     <span class="lesson-wrap"><a href="bias-variance.html" class="lesson-link lesson-link-pro" data-subtopics="Bias-Variance Tradeoff|Detecting Bias & Variance|Gradient Descent|Regularization (L1/L2)|Cross-Validation|Summary"><i class="fas fa-lock"></i> Bias, Variance & Gradient Descent<span class="pro-badge">Pro</span></a><div class="subtopics-popover"><span class="popover-title">In this lesson</span><ul class="popover-list"></ul></div></span>
                     <span class="lesson-wrap"><a href="logistic-regression.html" class="lesson-link lesson-link-pro" data-subtopics="What is Logistic Regression?|Understanding Dataset|Building the Model|Train & Evaluate|Imbalanced Data|Odds Ratios|Save & Load|Probability Predictions|Summary"><i class="fas fa-lock"></i> Logistic Regression (Classification)<span class="pro-badge">Pro</span></a><div class="subtopics-popover"><span class="popover-title">In this lesson</span><ul class="popover-list"></ul></div></span>
@@ -364,10 +375,10 @@
                     <span class="lesson-wrap"><a href="decision-trees.html" class="lesson-link lesson-link-pro" data-subtopics="What is a Decision Tree?|How Decision Trees Work|In Python|Problem with One Tree|Random Forest|When to Use What?|Summary"><i class="fas fa-lock"></i> Decision Trees & Random Forests<span class="pro-badge">Pro</span></a><div class="subtopics-popover"><span class="popover-title">In this lesson</span><ul class="popover-list"></ul></div></span>
                     <span class="lesson-wrap"><a href="random-forest-code-walkthrough.html" class="lesson-link lesson-link-pro" data-subtopics="Load car data|Encode with get_dummies|Train Random Forest|Confusion matrix & accuracy|Feature importance|Optional GridSearch"><i class="fas fa-lock"></i> Random Forest Code Walkthrough (Car Evaluation)<span class="pro-badge">Pro</span></a><div class="subtopics-popover"><span class="popover-title">In this lesson</span><ul class="popover-list"></ul></div></span>
                     <span class="lesson-wrap"><a href="boosting.html" class="lesson-link lesson-link-pro" data-subtopics="What is Boosting?|AdaBoost|Gradient Boosting|XGBoost|When to Use|Summary"><i class="fas fa-lock"></i> Boosting (XGBoost, AdaBoost)<span class="pro-badge">Pro</span></a><div class="subtopics-popover"><span class="popover-title">In this lesson</span><ul class="popover-list"></ul></div></span>
-                    <span class="lesson-wrap"><a href="#" class="lesson-link" style="opacity: 0.9;"><i class="fas fa-lock"></i> Feature Engineering (Intro below)</a><div class="subtopics-popover"><span class="popover-title">What you’ll learn</span><ul class="popover-list"><li>Creating new columns from existing ones (e.g. ratios, bins, interactions)</li><li>When and why it improves models</li></ul></div></span>
+                    <span class="lesson-wrap"><a href="#feature-engineering" class="lesson-link"><i class="fas fa-play-circle"></i> Feature Engineering</a><div class="subtopics-popover"><span class="popover-title">What you’ll learn</span><ul class="popover-list"><li>Creating new columns from existing ones (e.g. ratios, bins, interactions)</li><li>When and why it improves models</li></ul></div></span>
                 </div>
                 <div style="background: rgba(254,243,199,0.5); border-radius: 12px; padding: 16px; margin-top: 12px; border-left: 4px solid #f59e0b;">
-                    <strong style="color: #92400e;">📌 Feature Engineering in one sentence:</strong> It means building new, useful inputs (features) from your raw data—e.g. "revenue per visit" from revenue and visits, or binning age into groups—so the model has better signals to learn from. Full lesson coming soon.
+                    <strong style="color: #92400e;">📌 Feature Engineering in one sentence:</strong> It means building new, useful inputs (features) from your raw data—e.g. "revenue per visit" from revenue and visits, or binning age into groups—so the model has better signals to learn from. The SVM walkthrough builds features before it fits. See the note on this hub.
                 </div>
             </div>
 
@@ -380,10 +391,10 @@
                 <div class="module-lessons">
                     <span class="lesson-wrap"><a href="clustering.html" class="lesson-link lesson-link-pro" data-subtopics="What is Clustering?|K-Means|Choosing the Right K|Other Algorithms|Customer Segmentation|Summary"><i class="fas fa-lock"></i> Clustering (K-Means, DBSCAN, Hierarchical)<span class="pro-badge">Pro</span></a><div class="subtopics-popover"><span class="popover-title">In this lesson</span><ul class="popover-list"></ul></div></span>
                     <span class="lesson-wrap"><a href="kmeans-code-walkthrough.html" class="lesson-link lesson-link-pro"><i class="fas fa-lock"></i> K-Means Code Walkthrough (Line by Line)<span class="pro-badge">Pro</span></a><div class="subtopics-popover"><span class="popover-title">In this lesson</span><ul class="popover-list"><li>Every line of the K-Means notebook explained</li><li>Hotel Reservations dataset</li><li>Scaling, encoding, elbow method</li></ul></div></span>
-                    <span class="lesson-wrap"><a href="#" class="lesson-link" style="opacity: 0.9;"><i class="fas fa-lock"></i> PCA (Principal Component Analysis) (Intro below)</a><div class="subtopics-popover"><span class="popover-title">What you’ll learn</span><ul class="popover-list"><li>Reducing many columns to fewer “summary” columns</li><li>When to use it (visualization, noise reduction)</li></ul></div></span>
+                    <span class="lesson-wrap"><a href="#pca" class="lesson-link"><i class="fas fa-play-circle"></i> PCA (on this hub)</a><div class="subtopics-popover"><span class="popover-title">What you’ll learn</span><ul class="popover-list"><li>Reducing many columns to fewer “summary” columns</li><li>When to use it (visualization, noise reduction)</li></ul></div></span>
                 </div>
                 <div style="background: rgba(254,243,199,0.5); border-radius: 12px; padding: 16px; margin-top: 12px; border-left: 4px solid #f59e0b;">
-                    <strong style="color: #92400e;">📌 PCA in one sentence:</strong> PCA finds a small set of new “summary” directions (principal components) that capture most of the variation in your data—so you can reduce 100 columns to a few for visualization or faster modeling, with minimal information loss. Full lesson coming soon.
+                    <strong style="color: #92400e;">📌 PCA in one sentence:</strong> PCA finds a small set of new “summary” directions (principal components) that capture most of the variation in your data—so you can reduce many numeric columns to a few for a plot or a faster model. The worked example is on this hub.
                 </div>
             </div>
 
@@ -433,12 +444,54 @@
                 <div class="module-lessons">
                     <span class="lesson-wrap"><a href="explainable-ai.html" class="lesson-link lesson-link-pro" data-subtopics="Why Explainability?|Feature Importance|SHAP & LIME|Explainer Dashboard"><i class="fas fa-lock"></i> Explainable AI (XAI)<span class="pro-badge">Pro</span></a><div class="subtopics-popover"><span class="popover-title">In this lesson</span><ul class="popover-list"></ul></div></span>
                     <span class="lesson-wrap"><a href="gen-ai-intro.html" class="lesson-link lesson-link-pro" data-subtopics="What Is Gen AI?|Using an API|Simple Chatbot"><i class="fas fa-lock"></i> Introduction to Gen AI<span class="pro-badge">Pro</span></a><div class="subtopics-popover"><span class="popover-title">In this lesson</span><ul class="popover-list"></ul></div></span>
-                    <a href="#" class="lesson-link" style="opacity: 0.5;"><i class="fas fa-lock"></i> Deploy on AWS - Coming</a>
+                    <a href="#deployment" class="lesson-link"><i class="fas fa-play-circle"></i> Save, track, and describe a model</a>
                 </div>
             </div>
         </div>
 
-        <div class="footer">
+        
+        <section class="progress-section" id="feature-engineering">
+            <h3>Feature engineering</h3>
+            <p>A feature is a column the model is allowed to see. Engineering one means building it from raw columns before the split is used for fitting: a ratio, a date part, or a bin. Build it with pandas, then let the pipeline below fit encoders on the training fold only. The bank-churn SVM walkthrough does this before <code>GridSearchCV</code>.</p>
+        </section>
+        <section class="progress-section" id="pca">
+            <h3>PCA, without a separate lesson file</h3>
+            <p>PCA redraws numeric columns along the directions that vary most. You can plot the first two components when a scatter of raw columns is unreadable. Fit it on the training fold only, inside a pipeline, after scaling. Do not treat a component as a business cause. It is a mix of the original columns.</p>
+            <pre class="code-block"><code>from sklearn.decomposition import PCA
+from sklearn.pipeline import Pipeline
+from sklearn.preprocessing import StandardScaler
+
+view = Pipeline([
+    ("scale", StandardScaler()),
+    ("pca", PCA(n_components=2)),
+])
+# Fit view on X_train only, then transform X_test with view.transform.</code></pre>
+        </section>
+        <section class="progress-section" id="deployment">
+            <h3>Save, track, and describe the model</h3>
+            <p>This hub does not deploy to AWS. What you can do from the lessons: fit a pipeline, log the run, and write down what the model is allowed to decide.</p>
+            <pre class="code-block"><code>import mlflow
+import mlflow.sklearn
+
+with mlflow.start_run():
+    mlflow.log_param("estimator", "logistic_regression")
+    mlflow.log_metric("roc_auc", float(roc_auc))
+    # MLflow 2.21+ and 3.x take name=, not the older artifact_path=.
+    mlflow.sklearn.log_model(pipeline, name="churn_model")</code></pre>
+            <p>A model card next to that run should name the intended use, the training file (for example <code>datasets/BankChurnersData.csv</code>), the metrics, and the decisions a person must still make. Explainable AI and the Gen AI lesson are the next pages.</p>
+        </section>
+
+        <section class="section dfd-quiz" id="check" data-dfd-quiz data-explanation="The pipeline learns means and scales from the training fold.">
+  <h2 data-dfd-prompt>Knowledge check</h2>
+  <p>Where do you scale numeric columns so the test rows cannot leak into the scaler?</p>
+  <div data-dfd-choices>
+    <button type="button" data-correct="false">Call fit_transform on the full frame, then split</button>
+    <button type="button" data-correct="true">Put SimpleImputer and StandardScaler inside a Pipeline and fit that pipeline on the training fold only</button>
+  </div>
+  <p class="dfd-quiz-feedback" data-dfd-feedback hidden></p>
+  <p class="dfd-quiz-explain" data-dfd-explain hidden></p>
+</section>
+<div class="footer">
             <p>📚 Content based on comprehensive Data Science curriculum</p>
             <p>Created by <a href="../index.html">Fakhruddin Khambaty</a></p>
         </div>
@@ -454,6 +507,15 @@
         });
     </script>
     <script src="../js/code-copy.js"></script>
-    <script src="../js/analytics-tracker.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="../js/supabase-config.js"></script>
+<script src="../js/supabase-auth.js"></script>
+<script src="../js/paywall.js"></script>
+<script src="../js/progress.js"></script>
+<script src="../js/lesson-common.js"></script>
+<script src="../js/quiz.js"></script>
+<script src="../js/analytics-tracker.js"></script>
+
+
 </body>
 </html>

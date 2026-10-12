@@ -8,7 +8,7 @@
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <link rel="stylesheet" href="../css/dfd-system.css">
 </head>
-<body data-access="pro">
+<body data-access="pro" class="dfd-safe" data-course-id="python" data-lesson-id="s10-pandas1" data-lesson-label="Session 10: Pandas Part I | 🐍 Python Mastery" data-total-lessons="15">
   <nav class="main-nav">
     <div class="nav-content">
       <a href="../index.html" class="nav-hub" title="Main website" style="display: flex; align-items: center; gap: 6px; padding: 8px 16px; background: linear-gradient(180deg, #ffffff 0%, #f5f5f7 100%); border: 1px solid #d1d5db; border-radius: 10px; color: #1d1d1f; font-size: 13px; font-weight: 600; text-decoration: none; box-shadow: 0 3px 0 #d1d5db, 0 4px 8px rgba(0,0,0,0.1); margin-right: 8px;">
@@ -41,6 +41,15 @@
   </nav>
 
   <main>
+<div class="dfd-lesson-progress" data-dfd-progress>
+  <p class="dfd-lesson-progress-label" data-dfd-progress-label>Sign in to save your place.</p>
+  <div class="dfd-lesson-progress-track" data-dfd-progress-bar role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-label="Course progress">
+    <div class="dfd-lesson-progress-fill" data-dfd-progress-fill></div>
+  </div>
+  <p><button type="button" data-dfd-complete>Mark lesson complete</button></p>
+  <p data-dfd-complete-status></p>
+</div>
+
     <header class="session-header">
       <div class="session-badge">Session 10</div>
       <h1>🐼 Pandas Part I</h1>
@@ -84,8 +93,8 @@
     </section>
 
     <div class="key-concept" style="background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%); border-left: 5px solid #3b82f6; padding: 1rem 1.25rem; border-radius: 12px; margin: 1.5rem 0;">
-      <h4 style="color: #1e40af;">📘 Same topic in the course notebook</h4>
-      <p style="color: #1e3a8a; margin: 0;">Session_10 <strong>Pandas Part I</strong> notebook has Series, DataFrame, read_csv, indexing, merge—same ideas. Run the notebook alongside.</p>
+      <h4 style="color: #1e40af;">Run this on the page</h4>
+      <p style="color: #1e3a8a; margin: 0;">Session_10 <strong>Pandas Part I</strong> notebook has Series, DataFrame, read_csv, indexing, merge—same ideas. Run the example on this page with Python 3.12+. A notebook is optional.</p>
     </div>
 
     <!-- ANALOGY -->
@@ -674,6 +683,7 @@ Concatenated:
         <li><strong>Chained indexing</strong> — <code>df['a'][0] = 1</code> may not change the DataFrame; use <code>df.loc[0, 'a'] = 1</code> to avoid a copy and ensure the change sticks.</li>
         <li><strong>loc vs iloc</strong> — <code>loc</code> uses labels (index/column names); <code>iloc</code> uses integer positions; mixing them causes KeyError or wrong rows.</li>
         <li><strong>Assuming default index</strong> — After filtering, index can have gaps; use <code>.reset_index(drop=True)</code> if you need 0,1,2,... for slicing by position.</li>
+        <li><strong>inplace=True</strong> — Do not teach it as the default. Assign the result: <code>df = df.drop(columns=["id"])</code>. In pandas 2.x, turn on Copy-on-Write with <code>pd.options.mode.copy_on_write = True</code>. Pandas 3 makes that behavior the default.</li>
       </ul>
     </div>
 
@@ -682,6 +692,16 @@ Concatenated:
       <p style="color: #064e3b;">In one sentence: when would you use <code>loc</code> vs <code>iloc</code> to select rows from a DataFrame?</p>
     </div>
     <div class="core-box" style="background: linear-gradient(135deg, #dcfce7 0%, #bbf7d0 100%); border: 2px solid #22c55e; border-radius: 16px; padding: 24px; margin: 20px 0;">
+      <h4 style="color: #166534;">Polars, beside pandas</h4>
+      <p>This course still teaches pandas. Polars is the comparison when the table is large and you want a lazy query. The same filter does not replace the pandas chapters.</p>
+      <div class="code-block"><pre><code>import polars as pl
+
+lazy = pl.scan_csv("sales.csv")
+out = (
+    lazy.filter(pl.col("revenue") &gt; 100)
+    .select("month", "revenue")
+    .collect()
+)</code></pre></div>
       <h4 style="color: #166534;">✅ CORE (Must know)</h4>
       <ul style="margin-left: 20px;">
         <li>DataFrame: <code>pd.read_csv()</code>, <code>df.head()</code>, <code>df.info()</code>, <code>df.describe()</code>, <code>df.shape</code>.</li>
@@ -698,8 +718,8 @@ Concatenated:
 
 
     <section class="content-section" style="margin-top: 2rem;">
-      <h2>Complete code from course notebook: Pandas_partt_I (1).ipynb</h2>
-      <p>Every line of code from the course notebook (verbatim).</p>
+      <h2>Worked example (source note: Pandas_partt_I (1).ipynb). Run it as a .py file. A notebook is optional.</h2>
+      <p>Worked example. Lines that start with ! or % are notebook-only and are not valid in a .py file.</p>
       <div class="code-block" style="max-height: 500px; overflow: auto; background: #1e293b; color: #e2e8f0; padding: 1rem; border-radius: 12px;">
         <pre style="white-space: pre; font-size: 0.85em;"># --- Code cell 1 ---
 # Numpy---array--1D and 2D..
@@ -980,7 +1000,18 @@ pd.concat([df1, df2 ], axis=1,ignore_index=True)
         <span class="nav-arrow">→</span>
       </a>
     </nav>
-  </main>
+  
+<section class="section dfd-quiz" id="check" data-dfd-quiz data-explanation="Assign the result. inplace=True is not the default to teach, especially with Copy-on-Write.">
+  <h2 data-dfd-prompt>Knowledge check</h2>
+  <p>How should new pandas code drop a column?</p>
+  <div data-dfd-choices>
+    <button type="button" data-correct="false">df.drop(columns=['id'], inplace=True) as the default style</button>
+    <button type="button" data-correct="true">df = df.drop(columns=['id']) so the result is explicit</button>
+  </div>
+  <p class="dfd-quiz-feedback" data-dfd-feedback hidden></p>
+  <p class="dfd-quiz-explain" data-dfd-explain hidden></p>
+</section>
+</main>
 
   <footer>
     <p>🐍 Python Mastery | Learn. Code. Create.</p>
@@ -1001,7 +1032,10 @@ pd.concat([df1, df2 ], axis=1,ignore_index=True)
     <script src="../js/supabase-config.js"></script>
     <script src="../js/supabase-auth.js"></script>
     <script src="../js/paywall.js"></script>
-    <script src="../js/analytics-tracker.js"></script>
+    <script src="../js/progress.js"></script>
+<script src="../js/lesson-common.js"></script>
+<script src="../js/quiz.js"></script>
+<script src="../js/analytics-tracker.js"></script>
 </body>
 </html>
 

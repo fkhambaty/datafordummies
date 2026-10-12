@@ -6,7 +6,8 @@
     <title>Introduction to Machine Learning | Fakhruddin Khambaty's Learning Hub</title>
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <style>
+    <link rel="stylesheet" href="styles.css">
+<style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         
         body {
@@ -247,8 +248,17 @@
     </style>
     <link rel="stylesheet" href="../css/dfd-system.css">
 </head>
-<body>
+<body class="dfd-safe" data-course-id="data-science" data-lesson-id="ml-introduction" data-lesson-label="Introduction to Machine Learning | Fakhruddin Khambaty's Learning Hub" data-total-lessons="32">
     <div class="container">
+<div class="dfd-lesson-progress" data-dfd-progress>
+  <p class="dfd-lesson-progress-label" data-dfd-progress-label>Sign in to save your place.</p>
+  <div class="dfd-lesson-progress-track" data-dfd-progress-bar role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-label="Course progress">
+    <div class="dfd-lesson-progress-fill" data-dfd-progress-fill></div>
+  </div>
+  <p><button type="button" data-dfd-complete>Mark lesson complete</button></p>
+  <p data-dfd-complete-status></p>
+</div>
+
         <nav class="nav">
             <a href="../index.html"><i class="fas fa-home"></i><span>Home</span></a>
             <a href="hypothesis-testing.html"><i class="fas fa-arrow-left"></i><span>Previous: Hypothesis Testing</span></a>
@@ -575,6 +585,42 @@
 
         <!-- Summary -->
         <div class="section">
+            <h2>Fit the preprocessor on the training fold only</h2>
+            <p>Scaling, imputing, and one-hot encoding learn from rows. If they see the test rows, the score is optimistic. Put those steps in a pipeline and fit the pipeline on the training fold. Pandas 2.x Copy-on-Write is a separate rule for the dataframe: assign <code>frame = frame.drop(columns=["id"])</code> instead of <code>inplace=True</code>.</p>
+            <div class="code-block"><pre><code>from sklearn.compose import ColumnTransformer
+from sklearn.impute import SimpleImputer
+from sklearn.pipeline import Pipeline
+from sklearn.preprocessing import OneHotEncoder, StandardScaler
+from sklearn.linear_model import LogisticRegression
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import classification_report
+
+numeric = Pipeline([
+    ("impute", SimpleImputer(strategy="median")),
+    ("scale", StandardScaler()),
+])
+categorical = Pipeline([
+    ("impute", SimpleImputer(strategy="most_frequent")),
+    ("onehot", OneHotEncoder(handle_unknown="ignore")),
+])
+preprocess = ColumnTransformer([
+    ("num", numeric, ["area", "bedrooms"]),
+    ("cat", categorical, ["furnishingstatus"]),
+])
+model = Pipeline([
+    ("prep", preprocess),
+    ("clf", LogisticRegression(max_iter=1000, class_weight="balanced")),
+])
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y, test_size=0.2, stratify=y, random_state=42
+)
+model.fit(X_train, y_train)
+print(classification_report(y_test, model.predict(X_test)))</code></pre>
+            <p>Report more than accuracy when classes are uneven: precision, recall, F1, and ROC-AUC. A probability of 0.9 should mean "about 90% of rows scored like this are positive." Check that with a calibration curve. Write a model card: intended use, training file, metrics, and what a person must still decide. Log the run with MLflow (<code>mlflow.sklearn.log_model(model, name="model")</code> on MLflow 2.21+ and 3.x).</p>
+            <p>A classical model predicts a column. A generative model continues text. The table you cleaned is still the evidence. Do not paste raw personal data into an API prompt. The Gen AI lesson shows the current client, with the model id read from the environment.</p>
+            </div>
+        </div>
+        <div class="section">
             <h2><i class="fas fa-graduation-cap"></i> Summary</h2>
             
             <div class="key-point">
@@ -589,7 +635,18 @@
             </div>
         </div>
 
-        <div class="nav-buttons">
+        
+<section class="section dfd-quiz" id="check" data-dfd-quiz data-explanation="Fitting on all rows leaks test information into the model.">
+  <h2 data-dfd-prompt>Knowledge check</h2>
+  <p>Why split before you fit a scaler?</p>
+  <div data-dfd-choices>
+    <button type="button" data-correct="false">So the test set can teach the scaler the full range of the data</button>
+    <button type="button" data-correct="true">So the scaler's mean and scale come only from the training fold</button>
+  </div>
+  <p class="dfd-quiz-feedback" data-dfd-feedback hidden></p>
+  <p class="dfd-quiz-explain" data-dfd-explain hidden></p>
+</section>
+<div class="nav-buttons">
             <a href="hypothesis-testing.html" class="nav-btn prev"><i class="fas fa-arrow-left"></i> Previous: Hypothesis Testing</a>
             <a href="linear-regression.html" class="nav-btn next">Next: Linear Regression <i class="fas fa-arrow-right"></i></a>
         </div>
@@ -606,6 +663,13 @@
         backToTopButton.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
     </script>
     <script src="../js/code-copy.js"></script>
-    <script src="../js/analytics-tracker.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="../js/supabase-config.js"></script>
+<script src="../js/supabase-auth.js"></script>
+<script src="../js/paywall.js"></script>
+<script src="../js/progress.js"></script>
+<script src="../js/lesson-common.js"></script>
+<script src="../js/quiz.js"></script>
+<script src="../js/analytics-tracker.js"></script>
 </body>
 </html>
