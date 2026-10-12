@@ -1,9 +1,12 @@
-# FKTI Learning Hub 🎓
+# Data For Dummies
 
-**Fakhruddin Khambaty Training Institute - Unified Learning Platform**
+Live site: [https://datafordummies.in](https://datafordummies.in)
 
-- **Live site:** [https://fkhambaty.github.io/fkti_data/](https://fkhambaty.github.io/fkti_data/) *(enable GitHub Pages in repo Settings → Pages)*
-- **Repository:** [https://github.com/fkhambaty/fkti_data](https://github.com/fkhambaty/fkti_data)
+Repository: [https://github.com/fkhambaty/datafordummies](https://github.com/fkhambaty/datafordummies)
+
+Another computer or another AI should read [`ARCHITECTURE.md`](ARCHITECTURE.md) and [`AGENTS.md`](AGENTS.md) before editing. The older notes below still say FKTI and `fkti_data`. Those names are historical. The live brand is Data For Dummies, and the site is served by GitHub Pages from this repository.
+
+# FKTI Learning Hub (historical notes)
 
 ## Overview
 
