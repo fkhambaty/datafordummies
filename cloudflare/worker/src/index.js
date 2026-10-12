@@ -373,7 +373,7 @@ export default {
         const courseId = String(body?.course_id || "").slice(0, 80);
         if (!courseId) return json({ error: "Missing course." }, 400, allowedOrigin);
         const existing = await db
-          .prepare("SELECT completed_lesson_ids FROM user_progress WHERE user_id = ? AND course_id = ?")
+          .prepare("SELECT completed_lesson_ids, progress_pct FROM user_progress WHERE user_id = ? AND course_id = ?")
           .bind(profile.id, courseId)
           .first();
         let completed = [];
@@ -384,6 +384,11 @@ export default {
         }
         if (Array.isArray(body?.completed_lesson_ids)) {
           completed = body.completed_lesson_ids.map((item) => String(item)).slice(0, 500);
+        }
+        let progressPct = Number(existing?.progress_pct || 0);
+        if (body && body.progress_pct !== undefined && body.progress_pct !== null && body.progress_pct !== "") {
+          const parsed = Number(body.progress_pct);
+          if (!Number.isNaN(parsed)) progressPct = parsed;
         }
         const now = new Date().toISOString();
         await db
@@ -405,7 +410,7 @@ export default {
             body?.last_lesson_id ? String(body.last_lesson_id).slice(0, 120) : null,
             body?.last_lesson_label ? String(body.last_lesson_label).slice(0, 200) : null,
             JSON.stringify(completed),
-            Number(body?.progress_pct || 0),
+            progressPct,
             body?.last_visited_at || now,
             now,
           )

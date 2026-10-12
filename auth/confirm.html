@@ -20,7 +20,7 @@
         </div>
         <div id="authError" class="auth-error" style="display:none;"></div>
         <p class="auth-links" id="linksRow" style="display:none;">
-            <a href="login.html">Log in</a> · <a href="../index.html">Home</a>
+            <a href="verify.html">Enter your code</a> · <a href="login.html">Log in</a> · <a href="../index.html">Home</a>
         </p>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -57,7 +57,7 @@
             window.FKTI_Auth.getSession().then(function (res) {
                 var session = res.data && res.data.session;
                 if (!session || !session.user) {
-                    showError('Invalid or expired link. Please request a new verification link from sign up.');
+                    showError('This page no longer confirms email. Enter the 6-digit code from your inbox on the confirmation page.');
                     return;
                 }
                 var user = session.user;

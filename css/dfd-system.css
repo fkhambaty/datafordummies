@@ -83,6 +83,50 @@ html {
 }
 
 @media (max-width: 720px) {
+    *,
+    *::before,
+    *::after {
+        box-sizing: border-box;
+    }
+
+    .page-orb-bg {
+        max-width: 100%;
+        overflow: hidden;
+    }
+
+    #navbar .container,
+    .journey-header-row,
+    .step {
+        flex-wrap: wrap;
+        height: auto;
+        max-width: 100%;
+    }
+
+    .section-subtitle {
+        white-space: normal;
+    }
+
+    .step-content,
+    .section-header {
+        min-width: 0;
+        max-width: 100%;
+    }
+
+    pre,
+    .code-block,
+    table,
+    table.data-table,
+    .data-table {
+        max-width: 100%;
+        min-width: 0 !important;
+        overflow-x: auto;
+    }
+
+    pre,
+    .code-block {
+        overflow-wrap: anywhere;
+    }
+
     :where(.nav, .lesson-nav, .hero-cta-row, .ux-hero-btns) {
         flex-wrap: wrap;
     }

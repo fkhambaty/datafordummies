@@ -30,14 +30,20 @@
      */
     function recordPage(courseId, lessonId, lessonLabel) {
         if (!courseId) return Promise.resolve();
-        getUserId().then(function (userId) {
+        return getUserId().then(function (userId) {
             if (!userId) return;
-            if (!window.FKTI_Auth || !window.FKTI_Auth.saveProgress) return;
-            window.FKTI_Auth.saveProgress({
-                course_id: courseId,
-                last_lesson_id: lessonId || null,
-                last_lesson_label: lessonLabel || null,
-                last_visited_at: new Date().toISOString()
+            if (!window.FKTI_Auth || !window.FKTI_Auth.getProgress || !window.FKTI_Auth.saveProgress) return;
+            return window.FKTI_Auth.getProgress(courseId).then(function (res) {
+                if (res.error) return;
+                var row = (res.data && res.data[0]) || {};
+                return window.FKTI_Auth.saveProgress({
+                    course_id: courseId,
+                    last_lesson_id: lessonId || row.last_lesson_id || null,
+                    last_lesson_label: lessonLabel || row.last_lesson_label || null,
+                    last_visited_at: new Date().toISOString(),
+                    progress_pct: Number(row.progress_pct || 0),
+                    completed_lesson_ids: row.completed_lesson_ids || []
+                });
             });
         });
     }

@@ -9,9 +9,6 @@
 
     function authBase() {
         if (window.FKTI_BASE_URL) return window.FKTI_BASE_URL.replace(/\/$/, '');
-        var path = window.location.pathname || '';
-        var parts = path.split('/').filter(Boolean);
-        if (parts.length > 1) return window.location.origin + '/' + parts[0];
         return window.location.origin;
     }
 

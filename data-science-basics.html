@@ -6615,7 +6615,7 @@ print("  - Adjust min_support and min_threshold to find different patterns")</co
 
         // Mind Map 1: Probability - Enhanced with FKTI colors
         const probabilityNodes = [
-            {id: 1, label: 'Probability', shape: 'box', color: {background: '#3b82f6', border: '#2563eb', highlight: {background: '#2563eb'}}, font: {size: 24, bold: true, color: '#ffffff'}},
+            {id: 1, label: 'Probability', shape: 'box', color: {background: '#3b82f6', border: '#2563eb', highlight: {background: '#2563eb'}}, font: {size: 24, color: '#ffffff'}},
             {id: 2, label: '0 to 1 Scale', shape: 'ellipse', color: {background: '#dbeafe', border: '#3b82f6'}},
             {id: 3, label: '0 = Impossible', shape: 'ellipse', color: {background: '#fee2e2', border: '#ef4444'}},
             {id: 4, label: '0.5 = 50/50', shape: 'ellipse', color: {background: '#fef3c7', border: '#f59e0b'}},
@@ -6645,7 +6645,7 @@ print("  - Adjust min_support and min_threshold to find different patterns")</co
                 }
             },
             nodes: {
-                font: {size: 16, face: 'Nunito', bold: true},
+                font: {size: 16, face: 'Nunito'},
                 shapeProperties: {useBorderWithImage: true},
                 borderWidth: 2,
                 shadow: true,
@@ -6665,7 +6665,7 @@ print("  - Adjust min_support and min_threshold to find different patterns")</co
 
         // Mind Map 2: Scalar and Vector - Enhanced
         const scalarVectorNodes = [
-            {id: 1, label: 'Scalar & Vector', shape: 'box', color: {background: '#3b82f6', border: '#2563eb'}, font: {size: 24, bold: true, color: '#ffffff'}},
+            {id: 1, label: 'Scalar & Vector', shape: 'box', color: {background: '#3b82f6', border: '#2563eb'}, font: {size: 24, color: '#ffffff'}},
             {id: 2, label: 'Scalar', shape: 'box', color: {background: '#dbeafe', border: '#3b82f6'}},
             {id: 3, label: 'Just a Number', shape: 'ellipse', color: {background: '#dbeafe', border: '#3b82f6'}},
             {id: 4, label: 'Examples: Temp, Weight, Price', shape: 'ellipse', color: {background: '#dbeafe', border: '#3b82f6'}},
@@ -6684,23 +6684,10 @@ print("  - Adjust min_support and min_threshold to find different patterns")</co
         ];
         const scalarVectorData = {nodes: scalarVectorNodes, edges: scalarVectorEdges};
         const scalarVectorNetwork = new vis.Network(document.getElementById('mindmap-scalar-vector'), scalarVectorData, probabilityOptions);
-        
-        // Apply same enhanced options to all mind maps
-        const distanceData = {nodes: distanceNodes, edges: distanceEdges};
-        const distanceNetwork = new vis.Network(document.getElementById('mindmap-distance'), distanceData, probabilityOptions);
-        
-        const matrixData = {nodes: matrixNodes, edges: matrixEdges};
-        const matrixNetwork = new vis.Network(document.getElementById('mindmap-matrix'), matrixData, probabilityOptions);
-        
-        const linearData = {nodes: linearNodes, edges: linearEdges};
-        const linearNetwork = new vis.Network(document.getElementById('mindmap-linear'), linearData, probabilityOptions);
-        
-        const derivativeData = {nodes: derivativeNodes, edges: derivativeEdges};
-        const derivativeNetwork = new vis.Network(document.getElementById('mindmap-derivative'), derivativeData, probabilityOptions);
 
         // Mind Map 3: Distance Metrics - Enhanced
         const distanceNodes = [
-            {id: 1, label: 'Distance Metrics', shape: 'box', color: {background: '#3b82f6', border: '#2563eb'}, font: {size: 24, bold: true, color: '#ffffff'}},
+            {id: 1, label: 'Distance Metrics', shape: 'box', color: {background: '#3b82f6', border: '#2563eb'}, font: {size: 24, color: '#ffffff'}},
             {id: 2, label: 'Euclidean', shape: 'box', color: {background: '#dbeafe', border: '#3b82f6'}},
             {id: 3, label: 'Straight Line', shape: 'ellipse', color: {background: '#dbeafe', border: '#3b82f6'}},
             {id: 4, label: 'Shortest Path', shape: 'ellipse', color: {background: '#dbeafe', border: '#3b82f6'}},
@@ -6721,7 +6708,7 @@ print("  - Adjust min_support and min_threshold to find different patterns")</co
 
         // Mind Map 4: Matrix Operations - Enhanced
         const matrixNodes = [
-            {id: 1, label: 'Matrix Operations', shape: 'box', color: {background: '#3b82f6', border: '#2563eb'}, font: {size: 24, bold: true, color: '#ffffff'}},
+            {id: 1, label: 'Matrix Operations', shape: 'box', color: {background: '#3b82f6', border: '#2563eb'}, font: {size: 24, color: '#ffffff'}},
             {id: 2, label: 'What is Matrix?', shape: 'box', color: {background: '#dbeafe', border: '#3b82f6'}},
             {id: 3, label: 'Table of Numbers', shape: 'ellipse', color: {background: '#dbeafe', border: '#3b82f6'}},
             {id: 4, label: 'Rows & Columns', shape: 'ellipse', color: {background: '#dbeafe', border: '#3b82f6'}},
@@ -6743,7 +6730,7 @@ print("  - Adjust min_support and min_threshold to find different patterns")</co
 
         // Mind Map 5: Linear and Non-linear - Enhanced
         const linearNodes = [
-            {id: 1, label: 'Linear & Non-linear', shape: 'box', color: {background: '#3b82f6', border: '#2563eb'}, font: {size: 24, bold: true, color: '#ffffff'}},
+            {id: 1, label: 'Linear & Non-linear', shape: 'box', color: {background: '#3b82f6', border: '#2563eb'}, font: {size: 24, color: '#ffffff'}},
             {id: 2, label: 'Linear Function', shape: 'box', color: {background: '#dbeafe', border: '#3b82f6'}},
             {id: 3, label: 'Straight Line', shape: 'ellipse', color: {background: '#dbeafe', border: '#3b82f6'}},
             {id: 4, label: 'Simple & Predictable', shape: 'ellipse', color: {background: '#dbeafe', border: '#3b82f6'}},
@@ -6765,7 +6752,7 @@ print("  - Adjust min_support and min_threshold to find different patterns")</co
 
         // Mind Map 6: Derivative - Enhanced
         const derivativeNodes = [
-            {id: 1, label: 'Derivative', shape: 'box', color: {background: '#3b82f6', border: '#2563eb'}, font: {size: 24, bold: true, color: '#ffffff'}},
+            {id: 1, label: 'Derivative', shape: 'box', color: {background: '#3b82f6', border: '#2563eb'}, font: {size: 24, color: '#ffffff'}},
             {id: 2, label: 'Definition', shape: 'box', color: {background: '#dbeafe', border: '#3b82f6'}},
             {id: 3, label: 'Rate of Change', shape: 'ellipse', color: {background: '#dbeafe', border: '#3b82f6'}},
             {id: 4, label: 'How Fast?', shape: 'ellipse', color: {background: '#dbeafe', border: '#3b82f6'}},
@@ -6785,10 +6772,19 @@ print("  - Adjust min_support and min_threshold to find different patterns")</co
             {from: 6, to: 7}, {from: 6, to: 8}, {from: 6, to: 9},
             {from: 10, to: 11}, {from: 10, to: 12}, {from: 10, to: 13}
         ];
-        
+
+        const distanceData = {nodes: distanceNodes, edges: distanceEdges};
+        const distanceNetwork = new vis.Network(document.getElementById('mindmap-distance'), distanceData, probabilityOptions);
+        const matrixData = {nodes: matrixNodes, edges: matrixEdges};
+        const matrixNetwork = new vis.Network(document.getElementById('mindmap-matrix'), matrixData, probabilityOptions);
+        const linearData = {nodes: linearNodes, edges: linearEdges};
+        const linearNetwork = new vis.Network(document.getElementById('mindmap-linear'), linearData, probabilityOptions);
+        const derivativeData = {nodes: derivativeNodes, edges: derivativeEdges};
+        const derivativeNetwork = new vis.Network(document.getElementById('mindmap-derivative'), derivativeData, probabilityOptions);
+
         // Mind Map: Data Cleaning - Define nodes and edges (will be initialized when tab is shown)
         const dataCleaningNodes = [
-            {id: 1, label: 'Data Cleaning', shape: 'box', color: {background: '#0ea5e9', border: '#0284c7'}, font: {size: 24, bold: true, color: '#ffffff'}},
+            {id: 1, label: 'Data Cleaning', shape: 'box', color: {background: '#0ea5e9', border: '#0284c7'}, font: {size: 24, color: '#ffffff'}},
             {id: 2, label: 'Why Clean?', shape: 'box', color: {background: '#e0f2fe', border: '#0ea5e9'}},
             {id: 3, label: 'Garbage In = Garbage Out', shape: 'ellipse', color: {background: '#fee2e2', border: '#ef4444'}},
             {id: 4, label: '80% of Time', shape: 'ellipse', color: {background: '#fee2e2', border: '#ef4444'}},
@@ -6810,7 +6806,7 @@ print("  - Adjust min_support and min_threshold to find different patterns")</co
 
         // Mind Map: Data Visualization - Define nodes and edges
         const visualizationNodes = [
-            {id: 1, label: 'Data Visualization', shape: 'box', color: {background: '#22c55e', border: '#16a34a'}, font: {size: 24, bold: true, color: '#ffffff'}},
+            {id: 1, label: 'Data Visualization', shape: 'box', color: {background: '#22c55e', border: '#16a34a'}, font: {size: 24, color: '#ffffff'}},
             {id: 2, label: 'Why Visualize?', shape: 'box', color: {background: '#dcfce7', border: '#22c55e'}},
             {id: 3, label: 'See Patterns', shape: 'ellipse', color: {background: '#d1fae5', border: '#22c55e'}},
             {id: 4, label: 'Easy to Understand', shape: 'ellipse', color: {background: '#d1fae5', border: '#22c55e'}},
@@ -6833,7 +6829,7 @@ print("  - Adjust min_support and min_threshold to find different patterns")</co
 
         // Mind Map: Machine Learning - Define nodes and edges
         const machineLearningNodes = [
-            {id: 1, label: 'Machine Learning', shape: 'box', color: {background: '#ec4899', border: '#db2777'}, font: {size: 24, bold: true, color: '#ffffff'}},
+            {id: 1, label: 'Machine Learning', shape: 'box', color: {background: '#ec4899', border: '#db2777'}, font: {size: 24, color: '#ffffff'}},
             {id: 2, label: 'What is ML?', shape: 'box', color: {background: '#fce7f3', border: '#ec4899'}},
             {id: 3, label: 'Learn from Data', shape: 'ellipse', color: {background: '#d1fae5', border: '#22c55e'}},
             {id: 4, label: 'Find Patterns', shape: 'ellipse', color: {background: '#d1fae5', border: '#22c55e'}},

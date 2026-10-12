@@ -51,10 +51,11 @@
             var user = session.user;
             var userId = user.id;
             var email = user.email || '';
-            var name = (user.user_metadata && user.user_metadata.full_name) || email.split('@')[0] || '';
-            var contact = (user.user_metadata && (user.user_metadata.phone || user.user_metadata.country_code))
-                ? (user.user_metadata.country_code || '') + (user.user_metadata.phone || '')
-                : '';
+            var meta = user.user_metadata || {};
+            var name = user.full_name || meta.full_name || email.split('@')[0] || '';
+            var phone = user.phone || meta.phone || '';
+            var countryCode = user.country_code || meta.country_code || '';
+            var contact = (phone || countryCode) ? (countryCode || '') + (phone || '') : '';
 
             var baseUrl = (typeof window !== 'undefined' && window.location && window.location.origin)
                 ? window.location.origin.replace(/\/$/, '')

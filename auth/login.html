@@ -40,8 +40,32 @@
             successEl.textContent = 'Password updated. You can log in with your new password.';
             successEl.style.display = 'block';
         }
-        var returnTo = params.get('returnTo') || 'profile.html';
-        if (returnTo.indexOf('/') === -1) returnTo = returnTo.replace(/^auth\//, '');
+        function safeReturn(raw) {
+            var fallback = 'profile.html';
+            if (!raw) return fallback;
+            var authPages = {
+                'profile.html': 1,
+                'verify.html': 1,
+                'reset-password.html': 1,
+                'signup.html': 1,
+                'update-password.html': 1,
+                'confirm.html': 1
+            };
+            try {
+                if (raw.indexOf('://') === -1 && raw.charAt(0) !== '/' && raw.indexOf('..') === -1) {
+                    var file = raw.split('?')[0].split('#')[0];
+                    if (authPages[file]) return raw;
+                    if (/\.html$/.test(file)) return '/' + raw;
+                }
+                var url = new URL(raw, window.location.origin);
+                if (url.origin !== window.location.origin) return fallback;
+                if (url.pathname.indexOf('login.html') !== -1) return fallback;
+                return url.pathname + url.search + url.hash;
+            } catch (err) {
+                return fallback;
+            }
+        }
+        var returnTo = safeReturn(params.get('returnTo'));
 
         form.addEventListener('submit', function (e) {
             e.preventDefault();
