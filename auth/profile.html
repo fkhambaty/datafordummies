@@ -15,8 +15,12 @@
         <span class="auth-profile-title">My Account</span>
         <a href="../index.html" class="auth-profile-home-txt">Home</a>
     </header>
-    <div class="auth-card auth-profile-card ds-animate-in">
-        <p class="auth-subtitle auth-profile-sub">Manage your profile and subscription.</p>
+    <main class="auth-card auth-profile-card ds-animate-in">
+        <div class="auth-profile-intro">
+            <span class="auth-profile-eyebrow">Learning dashboard</span>
+            <h1>Your account</h1>
+            <p class="auth-subtitle auth-profile-sub">Manage your profile, plan, and learning progress in one place.</p>
+        </div>
         <div id="profileError" class="auth-error" style="display:none;margin-bottom:12px;"></div>
         <div id="profileContent" style="display:none;">
             <div class="auth-profile-row">
@@ -31,8 +35,8 @@
                 <h3 class="auth-profile-block-title">Subscription</h3>
                 <p class="auth-profile-block-text" id="subscriptionText">You’re on the Free plan. Unlock all courses and projects with Pro.</p>
                 <div id="upgradeBtns">
-                    <button type="button" class="ds-btn ds-btn-primary auth-upgrade-btn" id="upgradeWeekly" style="margin-bottom:8px;">Upgrade — ₹99/week</button>
-                    <button type="button" class="ds-btn auth-upgrade-btn" id="upgradeMonthly" style="display:block;text-align:center;margin-top:0;background:linear-gradient(135deg,#059669,#10b981);color:#fff;border:none;border-radius:var(--ds-radius);padding:12px;font-weight:600;cursor:pointer;">Upgrade — ₹349/month (save ₹47)</button>
+                    <button type="button" class="ds-btn ds-btn-primary auth-upgrade-btn" id="upgradeWeekly">Upgrade — ₹99/week</button>
+                    <button type="button" class="ds-btn auth-upgrade-btn auth-upgrade-monthly" id="upgradeMonthly">Upgrade — ₹349/month (save ₹47)</button>
                 </div>
             </div>
             <div class="auth-profile-block" id="progressSection">
@@ -49,28 +53,7 @@
             <p class="auth-subtitle">You’re not logged in.</p>
             <a href="login.html" class="ds-btn ds-btn-primary auth-submit">Log in</a>
         </div>
-    </div>
-    <style>
-        .auth-profile-page { padding: 12px 16px 24px; align-items: flex-start; }
-        .auth-profile-header-bar { display: flex; align-items: center; justify-content: space-between; width: 100%; max-width: 420px; margin: 0 auto 8px; padding: 8px 0; }
-        .auth-profile-close { width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; border-radius: 50%; background: rgba(0,0,0,0.06); color: var(--ds-text); text-decoration: none; font-size: 1.25rem; }
-        .auth-profile-close:hover { background: rgba(0,0,0,0.1); }
-        .auth-profile-title { font-weight: 700; font-size: 1.1rem; color: var(--ds-text); }
-        .auth-profile-home-txt { font-size: 0.9rem; font-weight: 600; color: var(--ds-primary); text-decoration: none; }
-        .auth-profile-card { max-width: 420px; padding: var(--ds-space-4); }
-        .auth-profile-card h1 { display: none; }
-        .auth-profile-sub { margin-bottom: var(--ds-space-3); font-size: 0.875rem; }
-        .auth-profile-row { display: flex; align-items: center; gap: 12px; margin-bottom: var(--ds-space-3); }
-        .auth-profile-avatar { width: 48px; height: 48px; border-radius: 50%; background: linear-gradient(135deg,#6366f1,#8b5cf6); color: #fff; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 1.25rem; flex-shrink: 0; }
-        .auth-profile-info { min-width: 0; }
-        .auth-profile-info h2 { font-size: 1rem; font-weight: 700; margin: 0 0 2px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-        .auth-profile-info p { font-size: 0.8125rem; color: var(--ds-text-muted); margin: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-        .auth-profile-block { margin-top: var(--ds-space-3); padding-top: var(--ds-space-3); border-top: 1px solid var(--ds-border); }
-        .auth-profile-block-title { font-size: 0.875rem; font-weight: 700; margin: 0 0 4px; }
-        .auth-profile-block-text { font-size: 0.8125rem; color: var(--ds-text-muted); margin: 0 0 8px; }
-        .auth-upgrade-btn { display: block; text-align: center; margin-top: 8px; }
-        .auth-profile-logout { margin-top: var(--ds-space-4); font-size: 0.875rem; }
-    </style>
+    </main>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="../js/supabase-config.js"></script>
     <script src="../js/supabase-auth.js"></script>
@@ -191,7 +174,7 @@
         function showProfile(session) {
             profileLoading.style.display = 'none';
             profileLogin.style.display = 'none';
-            profileContent.style.display = 'block';
+            profileContent.style.display = 'grid';
             function doCheckout(plan) {
                 if (window.FKTI_RazorpayCheckout && window.FKTI_RazorpayCheckout.openProCheckout) {
                     window.FKTI_RazorpayCheckout.openProCheckout(plan);
