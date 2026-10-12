@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Lesson shell | Data For Dummies</title>
+    <link rel="stylesheet" href="../css/course-light-theme.css">
+    <style>
+        :root { --course-primary: #0f766e; --course-accent: #14b8a6; }
+    </style>
+    <link rel="stylesheet" href="../css/dfd-system.css">
+</head>
+<!--
+  CSS order: family sheet, page accent, css/dfd-system.css last.
+  Script order is at the end of body. Do not load js/hub-script.js here.
+  Pro lessons add data-access="pro" on body. paywall.js stays either way.
+  See docs/LESSON_SHELL.md.
+-->
+<body class="dfd-safe" data-course-id="example" data-lesson-id="shell" data-lesson-label="Lesson shell" data-total-lessons="1">
+    <div class="container">
+        <nav class="nav">
+            <a href="../index.html">Home</a>
+            <a href="#check">Knowledge check</a>
+        </nav>
+        <header class="lesson-hero" id="top">
+            <h1>Lesson shell</h1>
+            <p>Copy this file when a new lesson needs the shared foundation. It is not a published course.</p>
+        </header>
+
+        <section class="section" data-dfd-reveal>
+            <h2>What this page wires</h2>
+            <p>Scroll reveal, a back-to-top control, lesson progress, a knowledge check, and a small diagram. Nothing here replaces an old lesson.</p>
+            <div class="dfd-lesson-progress" data-dfd-progress>
+                <p class="dfd-lesson-progress-label" data-dfd-progress-label>Sign in to save your place.</p>
+                <div class="dfd-lesson-progress-track" data-dfd-progress-bar role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-label="Course progress">
+                    <div class="dfd-lesson-progress-fill" data-dfd-progress-fill></div>
+                </div>
+            </div>
+            <p>
+                <button type="button" data-dfd-complete>Mark lesson complete</button>
+            </p>
+            <p data-dfd-complete-status></p>
+        </section>
+
+        <section class="section" data-dfd-reveal>
+            <h2>A wide table stays in its box</h2>
+            <table class="dfd-scroll">
+                <thead>
+                    <tr><th>Step</th><th>What the student sees</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td>1</td><td>The family stylesheet paints the course color.</td></tr>
+                    <tr><td>2</td><td>dfd-system.css loads last and only adds shared guards.</td></tr>
+                </tbody>
+            </table>
+            <pre class="code-block"><code>select course_id, last_lesson_id
+from user_progress
+where course_id = 'example';</code></pre>
+        </section>
+
+        <section class="section dfd-diagram" data-dfd-diagram data-dfd-reveal>
+            <h2>Diagram</h2>
+            <div data-dfd-diagram-panel="rows">
+                <svg class="dfd-responsive" viewBox="0 0 320 80" role="img" aria-label="Two stacked rows">
+                    <rect x="8" y="8" width="304" height="28" rx="6" fill="#ccfbf1"></rect>
+                    <rect x="8" y="44" width="304" height="28" rx="6" fill="#99f6e4"></rect>
+                </svg>
+            </div>
+            <div data-dfd-diagram-panel="one" hidden>
+                <svg class="dfd-responsive" viewBox="0 0 320 80" role="img" aria-label="One highlighted row">
+                    <rect x="8" y="26" width="304" height="28" rx="6" fill="#0f766e"></rect>
+                </svg>
+            </div>
+            <div class="dfd-diagram-controls">
+                <button type="button" data-dfd-diagram-step="rows" aria-pressed="true">Show rows</button>
+                <button type="button" data-dfd-diagram-step="one">Show one row</button>
+            </div>
+        </section>
+
+        <section class="section dfd-quiz" id="check" data-dfd-quiz data-dfd-reveal data-explanation="A primary key identifies one row.">
+            <h2 data-dfd-prompt id="shell-check">Knowledge check</h2>
+            <p>Which key identifies one row in a table?</p>
+            <div data-dfd-choices>
+                <button type="button" data-correct="false">A foreign key, because it points somewhere else</button>
+                <button type="button" data-correct="true">A primary key, because it identifies one row</button>
+            </div>
+            <p class="dfd-quiz-feedback" data-dfd-feedback hidden></p>
+            <p class="dfd-quiz-explain" data-dfd-explain hidden></p>
+        </section>
+    </div>
+
+    <script src="../js/code-copy.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="../js/supabase-config.js"></script>
+    <script src="../js/supabase-auth.js"></script>
+    <script src="../js/paywall.js"></script>
+    <script src="../js/progress.js"></script>
+    <script src="../js/lesson-common.js"></script>
+    <script src="../js/quiz.js"></script>
+    <script src="../js/analytics-tracker.js"></script>
+</body>
+</html>

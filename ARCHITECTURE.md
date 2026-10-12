@@ -125,15 +125,35 @@ The page itself never scrolls sideways. Only intrinsically wide content scrolls,
 - Do not fix overflow by clipping a lesson container with `overflow: hidden`. Find the widest element and make it wrap or scroll.
 - The filename `css/fkti-light-theme.css` stays. Renaming it would break every existing link.
 
+## Lesson foundation
+
+Added 13 October 2026. These files are the shared shell for new lessons. Existing course HTML was not rewritten to use them, apart from `viewport-fit=cover` on the viewport meta (the previous `width=device-width, initial-scale=1.0` content stays).
+
+| File | Role |
+|------|------|
+| `js/lesson-common.js` | Opt-in reveal (`[data-dfd-reveal]`), back-to-top only when the page has no `.back-to-top` or `#backToTop`, and progress through `FKTI_Progress` / `FKTI_Auth` when `data-course-id` and `data-lesson-id` are both set. No ids or no API: no-op. |
+| `js/quiz.js` | Opt-in `[data-dfd-quiz]` checks. Does not bind old `checkQuiz`, `checkQ`, or `[data-quiz]` markup. |
+| `templates/lesson-shell.html` | Copy-from page. Not a hub lesson. |
+| `docs/LESSON_SHELL.md` | CSS and script order. |
+| `scripts/verify_site.py` | Crawls HTML. Baseline stubs, known missing anchors, and `python_course/s13-dataviz.html` (Pro markup, paywall scripts not in the file) are warnings. New breaks exit 1. |
+| `scripts/viewport_audit.mjs` | Playwright pass for HTTP errors, console errors, page errors, and document overflow. |
+
+Head order for a new lesson: the family stylesheet, then the page accent, then `dfd-system.css` last. Script order: `code-copy.js`, Supabase CDN, `supabase-config.js`, `supabase-auth.js`, `paywall.js`, `progress.js`, `lesson-common.js`, `quiz.js`, `analytics-tracker.js`. Do not load `hub-script.js` on a lesson. It already owns the home-page nav and scroll handlers.
+
+`css/course-light-theme.css`, `css/hub-light.css`, and `css/dfd-system.css` gained additive `.dfd-*` classes for diagrams, knowledge checks, progress, 48px targets, safe-area padding, and scrolling tables, SVG, and code. Syntax color classes and paywall `display` rules are unchanged.
+
 ## Local run
 
 Open `index.html` in a browser, or serve the folder:
 
 ```bash
 python3 -m http.server 8080
+python3 scripts/verify_site.py --self-test
+python3 scripts/verify_site.py
+node scripts/viewport_audit.mjs --base http://127.0.0.1:8080
 ```
 
-No install step. A change is live only after it is pushed to `main` and GitHub Pages finishes.
+The audit reads Playwright from `PLAYWRIGHT_MODULE` or `/Users/fakhruddinkhambaty/product-reviews/okavo/node_modules/playwright/index.js`. No package install is part of this site. A change is live only after it is pushed to `main` and GitHub Pages finishes.
 
 ## What not to get wrong
 

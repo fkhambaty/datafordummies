@@ -169,3 +169,133 @@ html {
         scroll-behavior: auto !important;
     }
 }
+
+/* Lesson foundation. These classes are opt-in. They do not restyle syntax
+   spans (.keyword .string .comment .function .number .type .operator) and
+   they do not set display on paywall, auth, or dashboard gates.
+   :where() loses to any lesson rule, so family styles keep their colors. */
+
+:where(body.dfd-safe) {
+    padding-left: max(16px, env(safe-area-inset-left, 0px));
+    padding-right: max(16px, env(safe-area-inset-right, 0px));
+    padding-bottom: max(16px, env(safe-area-inset-bottom, 0px));
+}
+
+:where(.dfd-hit, .dfd-quiz-choice, .dfd-back-top, .dfd-diagram-control, [data-dfd-complete]) {
+    min-width: 48px;
+    min-height: 48px;
+    touch-action: manipulation;
+}
+
+:where(.dfd-back-top) {
+    position: fixed;
+    right: max(16px, env(safe-area-inset-right, 0px));
+    bottom: max(16px, env(safe-area-inset-bottom, 0px));
+    z-index: 30;
+    padding: 0 14px;
+    border: 0;
+    border-radius: 999px;
+    background: var(--dfd-accent);
+    color: #fff;
+    font: 700 0.95rem/1 var(--dfd-font);
+    cursor: pointer;
+}
+
+:where(.dfd-quiz) {
+    max-width: 100%;
+    margin: 24px 0;
+    padding: 20px;
+    border: 1px solid var(--dfd-line);
+    border-radius: var(--dfd-radius);
+    background: var(--dfd-surface);
+}
+
+:where(.dfd-quiz-choice) {
+    display: block;
+    width: 100%;
+    margin: 8px 0;
+    padding: 12px 16px;
+    text-align: left;
+    font: 600 1rem/1.4 var(--dfd-font);
+    color: var(--dfd-text);
+    background: var(--dfd-wash);
+    border: 2px solid var(--dfd-line);
+    border-radius: var(--dfd-radius-sm);
+    overflow-wrap: anywhere;
+    cursor: pointer;
+}
+
+:where(.dfd-quiz-choice.dfd-quiz-correct) {
+    border-color: var(--dfd-ok);
+    background: #ecfdf5;
+}
+
+:where(.dfd-quiz-choice.dfd-quiz-wrong) {
+    border-color: var(--dfd-danger);
+    background: #fef2f2;
+}
+
+:where(.dfd-quiz-feedback, .dfd-quiz-explain) {
+    margin-top: 12px;
+    overflow-wrap: anywhere;
+}
+
+:where(.dfd-lesson-progress) {
+    margin: 20px 0;
+}
+
+:where(.dfd-lesson-progress-track) {
+    height: 12px;
+    border-radius: 999px;
+    background: var(--dfd-line);
+    overflow: hidden;
+}
+
+:where(.dfd-lesson-progress-fill) {
+    height: 100%;
+    width: 0;
+    background: var(--dfd-accent);
+}
+
+:where(.dfd-diagram) {
+    max-width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+:where(.dfd-diagram svg, svg.dfd-responsive) {
+    display: block;
+    max-width: 100%;
+    height: auto;
+}
+
+:where(.dfd-diagram-controls) {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 12px;
+}
+
+:where(.dfd-scroll) {
+    display: block;
+    max-width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+:where(pre, .code-block) {
+    max-width: 100%;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+    [data-dfd-reveal].dfd-reveal-pending {
+        opacity: 0;
+        transform: translateY(12px);
+    }
+
+    [data-dfd-reveal].dfd-revealed {
+        opacity: 1;
+        transform: none;
+        transition: opacity 420ms var(--dfd-ease), transform 420ms var(--dfd-ease);
+    }
+}

@@ -42,3 +42,13 @@ python3 -m http.server 8080
 ```
 
 Open http://127.0.0.1:8080 and click through the page you edited, including one course link from the footer.
+
+Before a foundation or lesson-shell change, also run:
+
+```bash
+python3 scripts/verify_site.py --self-test
+python3 scripts/verify_site.py
+node scripts/viewport_audit.mjs --base http://127.0.0.1:8080
+```
+
+`verify_site.py` is allowed to print baseline warnings for unfinished hub lessons. It must exit 0 for those. A broken internal link, a bad `dfd-system.css` link, or a new Pro page missing `paywall.js` is a failure. The audit script uses Playwright from `PLAYWRIGHT_MODULE` or the Okavo `node_modules` checkout. There is no site package install.
