@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Snowflake interview practice | Data For Dummies</title>
+    <link rel="stylesheet" href="../css/course-light-theme.css">
+    <style>:root { --course-primary: #0369a1; --course-accent: #0ea5e9; }</style>
+    <link rel="stylesheet" href="../css/dfd-system.css">
+</head>
+<body class="dfd-safe">
+    <div class="container">
+        <nav class="nav" aria-label="Interview">
+            <a href="index.html">All interviews</a>
+            <a href="../snowflake_course/hub.html">Snowflake course</a>
+        </nav>
+        <header class="lesson-hero">
+            <h1>Snowflake interview practice</h1>
+            <p>Six free questions with answers from the course.</p>
+<p>No invented scale numbers.</p>
+<p>Edition and region still change what you are allowed to claim in a design interview.</p>
+        </header>
+        <section class="section">
+<h2>1. Why is a virtual warehouse not the same thing as storage?</h2>
+<p>Tables live in the storage layer.</p>
+<p>A warehouse is a compute cluster that queries that storage.</p>
+<p>Two warehouses can read the same tables.</p>
+<p>Suspending a warehouse stops its compute credits and leaves the data in place.</p>
+</section>
+<section class="section">
+<h2>2. What is the Standard Edition limit for Time Travel, and what is Fail-safe?</h2>
+<p>Standard Time Travel is up to one day.</p>
+<p>Enterprise and above can extend it to 90 days.</p>
+<p>Fail-safe is a further 7 days of recovery that only Snowflake can attempt.</p>
+<p>You cannot query Fail-safe.</p>
+</section>
+<section class="section">
+<h2>3. When would you add a cluster instead of resizing a warehouse?</h2>
+<p>Resize when one query needs more CPU or memory.</p>
+<p>Add a cluster, on Enterprise multi-cluster warehouses, when many queries need to run at the same time.</p>
+<p>Clusters do not duplicate storage.</p>
+</section>
+<section class="section">
+<h2>4. What does a stream consume, and what does a dynamic table declare?</h2>
+<p>A stream is a bookmark of changes and advances when DML commits against it.</p>
+<p>A dynamic table declares a SELECT and a freshness target.</p>
+<p>The minimum target lag is one minute.</p>
+<p>Procedures and MERGE stay on tasks.</p>
+</section>
+<section class="section">
+<h2>5. How do you keep a dbt pull request off the production database?</h2>
+<p>Clone the production database, point a dbt target at the clone, run dbt build, and drop the clone.</p>
+<p>The clone shares micro-partitions until the run writes.</p>
+<p>Give that run its own warehouse with auto-suspend.</p>
+</section>
+<section class="section">
+<h2>6. What should you verify before calling a Cortex function in production?</h2>
+<p>That the function is available in your region, that it is not still marked Preview, that the role has the AI function privileges, and that AI Credits are an acceptable separate charge.</p>
+<p>Cortex Agents have been generally available since 4 November 2025.</p>
+<p>Analytical search is a separate switch.</p>
+</section>
+        <section class="section">
+            <h2>What not to claim in the room</h2>
+            <p>Do not quote a credit price, a trial dollar balance, or a query speed.</p>
+<p>Those depend on the contract, the region, and the data.</p>
+            <p>Do not say every Cortex function is generally available.</p>
+<p>Read the function's own status and the account's region.</p>
+            <p>Do not say a primary key rejects duplicates.</p>
+<p>Snowflake stores the constraint and does not enforce it.</p>
+            <p>Do not say Fail-safe is something you can query.</p>
+<p>It is a 7-day recovery window for Snowflake, after Time Travel ends.</p>
+            <p>Do not say 5X-Large and 6X-Large exist in every region.</p>
+<p>The size page marks them generally available on AWS and Azure, and in preview in US Government regions.</p>
+            <p>Password login for the dbt Snowflake adapter is the wrong default after 31 August 2026.</p>
+<p>Talk about key-pair or SSO, and mention the documented LEGACY_SERVICE exception if the interviewer asks about old service users.</p>
+        </section>
+        <section class="section">
+            <h2>Where to practice</h2>
+            <p>The two free lessons are <a href="../snowflake_course/meet-snowflake.html">Meet Snowflake</a> and <a href="../snowflake_course/trial-account.html">Trial account and Snowsight</a>.</p>
+            <p>Pro lessons cover warehouses, streams, Iceberg, Horizon, Cortex, and the dbt plus Airflow capstone. Start at the <a href="../snowflake_course/hub.html">course hub</a>.</p>
+            <p>Official references used for these answers: the architecture page, the editions page, the Time Travel page, the warehouse size page, the dynamic table decision guide, the Cortex Agents release note from 4 November 2025, and the dbt Snowflake setup page.</p>
+        </section>
+    
+        <section class="section">
+            <h2>A 60-second structure</h2>
+            <p>Name the layer first: storage, warehouse, or cloud services.</p>
+            <p>Name the edition gate if the feature has one. Multi-cluster, masking, 90-day Time Travel, search optimization, materialized views, and query acceleration start at Enterprise.</p>
+            <p>Name the cost: warehouse seconds, serverless credits, storage bytes, or AI Credits.</p>
+            <p>Name the limit you looked up: region, preview label, or the 60-second warehouse minimum.</p>
+            <p>Stop. A precise limit beats a made-up benchmark.</p>
+            <p>If you do not remember the edition, say you would check the edition matrix before you promise the feature.</p>
+            <p>If you do not remember the region, say you would check the feature's region list before you promise the demo.</p>
+            <p>Say which official page you would open. Naming the page is a stronger answer than a guessed number.</p>
+            <p>Offer to draw the three layers before you draw a pipeline.</p>
+            <p>Offer a clone for the pull request before you offer a full copy of the data.</p>
+            <p>Mention auto-suspend in seconds, and the 60-second minimum when a warehouse resumes.</p>
+            <p>Mention that search optimization and materialized views are different tools.</p>
+            <p>Search optimization is for a selective point lookup. A materialized view is a stored query on one table.</p>
+            <p>Both of those start at Enterprise Edition. Say that before you recommend them.</p>
+        </section>
+        <section class="section">
+            <h2>Official pages behind these answers</h2>
+            <ul class="summary-list">
+                <li><a href="https://docs.snowflake.com/en/user-guide/intro-key-concepts">Architecture</a></li>
+                <li><a href="https://docs.snowflake.com/en/user-guide/intro-editions">Editions</a></li>
+                <li><a href="https://docs.snowflake.com/en/user-guide/data-time-travel">Time Travel</a></li>
+                <li><a href="https://docs.snowflake.com/en/user-guide/data-failsafe">Fail-safe</a></li>
+                <li><a href="https://docs.snowflake.com/en/user-guide/warehouses-multicluster">Multi-cluster warehouses</a></li>
+                <li><a href="https://docs.snowflake.com/en/user-guide/performance-query-warehouse-size">Warehouse sizes</a></li>
+                <li><a href="https://docs.snowflake.com/en/user-guide/streams-intro">Streams</a></li>
+                <li><a href="https://docs.snowflake.com/en/user-guide/dynamic-tables/decision-guide">Dynamic tables</a></li>
+                <li><a href="https://docs.snowflake.com/en/sql-reference/sql/create-clone">Zero-copy clone</a></li>
+                <li><a href="https://docs.snowflake.com/en/release-notes/2025/other/2025-11-04-cortex-agents">Cortex Agents, 4 November 2025</a></li>
+                <li><a href="https://docs.snowflake.com/en/user-guide/snowflake-cortex/aisql">Cortex AI Functions</a></li>
+                <li><a href="https://docs.getdbt.com/docs/core/connect-data-platform/snowflake-setup">dbt Snowflake setup</a></li>
+            </ul>
+        </section>
+    </div>
+</body>
+</html>

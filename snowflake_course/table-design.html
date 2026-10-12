@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Tables, pruning, and history | Snowflake course | Data For Dummies</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="../css/dfd-system.css">
+</head>
+<body class="dfd-safe" data-course-id="snowflake" data-lesson-id="table-design" data-lesson-label="Tables, pruning, and history" data-total-lessons="13" data-access="pro">
+    <div class="container">
+        <nav class="nav" aria-label="Course">
+            <a href="hub.html">Course hub</a>
+            <a href="../index.html">Home</a>
+            <a href="#check">Knowledge check</a>
+        </nav>
+        <header class="lesson-hero" id="top">
+            <p class="sf-kicker">Pro · Lesson 6 of 13</p>
+            <h1>Tables, pruning, and history</h1>
+            <p>Micro-partitions, clustering, search optimization, materialized views, Time Travel, and zero-copy clones.</p>
+        </header>
+        <div class="dfd-lesson-progress" data-dfd-progress>
+            <p class="dfd-lesson-progress-label" data-dfd-progress-label>Sign in to save your place.</p>
+            <div class="dfd-lesson-progress-track" data-dfd-progress-bar role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-label="Course progress">
+                <div class="dfd-lesson-progress-fill" data-dfd-progress-fill>
+</div>
+            </div>
+        </div>
+        <section class="section" data-dfd-reveal>
+            <div class="eli5-box">
+                <h4>Picture it this way</h4>
+                <p>Each micro-partition is a sealed box of rows, stored by column, with a label that says the smallest and largest value inside. A question about one day can skip every box whose label says it is a different day. Clustering is retaping the boxes so the labels get more useful. Time Travel is a camera roll of older boxes. A clone is a second name for the same boxes until someone changes a row.</p>
+            </div>
+        </section>
+        <section class="section" data-dfd-reveal>
+<h2>Pruning, clustering, search optimization, materialized views</h2>
+<p>Snowflake collects clustering metadata as data is loaded and uses it to skip micro-partitions. A clustering key asks the automatic clustering service to keep rows with similar key values in the same partitions. That service costs compute credits, and reclustering writes new partitions. Cluster large tables whose common filters match the key. Do not cluster a tiny lookup table.</p>
+<p>Search optimization, Enterprise Edition and above, builds a search access path for selective point lookups. It is a background service. Queries are not faster until the path is built, and <code>search_optimization_progress</code> on <code>SHOW TABLES</code> tells you when that happened. It is the wrong tool for a wide date-range scan. Clustering is the better first try there.</p>
+<p>A materialized view, also Enterprise and above, stores the result of a query from one table and maintains it. The optimizer might still scan the base table. Maintenance has a cost. Snowflake's decision guide says materialized views are for speeding a known query shape on one table, while pipelines with joins belong in dynamic tables.</p>
+<table class="comparison-table dfd-scroll">
+<thead>
+<tr>
+<th>Tool</th>
+<th>Edition</th>
+<th>Use it when</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Clustering key</td>
+<td>All editions</td>
+<td>Large table, repeated range or equality filters on the same columns</td>
+</tr>
+<tr>
+<td>Search optimization</td>
+<td>Enterprise+</td>
+<td>Very selective point lookups</td>
+</tr>
+<tr>
+<td>Materialized view</td>
+<td>Enterprise+</td>
+<td>A repeated aggregation or filter on a single table</td>
+</tr>
+<tr>
+<td>Query acceleration</td>
+<td>Enterprise+</td>
+<td>Outlier queries on a mixed warehouse. Covered in the warehouse lesson</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section class="section" data-dfd-reveal>
+<h2>Time Travel and Fail-safe</h2>
+<p>Time Travel lets you query, clone, or undrop data from the retention window. Standard Time Travel is up to 1 day on every edition. Extended Time Travel, up to 90 days, needs Enterprise Edition or higher. <code>DATA_RETENTION_TIME_IN_DAYS = 0</code> is how you turn Time Travel off for an object that allows it, such as a transient table.</p>
+<p>When the retention window ends, the bytes move to Fail-safe for 7 days. Fail-safe is not configurable, not queryable by you, and is a best-effort recovery performed by Snowflake. It is not a second Time Travel. You pay for the stored bytes in both states.</p>
+<p>Transient tables skip Fail-safe. Temporary tables last for the session. Permanent tables get both Time Travel and Fail-safe. Pick transient for staging data you can reload.</p>
+<div class="code-block">
+<pre>
+<code>SELECT * FROM orders AT (OFFSET =&gt; -900);
+
+CREATE OR REPLACE TABLE orders_backup CLONE orders;
+
+UNDROP TABLE orders;</code>
+</pre>
+</div>
+</section>
+<section class="section" data-dfd-reveal>
+<h2>Zero-copy clone</h2>
+<p>
+<code>CREATE TABLE ... CLONE</code> makes a new object that shares the source micro-partitions. There is no extra storage charge until the source or the clone changes. Each side then owns its new partitions, and each side has its own Time Travel.</p>
+<p>Cloning a database or schema at a past timestamp fails if a child table no longer has that history. <code>IGNORE TABLES WITH INSUFFICIENT DATA RETENTION</code> skips those children. <code>IGNORE HYBRID TABLES</code> exists when a hybrid table cannot be cloned the same way.</p>
+<p>A clone is the cheap way to give dbt or a pull request its own copy of production. The capstone lesson uses that pattern. It is not a backup you can keep forever without storage cost, because every later change is stored.</p>
+</section>
+        <section class="section dfd-diagram" data-dfd-diagram data-dfd-reveal>
+<h2>See it move</h2>
+<div data-dfd-diagram-panel="one">
+<svg class="dfd-responsive" viewBox="0 0 360 120" role="img" aria-label="Pruning skips a micro-partition">
+<rect class="sf-drift" x="16" y="36" width="70" height="48" rx="8" fill="#bae6fd">
+</rect>
+<rect x="110" y="28" width="140" height="64" rx="8" fill="#0284c7">
+</rect>
+<rect x="274" y="36" width="70" height="48" rx="8" fill="#e0f2fe" stroke="#0369a1">
+</rect>
+</svg>
+</div>
+<div data-dfd-diagram-panel="two" hidden>
+<svg class="dfd-responsive" viewBox="0 0 360 120" role="img" aria-label="Time Travel reads an older version">
+<rect x="16" y="36" width="70" height="48" rx="8" fill="#e0f2fe">
+</rect>
+<rect class="sf-drift" x="110" y="28" width="140" height="64" rx="8" fill="#0369a1">
+</rect>
+<rect x="274" y="36" width="70" height="48" rx="8" fill="#e0f2fe" stroke="#0369a1">
+</rect>
+</svg>
+</div>
+<div data-dfd-diagram-panel="three" hidden>
+<svg class="dfd-responsive" viewBox="0 0 360 120" role="img" aria-label="Clone shares partitions until a change">
+<rect x="16" y="36" width="70" height="48" rx="8" fill="#e0f2fe">
+</rect>
+<rect x="110" y="28" width="140" height="64" rx="8" fill="#bae6fd">
+</rect>
+<rect class="sf-drift" x="274" y="36" width="70" height="48" rx="8" fill="#0ea5e9">
+</rect>
+</svg>
+</div>
+<div class="dfd-diagram-controls">
+<button type="button" data-dfd-diagram-step="one" aria-pressed="true">Skip a partition</button>
+<button type="button" data-dfd-diagram-step="two" aria-pressed="false">Travel back</button>
+<button type="button" data-dfd-diagram-step="three" aria-pressed="false">Clone the name</button>
+</div>
+</section>
+        <section class="section" id="lab" data-dfd-reveal>
+            <h2>Lab: retention, a past read, and a clone</h2>
+            <p>Set retention to one day, which is valid on Standard Edition. Update a row, read the previous version with <code>AT (OFFSET => -60)</code> if you are still inside the window, and clone the table. The clone should match the current table until you update only one of them.</p>
+            <div class="code-block">
+<pre>
+<code>USE WAREHOUSE LEARN_WH;
+USE DATABASE LEARN_DB;
+USE SCHEMA PUBLIC;
+
+ALTER TABLE orders SET DATA_RETENTION_TIME_IN_DAYS = 1;
+UPDATE orders SET amount = 99 WHERE order_id = 1;
+
+SELECT amount FROM orders WHERE order_id = 1;
+SELECT amount FROM orders AT (OFFSET =&gt; -60) WHERE order_id = 1;
+
+CREATE OR REPLACE TABLE orders_clone CLONE orders;
+UPDATE orders_clone SET amount = 1 WHERE order_id = 1;
+SELECT &#x27;live&#x27; AS which, amount FROM orders WHERE order_id = 1
+UNION ALL
+SELECT &#x27;clone&#x27;, amount FROM orders_clone WHERE order_id = 1;</code>
+</pre>
+</div>
+            <p>
+<button type="button" data-dfd-complete>Mark lesson complete</button>
+</p>
+            <p data-dfd-complete-status>
+</p>
+        </section>
+        
+        <section class="section" id="summary" data-dfd-reveal>
+            <h2>Concept summary</h2>
+            <ul class="summary-list">
+<li>Micro-partitions are 50 to 500 MB uncompressed and stored compressed by column.</li>
+<li>Clustering helps range pruning. Search optimization helps point lookups. Materialized views precompute one table.</li>
+<li>Time Travel is 1 day on Standard and up to 90 days on Enterprise and above. Fail-safe is 7 days and not a user query.</li>
+<li>A clone shares storage until either object changes.</li>
+</ul>
+        </section>
+        <section class="section" id="check" data-dfd-reveal>
+<h2>Knowledge check</h2>
+<section class="dfd-quiz" data-dfd-quiz data-explanation="Extended Time Travel up to 90 days starts at Enterprise. Fail-safe is not a user query.">
+<h3 data-dfd-prompt>What is the Standard Edition Time Travel maximum?</h3>
+<div data-dfd-choices>
+<button type="button" data-correct="false">90 days</button>
+<button type="button" data-correct="true">1 day</button>
+<button type="button" data-correct="false">7 days of Fail-safe that you can query</button>
+</div>
+<p class="dfd-quiz-feedback" data-dfd-feedback hidden>
+</p>
+<p class="dfd-quiz-explain" data-dfd-explain hidden>
+</p>
+</section>
+<section class="dfd-quiz" data-dfd-quiz data-explanation="The clone shares existing partitions until one side changes them.">
+<h3 data-dfd-prompt>When does a zero-copy clone start using its own storage?</h3>
+<div data-dfd-choices>
+<button type="button" data-correct="false">The moment CREATE CLONE finishes</button>
+<button type="button" data-correct="true">When the clone or the source writes new micro-partitions</button>
+<button type="button" data-correct="false">Only after Fail-safe ends</button>
+</div>
+<p class="dfd-quiz-feedback" data-dfd-feedback hidden>
+</p>
+<p class="dfd-quiz-explain" data-dfd-explain hidden>
+</p>
+</section>
+<section class="dfd-quiz" data-dfd-quiz data-explanation="Search optimization maintains a search access path. It requires Enterprise or higher.">
+<h3 data-dfd-prompt>Which feature targets a selective point lookup?</h3>
+<div data-dfd-choices>
+<button type="button" data-correct="true">Search optimization</button>
+<button type="button" data-correct="false">A larger CSV file format</button>
+<button type="button" data-correct="false">Fail-safe</button>
+</div>
+<p class="dfd-quiz-feedback" data-dfd-feedback hidden>
+</p>
+<p class="dfd-quiz-explain" data-dfd-explain hidden>
+</p>
+</section>
+</section>
+        <section class="section" data-dfd-reveal>
+            <h2>Official sources</h2>
+            <p>Checked against Snowflake documentation in October 2026. Product behavior still depends on your edition, cloud, and region.</p>
+            <ul class="source-list">
+<li>
+<a href="https://docs.snowflake.com/en/user-guide/tables-clustering-micropartitions" target="_blank" rel="noopener noreferrer">Micro-partitions and clustering</a>
+</li>
+<li>
+<a href="https://docs.snowflake.com/en/user-guide/search-optimization-service" target="_blank" rel="noopener noreferrer">Search optimization</a>
+</li>
+<li>
+<a href="https://docs.snowflake.com/en/user-guide/views-materialized" target="_blank" rel="noopener noreferrer">Materialized views</a>
+</li>
+<li>
+<a href="https://docs.snowflake.com/en/user-guide/data-time-travel" target="_blank" rel="noopener noreferrer">Time Travel</a>
+</li>
+<li>
+<a href="https://docs.snowflake.com/en/user-guide/tables-storage-considerations" target="_blank" rel="noopener noreferrer">Zero-copy cloning storage</a>
+</li>
+</ul>
+        </section>
+        <nav class="lesson-nav" aria-label="Lesson order">
+            <a class="secondary" href="stages-loading.html">Previous: Stages, COPY, and Snowpipe</a>
+            <a href="warehouses-cost.html">Next: Warehouses and cost</a>
+        </nav>
+    </div>
+    <script src="../js/code-copy.js">
+</script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2">
+</script>
+    <script src="../js/supabase-config.js">
+</script>
+    <script src="../js/supabase-auth.js">
+</script>
+    <script src="../js/paywall.js">
+</script>
+    <script src="../js/progress.js">
+</script>
+    <script src="../js/lesson-common.js">
+</script>
+    <script src="../js/quiz.js">
+</script>
+    <script src="../js/analytics-tracker.js">
+</script>
+</body>
+</html>

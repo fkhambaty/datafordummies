@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Meet Snowflake | Snowflake course | Data For Dummies</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="../css/dfd-system.css">
+</head>
+<body class="dfd-safe" data-course-id="snowflake" data-lesson-id="meet-snowflake" data-lesson-label="Meet Snowflake" data-total-lessons="13">
+    <div class="container">
+        <nav class="nav" aria-label="Course">
+            <a href="hub.html">Course hub</a>
+            <a href="../index.html">Home</a>
+            <a href="#check">Knowledge check</a>
+        </nav>
+        <header class="lesson-hero" id="top">
+            <p class="sf-kicker">Free · Lesson 1 of 13</p>
+            <h1>Meet Snowflake</h1>
+            <p>Snowflake is a cloud data platform. You do not install the database on your laptop.</p>
+        </header>
+        <div class="dfd-lesson-progress" data-dfd-progress>
+            <p class="dfd-lesson-progress-label" data-dfd-progress-label>Sign in to save your place.</p>
+            <div class="dfd-lesson-progress-track" data-dfd-progress-bar role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-label="Course progress">
+                <div class="dfd-lesson-progress-fill" data-dfd-progress-fill>
+</div>
+            </div>
+        </div>
+        <section class="section" data-dfd-reveal>
+            <div class="eli5-box">
+                <h4>Picture it this way</h4>
+                <p>Think of a library. The books live in a warehouse that every reader can reach. The reading rooms are separate, and you can open a bigger room when the club arrives. A front desk checks cards, finds the shelf, and sends you to a room. Snowflake splits the job the same way: stored data, compute rooms called virtual warehouses, and a cloud-services desk.</p>
+            </div>
+        </section>
+        <section class="section" data-dfd-reveal>
+<h2>Three layers, on purpose</h2>
+<p>Snowflake runs on a public cloud you choose: Amazon Web Services, Microsoft Azure, or Google Cloud. Snowflake manages the software. You cannot install the service on your own machines.</p>
+<p>The architecture is a hybrid. Stored data sits in one central place, like a shared-disk database. Queries run on massively parallel clusters that do not share their compute with each other, like a shared-nothing database.</p>
+<table class="comparison-table dfd-scroll">
+<thead>
+<tr>
+<th>Layer</th>
+<th>What it does</th>
+<th>What you pay attention to</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Database storage</td>
+<td>Holds table data, including Time Travel and Fail-safe bytes</td>
+<td>Storage grows when data changes and when history is kept</td>
+</tr>
+<tr>
+<td>Compute</td>
+<td>Virtual warehouses run SQL, DML, loads, and Snowpark code</td>
+<td>Credits while a warehouse is running</td>
+</tr>
+<tr>
+<td>Cloud services</td>
+<td>Sign-in, access control, metadata, optimization, and query dispatch</td>
+<td>A daily credit adjustment applies only after cloud services pass 10% of that day&#x27;s warehouse usage</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section class="section" data-dfd-reveal>
+<h2>What a warehouse is, and is not</h2>
+<p>A virtual warehouse is a cluster of compute. It is not the place your tables are stored. Two warehouses can query the same tables at the same time without sharing CPU.</p>
+<p>Warehouses come in two types, Standard and Snowpark-optimized. Snowpark-optimized warehouses are the ones Snowflake recommends when the work needs a lot of memory, such as machine-learning training. Ordinary SQL can use a Standard warehouse.</p>
+<p>Each warehouse has a size. On Generation 1 warehouses the documented hourly credits start at 1 for X-Small and double at each larger size through 6X-Large. Generation 2 warehouses can bill differently, so read the current credit table before you estimate a bill. Credits are billed per second with a 60-second minimum.</p>
+</section>
+<section class="section" data-dfd-reveal>
+<h2>Editions decide features, not curiosity</h2>
+<p>Each account has an edition: Standard, Enterprise, Business Critical, or Virtual Private Snowflake (VPS). Higher editions add features. They do not change the three-layer shape.</p>
+<p>Standard includes virtual warehouses, resource monitors, one day of Time Travel, and Fail-safe. Enterprise adds multi-cluster warehouses, extended Time Travel up to 90 days, masking policies, row access policies, materialized views, search optimization, and query acceleration. Business Critical adds stronger network isolation, Tri-Secret Secure, and failover. VPS isolates the account from other Snowflake customers' hardware.</p>
+<p>Unit prices also depend on region and on whether the account is On Demand or Capacity. This course does not invent a price. Use Snowflake's current pricing page for numbers.</p>
+</section>
+        <section class="section dfd-diagram" data-dfd-diagram data-dfd-reveal>
+<h2>See it move</h2>
+<div data-dfd-diagram-panel="one">
+<svg class="dfd-responsive" viewBox="0 0 360 120" role="img" aria-label="Storage layer highlighted">
+<rect class="sf-drift" x="16" y="36" width="70" height="48" rx="8" fill="#bae6fd">
+</rect>
+<rect x="110" y="28" width="140" height="64" rx="8" fill="#0284c7">
+</rect>
+<rect x="274" y="36" width="70" height="48" rx="8" fill="#e0f2fe" stroke="#0369a1">
+</rect>
+</svg>
+</div>
+<div data-dfd-diagram-panel="two" hidden>
+<svg class="dfd-responsive" viewBox="0 0 360 120" role="img" aria-label="Compute warehouse highlighted">
+<rect x="16" y="36" width="70" height="48" rx="8" fill="#e0f2fe">
+</rect>
+<rect class="sf-drift" x="110" y="28" width="140" height="64" rx="8" fill="#0369a1">
+</rect>
+<rect x="274" y="36" width="70" height="48" rx="8" fill="#e0f2fe" stroke="#0369a1">
+</rect>
+</svg>
+</div>
+<div data-dfd-diagram-panel="three" hidden>
+<svg class="dfd-responsive" viewBox="0 0 360 120" role="img" aria-label="Cloud services highlighted">
+<rect x="16" y="36" width="70" height="48" rx="8" fill="#e0f2fe">
+</rect>
+<rect x="110" y="28" width="140" height="64" rx="8" fill="#bae6fd">
+</rect>
+<rect class="sf-drift" x="274" y="36" width="70" height="48" rx="8" fill="#0ea5e9">
+</rect>
+</svg>
+</div>
+<div class="dfd-diagram-controls">
+<button type="button" data-dfd-diagram-step="one" aria-pressed="true">Storage</button>
+<button type="button" data-dfd-diagram-step="two" aria-pressed="false">Warehouse</button>
+<button type="button" data-dfd-diagram-step="three" aria-pressed="false">Cloud services</button>
+</div>
+</section>
+        <section class="section" id="lab" data-dfd-reveal>
+            <h2>Lab: name the three layers</h2>
+            <p>You can run this in any Snowflake worksheet after the next lesson creates an account. It only reads your session. It does not create objects.</p>
+            <div class="code-block">
+<pre>
+<code>SELECT CURRENT_ACCOUNT() AS account_name,
+       CURRENT_REGION() AS region_name,
+       CURRENT_WAREHOUSE() AS warehouse_name,
+       CURRENT_ROLE() AS role_name;</code>
+</pre>
+</div>
+            <p>
+<button type="button" data-dfd-complete>Mark lesson complete</button>
+</p>
+            <p data-dfd-complete-status>
+</p>
+        </section>
+        
+        <section class="section" id="summary" data-dfd-reveal>
+            <h2>Concept summary</h2>
+            <ul class="summary-list">
+<li>Snowflake is hosted. You pick a public cloud and a region at account creation.</li>
+<li>Storage, virtual warehouses, and cloud services are separate layers.</li>
+<li>A warehouse burns credits while it runs. Storage is a different bill.</li>
+<li>Edition controls features such as multi-cluster warehouses, 90-day Time Travel, and masking.</li>
+</ul>
+        </section>
+        <section class="section" id="check" data-dfd-reveal>
+<h2>Knowledge check</h2>
+<section class="dfd-quiz" data-dfd-quiz data-explanation="Storage is central. Warehouses are compute clusters pointed at that storage.">
+<h3 data-dfd-prompt>Where do Snowflake tables live relative to a virtual warehouse?</h3>
+<div data-dfd-choices>
+<button type="button" data-correct="false">Inside that warehouse, so another warehouse cannot see them</button>
+<button type="button" data-correct="true">In the storage layer, which warehouses read independently</button>
+<button type="button" data-correct="false">Only on your laptop until you publish them</button>
+</div>
+<p class="dfd-quiz-feedback" data-dfd-feedback hidden>
+</p>
+<p class="dfd-quiz-explain" data-dfd-explain hidden>
+</p>
+</section>
+<section class="dfd-quiz" data-dfd-quiz data-explanation="The edition matrix lists multi-cluster warehouses starting at Enterprise.">
+<h3 data-dfd-prompt>Which edition is required for multi-cluster warehouses?</h3>
+<div data-dfd-choices>
+<button type="button" data-correct="false">Standard</button>
+<button type="button" data-correct="true">Enterprise or higher</button>
+<button type="button" data-correct="false">Only Virtual Private Snowflake</button>
+</div>
+<p class="dfd-quiz-feedback" data-dfd-feedback hidden>
+</p>
+<p class="dfd-quiz-explain" data-dfd-explain hidden>
+</p>
+</section>
+<section class="dfd-quiz" data-dfd-quiz data-explanation="The 10% adjustment is calculated each UTC day and never exceeds that day&#x27;s cloud-services usage.">
+<h3 data-dfd-prompt>When does Snowflake charge for cloud services?</h3>
+<div data-dfd-choices>
+<button type="button" data-correct="false">For every query, at the same rate as the warehouse</button>
+<button type="button" data-correct="true">Only the daily amount above 10% of that day&#x27;s warehouse compute</button>
+<button type="button" data-correct="false">Never. Cloud services are free on every edition</button>
+</div>
+<p class="dfd-quiz-feedback" data-dfd-feedback hidden>
+</p>
+<p class="dfd-quiz-explain" data-dfd-explain hidden>
+</p>
+</section>
+</section>
+        <section class="section" data-dfd-reveal>
+            <h2>Official sources</h2>
+            <p>Checked against Snowflake documentation in October 2026. Product behavior still depends on your edition, cloud, and region.</p>
+            <ul class="source-list">
+<li>
+<a href="https://docs.snowflake.com/en/user-guide/intro-key-concepts" target="_blank" rel="noopener noreferrer">Key concepts and architecture</a>
+</li>
+<li>
+<a href="https://docs.snowflake.com/en/user-guide/intro-editions" target="_blank" rel="noopener noreferrer">Snowflake editions</a>
+</li>
+<li>
+<a href="https://docs.snowflake.com/en/user-guide/warehouses-overview" target="_blank" rel="noopener noreferrer">Overview of warehouses</a>
+</li>
+<li>
+<a href="https://docs.snowflake.com/en/user-guide/cost-understanding-compute" target="_blank" rel="noopener noreferrer">Understanding compute cost</a>
+</li>
+</ul>
+        </section>
+        <nav class="lesson-nav" aria-label="Lesson order">
+            <a class="secondary" href="hub.html">Course hub</a>
+            <a href="trial-account.html">Next: Trial account and Snowsight</a>
+        </nav>
+    </div>
+    <script src="../js/code-copy.js">
+</script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2">
+</script>
+    <script src="../js/supabase-config.js">
+</script>
+    <script src="../js/supabase-auth.js">
+</script>
+    <script src="../js/paywall.js">
+</script>
+    <script src="../js/progress.js">
+</script>
+    <script src="../js/lesson-common.js">
+</script>
+    <script src="../js/quiz.js">
+</script>
+    <script src="../js/analytics-tracker.js">
+</script>
+</body>
+</html>

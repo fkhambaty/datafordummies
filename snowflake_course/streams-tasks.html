@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Streams, tasks, and dynamic tables | Snowflake course | Data For Dummies</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="../css/dfd-system.css">
+</head>
+<body class="dfd-safe" data-course-id="snowflake" data-lesson-id="streams-tasks" data-lesson-label="Streams, tasks, and dynamic tables" data-total-lessons="13" data-access="pro">
+    <div class="container">
+        <nav class="nav" aria-label="Course">
+            <a href="hub.html">Course hub</a>
+            <a href="../index.html">Home</a>
+            <a href="#check">Knowledge check</a>
+        </nav>
+        <header class="lesson-hero" id="top">
+            <p class="sf-kicker">Pro · Lesson 8 of 13</p>
+            <h1>Streams, tasks, and dynamic tables</h1>
+            <p>Streams remember changes. Tasks run SQL on a schedule. Dynamic tables declare the SQL and a freshness target.</p>
+        </header>
+        <div class="dfd-lesson-progress" data-dfd-progress>
+            <p class="dfd-lesson-progress-label" data-dfd-progress-label>Sign in to save your place.</p>
+            <div class="dfd-lesson-progress-track" data-dfd-progress-bar role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-label="Course progress">
+                <div class="dfd-lesson-progress-fill" data-dfd-progress-fill>
+</div>
+            </div>
+        </div>
+        <section class="section" data-dfd-reveal>
+            <div class="eli5-box">
+                <h4>Picture it this way</h4>
+                <p>A stream is a bookmark in a book of changes. It does not copy the table. A task is an alarm clock that runs a statement, and it can look at the bookmark so it only rings when new changes exist. A dynamic table is a recipe taped to the fridge: Snowflake recooks the recipe often enough to meet the freshness you asked for.</p>
+            </div>
+        </section>
+        <section class="section" data-dfd-reveal>
+<h2>Streams</h2>
+<p>A stream on a table tracks inserts, updates, and deletes since the stream was last consumed. Consuming means using the stream in a DML statement that commits. A plain SELECT does not advance the bookmark. <code>METADATA$ACTION</code> and <code>METADATA$ISUPDATE</code> tell you what happened.</p>
+<p>Standard streams show the net change. Append-only streams are for insert-only sources. A stream on a dynamic table must be created with <code>ON DYNAMIC TABLE</code>. <code>ON TABLE</code> errors. Those streams are standard streams only. Append-only is not supported there. The dynamic table itself must be refreshing incrementally. A full refresh has no incremental history to track.</p>
+<div class="code-block">
+<pre>
+<code>CREATE OR REPLACE STREAM orders_stream ON TABLE orders;
+SELECT METADATA$ACTION, METADATA$ISUPDATE, order_id
+FROM orders_stream;</code>
+</pre>
+</div>
+</section>
+<section class="section" data-dfd-reveal>
+<h2>Tasks, including triggered tasks</h2>
+<p>A task runs SQL, a procedure call, or a procedural block. Give it a warehouse, or leave the warehouse off and set <code>TARGET_COMPLETION_INTERVAL</code> for a serverless task. Do not set both. A new task is suspended until you <code>ALTER TASK ... RESUME</code>. Resuming usually requires the task owner and the privilege to run the statement.</p>
+<p>A task with <code>WHEN SYSTEM$STREAM_HAS_DATA('orders_stream')</code> skips its statement when the bookmark is empty. Triggered tasks can fire when a stream on a table, view, directory table, or supported Iceberg table changes, so you do not poll. Snowflake's migration guide says a stream on a dynamic table should use a scheduled task plus that WHEN clause, not a triggered task. The triggered-task page lists dynamic tables as a supported source for the table itself. Match the pattern to the object you created, and read the page for that object before you productionize it.</p>
+</section>
+<section class="section" data-dfd-reveal>
+<h2>Dynamic tables</h2>
+<p>A dynamic table materializes a SELECT and refreshes to a target lag. The documented minimum target lag is one minute. Intermediate tables can use <code>TARGET_LAG = DOWNSTREAM</code> so they refresh only when a later table needs them. Joins and aggregations belong here. Stored procedures, MERGE, and loops do not. Use streams and tasks for those.</p>
+<p>
+<code>SCHEDULER = DISABLE</code> has been generally available since March 2026. You cannot combine it with <code>TARGET_LAG</code>. Snowflake will not schedule the refresh. An orchestrator such as Airflow or dbt calls the refresh, and refreshes do not cascade upstream or downstream. That is the right switch when a DAG already owns the order.</p>
+<p>Changing the SELECT reinitializes the dynamic table. Non-deterministic functions such as <code>RANDOM()</code> force a full refresh when the mode is AUTO, and they fail the create when you demand incremental. Dynamic tables store the current result, not a history of changes. Slowly changing dimension type 2 still wants a stream and a task.</p>
+<div class="code-block">
+<pre>
+<code>CREATE OR REPLACE DYNAMIC TABLE orders_daily
+  TARGET_LAG = &#x27;1 hour&#x27;
+  WAREHOUSE = LEARN_WH
+AS
+SELECT region, SUM(amount) AS amount_sum
+FROM orders
+GROUP BY region;</code>
+</pre>
+</div>
+</section>
+        <section class="section dfd-diagram" data-dfd-diagram data-dfd-reveal>
+<h2>See it move</h2>
+<div data-dfd-diagram-panel="one">
+<svg class="dfd-responsive" viewBox="0 0 360 120" role="img" aria-label="A stream bookmark on new rows">
+<rect class="sf-drift" x="16" y="36" width="70" height="48" rx="8" fill="#bae6fd">
+</rect>
+<rect x="110" y="28" width="140" height="64" rx="8" fill="#0284c7">
+</rect>
+<rect x="274" y="36" width="70" height="48" rx="8" fill="#e0f2fe" stroke="#0369a1">
+</rect>
+</svg>
+</div>
+<div data-dfd-diagram-panel="two" hidden>
+<svg class="dfd-responsive" viewBox="0 0 360 120" role="img" aria-label="A task consuming the stream">
+<rect x="16" y="36" width="70" height="48" rx="8" fill="#e0f2fe">
+</rect>
+<rect class="sf-drift" x="110" y="28" width="140" height="64" rx="8" fill="#0369a1">
+</rect>
+<rect x="274" y="36" width="70" height="48" rx="8" fill="#e0f2fe" stroke="#0369a1">
+</rect>
+</svg>
+</div>
+<div data-dfd-diagram-panel="three" hidden>
+<svg class="dfd-responsive" viewBox="0 0 360 120" role="img" aria-label="A dynamic table refresh">
+<rect x="16" y="36" width="70" height="48" rx="8" fill="#e0f2fe">
+</rect>
+<rect x="110" y="28" width="140" height="64" rx="8" fill="#bae6fd">
+</rect>
+<rect class="sf-drift" x="274" y="36" width="70" height="48" rx="8" fill="#0ea5e9">
+</rect>
+</svg>
+</div>
+<div class="dfd-diagram-controls">
+<button type="button" data-dfd-diagram-step="one" aria-pressed="true">Bookmark the change</button>
+<button type="button" data-dfd-diagram-step="two" aria-pressed="false">Task reads it</button>
+<button type="button" data-dfd-diagram-step="three" aria-pressed="false">Dynamic table refreshes</button>
+</div>
+</section>
+        <section class="section" id="lab" data-dfd-reveal>
+            <h2>Lab: a stream and a dynamic table</h2>
+            <p>Insert a row and read the stream. Then create a dynamic table with a one-hour lag so the trial warehouse is not refreshing every minute. Suspend the task if you resume one. Drop the dynamic table at the end of the day if you want to stop its refresh warehouse from waking up.</p>
+            <div class="code-block">
+<pre>
+<code>USE WAREHOUSE LEARN_WH;
+USE DATABASE LEARN_DB;
+USE SCHEMA PUBLIC;
+
+CREATE OR REPLACE STREAM orders_stream ON TABLE orders;
+INSERT INTO orders VALUES (20, &#x27;south&#x27;, 12);
+SELECT METADATA$ACTION, order_id, region, amount
+FROM orders_stream;
+
+CREATE OR REPLACE DYNAMIC TABLE orders_by_region
+  TARGET_LAG = &#x27;1 hour&#x27;
+  WAREHOUSE = LEARN_WH
+AS
+SELECT region, SUM(amount) AS amount_sum
+FROM orders
+GROUP BY region;
+
+SELECT * FROM orders_by_region;</code>
+</pre>
+</div>
+            <p>
+<button type="button" data-dfd-complete>Mark lesson complete</button>
+</p>
+            <p data-dfd-complete-status>
+</p>
+        </section>
+        
+        <section class="section" id="summary" data-dfd-reveal>
+            <h2>Concept summary</h2>
+            <ul class="summary-list">
+<li>A stream is a change bookmark. DML consumes it. SELECT does not.</li>
+<li>Tasks are suspended when created. Serverless tasks use a target completion interval instead of a warehouse.</li>
+<li>Dynamic tables want a lag of at least one minute, or DOWNSTREAM, unless the scheduler is disabled.</li>
+<li>Use tasks for MERGE and procedures. Use dynamic tables for declarative SQL.</li>
+</ul>
+        </section>
+        <section class="section" id="check" data-dfd-reveal>
+<h2>Knowledge check</h2>
+<section class="dfd-quiz" data-dfd-quiz data-explanation="Reading the stream in a query does not consume it.">
+<h3 data-dfd-prompt>What advances a stream&#x27;s bookmark?</h3>
+<div data-dfd-choices>
+<button type="button" data-correct="false">Any SELECT from the stream</button>
+<button type="button" data-correct="true">A committed DML statement that consumes the stream</button>
+<button type="button" data-correct="false">Suspending the warehouse</button>
+</div>
+<p class="dfd-quiz-feedback" data-dfd-feedback hidden>
+</p>
+<p class="dfd-quiz-explain" data-dfd-explain hidden>
+</p>
+</section>
+<section class="dfd-quiz" data-dfd-quiz data-explanation="The decision guide states a one-minute minimum. Sub-minute work stays on streams and tasks.">
+<h3 data-dfd-prompt>What is the shortest target lag for a dynamic table?</h3>
+<div data-dfd-choices>
+<button type="button" data-correct="false">1 second</button>
+<button type="button" data-correct="true">1 minute</button>
+<button type="button" data-correct="false">1 day</button>
+</div>
+<p class="dfd-quiz-feedback" data-dfd-feedback hidden>
+</p>
+<p class="dfd-quiz-explain" data-dfd-explain hidden>
+</p>
+</section>
+<section class="dfd-quiz" data-dfd-quiz data-explanation="Disabled scheduling has been GA since March 2026 and does not cascade.">
+<h3 data-dfd-prompt>What does SCHEDULER = DISABLE change?</h3>
+<div data-dfd-choices>
+<button type="button" data-correct="false">Snowflake refreshes the dynamic table every minute</button>
+<button type="button" data-correct="true">You refresh it yourself, and you do not set TARGET_LAG</button>
+<button type="button" data-correct="false">It turns the table into a materialized view</button>
+</div>
+<p class="dfd-quiz-feedback" data-dfd-feedback hidden>
+</p>
+<p class="dfd-quiz-explain" data-dfd-explain hidden>
+</p>
+</section>
+</section>
+        <section class="section" data-dfd-reveal>
+            <h2>Official sources</h2>
+            <p>Checked against Snowflake documentation in October 2026. Product behavior still depends on your edition, cloud, and region.</p>
+            <ul class="source-list">
+<li>
+<a href="https://docs.snowflake.com/en/user-guide/streams-intro" target="_blank" rel="noopener noreferrer">Introduction to streams</a>
+</li>
+<li>
+<a href="https://docs.snowflake.com/en/user-guide/tasks-triggered" target="_blank" rel="noopener noreferrer">Triggered tasks</a>
+</li>
+<li>
+<a href="https://docs.snowflake.com/en/user-guide/dynamic-tables/decision-guide" target="_blank" rel="noopener noreferrer">Dynamic table decision guide</a>
+</li>
+<li>
+<a href="https://docs.snowflake.com/en/user-guide/dynamic-tables/migrate-streams-tasks" target="_blank" rel="noopener noreferrer">Migrate streams and tasks</a>
+</li>
+</ul>
+        </section>
+        <nav class="lesson-nav" aria-label="Lesson order">
+            <a class="secondary" href="warehouses-cost.html">Previous: Warehouses and cost</a>
+            <a href="snowpark-python.html">Next: Snowpark Python</a>
+        </nav>
+    </div>
+    <script src="../js/code-copy.js">
+</script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2">
+</script>
+    <script src="../js/supabase-config.js">
+</script>
+    <script src="../js/supabase-auth.js">
+</script>
+    <script src="../js/paywall.js">
+</script>
+    <script src="../js/progress.js">
+</script>
+    <script src="../js/lesson-common.js">
+</script>
+    <script src="../js/quiz.js">
+</script>
+    <script src="../js/analytics-tracker.js">
+</script>
+</body>
+</html>

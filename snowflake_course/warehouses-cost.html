@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Warehouses and cost | Snowflake course | Data For Dummies</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="../css/dfd-system.css">
+</head>
+<body class="dfd-safe" data-course-id="snowflake" data-lesson-id="warehouses-cost" data-lesson-label="Warehouses and cost" data-total-lessons="13" data-access="pro">
+    <div class="container">
+        <nav class="nav" aria-label="Course">
+            <a href="hub.html">Course hub</a>
+            <a href="../index.html">Home</a>
+            <a href="#check">Knowledge check</a>
+        </nav>
+        <header class="lesson-hero" id="top">
+            <p class="sf-kicker">Pro · Lesson 7 of 13</p>
+            <h1>Warehouses and cost</h1>
+            <p>Size, multi-cluster scale-out, auto-suspend, resource monitors, and query acceleration.</p>
+        </header>
+        <div class="dfd-lesson-progress" data-dfd-progress>
+            <p class="dfd-lesson-progress-label" data-dfd-progress-label>Sign in to save your place.</p>
+            <div class="dfd-lesson-progress-track" data-dfd-progress-bar role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-label="Course progress">
+                <div class="dfd-lesson-progress-fill" data-dfd-progress-fill>
+</div>
+            </div>
+        </div>
+        <section class="section" data-dfd-reveal>
+            <div class="eli5-box">
+                <h4>Picture it this way</h4>
+                <p>A warehouse is a rented reading room. A bigger room has more desks and a higher hourly rate. Auto-suspend locks the room when everyone leaves. Auto-resume unlocks it when the next person arrives, and the first minute is always billed. A resource monitor is a prepaid card that can lock the room when the card runs out. Query acceleration is borrowing extra desks only for the one hard question.</p>
+            </div>
+        </section>
+        <section class="section" data-dfd-reveal>
+<h2>Size is Generation 1 credits, doubled each step</h2>
+<p>Snowflake's warehouse-size page documents Generation 1 credits per hour as 1, 2, 4, 8, 16, 32, 64, 128, 256, and 512 from X-Small through 6X-Large. X-Small is the default for <code>CREATE WAREHOUSE</code>. Credits are billed per second with a 60-second minimum each time compute is provisioned. 5X-Large and 6X-Large are generally available on AWS and Azure, and the same page marks them as preview in US Government regions. Do not assume Google Cloud has those two sizes.</p>
+<p>Generation 2 warehouses can use a different credit rate. Read the current credit table before you put a number in a budget. This lesson's meter stops at Large so it stays readable. It shows the doubling. It is not an invoice.</p>
+<p>A larger warehouse can finish a heavy query sooner. If it finishes twice as fast at twice the credit rate, the query cost can stay flat. If the query was already pruning well, the larger size mostly burns credits. Compare the query profile, then resize back.</p>
+</section>
+<section class="section" data-dfd-reveal>
+<h2>Multi-cluster, suspend, and monitors</h2>
+<p>Multi-cluster warehouses require Enterprise Edition or higher. <code>MIN_CLUSTER_COUNT</code> and <code>MAX_CLUSTER_COUNT</code> set the range. <code>SCALING_POLICY = STANDARD</code> starts clusters sooner. <code>ECONOMY</code> waits longer to save credits. Clusters do not copy your data.</p>
+<p>Snowflake recommends a short auto-suspend, for example 5 or 10 minutes, because billing is per second. If queries arrive every two minutes, a 60-second suspend will resume constantly and pay the 60-second minimum each time. Match the setting to the gaps you actually have.</p>
+<p>A resource monitor watches warehouse credits, including cloud services that support those warehouses, over an interval. It can notify, suspend a standard warehouse, or disable an Adaptive Warehouse. It can monitor cloud-services credits and still cannot suspend them. Creating a monitor is an account-level job. Use <code>ACCOUNTADMIN</code> or a role that was granted the privilege. A warehouse monitor does not, by itself, cap serverless features such as query acceleration.</p>
+<div class="code-block">
+<pre>
+<code>CREATE WAREHOUSE IF NOT EXISTS ANALYTICS_WH
+  WAREHOUSE_SIZE = SMALL
+  MIN_CLUSTER_COUNT = 1
+  MAX_CLUSTER_COUNT = 2
+  SCALING_POLICY = ECONOMY
+  AUTO_SUSPEND = 300
+  AUTO_RESUME = TRUE
+  INITIALLY_SUSPENDED = TRUE;</code>
+</pre>
+</div>
+</section>
+<section class="section" data-dfd-reveal>
+<h2>Query acceleration</h2>
+<p>Query acceleration is an Enterprise feature. It leases serverless compute for parts of eligible queries, especially outliers on a mixed warehouse. Queries that do not need it do not pay the serverless rate. The scale factor is a multiplier of the warehouse's consumption rate. A factor of 8 means serverless acceleration cannot run at more than eight times the warehouse rate. Setting the factor to 0 removes that cap. Snowflake says to do that only when you are choosing speed over cost.</p>
+<p>Acceleration credits show up apart from warehouse metering. <code>QUERY_HISTORY</code> includes <code>QUERY_ACCELERATION_BYTES_SCANNED</code> and related columns so you can see which queries used it. <code>SYSTEM$ESTIMATE_QUERY_ACCELERATION</code> is the documented way to preview a scale factor before you leave it on.</p>
+<div class="code-block">
+<pre>
+<code>ALTER WAREHOUSE LEARN_WH SET
+  ENABLE_QUERY_ACCELERATION = TRUE
+  QUERY_ACCELERATION_MAX_SCALE_FACTOR = 8;</code>
+</pre>
+</div>
+</section>
+        <section class="section dfd-diagram" data-dfd-diagram data-dfd-reveal>
+<h2>See it move</h2>
+<div data-dfd-diagram-panel="one">
+<svg class="dfd-responsive" viewBox="0 0 360 120" role="img" aria-label="A single warehouse cluster">
+<rect class="sf-drift" x="16" y="36" width="70" height="48" rx="8" fill="#bae6fd">
+</rect>
+<rect x="110" y="28" width="140" height="64" rx="8" fill="#0284c7">
+</rect>
+<rect x="274" y="36" width="70" height="48" rx="8" fill="#e0f2fe" stroke="#0369a1">
+</rect>
+</svg>
+</div>
+<div data-dfd-diagram-panel="two" hidden>
+<svg class="dfd-responsive" viewBox="0 0 360 120" role="img" aria-label="Multi-cluster scale-out">
+<rect x="16" y="36" width="70" height="48" rx="8" fill="#e0f2fe">
+</rect>
+<rect class="sf-drift" x="110" y="28" width="140" height="64" rx="8" fill="#0369a1">
+</rect>
+<rect x="274" y="36" width="70" height="48" rx="8" fill="#e0f2fe" stroke="#0369a1">
+</rect>
+</svg>
+</div>
+<div data-dfd-diagram-panel="three" hidden>
+<svg class="dfd-responsive" viewBox="0 0 360 120" role="img" aria-label="Query acceleration beside the warehouse">
+<rect x="16" y="36" width="70" height="48" rx="8" fill="#e0f2fe">
+</rect>
+<rect x="110" y="28" width="140" height="64" rx="8" fill="#bae6fd">
+</rect>
+<rect class="sf-drift" x="274" y="36" width="70" height="48" rx="8" fill="#0ea5e9">
+</rect>
+</svg>
+</div>
+<div class="dfd-diagram-controls">
+<button type="button" data-dfd-diagram-step="one" aria-pressed="true">One small cluster</button>
+<button type="button" data-dfd-diagram-step="two" aria-pressed="false">A second cluster</button>
+<button type="button" data-dfd-diagram-step="three" aria-pressed="false">Acceleration beside it</button>
+</div>
+</section>
+        <section class="section" id="lab" data-dfd-reveal>
+            <h2>Lab: suspend, a monitor, and acceleration with a cap</h2>
+            <p>The warehouse statements need a role that can create warehouses. The resource monitor needs a role that can create monitors, often <code>ACCOUNTADMIN</code>. Skip the monitor if your trial role cannot create one, and still set auto-suspend. The credit quota of 5 is a learning cap, not a recommended production budget.</p>
+            <div class="code-block">
+<pre>
+<code>ALTER WAREHOUSE LEARN_WH SET
+  WAREHOUSE_SIZE = XSMALL
+  AUTO_SUSPEND = 300
+  AUTO_RESUME = TRUE
+  ENABLE_QUERY_ACCELERATION = FALSE;
+
+USE ROLE ACCOUNTADMIN;
+CREATE OR REPLACE RESOURCE MONITOR LEARN_MONITOR
+  WITH CREDIT_QUOTA = 5
+  FREQUENCY = MONTHLY
+  START_TIMESTAMP = IMMEDIATELY
+  TRIGGERS
+    ON 80 PERCENT DO NOTIFY
+    ON 100 PERCENT DO SUSPEND
+    ON 110 PERCENT DO SUSPEND_IMMEDIATE;
+ALTER WAREHOUSE LEARN_WH SET RESOURCE_MONITOR = LEARN_MONITOR;</code>
+</pre>
+</div>
+            <p>
+<button type="button" data-dfd-complete>Mark lesson complete</button>
+</p>
+            <p data-dfd-complete-status>
+</p>
+        </section>
+        
+<section class="section" data-dfd-reveal>
+    <h2>Warehouse size, as a meter</h2>
+    <p>Generation 1 credits per hour double with each step up from X-Small. This meter shows that shape. It is not a bill.</p>
+    <div class="sf-meter" data-sf-meter>
+        <div class="sf-meter-track" aria-hidden="true">
+<div class="sf-bar" data-sf-bar>
+</div>
+</div>
+        <p data-sf-label>X-Small · 1 credit per hour on a Generation 1 warehouse</p>
+        <div class="sf-meter-controls">
+            <button type="button" class="dfd-hit" data-sf-size="X-Small · 1 credit per hour on a Generation 1 warehouse" data-sf-width="12%" aria-pressed="true">X-Small</button>
+            <button type="button" class="dfd-hit" data-sf-size="Small · 2 credits per hour on a Generation 1 warehouse" data-sf-width="24%">Small</button>
+            <button type="button" class="dfd-hit" data-sf-size="Medium · 4 credits per hour on a Generation 1 warehouse" data-sf-width="48%">Medium</button>
+            <button type="button" class="dfd-hit" data-sf-size="Large · 8 credits per hour on a Generation 1 warehouse" data-sf-width="96%">Large</button>
+        </div>
+    </div>
+</section>
+<script>
+(function () {
+    var root = document.querySelector('[data-sf-meter]');
+    if (!root) return;
+    var bar = root.querySelector('[data-sf-bar]');
+    var label = root.querySelector('[data-sf-label]');
+    root.addEventListener('click', function (event) {
+        var button = event.target.closest('[data-sf-size]');
+        if (!button) return;
+        if (bar) bar.style.width = button.getAttribute('data-sf-width');
+        if (label) label.textContent = button.getAttribute('data-sf-size');
+        root.querySelectorAll('[data-sf-size]').forEach(function (item) {
+            item.setAttribute('aria-pressed', item === button ? 'true' : 'false');
+        });
+    });
+})();
+</script>
+
+        <section class="section" id="summary" data-dfd-reveal>
+            <h2>Concept summary</h2>
+            <ul class="summary-list">
+<li>Generation 1 credit rates double by size. Confirm Generation 2 and government-region limits before you budget.</li>
+<li>Multi-cluster is Enterprise and adds concurrency, not a second copy of storage.</li>
+<li>Auto-suspend is in seconds. A too-short window pays the 60-second resume minimum over and over.</li>
+<li>Resource monitors suspend warehouses. Query acceleration is separate serverless spend with its own scale factor.</li>
+</ul>
+        </section>
+        <section class="section" id="check" data-dfd-reveal>
+<h2>Knowledge check</h2>
+<section class="dfd-quiz" data-dfd-quiz data-explanation="X-Small is 1, Small 2, Medium 4, Large 8.">
+<h3 data-dfd-prompt>On a Generation 1 warehouse, how many credits per hour is a Large?</h3>
+<div data-dfd-choices>
+<button type="button" data-correct="false">1</button>
+<button type="button" data-correct="true">8</button>
+<button type="button" data-correct="false">512</button>
+</div>
+<p class="dfd-quiz-feedback" data-dfd-feedback hidden>
+</p>
+<p class="dfd-quiz-explain" data-dfd-explain hidden>
+</p>
+</section>
+<section class="dfd-quiz" data-dfd-quiz data-explanation="The resource-monitor docs say a warehouse monitor cannot suspend cloud services.">
+<h3 data-dfd-prompt>What can a warehouse resource monitor fail to stop?</h3>
+<div data-dfd-choices>
+<button type="button" data-correct="false">A standard warehouse, when a suspend trigger fires</button>
+<button type="button" data-correct="true">Cloud-services credits, which it can watch but not suspend</button>
+<button type="button" data-correct="false">Auto-resume</button>
+</div>
+<p class="dfd-quiz-feedback" data-dfd-feedback hidden>
+</p>
+<p class="dfd-quiz-explain" data-dfd-explain hidden>
+</p>
+</section>
+<section class="dfd-quiz" data-dfd-quiz data-explanation="Zero means no upper bound. Use it only when speed matters more than the serverless bill.">
+<h3 data-dfd-prompt>What does QUERY_ACCELERATION_MAX_SCALE_FACTOR = 0 do?</h3>
+<div data-dfd-choices>
+<button type="button" data-correct="false">Turns acceleration off</button>
+<button type="button" data-correct="true">Removes the serverless cost cap for acceleration</button>
+<button type="button" data-correct="false">Sets the warehouse to X-Small</button>
+</div>
+<p class="dfd-quiz-feedback" data-dfd-feedback hidden>
+</p>
+<p class="dfd-quiz-explain" data-dfd-explain hidden>
+</p>
+</section>
+</section>
+        <section class="section" data-dfd-reveal>
+            <h2>Official sources</h2>
+            <p>Checked against Snowflake documentation in October 2026. Product behavior still depends on your edition, cloud, and region.</p>
+            <ul class="source-list">
+<li>
+<a href="https://docs.snowflake.com/en/user-guide/performance-query-warehouse-size" target="_blank" rel="noopener noreferrer">Increasing warehouse size</a>
+</li>
+<li>
+<a href="https://docs.snowflake.com/en/user-guide/warehouses-considerations" target="_blank" rel="noopener noreferrer">Warehouse considerations</a>
+</li>
+<li>
+<a href="https://docs.snowflake.com/en/user-guide/resource-monitors" target="_blank" rel="noopener noreferrer">Resource monitors</a>
+</li>
+<li>
+<a href="https://docs.snowflake.com/en/user-guide/query-acceleration-service" target="_blank" rel="noopener noreferrer">Query acceleration</a>
+</li>
+<li>
+<a href="https://docs.snowflake.com/en/user-guide/warehouses-multicluster" target="_blank" rel="noopener noreferrer">Multi-cluster warehouses</a>
+</li>
+</ul>
+        </section>
+        <nav class="lesson-nav" aria-label="Lesson order">
+            <a class="secondary" href="table-design.html">Previous: Tables, pruning, and history</a>
+            <a href="streams-tasks.html">Next: Streams, tasks, and dynamic tables</a>
+        </nav>
+    </div>
+    <script src="../js/code-copy.js">
+</script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2">
+</script>
+    <script src="../js/supabase-config.js">
+</script>
+    <script src="../js/supabase-auth.js">
+</script>
+    <script src="../js/paywall.js">
+</script>
+    <script src="../js/progress.js">
+</script>
+    <script src="../js/lesson-common.js">
+</script>
+    <script src="../js/quiz.js">
+</script>
+    <script src="../js/analytics-tracker.js">
+</script>
+</body>
+</html>

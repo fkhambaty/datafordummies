@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Iceberg and unstructured files | Snowflake course | Data For Dummies</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="../css/dfd-system.css">
+</head>
+<body class="dfd-safe" data-course-id="snowflake" data-lesson-id="iceberg-unstructured" data-lesson-label="Iceberg and unstructured files" data-total-lessons="13" data-access="pro">
+    <div class="container">
+        <nav class="nav" aria-label="Course">
+            <a href="hub.html">Course hub</a>
+            <a href="../index.html">Home</a>
+            <a href="#check">Knowledge check</a>
+        </nav>
+        <header class="lesson-hero" id="top">
+            <p class="sf-kicker">Pro · Lesson 10 of 13</p>
+            <h1>Iceberg and unstructured files</h1>
+            <p>Iceberg tables keep open metadata in your bucket. Unstructured files stay files until you decide to parse them.</p>
+        </header>
+        <div class="dfd-lesson-progress" data-dfd-progress>
+            <p class="dfd-lesson-progress-label" data-dfd-progress-label>Sign in to save your place.</p>
+            <div class="dfd-lesson-progress-track" data-dfd-progress-bar role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-label="Course progress">
+                <div class="dfd-lesson-progress-fill" data-dfd-progress-fill>
+</div>
+            </div>
+        </div>
+        <section class="section" data-dfd-reveal>
+            <div class="eli5-box">
+                <h4>Picture it this way</h4>
+                <p>An Iceberg table is a card catalog that Snowflake and other engines can both read. The cards and the books can live in your bucket. An external volume is the key to that bucket. A catalog-linked database is Snowflake subscribing to someone else's card catalog and noticing new cards. A PDF on a stage is still a PDF. A directory table is the list of filenames, not the words inside the PDF.</p>
+            </div>
+        </section>
+        <section class="section" data-dfd-reveal>
+<h2>External volumes and Snowflake-managed Iceberg</h2>
+<p>An external volume is an account-level object. It stores the cloud identity Snowflake uses to reach a storage location for Iceberg data and metadata. You create the volume before the Iceberg table. One volume can serve many tables. Writes require <code>ALLOW_WRITES</code>, which defaults to true, plus the cloud permissions documented for that provider.</p>
+<p>A Snowflake-managed Iceberg table uses <code>CATALOG = 'SNOWFLAKE'</code>, an external volume, and a <code>BASE_LOCATION</code>. Snowflake writes the Parquet data and the Iceberg metadata under that location. You can still point Spark or another reader at those files if the catalog is shared. Iceberg tables are listed for every edition. Private connectivity to external volumes is a Business Critical feature.</p>
+<div class="code-block">
+<pre>
+<code>CREATE OR REPLACE ICEBERG TABLE reviews (
+  id STRING,
+  product_name STRING,
+  review_date DATE
+)
+  CATALOG = &#x27;SNOWFLAKE&#x27;
+  EXTERNAL_VOLUME = &#x27;reviews_vol&#x27;
+  BASE_LOCATION = &#x27;product_reviews&#x27;;</code>
+</pre>
+</div>
+</section>
+<section class="section" data-dfd-reveal>
+<h2>Catalog-linked databases</h2>
+<p>A catalog-linked database syncs with an external Iceberg REST catalog, such as Snowflake Open Catalog or another REST catalog you have integrated. <code>CREATE DATABASE ... LINKED_CATALOG</code> points at that catalog integration. If the catalog does not vend credentials, you also set <code>EXTERNAL_VOLUME</code>.</p>
+<p>Snowflake can discover remote schemas and Iceberg tables and, where write support applies, insert and update them. The create-database page says you can create schemas, externally managed Iceberg tables, and database roles in that database. Creating other Snowflake object types there is not currently supported. Automated refresh is on by default.</p>
+<p>The owner role needs <code>USAGE</code> on the catalog integration and, when a volume is used, on the external volume. A 2025 behavior change routed that requirement through the database owner. Credential vending skips the volume grant. Do not copy a sample ARN from this page into a cloud account. Use the role your storage admin created.</p>
+</section>
+<section class="section" data-dfd-reveal>
+<h2>Unstructured files</h2>
+<p>Unstructured support is on every edition: files on a stage, a directory table that lists them, and file functions that build a URL or read contents. <code>BUILD_SCOPED_FILE_URL</code> returns a URL that works for a limited time for a role that can read the file. Check the current file-function page for that lifetime before you put the URL in an email. A scoped URL is not a public website.</p>
+<p>Directory tables do not extract text. Parsing a PDF or an image is a separate step, often a Python function or a Cortex function where that function is available in your region. Enable directory auto-refresh or run <code>ALTER STAGE ... REFRESH</code> before a stream or a triggered task can see a new file.</p>
+<div class="code-block">
+<pre>
+<code>CREATE OR REPLACE STAGE docs
+  DIRECTORY = (ENABLE = TRUE);
+
+ALTER STAGE docs REFRESH;
+
+SELECT relative_path,
+       BUILD_SCOPED_FILE_URL(@docs, relative_path) AS file_url
+FROM DIRECTORY(@docs);</code>
+</pre>
+</div>
+</section>
+        <section class="section dfd-diagram" data-dfd-diagram data-dfd-reveal>
+<h2>See it move</h2>
+<div data-dfd-diagram-panel="one">
+<svg class="dfd-responsive" viewBox="0 0 360 120" role="img" aria-label="External volume to cloud storage">
+<rect class="sf-drift" x="16" y="36" width="70" height="48" rx="8" fill="#bae6fd">
+</rect>
+<rect x="110" y="28" width="140" height="64" rx="8" fill="#0284c7">
+</rect>
+<rect x="274" y="36" width="70" height="48" rx="8" fill="#e0f2fe" stroke="#0369a1">
+</rect>
+</svg>
+</div>
+<div data-dfd-diagram-panel="two" hidden>
+<svg class="dfd-responsive" viewBox="0 0 360 120" role="img" aria-label="Iceberg metadata beside the data">
+<rect x="16" y="36" width="70" height="48" rx="8" fill="#e0f2fe">
+</rect>
+<rect class="sf-drift" x="110" y="28" width="140" height="64" rx="8" fill="#0369a1">
+</rect>
+<rect x="274" y="36" width="70" height="48" rx="8" fill="#e0f2fe" stroke="#0369a1">
+</rect>
+</svg>
+</div>
+<div data-dfd-diagram-panel="three" hidden>
+<svg class="dfd-responsive" viewBox="0 0 360 120" role="img" aria-label="Directory table listing files">
+<rect x="16" y="36" width="70" height="48" rx="8" fill="#e0f2fe">
+</rect>
+<rect x="110" y="28" width="140" height="64" rx="8" fill="#bae6fd">
+</rect>
+<rect class="sf-drift" x="274" y="36" width="70" height="48" rx="8" fill="#0ea5e9">
+</rect>
+</svg>
+</div>
+<div class="dfd-diagram-controls">
+<button type="button" data-dfd-diagram-step="one" aria-pressed="true">Your bucket</button>
+<button type="button" data-dfd-diagram-step="two" aria-pressed="false">Iceberg metadata</button>
+<button type="button" data-dfd-diagram-step="three" aria-pressed="false">A file list</button>
+</div>
+</section>
+        <section class="section" id="lab" data-dfd-reveal>
+            <h2>Lab: a directory table, and an Iceberg statement you adapt</h2>
+            <p>The stage lab runs without a cloud bucket. The Iceberg statement is the shape to adapt after you have a real external volume. It will fail until <code>reviews_vol</code> exists, which is expected. Do not invent an AWS role ARN.</p>
+            <div class="code-block">
+<pre>
+<code>USE WAREHOUSE LEARN_WH;
+USE DATABASE LEARN_DB;
+USE SCHEMA PUBLIC;
+
+CREATE OR REPLACE STAGE docs
+  DIRECTORY = (ENABLE = TRUE);
+ALTER STAGE docs REFRESH;
+LIST @docs;
+
+-- Adapt after the volume exists. Do not run this against a made-up volume.
+-- CREATE OR REPLACE ICEBERG TABLE reviews (
+--   id STRING,
+--   product_name STRING,
+--   review_date DATE
+-- )
+--   CATALOG = &#x27;SNOWFLAKE&#x27;
+--   EXTERNAL_VOLUME = &#x27;reviews_vol&#x27;
+--   BASE_LOCATION = &#x27;product_reviews&#x27;;</code>
+</pre>
+</div>
+            <p>
+<button type="button" data-dfd-complete>Mark lesson complete</button>
+</p>
+            <p data-dfd-complete-status>
+</p>
+        </section>
+        
+        <section class="section" id="summary" data-dfd-reveal>
+            <h2>Concept summary</h2>
+            <ul class="summary-list">
+<li>An external volume is the storage identity for Iceberg data and metadata.</li>
+<li>Snowflake-managed Iceberg tables use CATALOG = &#x27;SNOWFLAKE&#x27; and a base location.</li>
+<li>Catalog-linked databases follow an Iceberg REST catalog and currently hold schemas, Iceberg tables, and database roles.</li>
+<li>Directory tables list files. Scoped URLs expire. They do not parse the file.</li>
+</ul>
+        </section>
+        <section class="section" id="check" data-dfd-reveal>
+<h2>Knowledge check</h2>
+<section class="dfd-quiz" data-dfd-quiz data-explanation="The volume is the account-level connection to your bucket for Iceberg files.">
+<h3 data-dfd-prompt>What does an external volume store?</h3>
+<div data-dfd-choices>
+<button type="button" data-correct="false">A copy of every micro-partition in cloud services</button>
+<button type="button" data-correct="true">The identity Snowflake uses to reach Iceberg storage</button>
+<button type="button" data-correct="false">A Snowsight worksheet</button>
+</div>
+<p class="dfd-quiz-feedback" data-dfd-feedback hidden>
+</p>
+<p class="dfd-quiz-explain" data-dfd-explain hidden>
+</p>
+</section>
+<section class="dfd-quiz" data-dfd-quiz data-explanation="The CREATE DATABASE page says other object types are not currently supported there.">
+<h3 data-dfd-prompt>Which objects can you create inside a catalog-linked database today?</h3>
+<div data-dfd-choices>
+<button type="button" data-correct="true">Schemas, externally managed Iceberg tables, and database roles</button>
+<button type="button" data-correct="false">Any Snowflake object, including streams and pipes</button>
+<button type="button" data-correct="false">Only resource monitors</button>
+</div>
+<p class="dfd-quiz-feedback" data-dfd-feedback hidden>
+</p>
+<p class="dfd-quiz-explain" data-dfd-explain hidden>
+</p>
+</section>
+<section class="dfd-quiz" data-dfd-quiz data-explanation="The directory lists files. Reading or parsing them is a later step.">
+<h3 data-dfd-prompt>What does a directory table contain?</h3>
+<div data-dfd-choices>
+<button type="button" data-correct="true">One row per file on the stage</button>
+<button type="button" data-correct="false">The extracted text of each PDF</button>
+<button type="button" data-correct="false">A virtual warehouse</button>
+</div>
+<p class="dfd-quiz-feedback" data-dfd-feedback hidden>
+</p>
+<p class="dfd-quiz-explain" data-dfd-explain hidden>
+</p>
+</section>
+</section>
+        <section class="section" data-dfd-reveal>
+            <h2>Official sources</h2>
+            <p>Checked against Snowflake documentation in October 2026. Product behavior still depends on your edition, cloud, and region.</p>
+            <ul class="source-list">
+<li>
+<a href="https://docs.snowflake.com/en/user-guide/tables-iceberg-configure-external-volume" target="_blank" rel="noopener noreferrer">Configure an external volume</a>
+</li>
+<li>
+<a href="https://docs.snowflake.com/en/sql-reference/sql/create-database-catalog-linked" target="_blank" rel="noopener noreferrer">Catalog-linked database</a>
+</li>
+<li>
+<a href="https://docs.snowflake.com/en/user-guide/tables-iceberg-externally-managed-writes" target="_blank" rel="noopener noreferrer">External Iceberg writes</a>
+</li>
+<li>
+<a href="https://docs.snowflake.com/en/user-guide/unstructured-intro" target="_blank" rel="noopener noreferrer">Unstructured data</a>
+</li>
+</ul>
+        </section>
+        <nav class="lesson-nav" aria-label="Lesson order">
+            <a class="secondary" href="snowpark-python.html">Previous: Snowpark Python</a>
+            <a href="governance-horizon.html">Next: Governance and Horizon</a>
+        </nav>
+    </div>
+    <script src="../js/code-copy.js">
+</script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2">
+</script>
+    <script src="../js/supabase-config.js">
+</script>
+    <script src="../js/supabase-auth.js">
+</script>
+    <script src="../js/paywall.js">
+</script>
+    <script src="../js/progress.js">
+</script>
+    <script src="../js/lesson-common.js">
+</script>
+    <script src="../js/quiz.js">
+</script>
+    <script src="../js/analytics-tracker.js">
+</script>
+</body>
+</html>

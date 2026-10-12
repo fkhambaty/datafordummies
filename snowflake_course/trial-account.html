@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Trial account and Snowsight | Snowflake course | Data For Dummies</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="../css/dfd-system.css">
+</head>
+<body class="dfd-safe" data-course-id="snowflake" data-lesson-id="trial-account" data-lesson-label="Trial account and Snowsight" data-total-lessons="13">
+    <div class="container">
+        <nav class="nav" aria-label="Course">
+            <a href="hub.html">Course hub</a>
+            <a href="../index.html">Home</a>
+            <a href="#check">Knowledge check</a>
+        </nav>
+        <header class="lesson-hero" id="top">
+            <p class="sf-kicker">Free · Lesson 2 of 13</p>
+            <h1>Trial account and Snowsight</h1>
+            <p>A trial is a real Snowflake account with a free usage balance, a cloud, a region, and an edition.</p>
+        </header>
+        <div class="dfd-lesson-progress" data-dfd-progress>
+            <p class="dfd-lesson-progress-label" data-dfd-progress-label>Sign in to save your place.</p>
+            <div class="dfd-lesson-progress-track" data-dfd-progress-bar role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-label="Course progress">
+                <div class="dfd-lesson-progress-fill" data-dfd-progress-fill>
+</div>
+            </div>
+        </div>
+        <section class="section" data-dfd-reveal>
+            <div class="eli5-box">
+                <h4>Picture it this way</h4>
+                <p>Signing up is like getting a temporary library card. You pick the city (the cloud region), the kind of card (the edition), and you receive a prepaid balance. The card works for 30 days or until the balance is gone, whichever happens first. The reading room on the web is called Snowsight.</p>
+            </div>
+        </section>
+        <section class="section" data-dfd-reveal>
+<h2>What the signup actually chooses</h2>
+<p>Snowflake's trial documentation says you select the cloud platform, the region, and the Snowflake edition when you sign up. Those choices change which features exist and how fast the free balance falls. Enterprise features can consume extra credits.</p>
+<p>The trial lasts 30 days from the sign-up date, or until the free usage balance is used up, whichever comes first. You can cancel during the trial or upgrade to a paid account. Upgrading ends the free trial and moves the account to on-demand billing. Remaining trial credits still apply. This course does not state a dollar value for the balance, because the signup page is the place that shows the current offer.</p>
+<p>You also choose an account identifier. Prefer the organization name plus the account name. An older account locator still exists, and VPS locators use a different format.</p>
+</section>
+<section class="section" data-dfd-reveal>
+<h2>Snowsight is the web app</h2>
+<p>Snowsight is the web interface for worksheets, dashboards, history, and admin. It is included on every edition in the current edition matrix. Worksheets run SQL. Query History is where you open the query profile after a statement finishes.</p>
+<p>The same account can be reached from SnowSQL, the Snowflake CLI, Python connectors, JDBC, and ODBC. The worksheet is the fastest place to learn. A load command such as <code>PUT</code> is a client command. It does not run inside the browser worksheet.</p>
+<p>Keep the trial small. Create one X-Small warehouse, turn on auto-suspend, and do not leave a large warehouse running while you read. Storage for loaded files and Time Travel also reduces the free balance.</p>
+<div class="important-box">
+<h4>Region is sticky for this practice</h4>
+<p>Cortex features, 5X-Large and 6X-Large warehouses, and private networking are not available in every region. Pick the region your company will really use, then check that region's feature list before you build a demo that depends on Cortex or a very large warehouse.</p>
+</div>
+</section>
+<section class="section" data-dfd-reveal>
+<h2>A safe first session</h2>
+<p>After Snowsight opens, confirm the role, warehouse, database, and schema shown above the worksheet. A query with no warehouse selected cannot run. <code>ACCOUNTADMIN</code> is the role that can create account-level objects such as resource monitors. Use a narrower role for everyday SQL once the account exists.</p>
+<p>Find the edition without guessing. If your role can read organization usage, the accounts view has an <code>edition</code> column. Otherwise look at the account details in Snowsight.</p>
+</section>
+        <section class="section dfd-diagram" data-dfd-diagram data-dfd-reveal>
+<h2>See it move</h2>
+<div data-dfd-diagram-panel="one">
+<svg class="dfd-responsive" viewBox="0 0 360 120" role="img" aria-label="Cloud and region selection">
+<rect class="sf-drift" x="16" y="36" width="70" height="48" rx="8" fill="#bae6fd">
+</rect>
+<rect x="110" y="28" width="140" height="64" rx="8" fill="#0284c7">
+</rect>
+<rect x="274" y="36" width="70" height="48" rx="8" fill="#e0f2fe" stroke="#0369a1">
+</rect>
+</svg>
+</div>
+<div data-dfd-diagram-panel="two" hidden>
+<svg class="dfd-responsive" viewBox="0 0 360 120" role="img" aria-label="Snowsight worksheet">
+<rect x="16" y="36" width="70" height="48" rx="8" fill="#e0f2fe">
+</rect>
+<rect class="sf-drift" x="110" y="28" width="140" height="64" rx="8" fill="#0369a1">
+</rect>
+<rect x="274" y="36" width="70" height="48" rx="8" fill="#e0f2fe" stroke="#0369a1">
+</rect>
+</svg>
+</div>
+<div data-dfd-diagram-panel="three" hidden>
+<svg class="dfd-responsive" viewBox="0 0 360 120" role="img" aria-label="Warehouse suspended to save the trial balance">
+<rect x="16" y="36" width="70" height="48" rx="8" fill="#e0f2fe">
+</rect>
+<rect x="110" y="28" width="140" height="64" rx="8" fill="#bae6fd">
+</rect>
+<rect class="sf-drift" x="274" y="36" width="70" height="48" rx="8" fill="#0ea5e9">
+</rect>
+</svg>
+</div>
+<div class="dfd-diagram-controls">
+<button type="button" data-dfd-diagram-step="one" aria-pressed="true">Pick a region</button>
+<button type="button" data-dfd-diagram-step="two" aria-pressed="false">Open Snowsight</button>
+<button type="button" data-dfd-diagram-step="three" aria-pressed="false">Suspend the warehouse</button>
+</div>
+</section>
+        <section class="section" id="lab" data-dfd-reveal>
+            <h2>Lab: context, edition, and a warehouse that sleeps</h2>
+            <p>Run the context query in a worksheet. Create the warehouse only if you do not already have one. <code>AUTO_SUSPEND</code> is in seconds. 300 is five minutes, which matches Snowflake's advice to keep the idle window short because billing is per second. The 60-second minimum still applies each time the warehouse resumes.</p>
+            <div class="code-block">
+<pre>
+<code>SELECT CURRENT_ROLE() AS role_name,
+       CURRENT_WAREHOUSE() AS warehouse_name,
+       CURRENT_REGION() AS region_name;
+
+CREATE WAREHOUSE IF NOT EXISTS LEARN_WH
+  WAREHOUSE_SIZE = XSMALL
+  AUTO_SUSPEND = 300
+  AUTO_RESUME = TRUE
+  INITIALLY_SUSPENDED = TRUE
+  COMMENT = &#x27;Course warehouse. Suspends after 5 idle minutes.&#x27;;
+
+USE WAREHOUSE LEARN_WH;</code>
+</pre>
+</div>
+            <p>
+<button type="button" data-dfd-complete>Mark lesson complete</button>
+</p>
+            <p data-dfd-complete-status>
+</p>
+        </section>
+        
+        <section class="section" id="summary" data-dfd-reveal>
+            <h2>Concept summary</h2>
+            <ul class="summary-list">
+<li>A trial is 30 days or until the free usage balance is consumed.</li>
+<li>Cloud, region, and edition are chosen at signup and affect features and credit burn.</li>
+<li>Snowsight is the web UI. PUT is a client command, not a worksheet command.</li>
+<li>An X-Small warehouse with a short auto-suspend protects a trial balance.</li>
+</ul>
+        </section>
+        <section class="section" id="check" data-dfd-reveal>
+<h2>Knowledge check</h2>
+<section class="dfd-quiz" data-dfd-quiz data-explanation="The docs define the trial as 30 days from signup or depletion of the free balance.">
+<h3 data-dfd-prompt>When does a Snowflake trial end?</h3>
+<div data-dfd-choices>
+<button type="button" data-correct="true">After 30 days, or when the free usage balance is gone, whichever is first</button>
+<button type="button" data-correct="false">Only when you close the browser</button>
+<button type="button" data-correct="false">After a fixed credit grant that is the same in every region and edition</button>
+</div>
+<p class="dfd-quiz-feedback" data-dfd-feedback hidden>
+</p>
+<p class="dfd-quiz-explain" data-dfd-explain hidden>
+</p>
+</section>
+<section class="dfd-quiz" data-dfd-quiz data-explanation="The warehouse property is a number of seconds.">
+<h3 data-dfd-prompt>What does AUTO_SUSPEND = 300 mean?</h3>
+<div data-dfd-choices>
+<button type="button" data-correct="false">Suspend after 300 minutes</button>
+<button type="button" data-correct="true">Suspend after 300 seconds of inactivity</button>
+<button type="button" data-correct="false">Spend at most 300 credits</button>
+</div>
+<p class="dfd-quiz-feedback" data-dfd-feedback hidden>
+</p>
+<p class="dfd-quiz-explain" data-dfd-explain hidden>
+</p>
+</section>
+<section class="dfd-quiz" data-dfd-quiz data-explanation="PUT uploads a local file and is a client command.">
+<h3 data-dfd-prompt>Where should you run PUT file://orders.csv?</h3>
+<div data-dfd-choices>
+<button type="button" data-correct="false">In a Snowsight SQL worksheet</button>
+<button type="button" data-correct="true">From a client such as SnowSQL, not from the browser worksheet</button>
+<button type="button" data-correct="false">Inside a resource monitor</button>
+</div>
+<p class="dfd-quiz-feedback" data-dfd-feedback hidden>
+</p>
+<p class="dfd-quiz-explain" data-dfd-explain hidden>
+</p>
+</section>
+</section>
+        <section class="section" data-dfd-reveal>
+            <h2>Official sources</h2>
+            <p>Checked against Snowflake documentation in October 2026. Product behavior still depends on your edition, cloud, and region.</p>
+            <ul class="source-list">
+<li>
+<a href="https://docs.snowflake.com/en/user-guide/admin-trial-account" target="_blank" rel="noopener noreferrer">Trial accounts</a>
+</li>
+<li>
+<a href="https://docs.snowflake.com/en/user-guide/organizations-manage-accounts-editions" target="_blank" rel="noopener noreferrer">Working with account editions</a>
+</li>
+<li>
+<a href="https://docs.snowflake.com/en/user-guide/intro-editions" target="_blank" rel="noopener noreferrer">Snowflake editions</a>
+</li>
+<li>
+<a href="https://docs.snowflake.com/en/user-guide/warehouses-considerations" target="_blank" rel="noopener noreferrer">Warehouse considerations</a>
+</li>
+</ul>
+        </section>
+        <nav class="lesson-nav" aria-label="Lesson order">
+            <a class="secondary" href="meet-snowflake.html">Previous: Meet Snowflake</a>
+            <a href="architecture.html">Next: Architecture</a>
+        </nav>
+    </div>
+    <script src="../js/code-copy.js">
+</script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2">
+</script>
+    <script src="../js/supabase-config.js">
+</script>
+    <script src="../js/supabase-auth.js">
+</script>
+    <script src="../js/paywall.js">
+</script>
+    <script src="../js/progress.js">
+</script>
+    <script src="../js/lesson-common.js">
+</script>
+    <script src="../js/quiz.js">
+</script>
+    <script src="../js/analytics-tracker.js">
+</script>
+</body>
+</html>

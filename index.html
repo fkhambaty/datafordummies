@@ -247,6 +247,7 @@
                 <button type="button" onclick="enterCourse('airflow')">Airflow</button>
                 <button type="button" onclick="enterCourse('dbt')">dbt</button>
                 <button type="button" onclick="enterCourse('redshift')">Redshift</button>
+                <button type="button" onclick="enterCourse('snowflake')">Snowflake</button>
                 <button type="button" onclick="enterCourse('metabase')">Metabase</button>
                 <button type="button" onclick="enterCourse('datascience')">Data Science</button>
                 <button type="button" onclick="enterCourse('llm')">LLMs</button>
@@ -280,7 +281,7 @@
                 <ul class="ux-path-list">
                     <li><i class="fas fa-cubes"></i> Data modelling (Kimball)</li>
                     <li><i class="fas fa-project-diagram"></i> Apache Airflow</li>
-                    <li><i class="fab fa-aws"></i> Redshift & cloud storage</li>
+                    <li><i class="fab fa-aws"></i> Redshift, Snowflake & cloud storage</li>
                     <li><i class="fas fa-warehouse"></i> ETL patterns</li>
                 </ul>
                 <a href="learning-path.html" class="ux-btn ux-btn-secondary" style="margin-top:12px;">View path</a>
@@ -353,6 +354,10 @@
             <div class="ux-tool" onclick="enterCourse('redshift')">
                 <div class="ux-tool-icon" style="background:linear-gradient(135deg,#ff9900,#ffb84d)"><i class="fab fa-aws"></i></div>
                 <span>Redshift</span>
+            </div>
+            <div class="ux-tool" onclick="enterCourse('snowflake')">
+                <div class="ux-tool-icon" style="background:linear-gradient(135deg,#0369a1,#38bdf8)"><i class="fas fa-snowflake"></i></div>
+                <span>Snowflake</span>
             </div>
             <div class="ux-tool" onclick="enterCourse('postgres')">
                 <div class="ux-tool-icon" style="background:linear-gradient(135deg,#336791,#4a90c7)"><i class="fas fa-database"></i></div>
@@ -481,6 +486,7 @@
                     <h4>Cloud & Analytics</h4>
                     <a href="clickhouse_course/hub.html" onclick="enterCourse('clickhouse'); return false;">ClickHouse</a>
                     <a href="redshift_course/hub.html" onclick="enterCourse('redshift'); return false;">AWS Redshift</a>
+                    <a href="snowflake_course/hub.html" onclick="enterCourse('snowflake'); return false;">Snowflake</a>
                     <a href="metabase_course/hub.html" onclick="enterCourse('metabase'); return false;">Metabase BI</a>
                     <a href="kubernetes_course/index.html">Kubernetes</a>
                     <a href="terraform_course/index.html">Terraform</a>

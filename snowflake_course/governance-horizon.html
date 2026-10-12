@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Governance and Horizon | Snowflake course | Data For Dummies</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="../css/dfd-system.css">
+</head>
+<body class="dfd-safe" data-course-id="snowflake" data-lesson-id="governance-horizon" data-lesson-label="Governance and Horizon" data-total-lessons="13" data-access="pro">
+    <div class="container">
+        <nav class="nav" aria-label="Course">
+            <a href="hub.html">Course hub</a>
+            <a href="../index.html">Home</a>
+            <a href="#check">Knowledge check</a>
+        </nav>
+        <header class="lesson-hero" id="top">
+            <p class="sf-kicker">Pro · Lesson 11 of 13</p>
+            <h1>Governance and Horizon</h1>
+            <p>Roles, database roles, masking, row access, tags, access history, and Horizon Catalog.</p>
+        </header>
+        <div class="dfd-lesson-progress" data-dfd-progress>
+            <p class="dfd-lesson-progress-label" data-dfd-progress-label>Sign in to save your place.</p>
+            <div class="dfd-lesson-progress-track" data-dfd-progress-bar role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-label="Course progress">
+                <div class="dfd-lesson-progress-fill" data-dfd-progress-fill>
+</div>
+            </div>
+        </div>
+        <section class="section" data-dfd-reveal>
+            <div class="eli5-box">
+                <h4>Picture it this way</h4>
+                <p>A role is a badge. Grants are what the badge opens. A database role is a badge that only works inside one database, which you then pin onto an account role. A masking policy is a stamp that replaces a column when the badge is wrong. A row access policy throws away rows before that stamp is applied. Horizon Catalog is the desk that keeps those rules, including when another engine reads an Iceberg table.</p>
+            </div>
+        </section>
+        <section class="section" data-dfd-reveal>
+<h2>Account roles and database roles</h2>
+<p>Snowflake access is role-based on every edition. A user has roles. A role has grants. <code>ACCOUNTADMIN</code>, <code>SYSADMIN</code>, and <code>SECURITYADMIN</code> exist so that loading data and writing policy are not the same badge. Secondary roles can be active in a session. Policies often call <code>IS_ROLE_IN_SESSION</code> so a secondary role still counts.</p>
+<p>A database role lives in one database. You grant it to an account role. That keeps a schema's privileges from leaking across databases. In a catalog-linked database, database roles are one of the object types you are allowed to create.</p>
+<div class="code-block">
+<pre>
+<code>CREATE DATABASE ROLE LEARN_DB.READER_DB;
+GRANT USAGE ON DATABASE LEARN_DB TO DATABASE ROLE LEARN_DB.READER_DB;
+GRANT USAGE ON SCHEMA LEARN_DB.PUBLIC TO DATABASE ROLE LEARN_DB.READER_DB;
+GRANT SELECT ON ALL TABLES IN SCHEMA LEARN_DB.PUBLIC TO DATABASE ROLE LEARN_DB.READER_DB;
+GRANT DATABASE ROLE LEARN_DB.READER_DB TO ROLE SYSADMIN;</code>
+</pre>
+</div>
+</section>
+<section class="section" data-dfd-reveal>
+<h2>Masking, row access, and tags</h2>
+<p>Masking policies and row access policies require Enterprise Edition or higher. A masking policy returns a possibly rewritten value for a column. A row access policy returns true or false for whether the row is visible. When both exist, Snowflake evaluates the row access policy first. The same column cannot appear in both policy signatures.</p>
+<p>If a row policy looks up a mapping table, put that table in the same database as the protected table. That placement matters when the policy calls <code>IS_DATABASE_ROLE_IN_SESSION</code>.</p>
+<p>Object tags exist on Standard Edition. The edition matrix says some tagging features require Enterprise. Tag-based masking needs the masking feature, so it needs Enterprise or higher. Tags are how you mark a column as an email address once and attach a policy to the tag.</p>
+<div class="code-block">
+<pre>
+<code>CREATE OR REPLACE MASKING POLICY mask_email AS (val STRING) RETURNS STRING -&gt;
+  CASE
+    WHEN IS_ROLE_IN_SESSION(&#x27;PII_READER&#x27;) THEN val
+    ELSE &#x27;***&#x27;
+  END;</code>
+</pre>
+</div>
+</section>
+<section class="section" data-dfd-reveal>
+<h2>Access history and Horizon</h2>
+<p>
+<code>SNOWFLAKE.ACCOUNT_USAGE.ACCESS_HISTORY</code> is an Enterprise feature. It records which user read which columns. Account Usage views are not live. Snowflake documents a latency, so a query you ran a minute ago may be missing. Use Snowsight Query History for that query, and Account Usage for a later audit.</p>
+<p>Snowflake Horizon Catalog is the governance surface over those controls. The Horizon docs describe policy enforcement, tags, access history, and Trust Center checks for risky grants. Horizon can also enforce masking and row access when an external engine such as Spark, Trino, or PyIceberg reads an Iceberg table through the Horizon Iceberg REST catalog. The external engine receives a scan plan that already applied the policy. Writes from those engines are limited to policy shapes the Scan Plan API documents, and other shapes can return HTTP 403.</p>
+<p>Business Critical adds private connectivity, Tri-Secret Secure, and customer-managed keys. Do not claim those on a Standard trial. Differential privacy, aggregation policies, and projection policies are also Enterprise-and-above features and are separate from a basic mask.</p>
+</section>
+        <section class="section dfd-diagram" data-dfd-diagram data-dfd-reveal>
+<h2>See it move</h2>
+<div data-dfd-diagram-panel="one">
+<svg class="dfd-responsive" viewBox="0 0 360 120" role="img" aria-label="A role receiving a grant">
+<rect class="sf-drift" x="16" y="36" width="70" height="48" rx="8" fill="#bae6fd">
+</rect>
+<rect x="110" y="28" width="140" height="64" rx="8" fill="#0284c7">
+</rect>
+<rect x="274" y="36" width="70" height="48" rx="8" fill="#e0f2fe" stroke="#0369a1">
+</rect>
+</svg>
+</div>
+<div data-dfd-diagram-panel="two" hidden>
+<svg class="dfd-responsive" viewBox="0 0 360 120" role="img" aria-label="A masking policy on a column">
+<rect x="16" y="36" width="70" height="48" rx="8" fill="#e0f2fe">
+</rect>
+<rect class="sf-drift" x="110" y="28" width="140" height="64" rx="8" fill="#0369a1">
+</rect>
+<rect x="274" y="36" width="70" height="48" rx="8" fill="#e0f2fe" stroke="#0369a1">
+</rect>
+</svg>
+</div>
+<div data-dfd-diagram-panel="three" hidden>
+<svg class="dfd-responsive" viewBox="0 0 360 120" role="img" aria-label="Horizon applying the policy">
+<rect x="16" y="36" width="70" height="48" rx="8" fill="#e0f2fe">
+</rect>
+<rect x="110" y="28" width="140" height="64" rx="8" fill="#bae6fd">
+</rect>
+<rect class="sf-drift" x="274" y="36" width="70" height="48" rx="8" fill="#0ea5e9">
+</rect>
+</svg>
+</div>
+<div class="dfd-diagram-controls">
+<button type="button" data-dfd-diagram-step="one" aria-pressed="true">Grant a role</button>
+<button type="button" data-dfd-diagram-step="two" aria-pressed="false">Mask a column</button>
+<button type="button" data-dfd-diagram-step="three" aria-pressed="false">Horizon keeps the rule</button>
+</div>
+</section>
+        <section class="section" id="lab" data-dfd-reveal>
+            <h2>Lab: a database role, then a mask if your edition allows it</h2>
+            <p>The database role works on Standard. The masking policy fails on Standard with an edition error. That failure is the lesson. Enterprise trials can run the policy and then attach it to a column with <code>ALTER TABLE ... MODIFY COLUMN ... SET MASKING POLICY</code>.</p>
+            <div class="code-block">
+<pre>
+<code>USE DATABASE LEARN_DB;
+CREATE DATABASE ROLE IF NOT EXISTS LEARN_DB.READER_DB;
+GRANT USAGE ON SCHEMA LEARN_DB.PUBLIC TO DATABASE ROLE LEARN_DB.READER_DB;
+GRANT SELECT ON TABLE LEARN_DB.PUBLIC.ORDERS TO DATABASE ROLE LEARN_DB.READER_DB;
+
+CREATE OR REPLACE MASKING POLICY mask_email AS (val STRING) RETURNS STRING -&gt;
+  CASE
+    WHEN IS_ROLE_IN_SESSION(&#x27;PII_READER&#x27;) THEN val
+    ELSE &#x27;***&#x27;
+  END;</code>
+</pre>
+</div>
+            <p>
+<button type="button" data-dfd-complete>Mark lesson complete</button>
+</p>
+            <p data-dfd-complete-status>
+</p>
+        </section>
+        
+        <section class="section" id="summary" data-dfd-reveal>
+            <h2>Concept summary</h2>
+            <ul class="summary-list">
+<li>Grants go to roles. Database roles stay inside one database and are granted to account roles.</li>
+<li>Masking and row access start at Enterprise. Row access runs before masking.</li>
+<li>ACCESS_HISTORY is Enterprise and lags. Query History is the live view.</li>
+<li>Horizon Catalog carries those policies, including onto Iceberg reads from external engines.</li>
+</ul>
+        </section>
+        <section class="section" id="check" data-dfd-reveal>
+<h2>Knowledge check</h2>
+<section class="dfd-quiz" data-dfd-quiz data-explanation="Column-level and row-level security start at Enterprise in the edition matrix.">
+<h3 data-dfd-prompt>Which edition adds masking policies?</h3>
+<div data-dfd-choices>
+<button type="button" data-correct="false">Standard</button>
+<button type="button" data-correct="true">Enterprise or higher</button>
+<button type="button" data-correct="false">Only VPS</button>
+</div>
+<p class="dfd-quiz-feedback" data-dfd-feedback hidden>
+</p>
+<p class="dfd-quiz-explain" data-dfd-explain hidden>
+</p>
+</section>
+<section class="dfd-quiz" data-dfd-quiz data-explanation="Snowflake evaluates row access before masking.">
+<h3 data-dfd-prompt>When both policies exist, which runs first?</h3>
+<div data-dfd-choices>
+<button type="button" data-correct="false">The masking policy</button>
+<button type="button" data-correct="true">The row access policy</button>
+<button type="button" data-correct="false">Whichever was created first</button>
+</div>
+<p class="dfd-quiz-feedback" data-dfd-feedback hidden>
+</p>
+<p class="dfd-quiz-explain" data-dfd-explain hidden>
+</p>
+</section>
+<section class="dfd-quiz" data-dfd-quiz data-explanation="External engines such as Spark and Trino receive a policy-filtered plan.">
+<h3 data-dfd-prompt>What does Horizon Catalog add for Iceberg readers outside Snowflake?</h3>
+<div data-dfd-choices>
+<button type="button" data-correct="true">It can apply the same masking and row policies in the scan plan</button>
+<button type="button" data-correct="false">It copies the table into the external engine with no grants</button>
+<button type="button" data-correct="false">It disables Time Travel</button>
+</div>
+<p class="dfd-quiz-feedback" data-dfd-feedback hidden>
+</p>
+<p class="dfd-quiz-explain" data-dfd-explain hidden>
+</p>
+</section>
+</section>
+        <section class="section" data-dfd-reveal>
+            <h2>Official sources</h2>
+            <p>Checked against Snowflake documentation in October 2026. Product behavior still depends on your edition, cloud, and region.</p>
+            <ul class="source-list">
+<li>
+<a href="https://docs.snowflake.com/en/user-guide/intro-editions" target="_blank" rel="noopener noreferrer">Snowflake editions</a>
+</li>
+<li>
+<a href="https://docs.snowflake.com/en/user-guide/security-row-intro" target="_blank" rel="noopener noreferrer">Row access policies</a>
+</li>
+<li>
+<a href="https://docs.snowflake.com/en/user-guide/snowflake-horizon" target="_blank" rel="noopener noreferrer">Horizon Catalog</a>
+</li>
+<li>
+<a href="https://docs.snowflake.com/en/user-guide/security-access-control-considerations" target="_blank" rel="noopener noreferrer">Database roles</a>
+</li>
+</ul>
+        </section>
+        <nav class="lesson-nav" aria-label="Lesson order">
+            <a class="secondary" href="iceberg-unstructured.html">Previous: Iceberg and unstructured files</a>
+            <a href="cortex-ai.html">Next: Cortex AI</a>
+        </nav>
+    </div>
+    <script src="../js/code-copy.js">
+</script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2">
+</script>
+    <script src="../js/supabase-config.js">
+</script>
+    <script src="../js/supabase-auth.js">
+</script>
+    <script src="../js/paywall.js">
+</script>
+    <script src="../js/progress.js">
+</script>
+    <script src="../js/lesson-common.js">
+</script>
+    <script src="../js/quiz.js">
+</script>
+    <script src="../js/analytics-tracker.js">
+</script>
+</body>
+</html>

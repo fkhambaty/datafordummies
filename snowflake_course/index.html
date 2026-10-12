@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Snowflake course | Data For Dummies</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../css/hub-light.css">
+    <style>
+        :root {
+            --hub-color: #0369a1;
+            --hub-color2: #0ea5e9;
+            --hub-bg: linear-gradient(165deg, #f0f9ff 0%, #e0f2fe 42%, #f8fafc 100%);
+        }
+        .hub-mark { width: 72px; height: 72px; margin: 0 auto 12px; display: block; }
+        .hub-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 12px;
+            margin: 0 0 22px;
+        }
+        .hub-stat {
+            background: #fff;
+            border: 1px solid rgba(15, 23, 42, 0.08);
+            border-radius: 16px;
+            padding: 14px 16px;
+        }
+        .hub-stat strong { display: block; color: #0369a1; font-size: 1.35rem; }
+        .hub-stat span { color: #475569; font-size: 0.88rem; }
+        .lesson-link-pro { background: #f8fafc; color: #475569; }
+        .lesson-link .pro-badge {
+            margin-left: auto;
+            font-size: 0.68rem;
+            padding: 2px 8px;
+            border-radius: 999px;
+            background: linear-gradient(135deg, #d97706, #b45309);
+            color: #fff;
+            font-weight: 800;
+        }
+        .dfd-lesson-progress-label { color: #334155; font-weight: 700; }
+    </style>
+    <link rel="stylesheet" href="../css/dfd-system.css">
+</head>
+<body class="dfd-safe" data-course-id="snowflake" data-lesson-id="hub" data-lesson-label="Snowflake course hub" data-total-lessons="13">
+    <div class="container">
+        <nav class="nav" aria-label="Site">
+            <a href="../index.html">
+<i class="fas fa-home">
+</i>
+<span>Home</span>
+</a>
+            <a href="../learning-path.html">
+<span>All courses</span>
+</a>
+            <a href="../interviews/snowflake-interview.html">
+<span>Interview practice</span>
+</a>
+        </nav>
+        <header class="header">
+            <img class="hub-mark" src="logo.svg" alt="" width="72" height="72">
+            <span class="header-badge">SNOWFLAKE · 4 MODULES · 13 LESSONS</span>
+            <h1>Snowflake, explained plainly</h1>
+            <p>Storage, warehouses, and cloud services stay separate. Two lessons are free. The other eleven open with Pro.</p>
+        </header>
+        <div class="hub-stats" aria-label="Course size">
+            <div class="hub-stat">
+<strong>13</strong>
+<span>lessons</span>
+</div>
+            <div class="hub-stat">
+<strong>2</strong>
+<span>free to open</span>
+</div>
+            <div class="hub-stat">
+<strong>11</strong>
+<span>Pro lessons</span>
+</div>
+            <div class="hub-stat">
+<strong>4</strong>
+<span>modules</span>
+</div>
+        </div>
+        <div class="dfd-lesson-progress" data-dfd-progress>
+            <p class="dfd-lesson-progress-label" data-dfd-progress-label>Sign in to save your place.</p>
+            <div class="dfd-lesson-progress-track" data-dfd-progress-bar role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-label="Course progress">
+                <div class="dfd-lesson-progress-fill" data-dfd-progress-fill>
+</div>
+            </div>
+        </div>
+        <div class="modules-grid">
+            <article class="module-card">
+<span class="module-status status-ready">2 lessons</span>
+<h3>Start here</h3>
+<p>What the platform is, and how a trial account is created.</p>
+<div class="module-lessons">
+<a class="lesson-link" href="meet-snowflake.html">
+<i class="fas fa-play-circle">
+</i> Meet Snowflake<span class="pro-badge" style="background:#059669">Free</span>
+</a>
+<a class="lesson-link" href="trial-account.html">
+<i class="fas fa-play-circle">
+</i> Trial account and Snowsight<span class="pro-badge" style="background:#059669">Free</span>
+</a>
+</div>
+</article>
+<article class="module-card">
+<span class="module-status status-ready">4 lessons</span>
+<h3>Store and query</h3>
+<p>Architecture, SQL, loading, and how tables are stored.</p>
+<div class="module-lessons">
+<a class="lesson-link lesson-link-pro" href="architecture.html">
+<i class="fas fa-lock">
+</i> Architecture<span class="pro-badge">Pro</span>
+</a>
+<a class="lesson-link lesson-link-pro" href="sql-analytics.html">
+<i class="fas fa-lock">
+</i> SQL for analytics<span class="pro-badge">Pro</span>
+</a>
+<a class="lesson-link lesson-link-pro" href="stages-loading.html">
+<i class="fas fa-lock">
+</i> Stages, COPY, and Snowpipe<span class="pro-badge">Pro</span>
+</a>
+<a class="lesson-link lesson-link-pro" href="table-design.html">
+<i class="fas fa-lock">
+</i> Tables, pruning, and history<span class="pro-badge">Pro</span>
+</a>
+</div>
+</article>
+<article class="module-card">
+<span class="module-status status-ready">3 lessons</span>
+<h3>Compute and pipelines</h3>
+<p>Warehouses, streams, tasks, dynamic tables, and Snowpark.</p>
+<div class="module-lessons">
+<a class="lesson-link lesson-link-pro" href="warehouses-cost.html">
+<i class="fas fa-lock">
+</i> Warehouses and cost<span class="pro-badge">Pro</span>
+</a>
+<a class="lesson-link lesson-link-pro" href="streams-tasks.html">
+<i class="fas fa-lock">
+</i> Streams, tasks, dynamic tables<span class="pro-badge">Pro</span>
+</a>
+<a class="lesson-link lesson-link-pro" href="snowpark-python.html">
+<i class="fas fa-lock">
+</i> Snowpark Python<span class="pro-badge">Pro</span>
+</a>
+</div>
+</article>
+<article class="module-card">
+<span class="module-status status-ready">4 lessons</span>
+<h3>Govern and ship</h3>
+<p>Iceberg, Horizon, Cortex, and a dbt plus Airflow capstone.</p>
+<div class="module-lessons">
+<a class="lesson-link lesson-link-pro" href="iceberg-unstructured.html">
+<i class="fas fa-lock">
+</i> Iceberg and unstructured files<span class="pro-badge">Pro</span>
+</a>
+<a class="lesson-link lesson-link-pro" href="governance-horizon.html">
+<i class="fas fa-lock">
+</i> Governance and Horizon<span class="pro-badge">Pro</span>
+</a>
+<a class="lesson-link lesson-link-pro" href="cortex-ai.html">
+<i class="fas fa-lock">
+</i> Cortex AI<span class="pro-badge">Pro</span>
+</a>
+<a class="lesson-link lesson-link-pro" href="dbt-airflow-production.html">
+<i class="fas fa-lock">
+</i> dbt, Airflow, and production<span class="pro-badge">Pro</span>
+</a>
+</div>
+</article>
+        </div>
+        <footer>
+<p>&copy; 2026 <a href="../index.html">Data For Dummies</a> · Snowflake course</p>
+</footer>
+    </div>
+    <script src="../js/code-copy.js">
+</script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2">
+</script>
+    <script src="../js/supabase-config.js">
+</script>
+    <script src="../js/supabase-auth.js">
+</script>
+    <script src="../js/paywall.js">
+</script>
+    <script src="../js/progress.js">
+</script>
+    <script src="../js/lesson-common.js">
+</script>
+    <script src="../js/quiz.js">
+</script>
+    <script src="../js/analytics-tracker.js">
+</script>
+</body>
+</html>

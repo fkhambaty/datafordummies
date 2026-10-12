@@ -1,0 +1,74 @@
+@import url('../css/course-light-theme.css');
+
+:root {
+    --course-primary: #0369a1;
+    --course-accent: #0ea5e9;
+    --bg-page: linear-gradient(165deg, #f0f9ff 0%, #e0f2fe 38%, #f8fafc 100%);
+}
+
+.lesson-hero h1,
+.section h2,
+.section h3,
+.summary-list li,
+.source-list li {
+    overflow-wrap: anywhere;
+}
+
+.comparison-table,
+.result-table {
+    display: block;
+    max-width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+.summary-list,
+.source-list {
+    margin: 12px 0 0 1.2rem;
+    color: var(--text-secondary);
+}
+
+.source-list a { color: var(--course-primary); font-weight: 700; }
+
+.sf-kicker {
+    display: inline-block;
+    margin-bottom: 12px;
+    padding: 4px 12px;
+    border-radius: 999px;
+    background: rgba(14, 165, 233, 0.12);
+    color: var(--course-primary);
+    font-size: 0.78rem;
+    font-weight: 800;
+    letter-spacing: 0.04em;
+}
+
+.sf-meter { margin: 16px 0; }
+.sf-meter-track {
+    height: 18px;
+    border-radius: 999px;
+    background: #e0f2fe;
+    overflow: hidden;
+}
+.sf-bar {
+    height: 100%;
+    width: 16%;
+    border-radius: 999px;
+    background: linear-gradient(90deg, #0369a1, #38bdf8);
+    transition: width 280ms ease;
+}
+.sf-meter-controls { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+
+@keyframes sfDrift {
+    from { transform: translateX(0); }
+    to { transform: translateX(14px); }
+}
+.sf-drift { animation: sfDrift 2.6s ease-in-out infinite alternate; }
+
+@media (prefers-reduced-motion: reduce) {
+    .sf-drift { animation: none; }
+    .sf-bar { transition: none; }
+}
+
+@media (max-width: 720px) {
+    .lesson-nav { gap: 10px; }
+}

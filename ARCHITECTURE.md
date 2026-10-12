@@ -64,7 +64,8 @@ Course folders, each with its own `index.html` and usually a `hub.html`:
 | `terraform_course/` | Terraform |
 | `llm_course/` | Large language models |
 | `dms_course/` | AWS DMS |
-| `interviews/` | Interview practice |
+| `snowflake_course/` | Snowflake. Hub at `hub.html` (also copied to `index.html`). Lessons use `styles.css`, which imports `course-light-theme.css`. Two lessons are free (`meet-snowflake`, `trial-account`). The other eleven set `data-access="pro"`. |
+| `interviews/` | Interview practice, including a free `snowflake-interview.html` |
 
 `js/hub-script.js` function `enterCourse` is the old router from the home page into a course `hub.html`. Footer links should also have a real `href`, so the course opens when JavaScript does not.
 
@@ -141,6 +142,8 @@ Added 13 October 2026. These files are the shared shell for new lessons. Existin
 Head order for a new lesson: the family stylesheet, then the page accent, then `dfd-system.css` last. Script order: `code-copy.js`, Supabase CDN, `supabase-config.js`, `supabase-auth.js`, `paywall.js`, `progress.js`, `lesson-common.js`, `quiz.js`, `analytics-tracker.js`. Do not load `hub-script.js` on a lesson. It already owns the home-page nav and scroll handlers.
 
 `css/course-light-theme.css`, `css/hub-light.css`, and `css/dfd-system.css` gained additive `.dfd-*` classes for diagrams, knowledge checks, progress, 48px targets, safe-area padding, and scrolling tables, SVG, and code. Syntax color classes and paywall `display` rules are unchanged.
+
+`snowflake_course/` is the first course built on that shell. Each lesson sets `data-course-id="snowflake"` and its own `data-lesson-id`. `css/dfd-system.css` is last. Scripts are `code-copy.js`, the account and paywall files, `progress.js`, `lesson-common.js`, and `quiz.js`. The mark in `snowflake_course/logo.svg` is an original hexagon, not the Snowflake Inc. logo.
 
 ## Local run
 

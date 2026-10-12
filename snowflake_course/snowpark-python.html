@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Snowpark Python | Snowflake course | Data For Dummies</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="../css/dfd-system.css">
+</head>
+<body class="dfd-safe" data-course-id="snowflake" data-lesson-id="snowpark-python" data-lesson-label="Snowpark Python" data-total-lessons="13" data-access="pro">
+    <div class="container">
+        <nav class="nav" aria-label="Course">
+            <a href="hub.html">Course hub</a>
+            <a href="../index.html">Home</a>
+            <a href="#check">Knowledge check</a>
+        </nav>
+        <header class="lesson-hero" id="top">
+            <p class="sf-kicker">Pro · Lesson 9 of 13</p>
+            <h1>Snowpark Python</h1>
+            <p>DataFrames, Python UDFs, and stored procedures run where the data already lives.</p>
+        </header>
+        <div class="dfd-lesson-progress" data-dfd-progress>
+            <p class="dfd-lesson-progress-label" data-dfd-progress-label>Sign in to save your place.</p>
+            <div class="dfd-lesson-progress-track" data-dfd-progress-bar role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-label="Course progress">
+                <div class="dfd-lesson-progress-fill" data-dfd-progress-fill>
+</div>
+            </div>
+        </div>
+        <section class="section" data-dfd-reveal>
+            <div class="eli5-box">
+                <h4>Picture it this way</h4>
+                <p>Snowpark is a remote control. The Python on your laptop describes the work. Snowflake's warehouse does the work next to the table, so you are not downloading a million rows to add them up. A UDF is one small Python function the SQL engine can call per value. A procedure is a Python function that can run several statements and hand a result back.</p>
+            </div>
+        </section>
+        <section class="section" data-dfd-reveal>
+<h2>A session and a DataFrame</h2>
+<p>The <code>snowflake-snowpark-python</code> package creates a session with an account identifier, a user, a role, a warehouse, a database, and a schema. Prefer key-pair authentication over embedding a password in a file. The DataFrame API builds a plan. <code>show()</code> or <code>collect()</code> is what sends it.</p>
+<p>Snowpark code runs on a warehouse. A Snowpark-optimized warehouse is the documented choice when the job needs more memory, such as model training. Ordinary filters and group-bys are fine on a Standard warehouse. The Python still cannot see a table your role cannot select.</p>
+</section>
+<section class="section" data-dfd-reveal>
+<h2>UDFs and procedures</h2>
+<p>A Python UDF is created with <code>LANGUAGE PYTHON</code>, a <code>RUNTIME_VERSION</code> your account currently allows, and a <code>HANDLER</code>. Do not assume 3.11 is enabled. In Snowsight, check the Python versions the account offers and put that version in the statement. Packages you name must exist in the Snowflake Anaconda channel or be uploaded to a stage.</p>
+<p>A stored procedure receives a Snowpark session as its first handler argument. It can query tables and return a string, a variant, or a table, depending on how you declare it. Procedures are on every edition, in Python, Java, Scala, JavaScript, and SQL.</p>
+<p>Push filters into the DataFrame before you <code>collect()</code>. Collecting an entire fact table into the client defeats the point of the warehouse.</p>
+<div class="code-block">
+<pre>
+<code>CREATE OR REPLACE FUNCTION double_qty(qty NUMBER)
+  RETURNS NUMBER
+  LANGUAGE PYTHON
+  RUNTIME_VERSION = &#x27;3.11&#x27;
+  HANDLER = &#x27;double_qty&#x27;
+AS
+$$
+def double_qty(qty):
+    if qty is None:
+        return None
+    return qty * 2
+$$;</code>
+</pre>
+</div>
+</section>
+<section class="section" data-dfd-reveal>
+<h2>What this lesson will not pretend</h2>
+<p>The <code>RUNTIME_VERSION</code> in the sample is a placeholder. If the create fails, the error is telling you the account does not offer that version. Change the string. Do not keep retrying a version the error rejected.</p>
+<p>Snowpark Container Services and Streamlit in Snowflake exist and are listed in the edition matrix. They are different products from a DataFrame script. This lesson does not deploy a container.</p>
+</section>
+        <section class="section dfd-diagram" data-dfd-diagram data-dfd-reveal>
+<h2>See it move</h2>
+<div data-dfd-diagram-panel="one">
+<svg class="dfd-responsive" viewBox="0 0 360 120" role="img" aria-label="Python client builds a plan">
+<rect class="sf-drift" x="16" y="36" width="70" height="48" rx="8" fill="#bae6fd">
+</rect>
+<rect x="110" y="28" width="140" height="64" rx="8" fill="#0284c7">
+</rect>
+<rect x="274" y="36" width="70" height="48" rx="8" fill="#e0f2fe" stroke="#0369a1">
+</rect>
+</svg>
+</div>
+<div data-dfd-diagram-panel="two" hidden>
+<svg class="dfd-responsive" viewBox="0 0 360 120" role="img" aria-label="Warehouse executes the plan">
+<rect x="16" y="36" width="70" height="48" rx="8" fill="#e0f2fe">
+</rect>
+<rect class="sf-drift" x="110" y="28" width="140" height="64" rx="8" fill="#0369a1">
+</rect>
+<rect x="274" y="36" width="70" height="48" rx="8" fill="#e0f2fe" stroke="#0369a1">
+</rect>
+</svg>
+</div>
+<div data-dfd-diagram-panel="three" hidden>
+<svg class="dfd-responsive" viewBox="0 0 360 120" role="img" aria-label="A UDF called from SQL">
+<rect x="16" y="36" width="70" height="48" rx="8" fill="#e0f2fe">
+</rect>
+<rect x="110" y="28" width="140" height="64" rx="8" fill="#bae6fd">
+</rect>
+<rect class="sf-drift" x="274" y="36" width="70" height="48" rx="8" fill="#0ea5e9">
+</rect>
+</svg>
+</div>
+<div class="dfd-diagram-controls">
+<button type="button" data-dfd-diagram-step="one" aria-pressed="true">Describe the plan</button>
+<button type="button" data-dfd-diagram-step="two" aria-pressed="false">Warehouse runs it</button>
+<button type="button" data-dfd-diagram-step="three" aria-pressed="false">UDF per value</button>
+</div>
+</section>
+        <section class="section" id="lab" data-dfd-reveal>
+            <h2>Lab: a function and a DataFrame script</h2>
+            <p>Run the SQL function in a worksheet after you replace the runtime version if needed. The Python is for your machine, with the Snowpark package installed. Fill the account identifier from Snowsight. Use a key file rather than a password if you already have one. The script only counts rows for one region.</p>
+            <div class="code-block">
+<pre>
+<code>-- Worksheet. Replace the runtime version if your account rejects 3.11.
+CREATE OR REPLACE FUNCTION double_qty(qty NUMBER)
+  RETURNS NUMBER
+  LANGUAGE PYTHON
+  RUNTIME_VERSION = &#x27;3.11&#x27;
+  HANDLER = &#x27;double_qty&#x27;
+AS
+$$
+def double_qty(qty):
+    if qty is None:
+        return None
+    return qty * 2
+$$;
+SELECT double_qty(amount) FROM orders;
+
+# Local Python, after: pip install snowflake-snowpark-python
+from snowflake.snowpark import Session
+from snowflake.snowpark.functions import col
+
+session = Session.builder.configs({
+    &quot;account&quot;: &quot;&lt;org&gt;-&lt;account&gt;&quot;,
+    &quot;user&quot;: &quot;&lt;user&gt;&quot;,
+    &quot;private_key_file&quot;: &quot;&lt;path-to-key.p8&gt;&quot;,
+    &quot;role&quot;: &quot;SYSADMIN&quot;,
+    &quot;warehouse&quot;: &quot;LEARN_WH&quot;,
+    &quot;database&quot;: &quot;LEARN_DB&quot;,
+    &quot;schema&quot;: &quot;PUBLIC&quot;,
+}).create()
+
+west = session.table(&quot;orders&quot;).filter(col(&quot;region&quot;) == &quot;west&quot;)
+print(west.count())
+session.close()</code>
+</pre>
+</div>
+            <p>
+<button type="button" data-dfd-complete>Mark lesson complete</button>
+</p>
+            <p data-dfd-complete-status>
+</p>
+        </section>
+        
+        <section class="section" id="summary" data-dfd-reveal>
+            <h2>Concept summary</h2>
+            <ul class="summary-list">
+<li>Snowpark DataFrames build a plan that the warehouse executes.</li>
+<li>Python UDFs and procedures run inside Snowflake and honor your role.</li>
+<li>RUNTIME_VERSION must be one the account offers. The sample value is a placeholder.</li>
+<li>Collect only the rows you need on the client.</li>
+</ul>
+        </section>
+        <section class="section" id="check" data-dfd-reveal>
+<h2>Knowledge check</h2>
+<section class="dfd-quiz" data-dfd-quiz data-explanation="The client sends a plan. The warehouse executes it.">
+<h3 data-dfd-prompt>Where does a Snowpark DataFrame aggregation run?</h3>
+<div data-dfd-choices>
+<button type="button" data-correct="false">Only in the laptop&#x27;s memory after collect()</button>
+<button type="button" data-correct="true">On the Snowflake warehouse the session is using</button>
+<button type="button" data-correct="false">Inside cloud services with no credits</button>
+</div>
+<p class="dfd-quiz-feedback" data-dfd-feedback hidden>
+</p>
+<p class="dfd-quiz-explain" data-dfd-explain hidden>
+</p>
+</section>
+<section class="dfd-quiz" data-dfd-quiz data-explanation="The handler runtime has to be enabled on the account.">
+<h3 data-dfd-prompt>What should you do if CREATE FUNCTION rejects RUNTIME_VERSION 3.11?</h3>
+<div data-dfd-choices>
+<button type="button" data-correct="true">Pick a Python version your account lists</button>
+<button type="button" data-correct="false">Grant ACCOUNTADMIN to PUBLIC</button>
+<button type="button" data-correct="false">Turn off auto-suspend</button>
+</div>
+<p class="dfd-quiz-feedback" data-dfd-feedback hidden>
+</p>
+<p class="dfd-quiz-explain" data-dfd-explain hidden>
+</p>
+</section>
+<section class="dfd-quiz" data-dfd-quiz data-explanation="The session is how the procedure runs SQL and DataFrame code.">
+<h3 data-dfd-prompt>What is the first argument of a Python stored-procedure handler?</h3>
+<div data-dfd-choices>
+<button type="button" data-correct="false">The warehouse name as a string</button>
+<button type="button" data-correct="true">A Snowpark session</button>
+<button type="button" data-correct="false">The caller&#x27;s password</button>
+</div>
+<p class="dfd-quiz-feedback" data-dfd-feedback hidden>
+</p>
+<p class="dfd-quiz-explain" data-dfd-explain hidden>
+</p>
+</section>
+</section>
+        <section class="section" data-dfd-reveal>
+            <h2>Official sources</h2>
+            <p>Checked against Snowflake documentation in October 2026. Product behavior still depends on your edition, cloud, and region.</p>
+            <ul class="source-list">
+<li>
+<a href="https://docs.snowflake.com/en/developer-guide/snowpark/python/index" target="_blank" rel="noopener noreferrer">Snowpark Developer Guide for Python</a>
+</li>
+<li>
+<a href="https://docs.snowflake.com/en/developer-guide/udf/python/udf-python-introduction" target="_blank" rel="noopener noreferrer">Python UDFs</a>
+</li>
+<li>
+<a href="https://docs.snowflake.com/en/developer-guide/stored-procedure/python/procedure-python-overview" target="_blank" rel="noopener noreferrer">Writing stored procedures in Python</a>
+</li>
+</ul>
+        </section>
+        <nav class="lesson-nav" aria-label="Lesson order">
+            <a class="secondary" href="streams-tasks.html">Previous: Streams, tasks, and dynamic tables</a>
+            <a href="iceberg-unstructured.html">Next: Iceberg and unstructured files</a>
+        </nav>
+    </div>
+    <script src="../js/code-copy.js">
+</script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2">
+</script>
+    <script src="../js/supabase-config.js">
+</script>
+    <script src="../js/supabase-auth.js">
+</script>
+    <script src="../js/paywall.js">
+</script>
+    <script src="../js/progress.js">
+</script>
+    <script src="../js/lesson-common.js">
+</script>
+    <script src="../js/quiz.js">
+</script>
+    <script src="../js/analytics-tracker.js">
+</script>
+</body>
+</html>

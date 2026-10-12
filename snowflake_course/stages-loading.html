@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Stages, COPY, and Snowpipe | Snowflake course | Data For Dummies</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="../css/dfd-system.css">
+</head>
+<body class="dfd-safe" data-course-id="snowflake" data-lesson-id="stages-loading" data-lesson-label="Stages, COPY, and Snowpipe" data-total-lessons="13" data-access="pro">
+    <div class="container">
+        <nav class="nav" aria-label="Course">
+            <a href="hub.html">Course hub</a>
+            <a href="../index.html">Home</a>
+            <a href="#check">Knowledge check</a>
+        </nav>
+        <header class="lesson-hero" id="top">
+            <p class="sf-kicker">Pro · Lesson 5 of 13</p>
+            <h1>Stages, COPY, and Snowpipe</h1>
+            <p>Files land on a stage. COPY turns files into table rows. Snowpipe does that continuously.</p>
+        </header>
+        <div class="dfd-lesson-progress" data-dfd-progress>
+            <p class="dfd-lesson-progress-label" data-dfd-progress-label>Sign in to save your place.</p>
+            <div class="dfd-lesson-progress-track" data-dfd-progress-bar role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-label="Course progress">
+                <div class="dfd-lesson-progress-fill" data-dfd-progress-fill>
+</div>
+            </div>
+        </div>
+        <section class="section" data-dfd-reveal>
+            <div class="eli5-box">
+                <h4>Picture it this way</h4>
+                <p>A stage is the loading dock. A file format is the packing slip that says whether the boxes are CSV or Parquet. COPY INTO is the crew that unpacks the boxes into shelves. Snowpipe is a crew that starts when a new box arrives, instead of waiting for you to shout.</p>
+            </div>
+        </section>
+        <section class="section" data-dfd-reveal>
+<h2>Stages and file formats</h2>
+<p>Internal stages live inside Snowflake: a user stage (<code>@~</code>), a table stage (<code>@%table_name</code>), or a named stage you create. External stages point at Amazon S3, Azure Blob Storage, or Google Cloud Storage that you manage.</p>
+<p>File formats cover CSV and other delimited text, JSON, Avro, ORC, Parquet, and XML. Name the format once and reuse it in COPY, so a skipped header or a quote character is not retyped in every load.</p>
+<p>A directory table on a stage lists the files themselves. That is the door into unstructured data, covered again in the Iceberg lesson. Enabling it does not by itself parse CSV into columns.</p>
+</section>
+<section class="section" data-dfd-reveal>
+<h2>COPY INTO is the batch load</h2>
+<p>
+<code>COPY INTO</code> a table reads staged files with a running warehouse. <code>ON_ERROR</code> chooses whether one bad row aborts the file or is skipped. <code>VALIDATION_MODE</code> can preview errors without committing a load. After a successful load, Snowflake remembers which files it already loaded for that table, unless you tell COPY to force them.</p>
+<p>Unloading is the reverse: <code>COPY INTO @stage FROM table</code>. Bulk unload to delimited files and JSON is on every edition.</p>
+<div class="code-block">
+<pre>
+<code>CREATE OR REPLACE FILE FORMAT ff_csv
+  TYPE = CSV
+  SKIP_HEADER = 1
+  FIELD_OPTIONALLY_ENCLOSED_BY = &#x27;&quot;&#x27;;
+
+CREATE OR REPLACE STAGE stg_orders
+  FILE_FORMAT = ff_csv;
+
+COPY INTO orders
+FROM @stg_orders
+FILE_FORMAT = (FORMAT_NAME = ff_csv)
+ON_ERROR = ABORT_STATEMENT;</code>
+</pre>
+</div>
+</section>
+<section class="section" data-dfd-reveal>
+<h2>Snowpipe and Snowpipe Streaming</h2>
+<p>Snowpipe is continuous micro-batch loading and is listed for every edition. A pipe wraps a COPY statement. <code>AUTO_INGEST = TRUE</code> waits for a notification from the storage cloud. The notification service is different on AWS, Azure, and Google Cloud, so follow the auto-ingest page for the cloud you chose. Snowpipe compute is serverless. It is not the same bill as <code>LEARN_WH</code>.</p>
+<p>Snowpipe Streaming loads rows, not files. Snowflake's current overview describes a high-performance architecture and says the older classic architecture is planned for future deprecation. Use the high-performance path for new work. Elastic Channels are the recommended start: Snowflake manages channels, delivery is at-least-once, and order is not guaranteed. Named Channels are the ordered, exactly-once option and use offset tokens. The docs describe throughput up to 20 GB/s per table and ingest-to-query latency as low as about 5 seconds. Treat those as documented ceilings, not a promise for every account and region.</p>
+<p>Fail-safe does not protect tables that contain data loaded by the classic streaming architecture. If you still have classic channels, read that limitation before you count on Fail-safe.</p>
+</section>
+        <section class="section dfd-diagram" data-dfd-diagram data-dfd-reveal>
+<h2>See it move</h2>
+<div data-dfd-diagram-panel="one">
+<svg class="dfd-responsive" viewBox="0 0 360 120" role="img" aria-label="A file waiting on a stage">
+<rect class="sf-drift" x="16" y="36" width="70" height="48" rx="8" fill="#bae6fd">
+</rect>
+<rect x="110" y="28" width="140" height="64" rx="8" fill="#0284c7">
+</rect>
+<rect x="274" y="36" width="70" height="48" rx="8" fill="#e0f2fe" stroke="#0369a1">
+</rect>
+</svg>
+</div>
+<div data-dfd-diagram-panel="two" hidden>
+<svg class="dfd-responsive" viewBox="0 0 360 120" role="img" aria-label="COPY writing rows">
+<rect x="16" y="36" width="70" height="48" rx="8" fill="#e0f2fe">
+</rect>
+<rect class="sf-drift" x="110" y="28" width="140" height="64" rx="8" fill="#0369a1">
+</rect>
+<rect x="274" y="36" width="70" height="48" rx="8" fill="#e0f2fe" stroke="#0369a1">
+</rect>
+</svg>
+</div>
+<div data-dfd-diagram-panel="three" hidden>
+<svg class="dfd-responsive" viewBox="0 0 360 120" role="img" aria-label="Snowpipe receiving a notification">
+<rect x="16" y="36" width="70" height="48" rx="8" fill="#e0f2fe">
+</rect>
+<rect x="110" y="28" width="140" height="64" rx="8" fill="#bae6fd">
+</rect>
+<rect class="sf-drift" x="274" y="36" width="70" height="48" rx="8" fill="#0ea5e9">
+</rect>
+</svg>
+</div>
+<div class="dfd-diagram-controls">
+<button type="button" data-dfd-diagram-step="one" aria-pressed="true">File on a stage</button>
+<button type="button" data-dfd-diagram-step="two" aria-pressed="false">COPY into a table</button>
+<button type="button" data-dfd-diagram-step="three" aria-pressed="false">Pipe keeps watching</button>
+</div>
+</section>
+        <section class="section" id="lab" data-dfd-reveal>
+            <h2>Lab: format, stage, and a one-row load</h2>
+            <p>This lab stays inside SQL. It creates a format and an internal stage, then loads a row you insert into a staged file using a <code>COPY INTO</code> from a <code>SELECT</code>, so you do not need a local file uploader. When you do have a CSV, upload it with SnowSQL <code>PUT</code> and point COPY at the stage.</p>
+            <div class="code-block">
+<pre>
+<code>USE WAREHOUSE LEARN_WH;
+USE DATABASE LEARN_DB;
+USE SCHEMA PUBLIC;
+
+CREATE OR REPLACE FILE FORMAT ff_csv
+  TYPE = CSV
+  SKIP_HEADER = 1
+  FIELD_OPTIONALLY_ENCLOSED_BY = &#x27;&quot;&#x27;;
+
+CREATE OR REPLACE STAGE stg_orders
+  FILE_FORMAT = ff_csv;
+
+COPY INTO @stg_orders/orders.csv
+FROM (SELECT &#x27;order_id&#x27;, &#x27;region&#x27;, &#x27;amount&#x27;
+      UNION ALL
+      SELECT &#x27;4&#x27;, &#x27;west&#x27;, &#x27;8&#x27;)
+FILE_FORMAT = (TYPE = CSV FIELD_OPTIONALLY_ENCLOSED_BY = &#x27;&quot;&#x27;)
+OVERWRITE = TRUE;
+
+CREATE OR REPLACE TABLE orders_loaded (
+  order_id NUMBER,
+  region STRING,
+  amount NUMBER(10, 2)
+);
+
+COPY INTO orders_loaded
+FROM @stg_orders/orders.csv
+FILE_FORMAT = (FORMAT_NAME = ff_csv)
+ON_ERROR = ABORT_STATEMENT;
+
+SELECT * FROM orders_loaded;</code>
+</pre>
+</div>
+            <p>
+<button type="button" data-dfd-complete>Mark lesson complete</button>
+</p>
+            <p data-dfd-complete-status>
+</p>
+        </section>
+        
+        <section class="section" id="summary" data-dfd-reveal>
+            <h2>Concept summary</h2>
+            <ul class="summary-list">
+<li>Named, user, and table stages are internal. External stages point at your bucket.</li>
+<li>A file format freezes CSV or Parquet options for COPY and Snowpipe.</li>
+<li>COPY uses a warehouse. Snowpipe is serverless micro-batch. Streaming loads rows.</li>
+<li>Prefer the high-performance streaming architecture. Classic is on a deprecation path and has a Fail-safe gap.</li>
+</ul>
+        </section>
+        <section class="section" id="check" data-dfd-reveal>
+<h2>Knowledge check</h2>
+<section class="dfd-quiz" data-dfd-quiz data-explanation="The format is reused by COPY and pipes so parse options stay in one place.">
+<h3 data-dfd-prompt>What does a file format object remember?</h3>
+<div data-dfd-choices>
+<button type="button" data-correct="false">The warehouse size</button>
+<button type="button" data-correct="true">How to parse a file, such as CSV headers and quotes</button>
+<button type="button" data-correct="false">The Time Travel retention of a table</button>
+</div>
+<p class="dfd-quiz-feedback" data-dfd-feedback hidden>
+</p>
+<p class="dfd-quiz-explain" data-dfd-explain hidden>
+</p>
+</section>
+<section class="dfd-quiz" data-dfd-quiz data-explanation="AUTO_INGEST pipes wait for the cloud&#x27;s notification channel.">
+<h3 data-dfd-prompt>How is Snowpipe different from a COPY you run by hand?</h3>
+<div data-dfd-choices>
+<button type="button" data-correct="false">Snowpipe stores the table inside the pipe</button>
+<button type="button" data-correct="true">A pipe can run COPY when cloud storage sends a notification</button>
+<button type="button" data-correct="false">Snowpipe only works on Standard Edition</button>
+</div>
+<p class="dfd-quiz-feedback" data-dfd-feedback hidden>
+</p>
+<p class="dfd-quiz-explain" data-dfd-explain hidden>
+</p>
+</section>
+<section class="dfd-quiz" data-dfd-quiz data-explanation="Elastic Channels are at-least-once and unordered. Named Channels are the ordered path.">
+<h3 data-dfd-prompt>Which streaming choice gives ordered, exactly-once delivery?</h3>
+<div data-dfd-choices>
+<button type="button" data-correct="false">Elastic Channels</button>
+<button type="button" data-correct="true">Named Channels with offset tokens</button>
+<button type="button" data-correct="false">A directory table</button>
+</div>
+<p class="dfd-quiz-feedback" data-dfd-feedback hidden>
+</p>
+<p class="dfd-quiz-explain" data-dfd-explain hidden>
+</p>
+</section>
+</section>
+        <section class="section" data-dfd-reveal>
+            <h2>Official sources</h2>
+            <p>Checked against Snowflake documentation in October 2026. Product behavior still depends on your edition, cloud, and region.</p>
+            <ul class="source-list">
+<li>
+<a href="https://docs.snowflake.com/en/user-guide/data-load-snowpipe-intro" target="_blank" rel="noopener noreferrer">Snowpipe</a>
+</li>
+<li>
+<a href="https://docs.snowflake.com/en/user-guide/snowpipe-streaming/data-load-snowpipe-streaming-overview" target="_blank" rel="noopener noreferrer">Snowpipe Streaming</a>
+</li>
+<li>
+<a href="https://docs.snowflake.com/en/sql-reference/sql/copy-into-table" target="_blank" rel="noopener noreferrer">COPY INTO table</a>
+</li>
+<li>
+<a href="https://docs.snowflake.com/en/user-guide/data-failsafe" target="_blank" rel="noopener noreferrer">Fail-safe</a>
+</li>
+</ul>
+        </section>
+        <nav class="lesson-nav" aria-label="Lesson order">
+            <a class="secondary" href="sql-analytics.html">Previous: SQL for analytics</a>
+            <a href="table-design.html">Next: Tables, pruning, and history</a>
+        </nav>
+    </div>
+    <script src="../js/code-copy.js">
+</script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2">
+</script>
+    <script src="../js/supabase-config.js">
+</script>
+    <script src="../js/supabase-auth.js">
+</script>
+    <script src="../js/paywall.js">
+</script>
+    <script src="../js/progress.js">
+</script>
+    <script src="../js/lesson-common.js">
+</script>
+    <script src="../js/quiz.js">
+</script>
+    <script src="../js/analytics-tracker.js">
+</script>
+</body>
+</html>

@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Architecture | Snowflake course | Data For Dummies</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="../css/dfd-system.css">
+</head>
+<body class="dfd-safe" data-course-id="snowflake" data-lesson-id="architecture" data-lesson-label="Architecture" data-total-lessons="13" data-access="pro">
+    <div class="container">
+        <nav class="nav" aria-label="Course">
+            <a href="hub.html">Course hub</a>
+            <a href="../index.html">Home</a>
+            <a href="#check">Knowledge check</a>
+        </nav>
+        <header class="lesson-hero" id="top">
+            <p class="sf-kicker">Pro · Lesson 3 of 13</p>
+            <h1>Architecture</h1>
+            <p>Storage, warehouses, and cloud services scale on different clocks.</p>
+        </header>
+        <div class="dfd-lesson-progress" data-dfd-progress>
+            <p class="dfd-lesson-progress-label" data-dfd-progress-label>Sign in to save your place.</p>
+            <div class="dfd-lesson-progress-track" data-dfd-progress-bar role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-label="Course progress">
+                <div class="dfd-lesson-progress-fill" data-dfd-progress-fill>
+</div>
+            </div>
+        </div>
+        <section class="section" data-dfd-reveal>
+            <div class="eli5-box">
+                <h4>Picture it this way</h4>
+                <p>The books stay on the shelves. Opening a second reading room does not photocopy the library. Closing a room does not throw the books away. The front desk remembers who is allowed in, which shelf a title is on, and which room should take the next question.</p>
+            </div>
+        </section>
+        <section class="section" data-dfd-reveal>
+<h2>Storage is columnar and central</h2>
+<p>Table data is stored compressed in the cloud provider's storage, organized into micro-partitions. Snowflake's micro-partition page says each partition holds about 50 MB to 500 MB of uncompressed data, and the stored size is smaller because the data is compressed. Rows in a partition are stored by column.</p>
+<p>Cloud services keeps metadata about those partitions, including enough statistics to skip partitions that cannot match a filter. That pruning is why a selective query can avoid reading the whole table.</p>
+<p>Storage billing includes active bytes, Time Travel bytes, and Fail-safe bytes. Cloning does not copy those bytes until a change creates new partitions.</p>
+</section>
+<section class="section" data-dfd-reveal>
+<h2>Compute is a warehouse you can stop</h2>
+<p>A virtual warehouse is an independent cluster. It does not share compute with other warehouses, so a heavy load on a loading warehouse does not slow a separate analyst warehouse pointed at the same tables.</p>
+<p>You can resize a warehouse while it runs. Size is the resources per cluster. Multi-cluster warehouses, which require Enterprise Edition or higher, add more clusters of that size for concurrency. Resizing makes one query faster. Extra clusters help more people run at once.</p>
+<p>If the warehouse does not have enough resources left, extra queries queue. They are not rejected. Multi-cluster warehouses in auto-scale mode start and stop clusters using a scaling policy. Standard favors responsiveness. Economy favors fewer credits.</p>
+</section>
+<section class="section" data-dfd-reveal>
+<h2>Cloud services is the control plane</h2>
+<p>Cloud services handles authentication, access control, metadata, query compilation, and dispatch. It runs on compute that Snowflake provisions. You do not size it yourself.</p>
+<p>The result cache lives on this layer. When Snowflake can reuse a stored result, the warehouse does not recompute the query. Treat the cache as a bonus you can see in the query profile, not as a design you should time to a fixed number of hours without reading the current cache page.</p>
+<p>Cloud services credits are adjusted daily in UTC. Only the part above 10% of that day's virtual-warehouse credits is billed, and the adjustment cannot exceed the cloud services actually used that day.</p>
+<table class="comparison-table dfd-scroll">
+<thead>
+<tr>
+<th>If you need</th>
+<th>Change this</th>
+<th>Leave this alone</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>A faster single scan</td>
+<td>A larger warehouse size</td>
+<td>Do not copy the table into a second database just to go faster</td>
+</tr>
+<tr>
+<td>More concurrent users</td>
+<td>Multi-cluster warehouse (Enterprise+)</td>
+<td>Do not give every user ACCOUNTADMIN</td>
+</tr>
+<tr>
+<td>Less idle spend</td>
+<td>AUTO_SUSPEND and a resource monitor</td>
+<td>Do not turn off the storage layer</td>
+</tr>
+</tbody>
+</table>
+</section>
+        <section class="section dfd-diagram" data-dfd-diagram data-dfd-reveal>
+<h2>See it move</h2>
+<div data-dfd-diagram-panel="one">
+<svg class="dfd-responsive" viewBox="0 0 360 120" role="img" aria-label="Central storage">
+<rect class="sf-drift" x="16" y="36" width="70" height="48" rx="8" fill="#bae6fd">
+</rect>
+<rect x="110" y="28" width="140" height="64" rx="8" fill="#0284c7">
+</rect>
+<rect x="274" y="36" width="70" height="48" rx="8" fill="#e0f2fe" stroke="#0369a1">
+</rect>
+</svg>
+</div>
+<div data-dfd-diagram-panel="two" hidden>
+<svg class="dfd-responsive" viewBox="0 0 360 120" role="img" aria-label="Separate compute clusters">
+<rect x="16" y="36" width="70" height="48" rx="8" fill="#e0f2fe">
+</rect>
+<rect class="sf-drift" x="110" y="28" width="140" height="64" rx="8" fill="#0369a1">
+</rect>
+<rect x="274" y="36" width="70" height="48" rx="8" fill="#e0f2fe" stroke="#0369a1">
+</rect>
+</svg>
+</div>
+<div data-dfd-diagram-panel="three" hidden>
+<svg class="dfd-responsive" viewBox="0 0 360 120" role="img" aria-label="Cloud services coordinating the query">
+<rect x="16" y="36" width="70" height="48" rx="8" fill="#e0f2fe">
+</rect>
+<rect x="110" y="28" width="140" height="64" rx="8" fill="#bae6fd">
+</rect>
+<rect class="sf-drift" x="274" y="36" width="70" height="48" rx="8" fill="#0ea5e9">
+</rect>
+</svg>
+</div>
+<div class="dfd-diagram-controls">
+<button type="button" data-dfd-diagram-step="one" aria-pressed="true">One copy of the data</button>
+<button type="button" data-dfd-diagram-step="two" aria-pressed="false">Two warehouses</button>
+<button type="button" data-dfd-diagram-step="three" aria-pressed="false">Metadata desk</button>
+</div>
+</section>
+        <section class="section" id="lab" data-dfd-reveal>
+            <h2>Lab: two warehouses, one table</h2>
+            <p>Create a tiny table with the learning warehouse, then a second warehouse for a different kind of work. Both can see the table. Suspend the second warehouse when you are done so the trial does not keep paying for it.</p>
+            <div class="code-block">
+<pre>
+<code>USE WAREHOUSE LEARN_WH;
+CREATE DATABASE IF NOT EXISTS LEARN_DB;
+CREATE SCHEMA IF NOT EXISTS LEARN_DB.PUBLIC;
+CREATE OR REPLACE TABLE LEARN_DB.PUBLIC.HELLO (
+  ID NUMBER,
+  NOTE STRING
+);
+INSERT INTO LEARN_DB.PUBLIC.HELLO VALUES (1, &#x27;stored once&#x27;);
+
+CREATE WAREHOUSE IF NOT EXISTS LOAD_WH
+  WAREHOUSE_SIZE = XSMALL
+  AUTO_SUSPEND = 60
+  AUTO_RESUME = TRUE
+  INITIALLY_SUSPENDED = TRUE;
+
+USE WAREHOUSE LOAD_WH;
+SELECT * FROM LEARN_DB.PUBLIC.HELLO;
+ALTER WAREHOUSE LOAD_WH SUSPEND;</code>
+</pre>
+</div>
+            <p>
+<button type="button" data-dfd-complete>Mark lesson complete</button>
+</p>
+            <p data-dfd-complete-status>
+</p>
+        </section>
+        
+        <section class="section" id="summary" data-dfd-reveal>
+            <h2>Concept summary</h2>
+            <ul class="summary-list">
+<li>Storage is central, columnar, and split into compressed micro-partitions.</li>
+<li>Warehouses are independent compute. Size and cluster count solve different problems.</li>
+<li>Cloud services compiles queries, enforces grants, and can serve a result from cache.</li>
+<li>Idle compute is the usual surprise bill. Storage history is the other one.</li>
+</ul>
+        </section>
+        <section class="section" id="check" data-dfd-reveal>
+<h2>Knowledge check</h2>
+<section class="dfd-quiz" data-dfd-quiz data-explanation="Clusters scale concurrency. Size scales the resources inside a cluster.">
+<h3 data-dfd-prompt>What does adding a second cluster to a multi-cluster warehouse change?</h3>
+<div data-dfd-choices>
+<button type="button" data-correct="false">It stores a second copy of every table</button>
+<button type="button" data-correct="true">It adds concurrency. Each cluster is the warehouse&#x27;s chosen size</button>
+<button type="button" data-correct="false">It turns Standard Edition into Business Critical</button>
+</div>
+<p class="dfd-quiz-feedback" data-dfd-feedback hidden>
+</p>
+<p class="dfd-quiz-explain" data-dfd-explain hidden>
+</p>
+</section>
+<section class="dfd-quiz" data-dfd-quiz data-explanation="Pruning uses partition metadata collected as data is loaded.">
+<h3 data-dfd-prompt>Why can a filter skip micro-partitions?</h3>
+<div data-dfd-choices>
+<button type="button" data-correct="true">Because cloud services metadata says those partitions cannot match</button>
+<button type="button" data-correct="false">Because Snowflake deletes unmatched rows before the query starts</button>
+<button type="button" data-correct="false">Because every warehouse keeps its own private copy of the table</button>
+</div>
+<p class="dfd-quiz-feedback" data-dfd-feedback hidden>
+</p>
+<p class="dfd-quiz-explain" data-dfd-explain hidden>
+</p>
+</section>
+<section class="dfd-quiz" data-dfd-quiz data-explanation="Suspending a warehouse releases its compute. Storage remains.">
+<h3 data-dfd-prompt>Which layer do you suspend to stop compute credits?</h3>
+<div data-dfd-choices>
+<button type="button" data-correct="false">The database storage layer</button>
+<button type="button" data-correct="true">The virtual warehouse</button>
+<button type="button" data-correct="false">The organization</button>
+</div>
+<p class="dfd-quiz-feedback" data-dfd-feedback hidden>
+</p>
+<p class="dfd-quiz-explain" data-dfd-explain hidden>
+</p>
+</section>
+</section>
+        <section class="section" data-dfd-reveal>
+            <h2>Official sources</h2>
+            <p>Checked against Snowflake documentation in October 2026. Product behavior still depends on your edition, cloud, and region.</p>
+            <ul class="source-list">
+<li>
+<a href="https://docs.snowflake.com/en/user-guide/intro-key-concepts" target="_blank" rel="noopener noreferrer">Key concepts and architecture</a>
+</li>
+<li>
+<a href="https://docs.snowflake.com/en/user-guide/tables-clustering-micropartitions" target="_blank" rel="noopener noreferrer">Micro-partitions</a>
+</li>
+<li>
+<a href="https://docs.snowflake.com/en/user-guide/warehouses-multicluster" target="_blank" rel="noopener noreferrer">Multi-cluster warehouses</a>
+</li>
+<li>
+<a href="https://docs.snowflake.com/en/user-guide/cost-understanding-compute" target="_blank" rel="noopener noreferrer">Understanding compute cost</a>
+</li>
+</ul>
+        </section>
+        <nav class="lesson-nav" aria-label="Lesson order">
+            <a class="secondary" href="trial-account.html">Previous: Trial account and Snowsight</a>
+            <a href="sql-analytics.html">Next: SQL for analytics</a>
+        </nav>
+    </div>
+    <script src="../js/code-copy.js">
+</script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2">
+</script>
+    <script src="../js/supabase-config.js">
+</script>
+    <script src="../js/supabase-auth.js">
+</script>
+    <script src="../js/paywall.js">
+</script>
+    <script src="../js/progress.js">
+</script>
+    <script src="../js/lesson-common.js">
+</script>
+    <script src="../js/quiz.js">
+</script>
+    <script src="../js/analytics-tracker.js">
+</script>
+</body>
+</html>

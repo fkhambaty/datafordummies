@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Original geometric mark for the Snowflake course">
+  <polygon points="32,4 56,18 56,46 32,60 8,46 8,18" fill="#e0f2fe" stroke="#0369a1" stroke-width="3"/>
+  <polygon points="32,16 46,24 46,40 32,48 18,40 18,24" fill="#0ea5e9"/>
+  <circle cx="32" cy="32" r="4" fill="#f8fafc"/>
+</svg>

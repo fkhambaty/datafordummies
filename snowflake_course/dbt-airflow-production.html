@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>dbt, Airflow, and production | Snowflake course | Data For Dummies</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="../css/dfd-system.css">
+</head>
+<body class="dfd-safe" data-course-id="snowflake" data-lesson-id="dbt-airflow-production" data-lesson-label="dbt, Airflow, and production" data-total-lessons="13" data-access="pro">
+    <div class="container">
+        <nav class="nav" aria-label="Course">
+            <a href="hub.html">Course hub</a>
+            <a href="../index.html">Home</a>
+            <a href="#check">Knowledge check</a>
+        </nav>
+        <header class="lesson-hero" id="top">
+            <p class="sf-kicker">Pro · Lesson 13 of 13</p>
+            <h1>dbt, Airflow, and production</h1>
+            <p>A transform warehouse, a clone for CI, an orchestrator, and the views that show the spend.</p>
+        </header>
+        <div class="dfd-lesson-progress" data-dfd-progress>
+            <p class="dfd-lesson-progress-label" data-dfd-progress-label>Sign in to save your place.</p>
+            <div class="dfd-lesson-progress-track" data-dfd-progress-bar role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-label="Course progress">
+                <div class="dfd-lesson-progress-fill" data-dfd-progress-fill>
+</div>
+            </div>
+        </div>
+        <section class="section" data-dfd-reveal>
+            <div class="eli5-box">
+                <h4>Picture it this way</h4>
+                <p>dbt is the cook who follows written recipes. Snowflake is the kitchen. Airflow is the head cook who decides what time dinner starts and what to do if a dish burns. CI is cooking the new recipes in a spare kitchen that was cloned from the real one, so a bad recipe does not land on tonight's plates. Observability is the receipt: which warehouse ran, which query failed, and which role read the table.</p>
+            </div>
+        </section>
+        <section class="section" data-dfd-reveal>
+<h2>dbt Core against Snowflake</h2>
+<p>Install <code>dbt-snowflake</code> in the same environment as dbt Core. The profile <code>type</code> is <code>snowflake</code>. Put the account identifier, user, role, database, warehouse, and schema in the profile, and pull secrets with <code>env_var</code>. dbt's Snowflake setup page says password authentication for this adapter is not supported starting 31 August 2026, with a remaining exception it documents for <code>LEGACY_SERVICE</code> users. Use key-pair or SSO. The adapter field may be <code>private_key_path</code> or an inline <code>private_key</code> depending on the version you installed. Read the page for the version you have, and do not commit the key.</p>
+<p>Give transformations their own warehouse, with auto-suspend, and do not point that profile at the warehouse analysts use for ad hoc queries. Threads in the profile are dbt's parallelism. They queue on the warehouse if the warehouse is small. Raising threads without watching the warehouse queue does not make a small warehouse larger.</p>
+<p>The <a href="../dbt_course/installation.html">dbt installation lesson</a> and the <a href="../dbt_course/deployment.html">deployment lesson</a> cover adapters and targets. This lesson is the Snowflake side of that work.</p>
+<div class="code-block">
+<pre>
+<code>learn_shop:
+  target: dev
+  outputs:
+    dev:
+      type: snowflake
+      account: &quot;{{ env_var(&#x27;SNOWFLAKE_ACCOUNT&#x27;) }}&quot;
+      user: &quot;{{ env_var(&#x27;SNOWFLAKE_USER&#x27;) }}&quot;
+      private_key_path: &quot;{{ env_var(&#x27;SNOWFLAKE_PRIVATE_KEY_PATH&#x27;) }}&quot;
+      role: TRANSFORMER
+      database: LEARN_DB
+      warehouse: TRANSFORM_WH
+      schema: dev_analytics
+      threads: 4</code>
+</pre>
+</div>
+</section>
+<section class="section" data-dfd-reveal>
+<h2>CI with a zero-copy clone</h2>
+<p>For a pull request, clone the production database, point a dbt target at the clone, and run <code>dbt build</code> there. The clone is cheap until models write new partitions. Drop the clone when the check finishes so Time Travel on the clone does not linger. If a child table's retention is shorter than the timestamp you clone, add <code>IGNORE TABLES WITH INSUFFICIENT DATA RETENTION</code> or clone the current state instead of an old timestamp.</p>
+<p>Slim CI, using dbt state and <code>state:modified+</code>, builds what changed and what is downstream of it. It still needs a database to run in. The clone is that database. It does not replace tests.</p>
+</section>
+<section class="section" data-dfd-reveal>
+<h2>Airflow, then the receipt</h2>
+<p>Airflow should run <code>dbt build</code> after loads have landed. A Bash task or a container task is enough. Cosmos can map each dbt model to an Airflow task. Treat Cosmos operator names as something you check in the provider you installed. This course does not pin a Cosmos version. The <a href="../airflow_course/production.html">Airflow production lesson</a> is the place for schedulers, executors, and metadata databases.</p>
+<p>If you would rather keep the transform inside Snowflake, a dynamic table with <code>SCHEDULER = DISABLE</code> lets the DAG call the refresh. Do not also set <code>TARGET_LAG</code> in that mode.</p>
+<p>For a query that just failed, open Snowsight Query History and the query profile. For yesterday's spend, query <code>SNOWFLAKE.ACCOUNT_USAGE.QUERY_HISTORY</code> and warehouse metering, and remember Account Usage lags. <code>INFORMATION_SCHEMA.QUERY_HISTORY()</code> is the nearer window. Add a resource monitor on <code>TRANSFORM_WH</code>. On Enterprise accounts, <code>ACCESS_HISTORY</code> is the column-level audit. dbt tests and source freshness are the application-level checks. None of these replace the others.</p>
+<div class="code-block">
+<pre>
+<code>SELECT query_text, execution_status, warehouse_name, total_elapsed_time
+FROM TABLE(INFORMATION_SCHEMA.QUERY_HISTORY())
+WHERE warehouse_name = &#x27;TRANSFORM_WH&#x27;
+ORDER BY start_time DESC
+LIMIT 20;</code>
+</pre>
+</div>
+</section>
+        <section class="section dfd-diagram" data-dfd-diagram data-dfd-reveal>
+<h2>See it move</h2>
+<div data-dfd-diagram-panel="one">
+<svg class="dfd-responsive" viewBox="0 0 360 120" role="img" aria-label="A zero-copy clone used by CI">
+<rect class="sf-drift" x="16" y="36" width="70" height="48" rx="8" fill="#bae6fd">
+</rect>
+<rect x="110" y="28" width="140" height="64" rx="8" fill="#0284c7">
+</rect>
+<rect x="274" y="36" width="70" height="48" rx="8" fill="#e0f2fe" stroke="#0369a1">
+</rect>
+</svg>
+</div>
+<div data-dfd-diagram-panel="two" hidden>
+<svg class="dfd-responsive" viewBox="0 0 360 120" role="img" aria-label="Airflow starting dbt build">
+<rect x="16" y="36" width="70" height="48" rx="8" fill="#e0f2fe">
+</rect>
+<rect class="sf-drift" x="110" y="28" width="140" height="64" rx="8" fill="#0369a1">
+</rect>
+<rect x="274" y="36" width="70" height="48" rx="8" fill="#e0f2fe" stroke="#0369a1">
+</rect>
+</svg>
+</div>
+<div data-dfd-diagram-panel="three" hidden>
+<svg class="dfd-responsive" viewBox="0 0 360 120" role="img" aria-label="Query history as the receipt">
+<rect x="16" y="36" width="70" height="48" rx="8" fill="#e0f2fe">
+</rect>
+<rect x="110" y="28" width="140" height="64" rx="8" fill="#bae6fd">
+</rect>
+<rect class="sf-drift" x="274" y="36" width="70" height="48" rx="8" fill="#0ea5e9">
+</rect>
+</svg>
+</div>
+<div class="dfd-diagram-controls">
+<button type="button" data-dfd-diagram-step="one" aria-pressed="true">Clone for CI</button>
+<button type="button" data-dfd-diagram-step="two" aria-pressed="false">Airflow runs dbt</button>
+<button type="button" data-dfd-diagram-step="three" aria-pressed="false">Read the history</button>
+</div>
+</section>
+        <section class="section" id="lab" data-dfd-reveal>
+            <h2>Lab: a transform warehouse and a clone you can drop</h2>
+            <p>Create a warehouse that sleeps, clone <code>LEARN_DB</code>, and read recent queries. Dropping the clone removes the extra name. Storage from the clone's later changes leaves through Time Travel and, for permanent objects, Fail-safe. Skip the clone if you are out of trial balance.</p>
+            <div class="code-block">
+<pre>
+<code>CREATE WAREHOUSE IF NOT EXISTS TRANSFORM_WH
+  WAREHOUSE_SIZE = XSMALL
+  AUTO_SUSPEND = 60
+  AUTO_RESUME = TRUE
+  INITIALLY_SUSPENDED = TRUE
+  COMMENT = &#x27;dbt and Airflow only&#x27;;
+
+CREATE OR REPLACE DATABASE LEARN_CI CLONE LEARN_DB;
+SHOW SCHEMAS IN DATABASE LEARN_CI;
+DROP DATABASE LEARN_CI;
+
+SELECT query_text, execution_status, warehouse_name
+FROM TABLE(INFORMATION_SCHEMA.QUERY_HISTORY())
+ORDER BY start_time DESC
+LIMIT 10;</code>
+</pre>
+</div>
+            <p>
+<button type="button" data-dfd-complete>Mark lesson complete</button>
+</p>
+            <p data-dfd-complete-status>
+</p>
+        </section>
+        
+        <section class="section" id="summary" data-dfd-reveal>
+            <h2>Concept summary</h2>
+            <ul class="summary-list">
+<li>dbt-snowflake profiles name a role, a database, and a warehouse that can suspend.</li>
+<li>A zero-copy clone is the CI database. Drop it when the check is done.</li>
+<li>Airflow orders the run. Dynamic tables with a disabled scheduler are the in-platform alternative.</li>
+<li>Query profile for one statement. Information schema for recent history. Account Usage for the later audit.</li>
+</ul>
+        </section>
+        <section class="section" id="check" data-dfd-reveal>
+<h2>Knowledge check</h2>
+<section class="dfd-quiz" data-dfd-quiz data-explanation="Warehouses isolate compute. The tables can still live in one database.">
+<h3 data-dfd-prompt>Why give dbt its own warehouse?</h3>
+<div data-dfd-choices>
+<button type="button" data-correct="true">So transforms and ad hoc dashboards do not queue on the same cluster</button>
+<button type="button" data-correct="false">Because a warehouse can only be used by one tool</button>
+<button type="button" data-correct="false">Because storage is inside the warehouse</button>
+</div>
+<p class="dfd-quiz-feedback" data-dfd-feedback hidden>
+</p>
+<p class="dfd-quiz-explain" data-dfd-explain hidden>
+</p>
+</section>
+<section class="dfd-quiz" data-dfd-quiz data-explanation="Zero-copy clones start by sharing storage. Changes after that are new partitions.">
+<h3 data-dfd-prompt>What makes a clone a practical CI database?</h3>
+<div data-dfd-choices>
+<button type="button" data-correct="false">It copies every byte immediately and is billed as a full second copy</button>
+<button type="button" data-correct="true">It shares micro-partitions until the CI run writes new ones</button>
+<button type="button" data-correct="false">It disables grants</button>
+</div>
+<p class="dfd-quiz-feedback" data-dfd-feedback hidden>
+</p>
+<p class="dfd-quiz-explain" data-dfd-explain hidden>
+</p>
+</section>
+<section class="dfd-quiz" data-dfd-quiz data-explanation="Account Usage lags. The profile and information schema are the near-term tools.">
+<h3 data-dfd-prompt>Which history should you open for a query that failed a minute ago?</h3>
+<div data-dfd-choices>
+<button type="button" data-correct="true">Snowsight Query History or INFORMATION_SCHEMA.QUERY_HISTORY()</button>
+<button type="button" data-correct="false">Only the 7-day Fail-safe window</button>
+<button type="button" data-correct="false">The resource monitor notify list</button>
+</div>
+<p class="dfd-quiz-feedback" data-dfd-feedback hidden>
+</p>
+<p class="dfd-quiz-explain" data-dfd-explain hidden>
+</p>
+</section>
+</section>
+        <section class="section" data-dfd-reveal>
+            <h2>Official sources</h2>
+            <p>Checked against Snowflake documentation in October 2026. Product behavior still depends on your edition, cloud, and region.</p>
+            <ul class="source-list">
+<li>
+<a href="https://docs.getdbt.com/docs/core/connect-data-platform/snowflake-setup" target="_blank" rel="noopener noreferrer">dbt Snowflake profile</a>
+</li>
+<li>
+<a href="https://docs.snowflake.com/en/sql-reference/sql/create-clone" target="_blank" rel="noopener noreferrer">CREATE CLONE</a>
+</li>
+<li>
+<a href="https://docs.snowflake.com/en/user-guide/dynamic-tables/migrate-streams-tasks" target="_blank" rel="noopener noreferrer">Dynamic table scheduler</a>
+</li>
+<li>
+<a href="https://docs.snowflake.com/en/sql-reference/account-usage/query_history" target="_blank" rel="noopener noreferrer">Account Usage query history</a>
+</li>
+</ul>
+        </section>
+        <nav class="lesson-nav" aria-label="Lesson order">
+            <a class="secondary" href="cortex-ai.html">Previous: Cortex AI</a>
+            <a href="hub.html">Back to the hub</a>
+        </nav>
+    </div>
+    <script src="../js/code-copy.js">
+</script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2">
+</script>
+    <script src="../js/supabase-config.js">
+</script>
+    <script src="../js/supabase-auth.js">
+</script>
+    <script src="../js/paywall.js">
+</script>
+    <script src="../js/progress.js">
+</script>
+    <script src="../js/lesson-common.js">
+</script>
+    <script src="../js/quiz.js">
+</script>
+    <script src="../js/analytics-tracker.js">
+</script>
+</body>
+</html>

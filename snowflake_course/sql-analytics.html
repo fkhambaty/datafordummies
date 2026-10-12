@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>SQL for analytics | Snowflake course | Data For Dummies</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="../css/dfd-system.css">
+</head>
+<body class="dfd-safe" data-course-id="snowflake" data-lesson-id="sql-analytics" data-lesson-label="SQL for analytics" data-total-lessons="13" data-access="pro">
+    <div class="container">
+        <nav class="nav" aria-label="Course">
+            <a href="hub.html">Course hub</a>
+            <a href="../index.html">Home</a>
+            <a href="#check">Knowledge check</a>
+        </nav>
+        <header class="lesson-hero" id="top">
+            <p class="sf-kicker">Pro · Lesson 4 of 13</p>
+            <h1>SQL for analytics</h1>
+            <p>Snowflake SQL is familiar SELECT, plus first-class semi-structured data.</p>
+        </header>
+        <div class="dfd-lesson-progress" data-dfd-progress>
+            <p class="dfd-lesson-progress-label" data-dfd-progress-label>Sign in to save your place.</p>
+            <div class="dfd-lesson-progress-track" data-dfd-progress-bar role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-label="Course progress">
+                <div class="dfd-lesson-progress-fill" data-dfd-progress-fill>
+</div>
+            </div>
+        </div>
+        <section class="section" data-dfd-reveal>
+            <div class="eli5-box">
+                <h4>Picture it this way</h4>
+                <p>A worksheet is a kitchen counter. SELECT is asking for a plate of food. GROUP BY is stacking identical snacks. A window function is writing a rank on each plate without throwing the other plates away. JSON is a lunchbox inside a lunchbox, and FLATTEN opens the inner boxes into rows.</p>
+            </div>
+        </section>
+        <section class="section" data-dfd-reveal>
+<h2>The statement shape you already know</h2>
+<p>Standard SQL is on every edition, including most SQL:1999 DDL and DML. MERGE, multi-table INSERT, and multi-statement transactions are included. Primary keys and other constraints can be declared, and Snowflake documents them as not enforced. They are notes for people and tools, not a guarantee the engine will reject a bad row.</p>
+<p>Use a warehouse, a database, and a schema before you create objects. <code>QUALIFY</code> filters on a window function without wrapping the query in another SELECT.</p>
+<div class="code-block">
+<pre>
+<code>SELECT region,
+       SUM(amount) AS amount_sum,
+       ROW_NUMBER() OVER (PARTITION BY region ORDER BY amount DESC) AS rank_in_region
+FROM orders
+QUALIFY rank_in_region &lt;= 3;</code>
+</pre>
+</div>
+</section>
+<section class="section" data-dfd-reveal>
+<h2>VARIANT, colon notation, and FLATTEN</h2>
+<p>JSON, Avro, ORC, Parquet, and XML can land in a VARIANT column. The colon reaches a field. <code>::</code> casts it. <code>LATERAL FLATTEN</code> turns an array into rows. Missing keys become NULL. They do not fail the query.</p>
+<p>Store the raw document while you are still learning the shape, then project the fields you actually filter on into typed columns. Typed columns cluster and prune more predictably than a deep VARIANT path.</p>
+<div class="code-block">
+<pre>
+<code>SELECT raw:order_id::NUMBER AS order_id,
+       raw:customer.name::STRING AS customer_name,
+       line.value:sku::STRING AS sku,
+       line.value:qty::NUMBER AS qty
+FROM stage_orders,
+LATERAL FLATTEN(input =&gt; raw:lines) line;</code>
+</pre>
+</div>
+</section>
+<section class="section" data-dfd-reveal>
+<h2>Read the query profile before you resize</h2>
+<p>After a query, open its profile in Snowsight. Look at partitions scanned against partitions total, bytes spilled, and whether the result came from cache. A warehouse cache (local disk on the compute cluster) helps a repeated scan. A result cache can skip the warehouse entirely when Snowflake still considers the underlying data unchanged.</p>
+<p>If most partitions are pruned, a larger warehouse often wastes credits. If the profile shows a huge scan and a long operator, then a larger size is the experiment. Snowflake's own guidance: per-second billing means you can try a larger size and suspend it, then compare elapsed time, not just the size label.</p>
+</section>
+        <section class="section dfd-diagram" data-dfd-diagram data-dfd-reveal>
+<h2>See it move</h2>
+<div data-dfd-diagram-panel="one">
+<svg class="dfd-responsive" viewBox="0 0 360 120" role="img" aria-label="SQL filter on typed columns">
+<rect class="sf-drift" x="16" y="36" width="70" height="48" rx="8" fill="#bae6fd">
+</rect>
+<rect x="110" y="28" width="140" height="64" rx="8" fill="#0284c7">
+</rect>
+<rect x="274" y="36" width="70" height="48" rx="8" fill="#e0f2fe" stroke="#0369a1">
+</rect>
+</svg>
+</div>
+<div data-dfd-diagram-panel="two" hidden>
+<svg class="dfd-responsive" viewBox="0 0 360 120" role="img" aria-label="FLATTEN turning an array into rows">
+<rect x="16" y="36" width="70" height="48" rx="8" fill="#e0f2fe">
+</rect>
+<rect class="sf-drift" x="110" y="28" width="140" height="64" rx="8" fill="#0369a1">
+</rect>
+<rect x="274" y="36" width="70" height="48" rx="8" fill="#e0f2fe" stroke="#0369a1">
+</rect>
+</svg>
+</div>
+<div data-dfd-diagram-panel="three" hidden>
+<svg class="dfd-responsive" viewBox="0 0 360 120" role="img" aria-label="Query profile after the statement">
+<rect x="16" y="36" width="70" height="48" rx="8" fill="#e0f2fe">
+</rect>
+<rect x="110" y="28" width="140" height="64" rx="8" fill="#bae6fd">
+</rect>
+<rect class="sf-drift" x="274" y="36" width="70" height="48" rx="8" fill="#0ea5e9">
+</rect>
+</svg>
+</div>
+<div class="dfd-diagram-controls">
+<button type="button" data-dfd-diagram-step="one" aria-pressed="true">Filter rows</button>
+<button type="button" data-dfd-diagram-step="two" aria-pressed="false">Open the array</button>
+<button type="button" data-dfd-diagram-step="three" aria-pressed="false">Read the profile</button>
+</div>
+</section>
+        <section class="section" id="lab" data-dfd-reveal>
+            <h2>Lab: a typed table and a JSON array</h2>
+            <p>This builds a small orders table and a VARIANT payload. The FLATTEN query should return one row per line. Drop the objects later if you want the trial storage back.</p>
+            <div class="code-block">
+<pre>
+<code>USE WAREHOUSE LEARN_WH;
+USE DATABASE LEARN_DB;
+USE SCHEMA PUBLIC;
+
+CREATE OR REPLACE TABLE orders (
+  order_id NUMBER,
+  region STRING,
+  amount NUMBER(10, 2)
+);
+INSERT INTO orders VALUES
+  (1, &#x27;west&#x27;, 20),
+  (2, &#x27;west&#x27;, 50),
+  (3, &#x27;east&#x27;, 15);
+
+CREATE OR REPLACE TABLE stage_orders (raw VARIANT);
+INSERT INTO stage_orders
+SELECT PARSE_JSON(&#x27;{&quot;order_id&quot;: 10, &quot;customer&quot;: {&quot;name&quot;: &quot;Asha&quot;}, &quot;lines&quot;: [{&quot;sku&quot;: &quot;pen&quot;, &quot;qty&quot;: 2}, {&quot;sku&quot;: &quot;book&quot;, &quot;qty&quot;: 1}]}&#x27;);
+
+SELECT raw:order_id::NUMBER AS order_id,
+       line.value:sku::STRING AS sku
+FROM stage_orders,
+LATERAL FLATTEN(input =&gt; raw:lines) line;</code>
+</pre>
+</div>
+            <p>
+<button type="button" data-dfd-complete>Mark lesson complete</button>
+</p>
+            <p data-dfd-complete-status>
+</p>
+        </section>
+        
+        <section class="section" id="summary" data-dfd-reveal>
+            <h2>Concept summary</h2>
+            <ul class="summary-list">
+<li>SELECT, JOIN, GROUP BY, MERGE, and transactions behave like standard SQL.</li>
+<li>Declared constraints are informational. Snowflake does not enforce them.</li>
+<li>VARIANT plus FLATTEN queries nested JSON without a separate parser.</li>
+<li>The query profile tells you whether to prune, cache, or resize.</li>
+</ul>
+        </section>
+        <section class="section" id="check" data-dfd-reveal>
+<h2>Knowledge check</h2>
+<section class="dfd-quiz" data-dfd-quiz data-explanation="The edition matrix says integrity constraints are not enforced.">
+<h3 data-dfd-prompt>What does Snowflake do with a declared primary key?</h3>
+<div data-dfd-choices>
+<button type="button" data-correct="false">It rejects duplicate inserts</button>
+<button type="button" data-correct="true">It stores the constraint as information and does not enforce it</button>
+<button type="button" data-correct="false">It creates a search optimization path automatically</button>
+</div>
+<p class="dfd-quiz-feedback" data-dfd-feedback hidden>
+</p>
+<p class="dfd-quiz-explain" data-dfd-explain hidden>
+</p>
+</section>
+<section class="dfd-quiz" data-dfd-quiz data-explanation="FLATTEN is the row generator for arrays and objects inside VARIANT.">
+<h3 data-dfd-prompt>What does LATERAL FLATTEN do to a JSON array?</h3>
+<div data-dfd-choices>
+<button type="button" data-correct="false">It keeps the array as one string</button>
+<button type="button" data-correct="true">It emits one row per element</button>
+<button type="button" data-correct="false">It creates a materialized view</button>
+</div>
+<p class="dfd-quiz-feedback" data-dfd-feedback hidden>
+</p>
+<p class="dfd-quiz-explain" data-dfd-explain hidden>
+</p>
+</section>
+<section class="dfd-quiz" data-dfd-quiz data-explanation="Result reuse is a cloud-services behavior. Confirm it in the query profile.">
+<h3 data-dfd-prompt>A result-cache hit means what for the warehouse?</h3>
+<div data-dfd-choices>
+<button type="button" data-correct="false">The warehouse must still scan every micro-partition</button>
+<button type="button" data-correct="true">Snowflake can return the stored result without recomputing on the warehouse</button>
+<button type="button" data-correct="false">The table is deleted</button>
+</div>
+<p class="dfd-quiz-feedback" data-dfd-feedback hidden>
+</p>
+<p class="dfd-quiz-explain" data-dfd-explain hidden>
+</p>
+</section>
+</section>
+        <section class="section" data-dfd-reveal>
+            <h2>Official sources</h2>
+            <p>Checked against Snowflake documentation in October 2026. Product behavior still depends on your edition, cloud, and region.</p>
+            <ul class="source-list">
+<li>
+<a href="https://docs.snowflake.com/en/user-guide/intro-editions" target="_blank" rel="noopener noreferrer">Snowflake editions, SQL features</a>
+</li>
+<li>
+<a href="https://docs.snowflake.com/en/user-guide/ui-query-profile" target="_blank" rel="noopener noreferrer">Query profile</a>
+</li>
+<li>
+<a href="https://docs.snowflake.com/en/sql-reference/functions/flatten" target="_blank" rel="noopener noreferrer">FLATTEN</a>
+</li>
+</ul>
+        </section>
+        <nav class="lesson-nav" aria-label="Lesson order">
+            <a class="secondary" href="architecture.html">Previous: Architecture</a>
+            <a href="stages-loading.html">Next: Stages, COPY, and Snowpipe</a>
+        </nav>
+    </div>
+    <script src="../js/code-copy.js">
+</script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2">
+</script>
+    <script src="../js/supabase-config.js">
+</script>
+    <script src="../js/supabase-auth.js">
+</script>
+    <script src="../js/paywall.js">
+</script>
+    <script src="../js/progress.js">
+</script>
+    <script src="../js/lesson-common.js">
+</script>
+    <script src="../js/quiz.js">
+</script>
+    <script src="../js/analytics-tracker.js">
+</script>
+</body>
+</html>

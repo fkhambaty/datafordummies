@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Cortex AI | Snowflake course | Data For Dummies</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="../css/dfd-system.css">
+</head>
+<body class="dfd-safe" data-course-id="snowflake" data-lesson-id="cortex-ai" data-lesson-label="Cortex AI" data-total-lessons="13" data-access="pro">
+    <div class="container">
+        <nav class="nav" aria-label="Course">
+            <a href="hub.html">Course hub</a>
+            <a href="../index.html">Home</a>
+            <a href="#check">Knowledge check</a>
+        </nav>
+        <header class="lesson-hero" id="top">
+            <p class="sf-kicker">Pro · Lesson 12 of 13</p>
+            <h1>Cortex AI</h1>
+            <p>AISQL functions, Cortex Search, Cortex Analyst, and Cortex Agents, with region and preview limits.</p>
+        </header>
+        <div class="dfd-lesson-progress" data-dfd-progress>
+            <p class="dfd-lesson-progress-label" data-dfd-progress-label>Sign in to save your place.</p>
+            <div class="dfd-lesson-progress-track" data-dfd-progress-bar role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-label="Course progress">
+                <div class="dfd-lesson-progress-fill" data-dfd-progress-fill>
+</div>
+            </div>
+        </div>
+        <section class="section" data-dfd-reveal>
+            <div class="eli5-box">
+                <h4>Picture it this way</h4>
+                <p>Cortex is a specialist sitting next to the warehouse. AISQL functions are sticky notes you can call from SQL, such as summarize this review. Cortex Search is a librarian for unstructured text. Cortex Analyst writes SQL from a question, using a semantic model you curate so it does not guess your column names. An agent is a coordinator that can ask the analyst and the librarian, then answer. None of them are available just because the account exists.</p>
+            </div>
+        </section>
+        <section class="section" data-dfd-reveal>
+<h2>AISQL functions</h2>
+<p>Snowflake Cortex AI Functions are SQL functions, also callable from Python, for tasks such as completing a prompt, summarizing, translating, sentiment, and embeddings. The AISQL page says they are available in select regions. Functions that are not marked Preview are generally available. Preview functions are Preview AI Features. Check each function before you put it in a pipeline.</p>
+<p>The role needs the <code>USE AI FUNCTIONS</code> privilege and a database role such as <code>CORTEX_USER</code> or <code>AI_FUNCTIONS_USER</code>. The docs say the functions are built for throughput over many rows. For one interactive call, Snowflake points you at the REST API instead.</p>
+<p>AI features bill AI Credits, which are separate from Platform Credits and do not follow the same edition discount. Warehouses, storage, and data transfer stay on Platform Credits. Read the current consumption table. Do not reuse an example price from the docs as your contract price.</p>
+<div class="code-block">
+<pre>
+<code>SELECT SNOWFLAKE.CORTEX.SENTIMENT(&#x27;The load finished and the dashboard matched.&#x27;);</code>
+</pre>
+</div>
+</section>
+<section class="section" data-dfd-reveal>
+<h2>Cortex Search and Cortex Analyst</h2>
+<p>Cortex Search is a managed search service over text you already store in Snowflake. The edition matrix lists it for every edition, and the service still has to be available in your region. A search service has a target lag because it refreshes an index. It is not a result cache.</p>
+<p>Cortex Analyst answers natural-language questions about structured data through a REST API. You give it a semantic model so table and column meaning is explicit. Snowflake's Analyst page says to move applications to Cortex Agents, which include Analyst's abilities. Analyst is natively available in a short region list that includes AWS us-east-1, us-west-2, eu-central-1, eu-west-1, ap-northeast-1, ap-southeast-2, AWS US East Commercial Gov, Azure East US 2, and Azure West Europe. Other regions need cross-region inference, which you turn on. The docs suggest AWS US regions when you have a choice.</p>
+</section>
+<section class="section" data-dfd-reveal>
+<h2>Cortex Agents, and what is still limited</h2>
+<p>Cortex Agents became generally available on 4 November 2025. An agent plans a task, calls tools, and answers. The documented tools include Cortex Analyst for structured data and Cortex Search for unstructured data. Agents are still subject to region availability and to the privileges above.</p>
+<p>Analytical search is a separate agent capability for questions that need counts or trends across many documents. It is off unless you set it on that agent. The analytical-search page is the availability note to read before you enable it. Do not describe it as generally available unless that page currently says so.</p>
+<p>If a function or an agent call fails with a region error, the lesson is the error. Cross-region inference is the documented switch for several Cortex features. It sends the request to a region where the model exists. Turn it on only if that data movement is allowed for the table you are querying.</p>
+<div class="important-box">
+<h4>Preview means preview</h4>
+<p>A function without a Preview label can be used in production. A function, region, or agent option that the docs still mark as preview can change or disappear. This course will not list a model name as the one you should fine-tune. Model menus move.</p>
+</div>
+</section>
+        <section class="section dfd-diagram" data-dfd-diagram data-dfd-reveal>
+<h2>See it move</h2>
+<div data-dfd-diagram-panel="one">
+<svg class="dfd-responsive" viewBox="0 0 360 120" role="img" aria-label="An AISQL function on a column">
+<rect class="sf-drift" x="16" y="36" width="70" height="48" rx="8" fill="#bae6fd">
+</rect>
+<rect x="110" y="28" width="140" height="64" rx="8" fill="#0284c7">
+</rect>
+<rect x="274" y="36" width="70" height="48" rx="8" fill="#e0f2fe" stroke="#0369a1">
+</rect>
+</svg>
+</div>
+<div data-dfd-diagram-panel="two" hidden>
+<svg class="dfd-responsive" viewBox="0 0 360 120" role="img" aria-label="Cortex Search over text">
+<rect x="16" y="36" width="70" height="48" rx="8" fill="#e0f2fe">
+</rect>
+<rect class="sf-drift" x="110" y="28" width="140" height="64" rx="8" fill="#0369a1">
+</rect>
+<rect x="274" y="36" width="70" height="48" rx="8" fill="#e0f2fe" stroke="#0369a1">
+</rect>
+</svg>
+</div>
+<div data-dfd-diagram-panel="three" hidden>
+<svg class="dfd-responsive" viewBox="0 0 360 120" role="img" aria-label="An agent calling Analyst or Search">
+<rect x="16" y="36" width="70" height="48" rx="8" fill="#e0f2fe">
+</rect>
+<rect x="110" y="28" width="140" height="64" rx="8" fill="#bae6fd">
+</rect>
+<rect class="sf-drift" x="274" y="36" width="70" height="48" rx="8" fill="#0ea5e9">
+</rect>
+</svg>
+</div>
+<div class="dfd-diagram-controls">
+<button type="button" data-dfd-diagram-step="one" aria-pressed="true">SQL function</button>
+<button type="button" data-dfd-diagram-step="two" aria-pressed="false">Search index</button>
+<button type="button" data-dfd-diagram-step="three" aria-pressed="false">Agent chooses a tool</button>
+</div>
+</section>
+        <section class="section" id="lab" data-dfd-reveal>
+            <h2>Lab: one AISQL call, then stop if the region says no</h2>
+            <p>Run this only after the role can use AI functions. If Snowflake returns a region or privilege error, stop. That is a real result. Do not route the column to another region until you know the data is allowed to move. There is nothing to install with pip for this statement.</p>
+            <div class="code-block">
+<pre>
+<code>USE WAREHOUSE LEARN_WH;
+SELECT SNOWFLAKE.CORTEX.SENTIMENT(
+  &#x27;The warehouse suspended and the trial balance survived.&#x27;
+) AS mood;</code>
+</pre>
+</div>
+            <p>
+<button type="button" data-dfd-complete>Mark lesson complete</button>
+</p>
+            <p data-dfd-complete-status>
+</p>
+        </section>
+        
+        <section class="section" id="summary" data-dfd-reveal>
+            <h2>Concept summary</h2>
+            <ul class="summary-list">
+<li>AISQL functions run from SQL in select regions. Preview functions stay preview.</li>
+<li>AI Credits are a separate price from warehouse Platform Credits.</li>
+<li>Cortex Analyst has a native region list. Other regions need cross-region inference.</li>
+<li>Cortex Agents have been generally available since 4 November 2025. Analytical search is a separate switch.</li>
+</ul>
+        </section>
+        <section class="section" id="check" data-dfd-reveal>
+<h2>Knowledge check</h2>
+<section class="dfd-quiz" data-dfd-quiz data-explanation="The AISQL page says select regions, and it tells you to check each function&#x27;s preview status.">
+<h3 data-dfd-prompt>Are Cortex AI Functions in every Snowflake region?</h3>
+<div data-dfd-choices>
+<button type="button" data-correct="false">Yes, on every edition and region</button>
+<button type="button" data-correct="true">No. They are available in select regions, and some functions are still preview</button>
+<button type="button" data-correct="false">Only on Virtual Private Snowflake</button>
+</div>
+<p class="dfd-quiz-feedback" data-dfd-feedback hidden>
+</p>
+<p class="dfd-quiz-explain" data-dfd-explain hidden>
+</p>
+</section>
+<section class="dfd-quiz" data-dfd-quiz data-explanation="The release note marks Cortex Agents as GA on that date. The other two are not that announcement.">
+<h3 data-dfd-prompt>What became generally available on 4 November 2025?</h3>
+<div data-dfd-choices>
+<button type="button" data-correct="true">Cortex Agents</button>
+<button type="button" data-correct="false">5X-Large warehouses on every cloud</button>
+<button type="button" data-correct="false">Fail-safe for classic Snowpipe Streaming</button>
+</div>
+<p class="dfd-quiz-feedback" data-dfd-feedback hidden>
+</p>
+<p class="dfd-quiz-explain" data-dfd-explain hidden>
+</p>
+</section>
+<section class="dfd-quiz" data-dfd-quiz data-explanation="The pricing page separates AI Credits from warehouse, storage, and transfer charges.">
+<h3 data-dfd-prompt>How are Cortex calls billed relative to a warehouse?</h3>
+<div data-dfd-choices>
+<button type="button" data-correct="false">They are included in the warehouse&#x27;s Generation 1 credits</button>
+<button type="button" data-correct="true">AI Credits, separate from Platform Credits</button>
+<button type="button" data-correct="false">They are free on trial accounts in every region</button>
+</div>
+<p class="dfd-quiz-feedback" data-dfd-feedback hidden>
+</p>
+<p class="dfd-quiz-explain" data-dfd-explain hidden>
+</p>
+</section>
+</section>
+        <section class="section" data-dfd-reveal>
+            <h2>Official sources</h2>
+            <p>Checked against Snowflake documentation in October 2026. Product behavior still depends on your edition, cloud, and region.</p>
+            <ul class="source-list">
+<li>
+<a href="https://docs.snowflake.com/en/user-guide/snowflake-cortex/aisql" target="_blank" rel="noopener noreferrer">Cortex AI Functions</a>
+</li>
+<li>
+<a href="https://docs.snowflake.com/en/user-guide/snowflake-cortex/cortex-analyst" target="_blank" rel="noopener noreferrer">Cortex Analyst</a>
+</li>
+<li>
+<a href="https://docs.snowflake.com/en/release-notes/2025/other/2025-11-04-cortex-agents" target="_blank" rel="noopener noreferrer">Cortex Agents GA note</a>
+</li>
+<li>
+<a href="https://docs.snowflake.com/en/user-guide/snowflake-cortex/pricing" target="_blank" rel="noopener noreferrer">AI pricing</a>
+</li>
+<li>
+<a href="https://docs.snowflake.com/en/user-guide/snowflake-cortex/cortex-agents-analytical-search" target="_blank" rel="noopener noreferrer">Analytical search</a>
+</li>
+</ul>
+        </section>
+        <nav class="lesson-nav" aria-label="Lesson order">
+            <a class="secondary" href="governance-horizon.html">Previous: Governance and Horizon</a>
+            <a href="dbt-airflow-production.html">Next: dbt, Airflow, and production</a>
+        </nav>
+    </div>
+    <script src="../js/code-copy.js">
+</script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2">
+</script>
+    <script src="../js/supabase-config.js">
+</script>
+    <script src="../js/supabase-auth.js">
+</script>
+    <script src="../js/paywall.js">
+</script>
+    <script src="../js/progress.js">
+</script>
+    <script src="../js/lesson-common.js">
+</script>
+    <script src="../js/quiz.js">
+</script>
+    <script src="../js/analytics-tracker.js">
+</script>
+</body>
+</html>
