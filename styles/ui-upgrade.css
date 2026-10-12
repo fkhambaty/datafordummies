@@ -514,6 +514,130 @@
     }
 }
 
+/* ── Home stage: video leads the page ── */
+body.page-home .home-stage {
+    padding: 88px 20px 12px;
+}
+.home-stage-inner {
+    width: min(1040px, 100%);
+    margin: 0 auto;
+    text-align: center;
+}
+.home-video {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    border-radius: 24px;
+    overflow: hidden;
+    background: #0f172a;
+    box-shadow: 0 24px 60px rgba(15, 23, 42, 0.18);
+}
+.home-video iframe {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+}
+.home-channel {
+    margin: 14px 0 22px;
+}
+.home-channel a {
+    color: #b91c1c;
+    font-weight: 700;
+    text-decoration: none;
+}
+.home-channel a:hover { text-decoration: underline; }
+.home-kicker {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    margin: 0 0 10px;
+    color: #4f46e5;
+    font-weight: 700;
+}
+.home-kicker img {
+    width: 36px;
+    height: 36px;
+    object-fit: contain;
+    border-radius: 8px;
+}
+.home-stage h1 {
+    margin: 0 auto 10px;
+    max-width: none;
+    text-wrap: balance;
+    font-size: clamp(2.1rem, 5vw, 3.5rem);
+    line-height: 1.05;
+    letter-spacing: -0.035em;
+    color: #0f172a;
+}
+.home-lead {
+    max-width: 620px;
+    margin: 0 auto 18px;
+    color: #475569;
+    font-size: 1.08rem;
+    line-height: 1.6;
+}
+.home-actions,
+.home-tools {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+}
+.home-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    min-height: 48px;
+    padding: 0 20px;
+    border-radius: 12px;
+    font-weight: 700;
+    text-decoration: none;
+}
+.home-btn-primary {
+    background: linear-gradient(135deg, #6366f1, #4f46e5);
+    color: #fff;
+    box-shadow: 0 8px 20px rgba(79, 70, 229, 0.28);
+}
+.home-btn-secondary {
+    background: #fff;
+    color: #312e81;
+    border: 1px solid #e2e8f0;
+}
+.home-tools {
+    margin-top: 16px;
+}
+.home-tools button {
+    border: 1px solid #e2e8f0;
+    background: #fff;
+    color: #334155;
+    border-radius: 999px;
+    padding: 8px 14px;
+    font: inherit;
+    font-weight: 650;
+    cursor: pointer;
+}
+.home-tools button:hover { border-color: #c7d2fe; color: #4338ca; }
+.home-trivia {
+    min-height: 1.5em;
+    margin: 16px auto 0;
+    max-width: 720px;
+    color: #64748b;
+    font-size: 0.95rem;
+}
+body.page-home .ux-section { padding-top: 36px; padding-bottom: 12px; }
+body.page-home .ux-path-card .ux-btn,
+body.page-home .ux-project,
+body.page-home .ux-tool { min-width: 0; }
+@media (max-width: 720px) {
+    body.page-home .home-stage { padding: 76px 16px 8px; }
+    .home-video { border-radius: 16px; }
+    .home-stage h1 { max-width: none; }
+    .home-btn { width: 100%; justify-content: center; }
+    .home-actions { width: 100%; }
+}
+
 /* ── Founder video ── */
 .ux-video-section {
     text-align: center;

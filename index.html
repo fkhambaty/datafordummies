@@ -53,6 +53,7 @@
         }
     </script>
     <style>
+        /* Home stage styles live in styles/ui-upgrade.css */
         .hero-logo-block { margin: 0; perspective: 900px; }
         .hero-logo-frame {
             position: relative;
@@ -224,112 +225,38 @@
         }
     </style>
 
-    <!-- Modern Hero Section -->
-    <section class="hero-modern">
-        <div class="hero-orb-bg" aria-hidden="true">
-            <div class="orb"></div>
-            <div class="orb"></div>
-            <div class="orb"></div>
-        </div>
-        <div class="hero-container">
-            <div class="hero-trivia" id="heroTrivia" aria-live="polite">
+    <!-- Home: video first, then the rest of the page -->
+    <section class="home-stage">
+        <div class="home-stage-inner">
+            <div class="home-video">
+                <iframe src="https://www.youtube-nocookie.com/embed/aMUeQKyW51k" title="Snowflake, dbt, Airflow Project | PostgreSQL, SQL, Data Engineering" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+            </div>
+            <p class="home-channel"><a href="https://www.youtube.com/@fakhruddinkhambaty" target="_blank" rel="noopener noreferrer"><i class="fab fa-youtube"></i> More lessons on the F K YouTube channel</a></p>
+            <p class="home-kicker"><img src="logo.png" alt="" width="36" height="36"> The best way to learn is to teach.</p>
+            <h1>Learn Data The Simple Way</h1>
+            <p class="home-lead">We simplify the complex, master the essential, and skip the jargon. Think of us as the friend who actually explains things.</p>
+            <div class="home-actions">
+                <a href="learning-path.html" class="home-btn home-btn-primary"><i class="fas fa-play"></i> Start Learning</a>
+                <a href="curriculum.html" class="home-btn home-btn-secondary" target="_blank" rel="noopener"><i class="fas fa-file-lines"></i> Download Curriculum</a>
+                <a href="pricing.html" class="home-btn home-btn-secondary"><i class="fas fa-tag"></i> View Pricing</a>
+            </div>
+            <div class="home-tools" aria-label="Courses">
+                <button type="button" onclick="enterCourse('python')">Python</button>
+                <button type="button" onclick="enterCourse('mssql')">SQL</button>
+                <button type="button" onclick="enterCourse('postgres')">PostgreSQL</button>
+                <button type="button" onclick="enterCourse('airflow')">Airflow</button>
+                <button type="button" onclick="enterCourse('dbt')">dbt</button>
+                <button type="button" onclick="enterCourse('redshift')">Redshift</button>
+                <button type="button" onclick="enterCourse('metabase')">Metabase</button>
+                <button type="button" onclick="enterCourse('datascience')">Data Science</button>
+                <button type="button" onclick="enterCourse('llm')">LLMs</button>
+            </div>
+            <div class="home-trivia" id="heroTrivia" aria-live="polite">
                 <span class="ticker-icon" aria-hidden="true">💡</span>
                 <span class="ticker-text" id="tickerText"></span>
             </div>
-            <div class="hero-content">
-                <div class="hero-logo-block">
-                    <div class="hero-logo-frame">
-                        <img src="logo.png" alt="Data For Dummies" class="hero-logo-img" loading="lazy">
-                        <p class="hero-tagline">The best way to learn is to teach.</p>
-                    </div>
-                </div>
-            </div>
-            <div class="hero-visual">
-                <div class="tech-powerhouse">
-                    <!-- Central powerful icon -->
-                    <div class="power-center">
-                        <div class="power-rings">
-                            <div class="ring ring-1"></div>
-                            <div class="ring ring-2"></div>
-                            <div class="ring ring-3"></div>
-                        </div>
-                        <div class="power-core">
-                            <i class="fas fa-database"></i>
-                        </div>
-                    </div>
-                    
-                    <!-- Floating tech icons - scattered layout -->
-                    <div class="tech-float tech-1" onclick="enterCourse('python')" style="cursor: pointer;">
-                        <img src="assets/python-logo.svg" alt="Python" loading="lazy">
-                        <span class="tech-label">Python</span>
-                    </div>
-                    <div class="tech-float tech-2" onclick="enterCourse('airflow')" style="cursor: pointer;">
-                        <img src="assets/airflow-logo.svg" alt="Airflow" loading="lazy">
-                        <span class="tech-label">Airflow</span>
-                    </div>
-                    <div class="tech-float tech-4" onclick="enterCourse('redshift')" style="cursor: pointer;">
-                        <img src="assets/redshift-logo.svg" alt="Redshift" loading="lazy">
-                        <span class="tech-label">Redshift</span>
-                    </div>
-                    <div class="tech-float tech-5" onclick="enterCourse('mssql')" style="cursor: pointer;">
-                        <img src="assets/mssql-logo.svg" alt="SQL" loading="lazy">
-                        <span class="tech-label">SQL</span>
-                    </div>
-                    <div class="tech-float tech-6" onclick="enterCourse('dbt')" style="cursor: pointer;">
-                        <img src="assets/dbt-logo.svg" alt="DBT" loading="lazy">
-                        <span class="tech-label">DBT</span>
-                    </div>
-                    <div class="tech-float tech-7" onclick="enterCourse('metabase')" style="cursor: pointer;">
-                        <img src="assets/metabase-logo.svg" alt="Metabase" loading="lazy">
-                        <span class="tech-label">Analytics</span>
-                    </div>
-                    <div class="tech-float tech-8" onclick="enterCourse('postgres')" style="cursor: pointer;">
-                        <i class="fas fa-database" style="font-size: 32px; color: #22c55e;"></i>
-                        <span class="tech-label">PostgreSQL</span>
-                    </div>
-                    <div class="tech-float tech-9" onclick="enterCourse('datascience')" style="cursor: pointer;">
-                        <i class="fas fa-chart-line" style="font-size: 32px; color: #667eea;"></i>
-                        <span class="tech-label">Data Science</span>
-                    </div>
-                    <div class="tech-float tech-10" onclick="enterCourse('llm')" style="cursor: pointer;">
-                        <i class="fas fa-brain" style="font-size: 32px; color: #a855f7;"></i>
-                        <span class="tech-label">LLMs</span>
-                    </div>
-                    
-                    <!-- Connection lines -->
-                    <svg class="power-connections" viewBox="0 0 400 400">
-                        <defs>
-                            <linearGradient id="lineGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                                <stop offset="0%" stop-color="#3b82f6" stop-opacity="0.4"/>
-                                <stop offset="100%" stop-color="#8b5cf6" stop-opacity="0.1"/>
-                            </linearGradient>
-                        </defs>
-                        <line x1="200" y1="200" x2="80" y2="60" stroke="url(#lineGrad)" stroke-width="1"/>
-                        <line x1="200" y1="200" x2="320" y2="80" stroke="url(#lineGrad)" stroke-width="1"/>
-                        <line x1="200" y1="200" x2="60" y2="200" stroke="url(#lineGrad)" stroke-width="1"/>
-                        <line x1="200" y1="200" x2="340" y2="220" stroke="url(#lineGrad)" stroke-width="1"/>
-                        <line x1="200" y1="200" x2="100" y2="340" stroke="url(#lineGrad)" stroke-width="1"/>
-                        <line x1="200" y1="200" x2="300" y2="320" stroke="url(#lineGrad)" stroke-width="1"/>
-                        <line x1="200" y1="200" x2="200" y2="380" stroke="url(#lineGrad)" stroke-width="1"/>
-                        <line x1="200" y1="200" x2="280" y2="140" stroke="url(#lineGrad)" stroke-width="1"/>
-                        <line x1="200" y1="200" x2="120" y2="260" stroke="url(#lineGrad)" stroke-width="1"/>
-                        <line x1="200" y1="200" x2="240" y2="300" stroke="url(#lineGrad)" stroke-width="1"/>
-                        <line x1="200" y1="200" x2="160" y2="340" stroke="url(#lineGrad)" stroke-width="1"/>
-                    </svg>
-                </div>
-            </div>
-            <div class="hero-copy">
-                <span class="hero-brand-badge">Plain-language data learning, built for practical progress</span>
-                <h1 class="hero-headline">Learn Data Analytics The Simple Way</h1>
-                <p class="hero-description">We simplify the complex, master the essential, and skip the jargon. Think of us as the friend who actually explains things.</p>
-                <div class="hero-cta-row">
-                    <a href="learning-path.html" class="hero-cta-primary"><i class="fas fa-play"></i> Start Learning</a>
-                    <a href="curriculum.html" class="hero-cta-secondary" target="_blank" rel="noopener"><i class="fas fa-file-lines"></i> Download Curriculum</a>
-                </div>
-            </div>
         </div>
     </section>
-
     <!-- SECTION 2: Learning Paths (Data Analyst, Data Engineer, Analytics Engineer) -->
     <div class="ux-section">
         <h2 class="ux-section-title">Choose Your Path</h2>
@@ -514,21 +441,6 @@
                 <p class="ux-faq-a">We arm you with skills and a portfolio employers care about. Resume and interview tips included. The rest is you + job applications + a bit of luck.</p>
             </div>
         </div>
-    </div>
-
-    <!-- Video: a full project walkthrough from the founder -->
-    <div class="ux-section ux-video-section">
-        <div class="ux-section-header">
-            <h2>Watch a Real Project, Start to Finish</h2>
-            <div class="ux-divider"></div>
-            <p>Snowflake, dbt and Airflow, with PostgreSQL and SQL, built and explained by the founder.</p>
-        </div>
-        <div class="ux-video-frame">
-            <iframe src="https://www.youtube-nocookie.com/embed/aMUeQKyW51k" title="Snowflake, dbt, Airflow Project | PostgreSQL, SQL, Data Engineering" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-        </div>
-        <p class="ux-video-channel">
-            <a href="https://www.youtube.com/@fakhruddinkhambaty" target="_blank" rel="noopener noreferrer"><i class="fab fa-youtube"></i> More lessons on the F K YouTube channel</a>
-        </p>
     </div>
 
     <!-- SECTION 6: CTA — Start Building Your First Data Pipeline Today -->
