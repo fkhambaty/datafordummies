@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Storage and StatefulSets | Kubernetes | Data For Dummies</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="../css/dfd-system.css">
+</head>
+<body class="dfd-safe" data-access="pro" data-course-id="kubernetes" data-lesson-id="storage-statefulsets" data-lesson-label="Storage and StatefulSets" data-total-lessons="12">
+    <div class="container">
+        <nav class="nav" aria-label="Course">
+            <a href="hub.html">Course hub</a>
+            <a href="../index.html">Home</a>
+            <a href="#check">Knowledge check</a>
+        </nav>
+        <header class="lesson-hero" id="top">
+            <p class="track-kicker">Pro · Lesson 6 of 12</p>
+            <h1>Storage and StatefulSets</h1>
+            <p>A Pod&#x27;s disk disappears with the Pod unless you asked for a volume that outlives it. A StatefulSet is for pods that need stable names.</p>
+        </header>
+        <div class="dfd-lesson-progress" data-dfd-progress>
+            <p class="dfd-lesson-progress-label" data-dfd-progress-label>Sign in to save your place.</p>
+            <div class="dfd-lesson-progress-track" data-dfd-progress-bar role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-label="Course progress">
+                <div class="dfd-lesson-progress-fill" data-dfd-progress-fill>
+</div>
+            </div>
+        </div>
+        <section class="section" data-dfd-reveal>
+            <div class="eli5-box">
+                <h4>Picture it this way</h4>
+                <p>emptyDir is a backpack the boat throws away when it sinks. A PersistentVolumeClaim is a locker with a number. A StatefulSet gives each boat the same name and the same locker when it is rebuilt.</p>
+            </div>
+        </section>
+        <section class="section" data-dfd-reveal id="vol">
+<h2>Volumes that die and volumes that do not</h2>
+<p>
+<code>emptyDir</code> lasts for the life of the Pod. It is fine for a cache. <code>hostPath</code> mounts the node&#x27;s disk. It pins you to that node and is a sharp tool on a shared cluster. A PersistentVolumeClaim asks a StorageClass for a volume. The CSI driver, not Kubernetes itself, talks to the disk system.</p>
+<p>ReadWriteOnce, ReadWriteMany, and the newer access modes depend on the driver. A claim the driver cannot satisfy stays Pending. That is a storage problem, not a YAML typo, once the class name is right.</p>
+<table class="comparison-table dfd-scroll">
+<thead>
+<tr>
+<th>Volume</th>
+<th>Survives a new Pod?</th>
+<th>Typical use</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>emptyDir</td>
+<td>No</td>
+<td>Scratch space</td>
+</tr>
+<tr>
+<td>hostPath</td>
+<td>Only on that same node</td>
+<td>Avoid on multi-tenant clusters</td>
+</tr>
+<tr>
+<td>PVC</td>
+<td>Yes, if the reclaim policy keeps it</td>
+<td>Databases and queues</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section class="section" data-dfd-reveal id="sts">
+<h2>StatefulSet identity</h2>
+<p>A StatefulSet gives Pods stable names: <code>db-0</code>, <code>db-1</code>. It creates volumes from <code>volumeClaimTemplates</code> so each ordinal can keep its own disk. Startup and rolling replacement are ordered unless you change the policy.</p>
+<p>A StatefulSet does not make a database highly available by itself. Replication, failover, and backups are the database&#x27;s job. The workload object only gives you stable identity and disks.</p>
+</section>
+        <section class="section dfd-diagram" data-dfd-diagram data-dfd-reveal>
+            <h2>What happens when the Pod is replaced</h2>
+            <div data-dfd-diagram-panel="empty">
+<svg class="dfd-responsive" viewBox="0 0 640 148" role="img" aria-label="emptyDir highlighted">
+<rect class="track-drift" x="16" y="36" width="188" height="72" rx="12" fill="#5b8def">
+</rect>
+<text x="110" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#ffffff">Pod</text>
+<path d="M204 72 H224" stroke="#64748b" stroke-width="2" fill="none">
+</path>
+<rect x="224" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
+</rect>
+<text x="318" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">emptyDir</text>
+<path d="M412 72 H432" stroke="#64748b" stroke-width="2" fill="none">
+</path>
+<rect x="432" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
+</rect>
+<text x="526" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">Gone</text>
+</svg>
+<p>The scratch disk is deleted with the Pod.</p>
+</div>
+<div data-dfd-diagram-panel="pvc" hidden>
+<svg class="dfd-responsive" viewBox="0 0 640 148" role="img" aria-label="PVC highlighted">
+<rect x="16" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
+</rect>
+<text x="110" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">Pod</text>
+<path d="M204 72 H224" stroke="#64748b" stroke-width="2" fill="none">
+</path>
+<rect class="track-drift" x="224" y="36" width="188" height="72" rx="12" fill="#5b8def">
+</rect>
+<text x="318" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#ffffff">PVC</text>
+<path d="M412 72 H432" stroke="#64748b" stroke-width="2" fill="none">
+</path>
+<rect x="432" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
+</rect>
+<text x="526" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">Disk</text>
+</svg>
+<p>The claim can be mounted again by the next Pod, if the access mode and node allow it.</p>
+</div>
+<div data-dfd-diagram-panel="sts" hidden>
+<svg class="dfd-responsive" viewBox="0 0 640 148" role="img" aria-label="StatefulSet identity highlighted">
+<rect x="16" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
+</rect>
+<text x="110" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">db-0</text>
+<path d="M204 72 H224" stroke="#64748b" stroke-width="2" fill="none">
+</path>
+<rect x="224" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
+</rect>
+<text x="318" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">claim-0</text>
+<path d="M412 72 H432" stroke="#64748b" stroke-width="2" fill="none">
+</path>
+<rect class="track-drift" x="432" y="36" width="188" height="72" rx="12" fill="#5b8def">
+</rect>
+<text x="526" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#ffffff">Disk</text>
+</svg>
+<p>Ordinal 0 comes back as db-0 and can see the same claim.</p>
+</div>
+            <div class="dfd-diagram-controls">
+                <button type="button" data-dfd-diagram-step="empty" aria-pressed="true">emptyDir</button>
+<button type="button" data-dfd-diagram-step="pvc" aria-pressed="false">PVC</button>
+<button type="button" data-dfd-diagram-step="sts" aria-pressed="false">StatefulSet</button>
+            </div>
+        </section>
+        <section class="section" id="lab" data-dfd-reveal>
+            <h2>Lab: watch emptyDir disappear</h2>
+            <p>Write a file in a Pod, delete the Pod, and start another with the same image. The file should be gone. Do not use hostPath for this lab.</p>
+            <div class="code-block">
+<pre>
+<code>kubectl run scratch --image=busybox:1.36 --restart=Never --command -- sh -c &#x27;echo hello &gt; /tmp/note &amp;&amp; sleep 3600&#x27;
+kubectl exec scratch -- cat /tmp/note
+kubectl delete pod scratch --wait=false
+# a new Pod with the same image will not have /tmp/note</code>
+</pre>
+</div>
+            <p>
+<button type="button" data-dfd-complete>Mark lesson complete</button>
+</p>
+            <p data-dfd-complete-status>
+</p>
+        </section>
+        <section class="section" id="summary" data-dfd-reveal>
+            <h2>Concept summary</h2>
+            <ul class="summary-list">
+<li>emptyDir dies with the Pod. A PVC is a request for a disk that can outlive it.</li>
+<li>The CSI driver decides which access modes are real.</li>
+<li>A StatefulSet gives stable names. It does not configure database replication.</li>
+</ul>
+        </section>
+        <section class="section" id="check" data-dfd-reveal>
+            <h2>Knowledge check</h2>
+            <section class="dfd-quiz" data-dfd-quiz data-explanation="emptyDir is tied to the Pod.">
+<h3 data-dfd-prompt>You stored a file in emptyDir and replaced the Pod. Where is the file?</h3>
+<div data-dfd-choices>
+<button type="button" data-correct="false">On the PersistentVolume</button>
+<button type="button" data-correct="true">Gone with the old Pod</button>
+<button type="button" data-correct="false">In etcd</button>
+</div>
+<p class="dfd-quiz-feedback" data-dfd-feedback hidden>
+</p>
+<p class="dfd-quiz-explain" data-dfd-explain hidden>
+</p>
+</section>
+<section class="dfd-quiz" data-dfd-quiz data-explanation="Stable ordinal names and per-pod claims.">
+<h3 data-dfd-prompt>What does a StatefulSet add that a Deployment does not?</h3>
+<div data-dfd-choices>
+<button type="button" data-correct="false">Automatic database failover</button>
+<button type="button" data-correct="true">Stable pod identity and volume claim templates</button>
+<button type="button" data-correct="false">Encryption of every volume</button>
+</div>
+<p class="dfd-quiz-feedback" data-dfd-feedback hidden>
+</p>
+<p class="dfd-quiz-explain" data-dfd-explain hidden>
+</p>
+</section>
+<section class="dfd-quiz" data-dfd-quiz data-explanation="The StorageClass and the driver have to agree.">
+<h3 data-dfd-prompt>A PVC stays Pending. What is a reasonable first check?</h3>
+<div data-dfd-choices>
+<button type="button" data-correct="false">Assume Kubernetes always attaches a disk</button>
+<button type="button" data-correct="true">Check the StorageClass and whether a driver can satisfy the access mode</button>
+<button type="button" data-correct="false">Switch the Deployment to a DaemonSet</button>
+</div>
+<p class="dfd-quiz-feedback" data-dfd-feedback hidden>
+</p>
+<p class="dfd-quiz-explain" data-dfd-explain hidden>
+</p>
+</section>
+        </section>
+        <section class="section" data-dfd-reveal>
+            <h2>Official sources</h2>
+            <p>Checked against the linked documentation in October 2026. A later release can move a flag, a price, or a supported pair. Use the page for the version you installed.</p>
+            <ul class="source-list">
+<li>
+<a href="https://kubernetes.io/docs/concepts/storage/volumes/" target="_blank" rel="noopener noreferrer">Volumes</a>
+</li>
+<li>
+<a href="https://kubernetes.io/docs/concepts/storage/persistent-volumes/" target="_blank" rel="noopener noreferrer">Persistent volumes</a>
+</li>
+<li>
+<a href="https://kubernetes.io/docs/concepts/workloads/controllers/statefulset/" target="_blank" rel="noopener noreferrer">StatefulSet</a>
+</li>
+</ul>
+        </section>
+        <nav class="lesson-nav" aria-label="Lesson order">
+            <a class="secondary" href="config-secrets.html">Previous: ConfigMaps and Secrets</a>
+            <a href="jobs-cronjobs.html">Next: Jobs and CronJobs</a>
+        </nav>
+    </div>
+
+    <script src="../js/code-copy.js">
+</script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2">
+</script>
+    <script src="../js/supabase-config.js">
+</script>
+    <script src="../js/supabase-auth.js">
+</script>
+    <script src="../js/paywall.js">
+</script>
+    <script src="../js/progress.js">
+</script>
+    <script src="../js/lesson-common.js">
+</script>
+    <script src="../js/quiz.js">
+</script>
+    <script src="../js/analytics-tracker.js">
+</script>
+
+</body>
+</html>

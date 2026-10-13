@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Services, Ingress, and Gateway API | Kubernetes | Data For Dummies</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="../css/dfd-system.css">
+</head>
+<body class="dfd-safe" data-access="pro" data-course-id="kubernetes" data-lesson-id="services-networking" data-lesson-label="Services, Ingress, and Gateway API" data-total-lessons="12">
+    <div class="container">
+        <nav class="nav" aria-label="Course">
+            <a href="hub.html">Course hub</a>
+            <a href="../index.html">Home</a>
+            <a href="#check">Knowledge check</a>
+        </nav>
+        <header class="lesson-hero" id="top">
+            <p class="track-kicker">Pro · Lesson 4 of 12</p>
+            <h1>Services, Ingress, and Gateway API</h1>
+            <p>A Service gives Pods a stable address. Ingress and the Gateway API are two different ways to get HTTP in from outside. Neither routes traffic until a controller is installed.</p>
+        </header>
+        <div class="dfd-lesson-progress" data-dfd-progress>
+            <p class="dfd-lesson-progress-label" data-dfd-progress-label>Sign in to save your place.</p>
+            <div class="dfd-lesson-progress-track" data-dfd-progress-bar role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-label="Course progress">
+                <div class="dfd-lesson-progress-fill" data-dfd-progress-fill>
+</div>
+            </div>
+        </div>
+        <section class="section" data-dfd-reveal>
+            <div class="eli5-box">
+                <h4>Picture it this way</h4>
+                <p>Pods change their phone numbers when they are replaced. A Service is the office number that stays. Ingress is one kind of receptionist. The Gateway API is a newer receptionist contract. If nobody is sitting at the desk, the sign on the door does nothing.</p>
+            </div>
+        </section>
+        <section class="section" data-dfd-reveal id="svc">
+<h2>Service types</h2>
+<p>ClusterIP is the default. Other Pods in the cluster use it. It is not reachable from your laptop unless you port-forward.</p>
+<p>NodePort opens a port on every node. LoadBalancer asks a cloud, or a local add-on, for an external address. On kind that address often never appears. ExternalName is a DNS alias, not a proxy to Pods.</p>
+<table class="comparison-table dfd-scroll">
+<thead>
+<tr>
+<th>Type</th>
+<th>Who can use it</th>
+<th>Needs</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ClusterIP</td>
+<td>Inside the cluster</td>
+<td>Nothing extra</td>
+</tr>
+<tr>
+<td>NodePort</td>
+<td>Anyone who can reach a node IP</td>
+<td>A free high port</td>
+</tr>
+<tr>
+<td>LoadBalancer</td>
+<td>Outside, if a provider answers</td>
+<td>A cloud controller or a local tunnel</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section class="section" data-dfd-reveal id="ingress">
+<h2>Ingress is stable, and idle without a controller</h2>
+<p>The Ingress API is <code>networking.k8s.io/v1</code>. An Ingress object names hosts, paths, and a Service. Kubernetes does not ship one Ingress controller. nginx, a cloud controller, or another project has to watch those objects and program a proxy.</p>
+<p>Two Ingress objects with the same host can surprise you. The controller&#x27;s rules, not the core API, decide the winner. Read that controller&#x27;s docs.</p>
+</section>
+<section class="section" data-dfd-reveal id="gateway">
+<h2>Gateway API is a second front door</h2>
+<p>Gateway API is not a field inside Ingress. You install its CRDs. The Standard channel is the stable set. The Experimental channel can break between releases.</p>
+<p>Gateway API 1.5, released in February 2026, documents Kubernetes 1.30 or later for that release. A newer Gateway API minor can raise that floor. Check the release you install. A Gateway with no GatewayClass controller is as idle as an Ingress with no controller.</p>
+<p>You can keep Ingress. New HTTP entry points on a cluster that already runs a conformant Gateway controller are a reason to look at HTTPRoute. Do not rewrite a working Ingress only because a blog said Ingress is gone.</p>
+</section>
+        <section class="section dfd-diagram" data-dfd-diagram data-dfd-reveal>
+            <h2>From a browser to a Pod</h2>
+            <div data-dfd-diagram-panel="gw">
+<svg class="dfd-responsive" viewBox="0 0 640 148" role="img" aria-label="Gateway highlighted">
+<rect class="track-drift" x="16" y="36" width="188" height="72" rx="12" fill="#5b8def">
+</rect>
+<text x="110" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#ffffff">Gateway</text>
+<path d="M204 72 H224" stroke="#64748b" stroke-width="2" fill="none">
+</path>
+<rect x="224" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
+</rect>
+<text x="318" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">Service</text>
+<path d="M412 72 H432" stroke="#64748b" stroke-width="2" fill="none">
+</path>
+<rect x="432" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
+</rect>
+<text x="526" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">Pods</text>
+</svg>
+<p>A Gateway or Ingress only works when its controller is running.</p>
+</div>
+<div data-dfd-diagram-panel="svc" hidden>
+<svg class="dfd-responsive" viewBox="0 0 640 148" role="img" aria-label="Service highlighted">
+<rect x="16" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
+</rect>
+<text x="110" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">Gateway</text>
+<path d="M204 72 H224" stroke="#64748b" stroke-width="2" fill="none">
+</path>
+<rect class="track-drift" x="224" y="36" width="188" height="72" rx="12" fill="#5b8def">
+</rect>
+<text x="318" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#ffffff">Service</text>
+<path d="M412 72 H432" stroke="#64748b" stroke-width="2" fill="none">
+</path>
+<rect x="432" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
+</rect>
+<text x="526" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">Pods</text>
+</svg>
+<p>The Service selects Ready Pods by label. Pod IPs can change behind it.</p>
+</div>
+<div data-dfd-diagram-panel="pods" hidden>
+<svg class="dfd-responsive" viewBox="0 0 640 148" role="img" aria-label="Pods highlighted">
+<rect x="16" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
+</rect>
+<text x="110" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">Gateway</text>
+<path d="M204 72 H224" stroke="#64748b" stroke-width="2" fill="none">
+</path>
+<rect x="224" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
+</rect>
+<text x="318" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">Service</text>
+<path d="M412 72 H432" stroke="#64748b" stroke-width="2" fill="none">
+</path>
+<rect class="track-drift" x="432" y="36" width="188" height="72" rx="12" fill="#5b8def">
+</rect>
+<text x="526" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#ffffff">Pods</text>
+</svg>
+<p>The proxy or kube-proxy sends the request to a Ready Pod.</p>
+</div>
+            <div class="dfd-diagram-controls">
+                <button type="button" data-dfd-diagram-step="gw" aria-pressed="true">Gateway</button>
+<button type="button" data-dfd-diagram-step="svc" aria-pressed="false">Service</button>
+<button type="button" data-dfd-diagram-step="pods" aria-pressed="false">Pods</button>
+            </div>
+        </section>
+        <section class="section" id="lab" data-dfd-reveal>
+            <h2>Lab: ClusterIP, then a port-forward</h2>
+            <p>This stays inside the cluster. It does not pretend kind created a cloud load balancer.</p>
+            <div class="code-block">
+<pre>
+<code>kubectl apply -f - &lt;&lt;&#x27;EOF&#x27;
+apiVersion: v1
+kind: Service
+metadata:
+  name: hello
+spec:
+  selector:
+    app: hello
+  ports:
+  - port: 80
+    targetPort: 80
+EOF
+kubectl get svc hello
+kubectl port-forward svc/hello 8080:80</code>
+</pre>
+</div>
+            <p>
+<button type="button" data-dfd-complete>Mark lesson complete</button>
+</p>
+            <p data-dfd-complete-status>
+</p>
+        </section>
+        <section class="section" id="summary" data-dfd-reveal>
+            <h2>Concept summary</h2>
+            <ul class="summary-list">
+<li>A Service is a stable address in front of replaceable Pods.</li>
+<li>Ingress and Gateway API both need a controller.</li>
+<li>Gateway API Standard is the stable channel. Check the Kubernetes floor for the release you install.</li>
+</ul>
+        </section>
+        <section class="section" id="check" data-dfd-reveal>
+            <h2>Knowledge check</h2>
+            <section class="dfd-quiz" data-dfd-quiz data-explanation="The Ingress API stores the object. A controller has to implement it.">
+<h3 data-dfd-prompt>You applied an Ingress and nothing answers on port 80. What is a likely cause?</h3>
+<div data-dfd-choices>
+<button type="button" data-correct="false">Ingress objects route traffic by themselves</button>
+<button type="button" data-correct="true">No Ingress controller is installed</button>
+<button type="button" data-correct="false">ClusterIP Services cannot exist in the same namespace</button>
+</div>
+<p class="dfd-quiz-feedback" data-dfd-feedback hidden>
+</p>
+<p class="dfd-quiz-explain" data-dfd-explain hidden>
+</p>
+</section>
+<section class="dfd-quiz" data-dfd-quiz data-explanation="It is a separate CRD project with a stable channel and an experimental channel.">
+<h3 data-dfd-prompt>Which statement about Gateway API is accurate?</h3>
+<div data-dfd-choices>
+<button type="button" data-correct="false">It is a field on the Ingress object</button>
+<button type="button" data-correct="true">Standard and Experimental are different channels</button>
+<button type="button" data-correct="false">It ships inside every cluster and needs no install</button>
+</div>
+<p class="dfd-quiz-feedback" data-dfd-feedback hidden>
+</p>
+<p class="dfd-quiz-explain" data-dfd-explain hidden>
+</p>
+</section>
+<section class="dfd-quiz" data-dfd-quiz data-explanation="kind does not allocate that address for you.">
+<h3 data-dfd-prompt>A LoadBalancer Service on kind stays pending. What did you learn?</h3>
+<div data-dfd-choices>
+<button type="button" data-correct="false">The Service type is illegal</button>
+<button type="button" data-correct="true">kind did not provide a load balancer</button>
+<button type="button" data-correct="false">The Pods failed their readiness probes</button>
+</div>
+<p class="dfd-quiz-feedback" data-dfd-feedback hidden>
+</p>
+<p class="dfd-quiz-explain" data-dfd-explain hidden>
+</p>
+</section>
+        </section>
+        <section class="section" data-dfd-reveal>
+            <h2>Official sources</h2>
+            <p>Checked against the linked documentation in October 2026. A later release can move a flag, a price, or a supported pair. Use the page for the version you installed.</p>
+            <ul class="source-list">
+<li>
+<a href="https://kubernetes.io/docs/concepts/services-networking/service/" target="_blank" rel="noopener noreferrer">Service</a>
+</li>
+<li>
+<a href="https://kubernetes.io/docs/concepts/services-networking/ingress/" target="_blank" rel="noopener noreferrer">Ingress</a>
+</li>
+<li>
+<a href="https://gateway-api.sigs.k8s.io/docs/concepts/versioning/" target="_blank" rel="noopener noreferrer">Gateway API versioning</a>
+</li>
+</ul>
+        </section>
+        <nav class="lesson-nav" aria-label="Lesson order">
+            <a class="secondary" href="pods-deployments.html">Previous: Pods and Deployments</a>
+            <a href="config-secrets.html">Next: ConfigMaps and Secrets</a>
+        </nav>
+    </div>
+
+    <script src="../js/code-copy.js">
+</script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2">
+</script>
+    <script src="../js/supabase-config.js">
+</script>
+    <script src="../js/supabase-auth.js">
+</script>
+    <script src="../js/paywall.js">
+</script>
+    <script src="../js/progress.js">
+</script>
+    <script src="../js/lesson-common.js">
+</script>
+    <script src="../js/quiz.js">
+</script>
+    <script src="../js/analytics-tracker.js">
+</script>
+
+</body>
+</html>

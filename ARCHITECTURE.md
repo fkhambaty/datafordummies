@@ -60,10 +60,10 @@ Course folders, each with its own `index.html` and usually a `hub.html`:
 | `clickhouse_course/` | ClickHouse |
 | `redshift_course/` | Amazon Redshift. The hub lessons are canonical. `index.html` stays as the older single-page course and links to those lessons. |
 | `metabase_course/` | Metabase. Hub lessons use the shared shell. Meet Metabase is free. The other eight lessons are Pro. |
-| `kubernetes_course/` | Kubernetes |
-| `terraform_course/` | Terraform |
+| `kubernetes_course/` | Kubernetes. Hub at `hub.html`. `index.html` keeps the old section addresses and links to the lessons. Twelve lessons: Meet Kubernetes and Local clusters are free. The other ten set `data-access="pro"`. |
+| `terraform_course/` | Terraform and OpenTofu. Hub at `hub.html`. `index.html` keeps the old section addresses, including `#workspaces`. Twelve lessons: the intro and the install lesson are free. The other ten are Pro. |
 | `llm_course/` | Large language models. `styles.css` imports the shared course theme. Page animations stay in each lesson. |
-| `dms_course/` | AWS DMS |
+| `dms_course/` | AWS DMS. `hub.html` and `index.html` are the same course map. Eleven lessons: architecture and assessments are free. The other nine are Pro. |
 | `snowflake_course/` | Snowflake. Hub at `hub.html` (also copied to `index.html`). Lessons use `styles.css`, which imports `course-light-theme.css`. Two lessons are free (`meet-snowflake`, `trial-account`). The other eleven set `data-access="pro"`. |
 | `interviews/` | Interview practice, including a free `snowflake-interview.html` |
 
@@ -87,15 +87,15 @@ Contact addresses published on the site: `fktiindia@gmail.com` and `fakhruddinkh
 
 ## Design system
 
-`css/dfd-system.css` owns shared tokens, keyboard focus, reduced motion, and overflow guards. Every static HTML page links it last inside `<head>`, with a relative path (`css/dfd-system.css` at the root, `../css/dfd-system.css` one folder down). Checked 13 October 2026: 214 pages, one link each, every path resolves.
+`css/dfd-system.css` owns shared tokens, keyboard focus, reduced motion, and overflow guards. Every static HTML page links it last inside `<head>`, with a relative path (`css/dfd-system.css` at the root, `../css/dfd-system.css` one folder down). Checked 13 October 2026: 267 pages, one link each, every path resolves.
 
 Family styles sit in front of that file. They own color and layout. The system file must not repaint them.
 
 | Family | Stylesheet | Pages |
 |--------|------------|--------|
 | Marketing | `css/fkti-light-theme.css`, `css/hub-styles.css`, `styles/ui-upgrade.css` | Home, learning path, founder, projects index, and pages that already share that nav |
-| Course hubs | `css/hub-light.css` | The nine `hub.html` files that already link it. Each hub sets `--hub-color` and `--hub-color2` |
-| Shared lesson shell | `css/course-light-theme.css` | Lessons whose `styles.css` imports it (PostgreSQL, SQL Server, ClickHouse, Metabase, Redshift) |
+| Course hubs | `css/hub-light.css` | Course `hub.html` files, including Kubernetes, Terraform, and AWS DMS. Each hub sets `--hub-color` and `--hub-color2` |
+| Shared lesson shell | `css/course-light-theme.css` | Lessons whose `styles.css` imports it, including PostgreSQL, SQL Server, ClickHouse, Metabase, Redshift, Kubernetes, Terraform, and AWS DMS |
 | Python | `python_course/light-theme.css` | Python lessons. October 2026 pass: 15-session nav, visualization on sessions 13 and 14, shared progress and knowledge checks. |
 | Data science | `data_science_course/styles.css` | Imports `css/course-light-theme.css`. Lesson pages keep their own `<style>` blocks for diagrams. |
 | LLM | `llm_course/styles.css` | Imports `css/course-light-theme.css`. Page animations stay in each lesson's `<style>` block. |
@@ -123,7 +123,7 @@ Data science, LLM, Airflow, and dbt lessons link a family `styles.css` and still
 
 ### Mobile width rule (720px and below)
 
-The page itself never scrolls sideways. Only intrinsically wide content scrolls, inside its own box. Checked 13 October 2026: all 214 pages have `scrollWidth` equal to the viewport at 390px and 1440px.
+The page itself never scrolls sideways. Only intrinsically wide content scrolls, inside its own box. Checked 13 October 2026: the Kubernetes, Terraform, and AWS DMS pages, the home page, the learning path, the curriculum, and the profile were opened at 390, 768, 820, 1024, and 1440. Document scroll width matched the viewport on each of them. The home page also logs a CORS refusal for the production page-view beacon when the origin is a local server. That request was already on the page.
 
 - Every `table` becomes `display: block` with `overflow-x: auto`, so the table is its own scroll container. Rows and cells keep table layout inside it. Do not set `display` on `thead`, `tbody`, `tr`, or cells; that breaks the column grid. A lesson that needs a wide table needs no wrapper markup.
 - `pre` and `.code-block` keep `white-space: pre` and scroll horizontally. Code lines are never wrapped.
@@ -152,7 +152,7 @@ Head order for a new lesson: the family stylesheet, then the page accent, then `
 
 Metabase, the Redshift hub lessons, the PostgreSQL replication lesson, and the SQL Server practice-dataset page use the same shell. Redshift's canonical URLs are the files linked from `redshift_course/hub.html`. `redshift_course/index.html` remains the older single-page course and points at those lessons. Meet Metabase and Meet Redshift stay free. The other hub lessons in those two courses are Pro.
 
-Checked 13 October 2026, the Python, data science, and LLM families use that same progress and knowledge-check script. Python sessions 13 and 14 teach matplotlib/seaborn and enhanced charts. `python_course/a4-functions.html` is the function solutions page for `student-assignments.html#assignment4`. Data science `index.html` is the course hub: every card links a real lesson or a section on that hub. LLM lessons distinguish the 2019 GPT-2 decoder from ChatGPT, and the deployment lesson uses a LangChain runnable instead of `RetrievalQA`. Access flags are unchanged. The Terraform hub still warns that `index.html#workspaces` is missing.
+Checked 13 October 2026, the Python, data science, and LLM families use that same progress and knowledge-check script. Python sessions 13 and 14 teach matplotlib/seaborn and enhanced charts. `python_course/a4-functions.html` is the function solutions page for `student-assignments.html#assignment4`. Data science `index.html` is the course hub: every card links a real lesson or a section on that hub. LLM lessons distinguish the 2019 GPT-2 decoder from ChatGPT, and the deployment lesson uses a LangChain runnable instead of `RetrievalQA`. Access flags are unchanged.
 
 Checked 13 October 2026, the Airflow, dbt, and ClickHouse families use the same shell. Each family `styles.css` imports `css/course-light-theme.css`. Lesson pages keep their own `<style>` blocks for diagrams. Airflow lessons are framed for Apache Airflow 3.3.2 (17 September 2026): `airflow.sdk`, Assets (the rename of Datasets), TaskFlow `@task` as the default, provider packages, deferrable operators, data intervals, dynamic task mapping, and DAG bundles. `PythonOperator` stays as migration context. The 75-question certification pages are a course practice set, not an Apache Software Foundation exam and not an Astronomer certification. dbt lessons are framed for the October 2026 Developer Hub: `dbt build`, unit tests, contracts, groups, access, versions, the Semantic Layer, Mesh, and `state:modified` with `--defer`. The `dbt` package is the Fusion v2 engine (self-hosted channel v2.0.8 on that check). `dbt-core` remains the Apache-licensed runtime. Fusion is generally available for dbt platform projects on Snowflake, with other adapters still preview or beta, and local lifecycle can lag the platform. ClickHouse lessons use current MergeTree practice, the JSON type (production-ready since 25.3), projections, incremental and refreshable materialized views, SharedMergeTree on Cloud, Iceberg and Delta reads, Kafka-to-MergeTree ingestion, `argMax` instead of `FINAL` on large tables, and ClickHouse Keeper. `airflow_course/index.html`, `dbt_course/index.html`, and `clickhouse_course/index.html` stay at those URLs. Free and Pro flags are unchanged: Meet Airflow, Meet dbt, and Meet ClickHouse are free. The other hub lessons are Pro.
 
@@ -163,6 +163,16 @@ SQL Server lessons are framed for the lifecycle on that date. SQL Server 2016 ex
 The Redshift and Metabase hub lessons were already on the shell. This pass checked them against October 2026 docs and left sound explanations in place. Redshift lessons keep the caveats on zero-ETL, data sharing, AUTO table design, RA3, Serverless, automatic WLM, Spectrum, and Iceberg. The older `redshift_course/index.html` no longer tells a new warehouse to start on DC2. Metabase lessons keep Cloud and self-host, embedding, models and metrics, permissions, and upgrades. The older Metabase index no longer shows a published application-database password, an H2 install as the way to keep data, or PostgreSQL 13 for that database. Meet Redshift and Meet Metabase stay free. The other eight lessons in each course are Pro.
 
 Snowflake was audited for navigation, Pro labels, lesson counts, and factual caveats. Thirteen lessons, two free and eleven Pro, and the next and previous links already matched the hub. No content rewrite.
+
+Checked 13 October 2026, Kubernetes, Terraform, and AWS DMS moved off single-page courses onto the same shell. Each lesson sets `data-course-id` and `data-lesson-id`, loads `dfd-system.css` last, and uses the shared progress, quiz, and code-copy scripts. Family `styles.css` imports `css/course-light-theme.css`. Diagrams are inline SVG with step buttons. There are no screenshot placeholders.
+
+Kubernetes is twelve lessons. Meet Kubernetes and Local clusters are free. The other ten are Pro. Local setup covers kind, minikube, and Docker Desktop on macOS, Windows, and Linux. Lessons do not pin one patch release: minor branches move about every four months and are maintained for about 14 months. Ingress stays a stable API that needs a controller. Gateway API is a separate CRD project; the 1.5 release notes say Kubernetes 1.30 or later for that release, and a later Gateway API release can raise the floor. NetworkPolicy is described as unenforced on default kind. PodSecurityPolicy is described as removed in 1.25. EKS, GKE, and AKS prices are left to each cloud's current price page. `kubernetes_course/index.html` keeps the old section ids (`welcome`, `what-is-k8s`, `install-docker-mac`, `pods`, `deployments`, `services`, `configmaps-secrets`, `kubectl`, `real-apps`) as a map onto the lessons. The hub is `hub.html`.
+
+Terraform is twelve lessons. The intro and the install lesson are free. The other ten are Pro. CLI workspaces and HCP Terraform workspaces are taught as different objects. `terraform_course/index.html#workspaces` is that pointer. S3 locking is described as version-dependent: current HashiCorp docs use `use_lockfile`, older releases used DynamoDB, and OpenTofu has its own backend page. OpenTofu is a separate MPL project. The lessons do not say it includes HCP Terraform, Sentinel, or every later Terraform flag. `terraform_course/index.html` keeps the old section ids and links to the lessons.
+
+AWS DMS is eleven lessons. Architecture and the assessment lesson are free. The other nine are Pro. Premigration assessment, DMS Schema Conversion, and the desktop AWS SCT are three different reports. Replication instances and DMS Serverless are both described as current choices. Serverless idle billing is left to the current pricing page. `dms_course/index.html` and `hub.html` are the same map, replacing the old launching-soon page. There were no old lesson anchors to keep.
+
+Home tools, the footer, the learning path, the curriculum, `enterCourse` in `js/hub-script.js`, and the profile progress links open the three hubs. The first two lessons of each course are free. Pro lessons set `data-access="pro"`.
 
 ## Local run
 

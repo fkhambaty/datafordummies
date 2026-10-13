@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Observability and debugging | Kubernetes | Data For Dummies</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="../css/dfd-system.css">
+</head>
+<body class="dfd-safe" data-access="pro" data-course-id="kubernetes" data-lesson-id="observability" data-lesson-label="Observability and debugging" data-total-lessons="12">
+    <div class="container">
+        <nav class="nav" aria-label="Course">
+            <a href="hub.html">Course hub</a>
+            <a href="../index.html">Home</a>
+            <a href="#check">Knowledge check</a>
+        </nav>
+        <header class="lesson-hero" id="top">
+            <p class="track-kicker">Pro · Lesson 8 of 12</p>
+            <h1>Observability and debugging</h1>
+            <p>Most failures are visible in events, Pod status, and logs before you need another tool.</p>
+        </header>
+        <div class="dfd-lesson-progress" data-dfd-progress>
+            <p class="dfd-lesson-progress-label" data-dfd-progress-label>Sign in to save your place.</p>
+            <div class="dfd-lesson-progress-track" data-dfd-progress-bar role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-label="Course progress">
+                <div class="dfd-lesson-progress-fill" data-dfd-progress-fill>
+</div>
+            </div>
+        </div>
+        <section class="section" data-dfd-reveal>
+            <div class="eli5-box">
+                <h4>Picture it this way</h4>
+                <p>The boat did not leave. First read the note on the dock (the event), then ask the boat what it printed (the logs), then look inside if it is still there (debug).</p>
+            </div>
+        </section>
+        <section class="section" data-dfd-reveal id="order">
+<h2>A short order of checks</h2>
+<p>
+<code>kubectl get pods</code> shows a status word: Pending, CrashLoopBackOff, Error, Running, Completed. The word is not the diagnosis. <code>kubectl describe pod</code> puts events at the bottom: image pull errors, failed mounts, probe failures, and scheduling complaints.</p>
+<p>
+<code>kubectl logs</code> prints what the process wrote. <code>--previous</code> is the last crashed container. If the process never started, the log is empty and the event is the useful part.</p>
+<table class="comparison-table dfd-scroll">
+<thead>
+<tr>
+<th>Status</th>
+<th>Often means</th>
+<th>Next command</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Pending</td>
+<td>No node, or a volume is not ready</td>
+<td>describe the Pod</td>
+</tr>
+<tr>
+<td>ImagePullBackOff</td>
+<td>The image name, tag, or pull secret is wrong</td>
+<td>describe, then check the image</td>
+</tr>
+<tr>
+<td>CrashLoopBackOff</td>
+<td>The process starts and exits</td>
+<td>logs --previous</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section class="section" data-dfd-reveal id="debug">
+<h2>Debugging without a new screenshot tool</h2>
+<p>
+<code>kubectl exec</code> works when the container is running and includes a shell. Many minimal images do not. <code>kubectl debug</code> can attach an ephemeral container. That feature depends on the cluster version and on permission to create ephemeral containers. If the command is rejected, read the error. Do not invent a node SSH step as the default.</p>
+<p>
+<code>kubectl top</code> needs metrics-server or an equivalent. A local kind cluster often does not have it. Missing metrics are not proof the Pod is idle.</p>
+</section>
+<section class="section" data-dfd-reveal id="probes">
+<h2>Probes show up as events</h2>
+<p>A readiness probe that never passes leaves the Pod out of the Service. A liveness probe that is too aggressive restarts a slow process. Describe the Pod and read the probe events before you change the image.</p>
+</section>
+        <section class="section dfd-diagram" data-dfd-diagram data-dfd-reveal>
+            <h2>Where to look</h2>
+            <div data-dfd-diagram-panel="ev">
+<svg class="dfd-responsive" viewBox="0 0 640 148" role="img" aria-label="Events highlighted">
+<rect class="track-drift" x="16" y="36" width="188" height="72" rx="12" fill="#5b8def">
+</rect>
+<text x="110" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#ffffff">Events</text>
+<path d="M204 72 H224" stroke="#64748b" stroke-width="2" fill="none">
+</path>
+<rect x="224" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
+</rect>
+<text x="318" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">Logs</text>
+<path d="M412 72 H432" stroke="#64748b" stroke-width="2" fill="none">
+</path>
+<rect x="432" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
+</rect>
+<text x="526" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">Debug</text>
+</svg>
+<p>Events explain why the Pod never started.</p>
+</div>
+<div data-dfd-diagram-panel="logs" hidden>
+<svg class="dfd-responsive" viewBox="0 0 640 148" role="img" aria-label="Logs highlighted">
+<rect x="16" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
+</rect>
+<text x="110" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">Events</text>
+<path d="M204 72 H224" stroke="#64748b" stroke-width="2" fill="none">
+</path>
+<rect class="track-drift" x="224" y="36" width="188" height="72" rx="12" fill="#5b8def">
+</rect>
+<text x="318" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#ffffff">Logs</text>
+<path d="M412 72 H432" stroke="#64748b" stroke-width="2" fill="none">
+</path>
+<rect x="432" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
+</rect>
+<text x="526" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">Debug</text>
+</svg>
+<p>Logs explain what a started process printed.</p>
+</div>
+<div data-dfd-diagram-panel="dbg" hidden>
+<svg class="dfd-responsive" viewBox="0 0 640 148" role="img" aria-label="Debug highlighted">
+<rect x="16" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
+</rect>
+<text x="110" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">Events</text>
+<path d="M204 72 H224" stroke="#64748b" stroke-width="2" fill="none">
+</path>
+<rect x="224" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
+</rect>
+<text x="318" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">Logs</text>
+<path d="M412 72 H432" stroke="#64748b" stroke-width="2" fill="none">
+</path>
+<rect class="track-drift" x="432" y="36" width="188" height="72" rx="12" fill="#5b8def">
+</rect>
+<text x="526" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#ffffff">Debug</text>
+</svg>
+<p>exec or an ephemeral container is for a process that is still there.</p>
+</div>
+            <div class="dfd-diagram-controls">
+                <button type="button" data-dfd-diagram-step="ev" aria-pressed="true">Events</button>
+<button type="button" data-dfd-diagram-step="logs" aria-pressed="false">Logs</button>
+<button type="button" data-dfd-diagram-step="dbg" aria-pressed="false">Debug</button>
+            </div>
+        </section>
+        <section class="section" id="lab" data-dfd-reveal>
+            <h2>Lab: break a Pod on purpose</h2>
+            <p>Use an image tag that does not exist. Describe the Pod and find the pull error. Then delete the Pod.</p>
+            <div class="code-block">
+<pre>
+<code>kubectl run bad --image=nginx:this-tag-does-not-exist --restart=Never
+kubectl describe pod bad | tail -n 20
+kubectl delete pod bad --wait=false</code>
+</pre>
+</div>
+            <p>
+<button type="button" data-dfd-complete>Mark lesson complete</button>
+</p>
+            <p data-dfd-complete-status>
+</p>
+        </section>
+        <section class="section" id="summary" data-dfd-reveal>
+            <h2>Concept summary</h2>
+            <ul class="summary-list">
+<li>Describe before you guess. Events are at the bottom.</li>
+<li>logs --previous is the crashed process. An empty log can mean it never started.</li>
+<li>kubectl top needs a metrics pipeline that local clusters often lack.</li>
+</ul>
+        </section>
+        <section class="section" id="check" data-dfd-reveal>
+            <h2>Knowledge check</h2>
+            <section class="dfd-quiz" data-dfd-quiz data-explanation="The volume is not ready. The image is not the first suspect.">
+<h3 data-dfd-prompt>A Pod is Pending and describe says the persistent volume is not found. Where is the problem?</h3>
+<div data-dfd-choices>
+<button type="button" data-correct="false">The readiness probe</button>
+<button type="button" data-correct="true">Storage for that claim</button>
+<button type="button" data-correct="false">The CronJob timezone</button>
+</div>
+<p class="dfd-quiz-feedback" data-dfd-feedback hidden>
+</p>
+<p class="dfd-quiz-explain" data-dfd-explain hidden>
+</p>
+</section>
+<section class="dfd-quiz" data-dfd-quiz data-explanation="The previous container may have printed the error.">
+<h3 data-dfd-prompt>CrashLoopBackOff and an empty current log. What next?</h3>
+<div data-dfd-choices>
+<button type="button" data-correct="true">kubectl logs with --previous</button>
+<button type="button" data-correct="false">Delete the namespace</button>
+<button type="button" data-correct="false">Assume the probe is the only cause</button>
+</div>
+<p class="dfd-quiz-feedback" data-dfd-feedback hidden>
+</p>
+<p class="dfd-quiz-explain" data-dfd-explain hidden>
+</p>
+</section>
+<section class="dfd-quiz" data-dfd-quiz data-explanation="The metrics API is often not installed.">
+<h3 data-dfd-prompt>kubectl top fails on a new kind cluster. What is a fair conclusion?</h3>
+<div data-dfd-choices>
+<button type="button" data-correct="false">The Pods are using zero CPU</button>
+<button type="button" data-correct="true">The metrics pipeline may be absent</button>
+<button type="button" data-correct="false">kind cannot run Pods</button>
+</div>
+<p class="dfd-quiz-feedback" data-dfd-feedback hidden>
+</p>
+<p class="dfd-quiz-explain" data-dfd-explain hidden>
+</p>
+</section>
+        </section>
+        <section class="section" data-dfd-reveal>
+            <h2>Official sources</h2>
+            <p>Checked against the linked documentation in October 2026. A later release can move a flag, a price, or a supported pair. Use the page for the version you installed.</p>
+            <ul class="source-list">
+<li>
+<a href="https://kubernetes.io/docs/tasks/debug/debug-application/debug-pods/" target="_blank" rel="noopener noreferrer">Debug Pods</a>
+</li>
+<li>
+<a href="https://kubernetes.io/docs/tasks/debug/debug-application/debug-running-pod/" target="_blank" rel="noopener noreferrer">kubectl debug</a>
+</li>
+<li>
+<a href="https://kubernetes.io/docs/reference/kubectl/generated/kubectl_describe/" target="_blank" rel="noopener noreferrer">Events</a>
+</li>
+</ul>
+        </section>
+        <nav class="lesson-nav" aria-label="Lesson order">
+            <a class="secondary" href="jobs-cronjobs.html">Previous: Jobs and CronJobs</a>
+            <a href="security.html">Next: Security: RBAC, NetworkPolicy, Pod Security</a>
+        </nav>
+    </div>
+
+    <script src="../js/code-copy.js">
+</script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2">
+</script>
+    <script src="../js/supabase-config.js">
+</script>
+    <script src="../js/supabase-auth.js">
+</script>
+    <script src="../js/paywall.js">
+</script>
+    <script src="../js/progress.js">
+</script>
+    <script src="../js/lesson-common.js">
+</script>
+    <script src="../js/quiz.js">
+</script>
+    <script src="../js/analytics-tracker.js">
+</script>
+
+</body>
+</html>

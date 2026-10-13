@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Security, policy, and OpenTofu | Terraform and OpenTofu | Data For Dummies</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="../css/dfd-system.css">
+</head>
+<body class="dfd-safe" data-access="pro" data-course-id="terraform" data-lesson-id="security-opentofu" data-lesson-label="Security, policy, and OpenTofu" data-total-lessons="12">
+    <div class="container">
+        <nav class="nav" aria-label="Course">
+            <a href="hub.html">Course hub</a>
+            <a href="../index.html">Home</a>
+            <a href="#check">Knowledge check</a>
+        </nav>
+        <header class="lesson-hero" id="top">
+            <p class="track-kicker">Pro · Lesson 11 of 12</p>
+            <h1>Security, policy, and OpenTofu</h1>
+            <p>Secrets belong outside git and outside a chatty plan. Policy belongs in a tool your runner actually executes. OpenTofu gets its own comparison here so it is not waved through as Terraform.</p>
+        </header>
+        <div class="dfd-lesson-progress" data-dfd-progress>
+            <p class="dfd-lesson-progress-label" data-dfd-progress-label>Sign in to save your place.</p>
+            <div class="dfd-lesson-progress-track" data-dfd-progress-bar role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-label="Course progress">
+                <div class="dfd-lesson-progress-fill" data-dfd-progress-fill>
+</div>
+            </div>
+        </div>
+        <section class="section" data-dfd-reveal>
+            <div class="eli5-box">
+                <h4>Picture it this way</h4>
+                <p>A password in a tfvars file is a key left on the desk. Policy is the rule that says which desks may exist. OpenTofu is a different company of locksmiths who learned from the same early manual. Their later locks are not automatically the same.</p>
+            </div>
+        </section>
+        <section class="section" data-dfd-reveal id="secrets">
+<h2>Secrets</h2>
+<p>Do not commit tfvars with passwords, cloud keys, or tokens. Prefer environment variables or a secret store the provider can read at plan time. The value still lands in state if a resource argument stores it. Protect the state backend the way you protect a password database: tight IAM, encryption the backend documents, and no public bucket.</p>
+<p>A <code>sensitive</code> output is a display hint. Rotate a secret that already reached a state file or a CI log. Redaction in the next plan does not scrub the old log.</p>
+</section>
+<section class="section" data-dfd-reveal id="policy">
+<h2>Policy</h2>
+<p>HashiCorp documents Sentinel and, in places, OPA-style policy for HCP Terraform. Those are features of that product. A CLI-only run does not grow Sentinel because the HCL parsed. If you need a policy check in your own CI, install the policy tool you chose and run it as a step. Say its name.</p>
+<p>OpenTofu does not include Sentinel. It has had its own work on features such as state encryption that Terraform does not copy one-for-one. When a design says &quot;we encrypt state&quot;, name the binary and the feature flag. Do not write &quot;Terraform/OpenTofu state encryption&quot; as one switch.</p>
+</section>
+<section class="section" data-dfd-reveal id="compare">
+<h2>A neutral comparison</h2>
+<p>Both tools can plan and apply HCL with providers, and both can store remote state. That is the overlap. It is not a feature matrix.</p>
+<p>License: Terraform is under the Business Source License. OpenTofu is MPL-2.0. Your legal review cares. This course is not that review.</p>
+<p>Registries: HashiCorp&#x27;s registry and the OpenTofu registry are different. A provider version you saw on one is not automatically published on the other. Pin the source your binary is configured to use.</p>
+<p>Cloud product: HCP Terraform is HashiCorp&#x27;s. OpenTofu does not ship it. Similar CLI workspace commands do not create HCP workspaces.</p>
+<p>Newer language: import, moved, removed, tests, and S3 lock files landed on timelines. Check the docs for the version in <code>terraform version</code> or <code>tofu version</code>. A blog that says &quot;they match&quot; without a version is not evidence.</p>
+<table class="comparison-table dfd-scroll">
+<thead>
+<tr>
+<th>Topic</th>
+<th>Fair to say</th>
+<th>Unfair to say</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Commands</td>
+<td>plan and apply exist in both families</td>
+<td>Every flag matches on every version</td>
+</tr>
+<tr>
+<td>License</td>
+<td>They differ</td>
+<td>OpenTofu is the free mode of terraform</td>
+</tr>
+<tr>
+<td>HCP Terraform</td>
+<td>It is a HashiCorp service</td>
+<td>It runs tofu if you ask nicely</td>
+</tr>
+<tr>
+<td>State lock on S3</td>
+<td>Read each backend page</td>
+<td>use_lockfile means the same deprecation schedule</td>
+</tr>
+</tbody>
+</table>
+</section>
+        <section class="section dfd-diagram" data-dfd-diagram data-dfd-reveal>
+            <h2>Overlap is not identity</h2>
+            <div data-dfd-diagram-panel="both">
+<svg class="dfd-responsive" viewBox="0 0 640 148" role="img" aria-label="Shared ideas highlighted">
+<rect class="track-drift" x="16" y="36" width="188" height="72" rx="12" fill="#a78bfa">
+</rect>
+<text x="110" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#ffffff">HCL</text>
+<path d="M204 72 H224" stroke="#64748b" stroke-width="2" fill="none">
+</path>
+<rect x="224" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
+</rect>
+<text x="318" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">State</text>
+<path d="M412 72 H432" stroke="#64748b" stroke-width="2" fill="none">
+</path>
+<rect x="432" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
+</rect>
+<text x="526" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">Plan</text>
+</svg>
+<p>HCL, state, and plan are the shared ideas.</p>
+</div>
+<div data-dfd-diagram-panel="tf" hidden>
+<svg class="dfd-responsive" viewBox="0 0 640 148" role="img" aria-label="HashiCorp-only items highlighted">
+<rect x="16" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
+</rect>
+<text x="110" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">BSL license</text>
+<path d="M204 72 H224" stroke="#64748b" stroke-width="2" fill="none">
+</path>
+<rect class="track-drift" x="224" y="36" width="188" height="72" rx="12" fill="#a78bfa">
+</rect>
+<text x="318" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#ffffff">HCP Terraform</text>
+<path d="M412 72 H432" stroke="#64748b" stroke-width="2" fill="none">
+</path>
+<rect x="432" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
+</rect>
+<text x="526" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">Sentinel</text>
+</svg>
+<p>License, HCP Terraform, and Sentinel belong to HashiCorp&#x27;s product story.</p>
+</div>
+<div data-dfd-diagram-panel="tofu" hidden>
+<svg class="dfd-responsive" viewBox="0 0 640 148" role="img" aria-label="OpenTofu items highlighted">
+<rect x="16" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
+</rect>
+<text x="110" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">MPL license</text>
+<path d="M204 72 H224" stroke="#64748b" stroke-width="2" fill="none">
+</path>
+<rect x="224" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
+</rect>
+<text x="318" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">tofu binary</text>
+<path d="M412 72 H432" stroke="#64748b" stroke-width="2" fill="none">
+</path>
+<rect class="track-drift" x="432" y="36" width="188" height="72" rx="12" fill="#a78bfa">
+</rect>
+<text x="526" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#ffffff">Own docs</text>
+</svg>
+<p>OpenTofu has its own binary, license, registry, and docs. Read those.</p>
+</div>
+            <div class="dfd-diagram-controls">
+                <button type="button" data-dfd-diagram-step="both" aria-pressed="true">Overlap</button>
+<button type="button" data-dfd-diagram-step="tf" aria-pressed="false">Terraform</button>
+<button type="button" data-dfd-diagram-step="tofu" aria-pressed="false">OpenTofu</button>
+            </div>
+        </section>
+        <section class="section" id="lab" data-dfd-reveal>
+            <h2>Lab: a secret-handling checklist</h2>
+            <p>Answer yes or no for a real repo you work in. A no is a useful result.</p>
+            <div class="code-block">
+<pre>
+<code>Secrets in git: no
+State bucket public: no
+State lock understood for our binary version: yes/no
+CI prints terraform version or tofu version: yes/no
+Policy tool we actually run (name it, or none):
+We did not write &quot;Terraform/OpenTofu&quot; as if it were one product: yes</code>
+</pre>
+</div>
+            <p>
+<button type="button" data-dfd-complete>Mark lesson complete</button>
+</p>
+            <p data-dfd-complete-status>
+</p>
+        </section>
+        <section class="section" id="summary" data-dfd-reveal>
+            <h2>Concept summary</h2>
+            <ul class="summary-list">
+<li>sensitive does not keep a value out of state or old logs.</li>
+<li>Name the policy engine your runner executes.</li>
+<li>Compare OpenTofu and Terraform by version and by feature. Do not grant them each other&#x27;s products.</li>
+</ul>
+        </section>
+        <section class="section" id="check" data-dfd-reveal>
+            <h2>Knowledge check</h2>
+            <section class="dfd-quiz" data-dfd-quiz data-explanation="It changes future display. It does not scrub the old log.">
+<h3 data-dfd-prompt>A sensitive output leaked in yesterday&#x27;s CI log. What does marking it sensitive today do?</h3>
+<div data-dfd-choices>
+<button type="button" data-correct="false">It deletes the old log</button>
+<button type="button" data-correct="true">It redacts future CLI output, not the old log</button>
+<button type="button" data-correct="false">It encrypts every old state file in place</button>
+</div>
+<p class="dfd-quiz-feedback" data-dfd-feedback hidden>
+</p>
+<p class="dfd-quiz-explain" data-dfd-explain hidden>
+</p>
+</section>
+<section class="dfd-quiz" data-dfd-quiz data-explanation="HCP Terraform is not an OpenTofu feature.">
+<h3 data-dfd-prompt>Which claim is unfair?</h3>
+<div data-dfd-choices>
+<button type="button" data-correct="false">Both tools can plan HCL</button>
+<button type="button" data-correct="true">HCP Terraform is included with OpenTofu</button>
+<button type="button" data-correct="false">The licenses differ</button>
+</div>
+<p class="dfd-quiz-feedback" data-dfd-feedback hidden>
+</p>
+<p class="dfd-quiz-explain" data-dfd-explain hidden>
+</p>
+</section>
+<section class="dfd-quiz" data-dfd-quiz data-explanation="On the backend page for the binary you run.">
+<h3 data-dfd-prompt>Where do you confirm S3 lock behavior?</h3>
+<div data-dfd-choices>
+<button type="button" data-correct="false">Only on a Terraform 1.10 blog, for every tool</button>
+<button type="button" data-correct="true">The backend docs for that version of terraform or tofu</button>
+<button type="button" data-correct="false">In the HCL resource block</button>
+</div>
+<p class="dfd-quiz-feedback" data-dfd-feedback hidden>
+</p>
+<p class="dfd-quiz-explain" data-dfd-explain hidden>
+</p>
+</section>
+        </section>
+        <section class="section" data-dfd-reveal>
+            <h2>Official sources</h2>
+            <p>Checked against the linked documentation in October 2026. A later release can move a flag, a price, or a supported pair. Use the page for the version you installed.</p>
+            <ul class="source-list">
+<li>
+<a href="https://developer.hashicorp.com/terraform/language/state/sensitive-data" target="_blank" rel="noopener noreferrer">Sensitive data</a>
+</li>
+<li>
+<a href="https://opentofu.org/docs/" target="_blank" rel="noopener noreferrer">OpenTofu docs</a>
+</li>
+<li>
+<a href="https://developer.hashicorp.com/terraform/language" target="_blank" rel="noopener noreferrer">Terraform language</a>
+</li>
+</ul>
+        </section>
+        <nav class="lesson-nav" aria-label="Lesson order">
+            <a class="secondary" href="ci-hcp.html">Previous: CI and HCP Terraform</a>
+            <a href="capstone.html">Next: Capstone</a>
+        </nav>
+    </div>
+
+    <script src="../js/code-copy.js">
+</script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2">
+</script>
+    <script src="../js/supabase-config.js">
+</script>
+    <script src="../js/supabase-auth.js">
+</script>
+    <script src="../js/paywall.js">
+</script>
+    <script src="../js/progress.js">
+</script>
+    <script src="../js/lesson-common.js">
+</script>
+    <script src="../js/quiz.js">
+</script>
+    <script src="../js/analytics-tracker.js">
+</script>
+
+</body>
+</html>

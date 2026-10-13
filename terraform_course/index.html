@@ -3,1553 +3,239 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>Terraform Infrastructure as Code | Data For Dummies</title>
-    <link rel="stylesheet" href="../css/fkti-light-theme.css">
-    <link rel="stylesheet" href="styles.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/atom-one-light.min.css">
+    <title>Terraform and OpenTofu section map | Data For Dummies</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="../css/dfd-system.css">
 </head>
-<body data-access="pro">
-    <!-- Header -->
-    <header>
-        <div class="container">
-            <div class="header-content">
-                <img src="../assets/terraform-logo.svg" alt="Data For Dummies" class="logo">
-                <div class="header-text">
-                    <h1>🏗️ Master Terraform Infrastructure as Code</h1>
-                    <p class="institute-name">Data For Dummies</p>
-                    <p class="tagline">Build, Change, and Version Infrastructure Safely and Efficiently</p>
-                </div>
-            </div>
-        </div>
-    </header>
-
-    <!-- Navigation -->
-    <nav id="navbar">
-        <div class="container">
-            <div class="nav-section">
-                <button class="nav-btn hub-btn" onclick="goToHub()">← Home</button>
-            </div>
-            <div class="nav-section main-nav">
-                <button class="nav-btn" onclick="showSection('welcome')">🏠 Welcome</button>
-                <button class="nav-btn" onclick="showSection('history')">📜 History</button>
-                <button class="nav-btn" onclick="showSection('installation')">⚙️ Installation</button>
-                <button class="nav-btn" onclick="showSection('basics')">📚 Basics</button>
-                <button class="nav-btn" onclick="showSection('providers')">🔌 Providers</button>
-                <button class="nav-btn" onclick="showSection('resources')">📦 Resources</button>
-                <button class="nav-btn" onclick="showSection('variables')">🔧 Variables</button>
-                <button class="nav-btn" onclick="showSection('modules')">📁 Modules</button>
-                <button class="nav-btn" onclick="showSection('state')">🗃️ State</button>
-                <button class="nav-btn" onclick="showSection('projects')">💡 Projects</button>
-                <button class="nav-btn" onclick="showSection('exercises')">🎯 Exercises</button>
-            </div>
-        </div>
-    </nav>
-
-    <!-- Progress Bar -->
-    <div class="progress-container">
-        <div class="progress-bar" id="progressBar"></div>
-        <span class="progress-text" id="progressText">0% Complete</span>
+<body class="dfd-safe" data-course-id="terraform" data-lesson-id="index" data-lesson-label="Terraform and OpenTofu section map" data-total-lessons="12">
+    <div class="container">
+        <nav class="nav" aria-label="Course">
+            <a href="hub.html">Course hub</a>
+            <a href="../index.html">Home</a>
+        </nav>
+        <header class="lesson-hero" id="top">
+            <p class="track-kicker">12 lessons · this page keeps old addresses</p>
+            <h1>Terraform and OpenTofu section map</h1>
+            <p>The old Terraform page used these section addresses. Workspaces now have a real lesson. The address #workspaces on this page jumps to that pointer.</p>
+        </header>
+        <section class="section" data-dfd-reveal>
+            <h2>Where each old address goes</h2>
+            <table class="comparison-table dfd-scroll">
+                <thead>
+<tr>
+<th>Address</th>
+<th>Lesson</th>
+</tr>
+</thead>
+                <tbody>
+<tr>
+<td>
+<a href="#welcome">welcome</a>
+</td>
+<td>
+<a href="meet-terraform.html">Welcome</a>
+</td>
+</tr>
+<tr>
+<td>
+<a href="#history">history</a>
+</td>
+<td>
+<a href="meet-terraform.html">History</a>
+</td>
+</tr>
+<tr>
+<td>
+<a href="#installation">installation</a>
+</td>
+<td>
+<a href="setup.html">Installation</a>
+</td>
+</tr>
+<tr>
+<td>
+<a href="#basics">basics</a>
+</td>
+<td>
+<a href="hcl-resources.html">Basics</a>
+</td>
+</tr>
+<tr>
+<td>
+<a href="#providers">providers</a>
+</td>
+<td>
+<a href="hcl-resources.html">Providers</a>
+</td>
+</tr>
+<tr>
+<td>
+<a href="#resources">resources</a>
+</td>
+<td>
+<a href="hcl-resources.html">Resources</a>
+</td>
+</tr>
+<tr>
+<td>
+<a href="#variables">variables</a>
+</td>
+<td>
+<a href="variables-outputs.html">Variables</a>
+</td>
+</tr>
+<tr>
+<td>
+<a href="#modules">modules</a>
+</td>
+<td>
+<a href="modules.html">Modules</a>
+</td>
+</tr>
+<tr>
+<td>
+<a href="#state">state</a>
+</td>
+<td>
+<a href="state-backends.html">State</a>
+</td>
+</tr>
+<tr>
+<td>
+<a href="#workspaces">workspaces</a>
+</td>
+<td>
+<a href="workspaces.html">Workspaces</a>
+</td>
+</tr>
+<tr>
+<td>
+<a href="#projects">projects</a>
+</td>
+<td>
+<a href="capstone.html">Projects</a>
+</td>
+</tr>
+<tr>
+<td>
+<a href="#exercises">exercises</a>
+</td>
+<td>
+<a href="capstone.html">Exercises</a>
+</td>
+</tr>
+</tbody>
+            </table>
+        </section>
+        <section class="section" id="welcome" data-dfd-reveal>
+<h2>Welcome</h2>
+<p>The welcome is now Meet Terraform and OpenTofu. It does not claim the two tools are interchangeable.</p>
+<p>
+<a href="meet-terraform.html">Open the lesson</a>
+</p>
+</section>
+<section class="section" id="history" data-dfd-reveal>
+<h2>History</h2>
+<p>The license change and the OpenTofu fork are in the first lesson, with a later lesson for the comparison.</p>
+<p>
+<a href="meet-terraform.html">Open the lesson</a>
+</p>
+</section>
+<section class="section" id="installation" data-dfd-reveal>
+<h2>Installation</h2>
+<p>Install steps and version managers are the second lesson.</p>
+<p>
+<a href="setup.html">Open the lesson</a>
+</p>
+</section>
+<section class="section" id="basics" data-dfd-reveal>
+<h2>Basics</h2>
+<p>The init, plan, and apply loop is with HCL, providers, and resources.</p>
+<p>
+<a href="hcl-resources.html">Open the lesson</a>
+</p>
+</section>
+<section class="section" id="providers" data-dfd-reveal>
+<h2>Providers</h2>
+<p>Providers and data sources share that lesson.</p>
+<p>
+<a href="hcl-resources.html">Open the lesson</a>
+</p>
+</section>
+<section class="section" id="resources" data-dfd-reveal>
+<h2>Resources</h2>
+<p>Resources are the objects Terraform creates, updates, and destroys.</p>
+<p>
+<a href="hcl-resources.html">Open the lesson</a>
+</p>
+</section>
+<section class="section" id="variables" data-dfd-reveal>
+<h2>Variables</h2>
+<p>Variables, outputs, and locals have their own lesson.</p>
+<p>
+<a href="variables-outputs.html">Open the lesson</a>
+</p>
+</section>
+<section class="section" id="modules" data-dfd-reveal>
+<h2>Modules</h2>
+<p>Modules are reusable root-module calls, not a copy-paste folder by magic.</p>
+<p>
+<a href="modules.html">Open the lesson</a>
+</p>
+</section>
+<section class="section" id="state" data-dfd-reveal>
+<h2>State</h2>
+<p>State, backends, and locking, including S3 lock files and older DynamoDB locks.</p>
+<p>
+<a href="state-backends.html">Open the lesson</a>
+</p>
+</section>
+<section class="section" id="workspaces" data-dfd-reveal>
+<h2>Workspaces</h2>
+<p>CLI workspaces and HCP Terraform workspaces are different objects. This is the lesson the old hub could not open.</p>
+<p>
+<a href="workspaces.html">Open the lesson</a>
+</p>
+</section>
+<section class="section" id="projects" data-dfd-reveal>
+<h2>Projects</h2>
+<p>The capstone is a local lab you can validate without cloud credentials.</p>
+<p>
+<a href="capstone.html">Open the lesson</a>
+</p>
+</section>
+<section class="section" id="exercises" data-dfd-reveal>
+<h2>Exercises</h2>
+<p>The knowledge checks and the capstone lab replace the old exercise tab.</p>
+<p>
+<a href="capstone.html">Open the lesson</a>
+</p>
+</section>
+        <nav class="lesson-nav" aria-label="Lesson order">
+            <a class="secondary" href="../index.html">Home</a>
+            <a href="hub.html">Open the course hub</a>
+        </nav>
     </div>
 
-    <!-- Main Content -->
-    <main class="container">
-        
-        <!-- Welcome Section -->
-        <section id="welcome" class="content-section active">
-            <h2>🎯 Welcome to Your Terraform Journey!</h2>
-            
-            <div class="welcome-card">
-                <h3>What You'll Learn</h3>
-                <ul class="feature-list">
-                    <li>✅ Infrastructure as Code (IaC) fundamentals</li>
-                    <li>✅ Terraform syntax and best practices</li>
-                    <li>✅ Multi-cloud resource provisioning</li>
-                    <li>✅ State management and remote backends</li>
-                    <li>✅ Modules and code organization</li>
-                    <li>✅ CI/CD integration and automation</li>
-                    <li>✅ Real-world enterprise projects</li>
-                </ul>
-            </div>
+    <script src="../js/code-copy.js">
+</script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2">
+</script>
+    <script src="../js/supabase-config.js">
+</script>
+    <script src="../js/supabase-auth.js">
+</script>
+    <script src="../js/paywall.js">
+</script>
+    <script src="../js/progress.js">
+</script>
+    <script src="../js/lesson-common.js">
+</script>
+    <script src="../js/quiz.js">
+</script>
+    <script src="../js/analytics-tracker.js">
+</script>
 
-            <div class="welcome-card" style="background: linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%); border: 2px solid #3b82f6;">
-                <h3 style="color: #1e40af;">👶 In one sentence</h3>
-                <p style="color: #1e3a8a; margin: 0;"><strong>Terraform</strong> is a tool that lets you describe servers, databases, and other cloud resources in code—then create and update them in a repeatable way so every environment matches.</p>
-            </div>
-            <div class="welcome-card" style="background: linear-gradient(135deg, #fef2f2 0%, #fecaca 100%); border: 2px solid #ef4444;">
-                <h3 style="color: #b91c1c;">🚫 Common Mistakes in Terraform</h3>
-                <ul style="margin-left: 20px; color: #7f1d1d;">
-                    <li><strong>Not using remote state</strong> — Store state in S3 (or similar) with locking so the team shares one state and avoids overwrites.</li>
-                    <li><strong>Hardcoding values</strong> — Use variables and tfvars (or env vars) for region, env name, and secrets; don't commit prod IDs.</li>
-                    <li><strong>Ignoring plan before apply</strong> — Always run <code>terraform plan</code> and review; apply can destroy or change resources unexpectedly.</li>
-                </ul>
-            </div>
-
-            <div class="welcome-card">
-                <h3>Why Terraform?</h3>
-                <p>Terraform revolutionized how we manage infrastructure. It's the Swiss Army knife of cloud provisioning, used by:</p>
-                <ul class="company-list">
-                    <li>🏢 Fortune 500 companies - for enterprise infrastructure</li>
-                    <li>🚀 Startups - for rapid scaling</li>
-                    <li>☁️ Cloud providers - AWS, Azure, Google Cloud</li>
-                    <li>🏦 Financial institutions - for compliance and security</li>
-                    <li>🎮 Gaming companies - for global deployments</li>
-                </ul>
-            </div>
-
-            <div class="screenshot-placeholder">
-                <h4>📸 Screenshot: Terraform Dashboard Overview</h4>
-                <p>Here you would see the Terraform Cloud dashboard showing multiple workspaces managing different environments (dev, staging, production) with their current status and last runs.</p>
-                <div class="mock-screenshot">
-                    <div class="screenshot-header">Terraform Cloud - Workspaces</div>
-                    <div class="screenshot-content">
-                        <div class="workspace-item">
-                            <span class="status success">✓</span> production-app
-                            <small>Last run: 2 hours ago</small>
-                        </div>
-                        <div class="workspace-item">
-                            <span class="status running">⟲</span> staging-db
-                            <small>Currently running...</small>
-                        </div>
-                        <div class="workspace-item">
-                            <span class="status pending">⏸</span> dev-testing
-                            <small>Waiting for approval</small>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="real-world-example">
-                <h3>🌟 Real-World Success Story</h3>
-                <div class="story-card">
-                    <h4>Netflix's Infrastructure Evolution</h4>
-                    <p><strong>Challenge:</strong> Netflix needed to manage thousands of AWS resources across multiple regions for their global streaming service.</p>
-                    <p><strong>Solution:</strong> They adopted Terraform to:</p>
-                    <ul>
-                        <li>🎬 Provision video encoding infrastructure automatically</li>
-                        <li>🌍 Deploy content delivery networks globally</li>
-                        <li>📊 Manage monitoring and alerting systems</li>
-                        <li>🔄 Handle blue-green deployments seamlessly</li>
-                    </ul>
-                    <p><strong>Result:</strong> 50% reduction in deployment time, 99.99% uptime, and ability to serve 200+ million subscribers globally.</p>
-                </div>
-            </div>
-        </section>
-
-        <!-- History Section -->
-        <section id="history" class="content-section">
-            <h2>📜 The Birth and Evolution of Terraform</h2>
-            
-            <div class="timeline">
-                <div class="timeline-item">
-                    <div class="timeline-year">2010-2012</div>
-                    <div class="timeline-content">
-                        <h3>🌱 The Problem Emerges</h3>
-                        <p>Cloud computing was growing rapidly, but managing infrastructure was chaotic:</p>
-                        <ul>
-                            <li>Manual server provisioning through web consoles</li>
-                            <li>Configuration drift between environments</li>
-                            <li>No version control for infrastructure changes</li>
-                            <li>Hours spent on repetitive deployment tasks</li>
-                        </ul>
-                    </div>
-                </div>
-
-                <div class="timeline-item">
-                    <div class="timeline-year">2013</div>
-                    <div class="timeline-content">
-                        <h3>💡 Mitchell Hashimoto's Vision</h3>
-                        <p>Mitchell Hashimoto, co-founder of HashiCorp, experienced these pain points firsthand:</p>
-                        <ul>
-                            <li>Working at various startups managing AWS manually</li>
-                            <li>Seeing the same infrastructure problems everywhere</li>
-                            <li>Realizing the need for "Infrastructure as Code"</li>
-                        </ul>
-                        <div class="screenshot-placeholder">
-                            <h4>📸 Screenshot: Mitchell's Early Blog Post</h4>
-                            <p>Mitchell's 2013 blog post titled "Infrastructure as Code" where he outlined the vision that would become Terraform.</p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="timeline-item">
-                    <div class="timeline-year">2014</div>
-                    <div class="timeline-content">
-                        <h3>🎯 HashiCorp Founded</h3>
-                        <p>Mitchell Hashimoto and Armon Dadgar founded HashiCorp with a clear mission:</p>
-                        <ul>
-                            <li>Create tools to solve infrastructure problems</li>
-                            <li>Make infrastructure programmable and version-controlled</li>
-                            <li>Build for multi-cloud from day one</li>
-                        </ul>
-                    </div>
-                </div>
-
-                <div class="timeline-item">
-                    <div class="timeline-year">July 28, 2014</div>
-                    <div class="timeline-content">
-                        <h3>🚀 Terraform 0.1.0 Released</h3>
-                        <p>The first public release of Terraform was announced with:</p>
-                        <ul>
-                            <li>Support for AWS, DigitalOcean, and Heroku</li>
-                            <li>HCL (HashiCorp Configuration Language)</li>
-                            <li>Plan and Apply workflow</li>
-                            <li>State management</li>
-                        </ul>
-                        <div class="screenshot-placeholder">
-                            <h4>📸 Screenshot: Original Terraform Announcement</h4>
-                            <p>HashiCorp's blog post announcing Terraform with the tagline "Build, Change, and Version Infrastructure".</p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="timeline-item">
-                    <div class="timeline-year">2015-2017</div>
-                    <div class="timeline-content">
-                        <h3>📈 Rapid Growth</h3>
-                        <p>Terraform gained massive adoption:</p>
-                        <ul>
-                            <li>100+ cloud providers supported</li>
-                            <li>Enterprise adoption by major companies</li>
-                            <li>Open source community contributions</li>
-                            <li>Terraform Registry launched</li>
-                        </ul>
-                    </div>
-                </div>
-
-                <div class="timeline-item">
-                    <div class="timeline-year">2019</div>
-                    <div class="timeline-content">
-                        <h3>☁️ Terraform Cloud</h3>
-                        <p>HashiCorp launched Terraform Cloud (formerly Terraform Enterprise):</p>
-                        <ul>
-                            <li>Remote state management</li>
-                            <li>Collaborative workflows</li>
-                            <li>Policy as Code with Sentinel</li>
-                            <li>Private module registry</li>
-                        </ul>
-                    </div>
-                </div>
-
-                <div class="timeline-item">
-                    <div class="timeline-year">2021</div>
-                    <div class="timeline-content">
-                        <h3>🎉 Terraform 1.0</h3>
-                        <p>Terraform reached maturity with version 1.0:</p>
-                        <ul>
-                            <li>Stability guarantees for core functionality</li>
-                            <li>Backwards compatibility promises</li>
-                            <li>Enhanced security features</li>
-                        </ul>
-                        <div class="screenshot-placeholder">
-                            <h4>📸 Screenshot: Terraform 1.0 Release Notes</h4>
-                            <p>The official release notes highlighting stability improvements and new features.</p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="timeline-item">
-                    <div class="timeline-year">2024</div>
-                    <div class="timeline-content">
-                        <h3>🌍 Current State</h3>
-                        <p>Today, Terraform is the industry standard:</p>
-                        <ul>
-                            <li>Used by 70% of Fortune 500 companies</li>
-                            <li>3000+ providers in the registry</li>
-                            <li>100+ million downloads</li>
-                            <li>Active community of 50,000+ contributors</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Installation Section -->
-        <section id="installation" class="content-section">
-            <h2>⚙️ Step-by-Step Installation Guide</h2>
-            
-            <div class="installation-tabs">
-                <button class="tab-btn active" onclick="showTab('windows')">🪟 Windows</button>
-                <button class="tab-btn" onclick="showTab('macos')">🍎 macOS</button>
-                <button class="tab-btn" onclick="showTab('linux')">🐧 Linux</button>
-                <button class="tab-btn" onclick="showTab('cloud')">☁️ Cloud Setup</button>
-            </div>
-
-            <div id="windows" class="tab-content active">
-                <h3>Windows Installation</h3>
-                <div class="step-by-step">
-                    <div class="step">
-                        <div class="step-number">1</div>
-                        <div class="step-content">
-                            <h4>Download Terraform</h4>
-                            <p>Visit <a href="https://www.terraform.io/downloads" target="_blank">terraform.io/downloads</a></p>
-                            <div class="screenshot-placeholder">
-                                <h4>📸 Screenshot: Terraform Downloads Page</h4>
-                                <p>The official Terraform downloads page showing different OS options and the latest version number.</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="step">
-                        <div class="step-number">2</div>
-                        <div class="step-content">
-                            <h4>Choose Windows Version</h4>
-                            <p>Select the appropriate Windows version (32-bit or 64-bit)</p>
-                            <div class="code-block">
-                                <pre><code># Check your system type in PowerShell
-systeminfo | findstr /C:"System Type"</code></pre>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="step">
-                        <div class="step-number">3</div>
-                        <div class="step-content">
-                            <h4>Extract and Install</h4>
-                            <p>Extract the downloaded ZIP file to a folder like <code>C:\terraform</code></p>
-                            <div class="screenshot-placeholder">
-                                <h4>📸 Screenshot: Extracting Terraform</h4>
-                                <p>Windows Explorer showing the extracted terraform.exe file in C:\terraform directory.</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="step">
-                        <div class="step-number">4</div>
-                        <div class="step-content">
-                            <h4>Add to PATH</h4>
-                            <p>Add C:\terraform to your Windows PATH environment variable</p>
-                            <div class="screenshot-placeholder">
-                                <h4>📸 Screenshot: Environment Variables</h4>
-                                <p>Windows System Properties dialog showing the Environment Variables section with PATH being edited.</p>
-                            </div>
-                            <div class="code-block">
-                                <pre><code># Steps to add to PATH:
-1. Right-click "This PC" → Properties
-2. Click "Advanced system settings"
-3. Click "Environment Variables"
-4. Under "System variables", find and select "Path"
-5. Click "Edit" → "New"
-6. Add: C:\terraform
-7. Click "OK" on all dialogs</code></pre>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="step">
-                        <div class="step-number">5</div>
-                        <div class="step-content">
-                            <h4>Verify Installation</h4>
-                            <p>Open Command Prompt or PowerShell and verify the installation</p>
-                            <div class="code-block">
-                                <pre><code># Check Terraform version
-terraform --version
-
-# Expected output:
-Terraform v1.6.0
-on windows_amd64</code></pre>
-                            </div>
-                            <div class="screenshot-placeholder">
-                                <h4>📸 Screenshot: Terraform Version Output</h4>
-                                <p>PowerShell window showing successful terraform --version command output.</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div id="macos" class="tab-content">
-                <h3>macOS Installation</h3>
-                <div class="step-by-step">
-                    <div class="step">
-                        <div class="step-number">1</div>
-                        <div class="step-content">
-                            <h4>Option 1: Using Homebrew (Recommended)</h4>
-                            <div class="code-block">
-                                <pre><code># Install Homebrew if you haven't already
-/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-
-# Install Terraform
-brew install terraform
-
-# Verify installation
-terraform --version</code></pre>
-                            </div>
-                            <div class="screenshot-placeholder">
-                                <h4>📸 Screenshot: Homebrew Installation</h4>
-                                <p>Terminal showing the brew install terraform command and its output.</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="step">
-                        <div class="step-number">2</div>
-                        <div class="step-content">
-                            <h4>Option 2: Manual Installation</h4>
-                            <p>Download the macOS binary from terraform.io</p>
-                            <div class="code-block">
-                                <pre><code># Download and install manually
-curl -O https://releases.hashicorp.com/terraform/1.6.0/terraform_1.6.0_darwin_amd64.zip
-unzip terraform_1.6.0_darwin_amd64.zip
-sudo mv terraform /usr/local/bin/
-terraform --version</code></pre>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div id="linux" class="tab-content">
-                <h3>Linux Installation</h3>
-                <div class="step-by-step">
-                    <div class="step">
-                        <div class="step-number">1</div>
-                        <div class="step-content">
-                            <h4>Ubuntu/Debian Installation</h4>
-                            <div class="code-block">
-                                <pre><code># Add HashiCorp GPG key
-curl -fsSL https://apt.releases.hashicorp.com/gpg | sudo apt-key add -
-
-# Add HashiCorp repository
-sudo apt-add-repository "deb [arch=amd64] https://apt.releases.hashicorp.com $(lsb_release -cs) main"
-
-# Update and install
-sudo apt-get update && sudo apt-get install terraform
-
-# Verify installation
-terraform --version</code></pre>
-                            </div>
-                            <div class="screenshot-placeholder">
-                                <h4>📸 Screenshot: Ubuntu Terminal Installation</h4>
-                                <p>Terminal showing the apt-get install terraform command execution.</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="step">
-                        <div class="step-number">2</div>
-                        <div class="step-content">
-                            <h4>CentOS/RHEL Installation</h4>
-                            <div class="code-block">
-                                <pre><code># Add HashiCorp repository
-sudo yum install -y yum-utils
-sudo yum-config-manager --add-repo https://rpm.releases.hashicorp.com/RHEL/hashicorp.repo
-
-# Install Terraform
-sudo yum -y install terraform
-
-# Verify installation
-terraform --version</code></pre>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div id="cloud" class="tab-content">
-                <h3>Cloud Setup (Terraform Cloud)</h3>
-                <div class="step-by-step">
-                    <div class="step">
-                        <div class="step-number">1</div>
-                        <div class="step-content">
-                            <h4>Create Terraform Cloud Account</h4>
-                            <p>Visit <a href="https://app.terraform.io/signup" target="_blank">app.terraform.io</a> and create a free account</p>
-                            <div class="screenshot-placeholder">
-                                <h4>📸 Screenshot: Terraform Cloud Signup</h4>
-                                <p>Terraform Cloud signup page with email and organization name fields.</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="step">
-                        <div class="step-number">2</div>
-                        <div class="step-content">
-                            <h4>Create Organization</h4>
-                            <p>Set up your organization and invite team members</p>
-                            <div class="screenshot-placeholder">
-                                <h4>📸 Screenshot: Organization Setup</h4>
-                                <p>Terraform Cloud organization creation form with name and email fields.</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="step">
-                        <div class="step-number">3</div>
-                        <div class="step-content">
-                            <h4>Generate API Token</h4>
-                            <div class="code-block">
-                                <pre><code># After logging in, go to:
-# User Settings → Tokens → Create API token
-
-# Save the token for CLI authentication
-terraform login</code></pre>
-                            </div>
-                            <div class="screenshot-placeholder">
-                                <h4>📸 Screenshot: API Token Generation</h4>
-                                <p>Terraform Cloud tokens page showing how to create a new API token.</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Basics Section -->
-        <section id="basics" class="content-section">
-            <h2>📚 Terraform Fundamentals</h2>
-            
-            <div class="concept-card">
-                <h3>🏗️ What is Infrastructure as Code (IaC)?</h3>
-                <p>Infrastructure as Code is the practice of managing and provisioning computing infrastructure through machine-readable definition files, rather than physical hardware configuration or interactive configuration tools.</p>
-                
-                <div class="comparison-table">
-                    <h4>Traditional vs. IaC Approach</h4>
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Traditional</th>
-                                <th>Infrastructure as Code</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>Manual server setup</td>
-                                <td>Automated provisioning</td>
-                            </tr>
-                            <tr>
-                                <td>GUI-based configuration</td>
-                                <td>Code-based configuration</td>
-                            </tr>
-                            <tr>
-                                <td>No version control</td>
-                                <td>Git-based versioning</td>
-                            </tr>
-                            <tr>
-                                <td>Environment drift</td>
-                                <td>Consistent environments</td>
-                            </tr>
-                            <tr>
-                                <td>Slow disaster recovery</td>
-                                <td>Fast recreation</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-
-            <div class="concept-card">
-                <h3>🔄 Terraform Workflow</h3>
-                <div class="workflow-diagram">
-                    <div class="workflow-step">
-                        <div class="step-icon">✏️</div>
-                        <div class="step-title">Write</div>
-                        <div class="step-desc">Define infrastructure in .tf files</div>
-                    </div>
-                    <div class="workflow-arrow">→</div>
-                    <div class="workflow-step">
-                        <div class="step-icon">📋</div>
-                        <div class="step-title">Plan</div>
-                        <div class="step-desc">Preview changes before applying</div>
-                    </div>
-                    <div class="workflow-arrow">→</div>
-                    <div class="workflow-step">
-                        <div class="step-icon">🚀</div>
-                        <div class="step-title">Apply</div>
-                        <div class="step-desc">Create or update infrastructure</div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="concept-card">
-                <h3>📝 Your First Terraform Configuration</h3>
-                <p>Let's create a simple AWS EC2 instance to understand the basics:</p>
-                
-                <div class="code-block">
-                    <pre><code class="language-hcl"># main.tf - Your first Terraform configuration
-
-# Configure the AWS Provider
-terraform {
-  required_providers {
-    aws = {
-      source  = "hashicorp/aws"
-      version = "~> 5.0"
-    }
-  }
-}
-
-# Configure AWS credentials
-provider "aws" {
-  region = "us-west-2"
-}
-
-# Create an EC2 instance
-resource "aws_instance" "web" {
-  ami           = "ami-0c02fb55956c7d316"  # Amazon Linux 2
-  instance_type = "t2.micro"               # Free tier eligible
-
-  tags = {
-    Name = "HelloWorld"
-  }
-}</code></pre>
-                </div>
-
-                <div class="real-world-example">
-                    <h4>🌟 Real-World Context</h4>
-                    <p><strong>Airbnb's Use Case:</strong> Airbnb uses similar configurations to provision thousands of EC2 instances across multiple regions for their booking platform. They can spin up entire environments for new markets in minutes rather than days.</p>
-                </div>
-
-                <div class="screenshot-placeholder">
-                    <h4>📸 Screenshot: VS Code with Terraform Extension</h4>
-                    <p>VS Code showing the main.tf file with Terraform syntax highlighting and the HashiCorp Terraform extension providing autocomplete suggestions.</p>
-                </div>
-            </div>
-
-            <div class="hands-on-exercise">
-                <h3>🔬 Try It Yourself</h3>
-                <div class="exercise-steps">
-                    <p><strong>Exercise 1: Create your first Terraform file</strong></p>
-                    <ol>
-                        <li>Create a new directory: <code>mkdir my-first-terraform</code></li>
-                        <li>Navigate to it: <code>cd my-first-terraform</code></li>
-                        <li>Create main.tf with the code above</li>
-                        <li>Run: <code>terraform init</code></li>
-                        <li>Run: <code>terraform plan</code></li>
-                    </ol>
-                </div>
-
-                <div class="expected-output">
-                    <h4>Expected Output:</h4>
-                    <div class="code-block">
-                        <pre><code>$ terraform init
-Initializing the backend...
-Initializing provider plugins...
-- Finding hashicorp/aws versions matching "~> 5.0"...
-- Installing hashicorp/aws v5.23.1...
-
-Terraform has been successfully initialized!</code></pre>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Basics Section -->
-        <section id="basics" class="content-section">
-            <h2>📚 Terraform Fundamentals</h2>
-            
-            <div class="concept-card">
-                <h3>🏗️ What is Infrastructure as Code (IaC)?</h3>
-                <p>Infrastructure as Code is the practice of managing and provisioning computing infrastructure through machine-readable definition files, rather than physical hardware configuration or interactive configuration tools.</p>
-                
-                <div class="comparison-table">
-                    <h4>Traditional vs. IaC Approach</h4>
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Traditional</th>
-                                <th>Infrastructure as Code</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>Manual server setup</td>
-                                <td>Automated provisioning</td>
-                            </tr>
-                            <tr>
-                                <td>GUI-based configuration</td>
-                                <td>Code-based configuration</td>
-                            </tr>
-                            <tr>
-                                <td>No version control</td>
-                                <td>Git-based versioning</td>
-                            </tr>
-                            <tr>
-                                <td>Environment drift</td>
-                                <td>Consistent environments</td>
-                            </tr>
-                            <tr>
-                                <td>Slow disaster recovery</td>
-                                <td>Fast recreation</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-
-            <div class="concept-card">
-                <h3>🔄 Terraform Workflow</h3>
-                <div class="workflow-diagram">
-                    <div class="workflow-step">
-                        <div class="step-icon">✏️</div>
-                        <div class="step-title">Write</div>
-                        <div class="step-desc">Define infrastructure in .tf files</div>
-                    </div>
-                    <div class="workflow-arrow">→</div>
-                    <div class="workflow-step">
-                        <div class="step-icon">📋</div>
-                        <div class="step-title">Plan</div>
-                        <div class="step-desc">Preview changes before applying</div>
-                    </div>
-                    <div class="workflow-arrow">→</div>
-                    <div class="workflow-step">
-                        <div class="step-icon">🚀</div>
-                        <div class="step-title">Apply</div>
-                        <div class="step-desc">Create or update infrastructure</div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="concept-card">
-                <h3>📝 Your First Terraform Configuration</h3>
-                <p>Let's create a simple AWS EC2 instance to understand the basics:</p>
-                
-                <div class="code-block">
-                    <pre><code class="language-hcl"># main.tf - Your first Terraform configuration
-
-# Configure the AWS Provider
-terraform {
-  required_providers {
-    aws = {
-      source  = "hashicorp/aws"
-      version = "~> 5.0"
-    }
-  }
-}
-
-# Configure AWS credentials
-provider "aws" {
-  region = "us-west-2"
-}
-
-# Create an EC2 instance
-resource "aws_instance" "web" {
-  ami           = "ami-0c02fb55956c7d316"  # Amazon Linux 2
-  instance_type = "t2.micro"               # Free tier eligible
-
-  tags = {
-    Name = "HelloWorld"
-  }
-}</code></pre>
-                </div>
-
-                <div class="real-world-example">
-                    <h4>🌟 Real-World Context</h4>
-                    <p><strong>Airbnb's Use Case:</strong> Airbnb uses similar configurations to provision thousands of EC2 instances across multiple regions for their booking platform. They can spin up entire environments for new markets in minutes rather than days.</p>
-                </div>
-
-                <div class="screenshot-placeholder">
-                    <h4>📸 Screenshot: VS Code with Terraform Extension</h4>
-                    <p>VS Code showing the main.tf file with Terraform syntax highlighting and the HashiCorp Terraform extension providing autocomplete suggestions.</p>
-                </div>
-            </div>
-
-            <div class="hands-on-exercise">
-                <h3>🔬 Try It Yourself</h3>
-                <div class="exercise-steps">
-                    <p><strong>Exercise 1: Create your first Terraform file</strong></p>
-                    <ol>
-                        <li>Create a new directory: <code>mkdir my-first-terraform</code></li>
-                        <li>Navigate to it: <code>cd my-first-terraform</code></li>
-                        <li>Create main.tf with the code above</li>
-                        <li>Run: <code>terraform init</code></li>
-                        <li>Run: <code>terraform plan</code></li>
-                    </ol>
-                </div>
-
-                <div class="expected-output">
-                    <h4>Expected Output:</h4>
-                    <div class="code-block">
-                        <pre><code>$ terraform init
-Initializing the backend...
-Initializing provider plugins...
-- Finding hashicorp/aws versions matching "~> 5.0"...
-- Installing hashicorp/aws v5.23.1...
-
-Terraform has been successfully initialized!</code></pre>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Providers Section -->
-        <section id="providers" class="content-section">
-            <h2>🔌 Terraform Providers</h2>
-            
-            <div class="concept-card">
-                <h3>What are Providers?</h3>
-                <p>Providers are plugins that allow Terraform to interact with cloud providers, SaaS providers, and other APIs. They are responsible for understanding API interactions and exposing resources.</p>
-                
-                <div class="provider-examples">
-                    <h4>🌟 Popular Providers</h4>
-                    <div class="provider-grid">
-                        <div class="provider-card">
-                            <h5>☁️ AWS Provider</h5>
-                            <div class="code-block">
-                                <pre><code class="language-hcl">terraform {
-  required_providers {
-    aws = {
-      source  = "hashicorp/aws"
-      version = "~> 5.0"
-    }
-  }
-}
-
-provider "aws" {
-  region = "us-west-2"
-}</code></pre>
-                            </div>
-                        </div>
-                        
-                        <div class="provider-card">
-                            <h5>⚡ Azure Provider</h5>
-                            <div class="code-block">
-                                <pre><code class="language-hcl">terraform {
-  required_providers {
-    azurerm = {
-      source  = "hashicorp/azurerm"
-      version = "~> 3.0"
-    }
-  }
-}
-
-provider "azurerm" {
-  features {}
-}</code></pre>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="real-world-example">
-                <h3>🌟 Multi-Cloud Strategy Example</h3>
-                <div class="story-card">
-                    <h4>Netflix's Multi-Provider Setup</h4>
-                    <p>Netflix uses multiple Terraform providers simultaneously:</p>
-                    <ul>
-                        <li>🔸 **AWS Provider** - Core streaming infrastructure</li>
-                        <li>🔸 **DataDog Provider** - Monitoring and alerting</li>
-                        <li>🔸 **GitHub Provider** - Repository and team management</li>
-                        <li>🔸 **Kubernetes Provider** - Container orchestration</li>
-                    </ul>
-                </div>
-            </div>
-        </section>
-
-        <!-- Resources Section -->
-        <section id="resources" class="content-section">
-            <h2>📦 Terraform Resources</h2>
-            
-            <div class="concept-card">
-                <h3>Understanding Resources</h3>
-                <p>Resources are the most important element in the Terraform language. Each resource block describes one or more infrastructure objects.</p>
-                
-                <div class="code-block">
-                    <pre><code class="language-hcl"># Resource syntax
-resource "resource_type" "resource_name" {
-  # Configuration arguments
-  argument1 = value1
-  argument2 = value2
-  
-  # Nested blocks
-  nested_block {
-    key = "value"
-  }
-}</code></pre>
-                </div>
-            </div>
-
-            <div class="resource-examples">
-                <h3>🎯 Common Resource Examples</h3>
-                
-                <div class="example-card">
-                    <h4>🌐 AWS VPC (Virtual Private Cloud)</h4>
-                    <div class="code-block">
-                        <pre><code class="language-hcl">resource "aws_vpc" "main" {
-  cidr_block           = "10.0.0.0/16"
-  enable_dns_hostnames = true
-  enable_dns_support   = true
-
-  tags = {
-    Name        = "main-vpc"
-    Environment = "production"
-  }
-}</code></pre>
-                    </div>
-                    <p><strong>Real-world usage:</strong> Uber provisions hundreds of VPCs across regions for service isolation and compliance.</p>
-                </div>
-
-                <div class="example-card">
-                    <h4>🗄️ AWS RDS Database</h4>
-                    <div class="code-block">
-                        <pre><code class="language-hcl">resource "aws_db_instance" "postgres" {
-  identifier     = "myapp-postgres"
-  engine         = "postgres"
-  engine_version = "13.7"
-  instance_class = "db.t3.micro"
-  
-  allocated_storage     = 20
-  max_allocated_storage = 100
-  storage_encrypted     = true
-  
-  db_name  = "myapp"
-  username = "dbadmin"
-  password = var.db_password
-  
-  vpc_security_group_ids = [aws_security_group.rds.id]
-  db_subnet_group_name   = aws_db_subnet_group.main.name
-  
-  backup_retention_period = 7
-  backup_window          = "03:00-04:00"
-  maintenance_window     = "sun:04:00-sun:05:00"
-  
-  skip_final_snapshot = false
-  final_snapshot_identifier = "myapp-postgres-final-snapshot"
-
-  tags = {
-    Name = "MyApp Database"
-    Env  = "production"
-  }
-}</code></pre>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Variables Section -->
-        <section id="variables" class="content-section">
-            <h2>🔧 Variables and Configuration</h2>
-            
-            <div class="concept-card">
-                <h3>Input Variables</h3>
-                <p>Input variables make your Terraform configuration flexible and reusable. They allow you to customize your infrastructure without changing the source code.</p>
-                
-                <div class="code-block">
-                    <pre><code class="language-hcl"># variables.tf
-variable "instance_type" {
-  description = "Type of EC2 instance"
-  type        = string
-  default     = "t2.micro"
-}
-
-variable "environment" {
-  description = "Environment name"
-  type        = string
-  validation {
-    condition     = contains(["dev", "staging", "production"], var.environment)
-    error_message = "Environment must be dev, staging, or production."
-  }
-}
-
-variable "instance_count" {
-  description = "Number of instances to create"
-  type        = number
-  default     = 1
-}</code></pre>
-                </div>
-            </div>
-
-            <div class="variable-types">
-                <h3>📊 Variable Types and Examples</h3>
-                
-                <div class="type-examples">
-                    <div class="type-card">
-                        <h4>🔤 String Variables</h4>
-                        <div class="code-block">
-                            <pre><code class="language-hcl">variable "region" {
-  type    = string
-  default = "us-west-2"
-}
-
-# Usage
-provider "aws" {
-  region = var.region
-}</code></pre>
-                        </div>
-                    </div>
-
-                    <div class="type-card">
-                        <h4>🔢 Number Variables</h4>
-                        <div class="code-block">
-                            <pre><code class="language-hcl">variable "port" {
-  type    = number
-  default = 80
-}
-
-# Usage
-resource "aws_security_group_rule" "web" {
-  from_port = var.port
-  to_port   = var.port
-}</code></pre>
-                        </div>
-                    </div>
-
-                    <div class="type-card">
-                        <h4>📋 List Variables</h4>
-                        <div class="code-block">
-                            <pre><code class="language-hcl">variable "availability_zones" {
-  type = list(string)
-  default = [
-    "us-west-2a",
-    "us-west-2b",
-    "us-west-2c"
-  ]
-}</code></pre>
-                        </div>
-                    </div>
-
-                    <div class="type-card">
-                        <h4>📦 Object Variables</h4>
-                        <div class="code-block">
-                            <pre><code class="language-hcl">variable "instance_config" {
-  type = object({
-    name = string
-    type = string
-    disk_size = number
-  })
-  default = {
-    name = "web-server"
-    type = "t2.micro"
-    disk_size = 20
-  }
-}</code></pre>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Modules Section -->
-        <section id="modules" class="content-section">
-            <h2>📁 Terraform Modules</h2>
-            
-            <div class="concept-card">
-                <h3>What are Modules?</h3>
-                <p>Modules are containers for multiple resources that are used together. A module consists of a collection of .tf files kept together in a directory.</p>
-                
-                <div class="module-benefits">
-                    <h4>🎯 Benefits of Using Modules</h4>
-                    <ul>
-                        <li>✅ **Reusability** - Write once, use many times</li>
-                        <li>✅ **Organization** - Group related resources logically</li>
-                        <li>✅ **Encapsulation** - Hide complexity behind simple interface</li>
-                        <li>✅ **Versioning** - Track changes and ensure stability</li>
-                        <li>✅ **Team Collaboration** - Share common patterns</li>
-                    </ul>
-                </div>
-            </div>
-
-            <div class="module-example">
-                <h3>🏗️ Creating a Web Server Module</h3>
-                
-                <div class="module-structure">
-                    <h4>📁 Module Directory Structure</h4>
-                    <div class="code-block">
-                        <pre><code>modules/web-server/
-├── main.tf      # Main resources
-├── variables.tf # Input variables
-├── outputs.tf   # Output values
-└── README.md    # Documentation</code></pre>
-                    </div>
-                </div>
-
-                <div class="file-content">
-                    <h4>📝 modules/web-server/main.tf</h4>
-                    <div class="code-block">
-                        <pre><code class="language-hcl">resource "aws_instance" "web" {
-  ami           = var.ami_id
-  instance_type = var.instance_type
-  
-  vpc_security_group_ids = [aws_security_group.web.id]
-  subnet_id             = var.subnet_id
-  
-  user_data = var.user_data
-  
-  tags = merge(var.tags, {
-    Name = var.server_name
-  })
-}
-
-resource "aws_security_group" "web" {
-  name_prefix = "${var.server_name}-"
-  vpc_id      = var.vpc_id
-  
-  ingress {
-    from_port   = 80
-    to_port     = 80
-    protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-  
-  ingress {
-    from_port   = 443
-    to_port     = 443
-    protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-  
-  egress {
-    from_port   = 0
-    to_port     = 0
-    protocol    = "-1"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-}</code></pre>
-                    </div>
-                </div>
-
-                <div class="file-content">
-                    <h4>📝 modules/web-server/variables.tf</h4>
-                    <div class="code-block">
-                        <pre><code class="language-hcl">variable "server_name" {
-  description = "Name of the web server"
-  type        = string
-}
-
-variable "instance_type" {
-  description = "EC2 instance type"
-  type        = string
-  default     = "t2.micro"
-}
-
-variable "ami_id" {
-  description = "AMI ID for the instance"
-  type        = string
-}
-
-variable "vpc_id" {
-  description = "VPC ID where resources will be created"
-  type        = string
-}
-
-variable "subnet_id" {
-  description = "Subnet ID for the instance"
-  type        = string
-}
-
-variable "user_data" {
-  description = "User data script for instance initialization"
-  type        = string
-  default     = ""
-}
-
-variable "tags" {
-  description = "Tags to apply to resources"
-  type        = map(string)
-  default     = {}
-}</code></pre>
-                    </div>
-                </div>
-
-                <div class="file-content">
-                    <h4>📝 Using the Module</h4>
-                    <div class="code-block">
-                        <pre><code class="language-hcl">module "web_server_prod" {
-  source = "./modules/web-server"
-  
-  server_name   = "production-web"
-  instance_type = "t3.medium"
-  ami_id        = "ami-0c02fb55956c7d316"
-  vpc_id        = aws_vpc.main.id
-  subnet_id     = aws_subnet.public.id
-  
-  user_data = file("scripts/install-apache.sh")
-  
-  tags = {
-    Environment = "production"
-    Owner       = "web-team"
-  }
-}
-
-module "web_server_staging" {
-  source = "./modules/web-server"
-  
-  server_name   = "staging-web"
-  instance_type = "t2.small"
-  ami_id        = "ami-0c02fb55956c7d316"
-  vpc_id        = aws_vpc.main.id
-  subnet_id     = aws_subnet.private.id
-  
-  tags = {
-    Environment = "staging"
-    Owner       = "web-team"
-  }
-}</code></pre>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- State Section -->
-        <section id="state" class="content-section">
-            <h2>🗃️ Terraform State Management</h2>
-            
-            <div class="concept-card">
-                <h3>Understanding Terraform State</h3>
-                <p>Terraform state is a critical concept that tracks the current state of your infrastructure. It maps your configuration to real-world resources and tracks metadata.</p>
-                
-                <div class="state-importance">
-                    <h4>🎯 Why State Matters</h4>
-                    <ul>
-                        <li>📊 **Resource Tracking** - Maps config to actual resources</li>
-                        <li>⚡ **Performance** - Caches resource attributes for faster operations</li>
-                        <li>🔄 **Change Detection** - Determines what needs to be created, updated, or destroyed</li>
-                        <li>🔒 **Locking** - Prevents concurrent modifications</li>
-                        <li>👥 **Team Collaboration** - Shared state enables team workflows</li>
-                    </ul>
-                </div>
-            </div>
-
-            <div class="state-backends">
-                <h3>🏪 State Backends</h3>
-                
-                <div class="backend-examples">
-                    <div class="backend-card">
-                        <h4>💾 Local Backend (Default)</h4>
-                        <div class="code-block">
-                            <pre><code class="language-hcl"># terraform.tf
-terraform {
-  backend "local" {
-    path = "terraform.tfstate"
-  }
-}</code></pre>
-                        </div>
-                        <p><strong>Use case:</strong> Personal projects, learning, single-user environments</p>
-                    </div>
-
-                    <div class="backend-card">
-                        <h4>🪣 S3 Backend (Popular)</h4>
-                        <div class="code-block">
-                            <pre><code class="language-hcl"># terraform.tf
-terraform {
-  backend "s3" {
-    bucket         = "my-terraform-state-bucket"
-    key            = "production/terraform.tfstate"
-    region         = "us-west-2"
-    encrypt        = true
-    dynamodb_table = "terraform-locks"
-  }
-}</code></pre>
-                        </div>
-                        <p><strong>Use case:</strong> Production environments, team collaboration</p>
-                    </div>
-
-                    <div class="backend-card">
-                        <h4>☁️ Terraform Cloud Backend</h4>
-                        <div class="code-block">
-                            <pre><code class="language-hcl"># terraform.tf
-terraform {
-  cloud {
-    organization = "my-org"
-    workspaces {
-      name = "production"
-    }
-  }
-}</code></pre>
-                        </div>
-                        <p><strong>Use case:</strong> Enterprise teams, managed workflows, governance</p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="state-commands">
-                <h3>🛠️ State Management Commands</h3>
-                
-                <div class="command-examples">
-                    <div class="command-card">
-                        <h4>🔍 Inspect State</h4>
-                        <div class="code-block">
-                            <pre><code># List all resources in state
-terraform state list
-
-# Show detailed info about a resource
-terraform state show aws_instance.web
-
-# Show current state (JSON format)
-terraform show -json</code></pre>
-                        </div>
-                    </div>
-
-                    <div class="command-card">
-                        <h4>🔧 Modify State</h4>
-                        <div class="code-block">
-                            <pre><code># Import existing resource into state
-terraform import aws_instance.web i-1234567890abcdef0
-
-# Move resource to different address
-terraform state mv aws_instance.web aws_instance.web_server
-
-# Remove resource from state (doesn't destroy)
-terraform state rm aws_instance.web</code></pre>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Projects Section -->
-        <section id="projects" class="content-section">
-            <h2>💡 Real-World Terraform Projects</h2>
-            
-            <div class="project-card">
-                <h3>🌐 Project 1: Multi-Tier Web Application</h3>
-                <p>Deploy a complete web application infrastructure on AWS with proper networking, security, and scaling.</p>
-                
-                <div class="project-overview">
-                    <h4>🎯 What You'll Build</h4>
-                    <ul>
-                        <li>🌐 **VPC with public/private subnets** across multiple AZs</li>
-                        <li>🔒 **Application Load Balancer** with SSL/TLS termination</li>
-                        <li>🖥️ **Auto Scaling Group** with Launch Templates</li>
-                        <li>🗄️ **RDS PostgreSQL** database with Multi-AZ deployment</li>
-                        <li>🚀 **CloudFront CDN** for global content delivery</li>
-                        <li>📊 **CloudWatch monitoring** and alerting</li>
-                    </ul>
-                </div>
-
-                <div class="project-architecture">
-                    <h4>🏗️ Architecture Diagram</h4>
-                    <div class="screenshot-placeholder">
-                        <h4>📸 Screenshot: Multi-Tier Architecture</h4>
-                        <p>AWS architecture diagram showing VPC, subnets, load balancer, auto-scaling group, and RDS database connections.</p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="project-card">
-                <h3>🚀 Project 2: Kubernetes Cluster on AWS</h3>
-                <p>Create a production-ready EKS cluster with monitoring, logging, and security best practices.</p>
-                
-                <div class="project-features">
-                    <h4>✨ Key Features</h4>
-                    <ul>
-                        <li>☸️ **Amazon EKS cluster** with managed node groups</li>
-                        <li>🔐 **IAM roles and policies** for service accounts</li>
-                        <li>🌐 **AWS Load Balancer Controller** for ingress</li>
-                        <li>📊 **Prometheus and Grafana** for monitoring</li>
-                        <li>🔍 **ELK stack** for centralized logging</li>
-                        <li>🛡️ **Network policies** and security groups</li>
-                    </ul>
-                </div>
-            </div>
-
-            <div class="project-card">
-                <h3>🏢 Project 3: Multi-Cloud Disaster Recovery</h3>
-                <p>Implement a disaster recovery strategy spanning AWS and Azure with automated failover.</p>
-                
-                <div class="project-scope">
-                    <h4>🌍 Multi-Cloud Setup</h4>
-                    <ul>
-                        <li>☁️ **Primary site on AWS** with full application stack</li>
-                        <li>⚡ **Secondary site on Azure** with warm standby</li>
-                        <li>🔄 **Cross-cloud networking** with VPN connections</li>
-                        <li>📊 **Database replication** between regions</li>
-                        <li>🚨 **Automated health checks** and failover procedures</li>
-                        <li>🔒 **Consistent security policies** across clouds</li>
-                    </ul>
-                </div>
-            </div>
-        </section>
-
-        <!-- Exercises Section -->
-        <section id="exercises" class="content-section">
-            <h2>🎯 Hands-On Exercises</h2>
-            
-            <div class="exercise-card">
-                <h3>💪 Exercise 1: Basic Infrastructure Setup</h3>
-                <div class="exercise-difficulty">🔰 Beginner Level</div>
-                
-                <div class="exercise-objective">
-                    <h4>🎯 Objective</h4>
-                    <p>Create your first AWS infrastructure using Terraform including VPC, subnet, and EC2 instance.</p>
-                </div>
-
-                <div class="exercise-tasks">
-                    <h4>📋 Tasks</h4>
-                    <ol>
-                        <li>Create a new directory for your Terraform project</li>
-                        <li>Write configuration for AWS VPC with CIDR 10.0.0.0/16</li>
-                        <li>Add a public subnet in the VPC</li>
-                        <li>Create an Internet Gateway and route table</li>
-                        <li>Launch a t2.micro EC2 instance in the subnet</li>
-                        <li>Add appropriate security groups for SSH access</li>
-                        <li>Apply the configuration and verify resources in AWS console</li>
-                    </ol>
-                </div>
-
-                <div class="exercise-solution">
-                    <h4>💡 Solution Hints</h4>
-                    <div class="code-block">
-                        <pre><code class="language-hcl"># VPC
-resource "aws_vpc" "main" {
-  cidr_block           = "10.0.0.0/16"
-  enable_dns_hostnames = true
-  # Add your tags here
-}
-
-# Internet Gateway
-resource "aws_internet_gateway" "main" {
-  vpc_id = aws_vpc.main.id
-  # Add your tags here
-}
-
-# Public Subnet
-resource "aws_subnet" "public" {
-  # Complete this configuration
-  # Hint: Use vpc_id from aws_vpc.main
-}
-
-# Route Table for Public Subnet
-resource "aws_route_table" "public" {
-  # Add routing configuration
-}
-
-# Security Group
-resource "aws_security_group" "web" {
-  # Allow SSH (port 22) access
-  # Allow HTTP (port 80) access
-}
-
-# EC2 Instance
-resource "aws_instance" "web" {
-  # Use free tier t2.micro
-  # Associate with public subnet
-}</code></pre>
-                    </div>
-                </div>
-            </div>
-
-            <div class="exercise-card">
-                <h3>🔧 Exercise 2: Variable-Driven Configuration</h3>
-                <div class="exercise-difficulty">🔶 Intermediate Level</div>
-                
-                <div class="exercise-objective">
-                    <h4>🎯 Objective</h4>
-                    <p>Refactor your basic infrastructure to use variables and create multiple environments.</p>
-                </div>
-
-                <div class="exercise-tasks">
-                    <h4>📋 Tasks</h4>
-                    <ol>
-                        <li>Create variables.tf with environment, region, and instance_type variables</li>
-                        <li>Create terraform.tfvars for different environments (dev, staging, prod)</li>
-                        <li>Use locals to derive naming conventions</li>
-                        <li>Implement conditional logic based on environment</li>
-                        <li>Add validation rules for variables</li>
-                        <li>Create outputs.tf to display important resource information</li>
-                    </ol>
-                </div>
-            </div>
-
-            <div class="exercise-card">
-                <h3>🏗️ Exercise 3: Module Development</h3>
-                <div class="exercise-difficulty">🔴 Advanced Level</div>
-                
-                <div class="exercise-objective">
-                    <h4>🎯 Objective</h4>
-                    <p>Create reusable Terraform modules and compose them into a larger infrastructure.</p>
-                </div>
-
-                <div class="exercise-tasks">
-                    <h4>📋 Tasks</h4>
-                    <ol>
-                        <li>Create a networking module (VPC, subnets, gateways)</li>
-                        <li>Create a security module (security groups, NACLs)</li>
-                        <li>Create a compute module (Auto Scaling Groups, Launch Templates)</li>
-                        <li>Create a database module (RDS with backup and monitoring)</li>
-                        <li>Compose all modules in a root configuration</li>
-                        <li>Implement module versioning using Git tags</li>
-                        <li>Add comprehensive documentation and examples</li>
-                    </ol>
-                </div>
-            </div>
-
-            <div class="exercise-validation">
-                <h3>✅ Self-Assessment Checklist</h3>
-                <div class="checklist">
-                    <h4>Before Moving to Production</h4>
-                    <ul class="checklist-items">
-                        <li>✅ All resources are properly tagged</li>
-                        <li>✅ State is stored in remote backend</li>
-                        <li>✅ Sensitive values use variables, not hardcoded</li>
-                        <li>✅ Security groups follow principle of least privilege</li>
-                        <li>✅ Infrastructure can be destroyed and recreated</li>
-                        <li>✅ Changes are tested in non-production environments first</li>
-                        <li>✅ Terraform configuration is in version control</li>
-                        <li>✅ Documentation is complete and up-to-date</li>
-                    </ul>
-                </div>
-            </div>
-        </section>
-
-        <section class="content-section" style="margin-top: 2rem;">
-            <div class="reflection-prompt" style="background: linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%); border-radius: 16px; padding: 24px; margin: 25px 0; border-left: 5px solid #10b981;">
-                <h4 style="color: #047857;">💭 Short reflection</h4>
-                <p style="color: #064e3b;">In one sentence: why should you run <code>terraform plan</code> before <code>terraform apply</code> in a team environment?</p>
-            </div>
-            <div class="core-box" style="background: linear-gradient(135deg, #dcfce7 0%, #bbf7d0 100%); border: 2px solid #22c55e; border-radius: 16px; padding: 24px; margin: 20px 0;">
-                <h4 style="color: #166534;">✅ CORE (Must know)</h4>
-                <ul style="margin-left: 20px;">
-                    <li><strong>HCL</strong>: resource, variable, output; provider block; state (local or remote).</li>
-                    <li><code>terraform init</code>, <code>plan</code>, <code>apply</code>, <code>destroy</code>; never commit .tfstate with secrets.</li>
-                    <li>Modules for reuse; use variables for env-specific values.</li>
-                </ul>
-            </div>
-            <div class="noncore-box" style="background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%); border: 2px solid #f59e0b; border-radius: 16px; padding: 24px; margin: 20px 0;">
-                <h4 style="color: #92400e;">📚 NON-CORE (Good to know)</h4>
-                <ul style="margin-left: 20px;">
-                    <li>Workspaces; backend (S3 + DynamoDB); import; policy as code.</li>
-                </ul>
-            </div>
-        </section>
-        
-    </main>
-
-    <!-- Quiz Section -->
-    <div id="quiz-container" class="quiz-container" style="display: none;">
-        <div class="quiz-header">
-            <h3>🎯 Test Your Knowledge</h3>
-            <button class="close-quiz" onclick="closeQuiz()">×</button>
-        </div>
-        <div class="quiz-content">
-            <div class="question" id="question"></div>
-            <div class="options" id="options"></div>
-            <div class="quiz-footer">
-                <button class="quiz-btn" onclick="submitAnswer()">Submit Answer</button>
-                <div class="quiz-progress">
-                    <span id="quiz-progress">Question 1 of 10</span>
-                </div>
-            </div>
-        </div>
-        <div class="quiz-result" id="quiz-result" style="display: none;">
-            <h4 id="result-title"></h4>
-            <p id="result-text"></p>
-            <button class="quiz-btn" onclick="nextQuestion()">Next Question</button>
-        </div>
-    </div>
-
-    <!-- Scripts -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
-    <script src="quiz-data.js"></script>
-    <script src="script.js"></script>
-
-    <!-- Back to Top Button -->
-    <button class="back-to-top" id="backToTop" onclick="window.scrollTo({top: 0, behavior: 'smooth'})" aria-label="Back to top">
-        <i class="fas fa-arrow-up"></i>
-    </button>
-    <script>
-        const backToTopBtn = document.getElementById('backToTop');
-        if (backToTopBtn) {
-            window.addEventListener('scroll', () => {
-                backToTopBtn.classList.toggle('show', window.pageYOffset > 300);
-            });
-        }
-    </script>
-    <script src="../js/code-copy.js"></script>
-    <script src="../js/analytics-tracker.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="../js/supabase-config.js"></script>
-<script src="../js/supabase-auth.js"></script>
-<script src="../js/paywall.js"></script>
 </body>
 </html>

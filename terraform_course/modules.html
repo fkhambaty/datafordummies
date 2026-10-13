@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Modules | Terraform and OpenTofu | Data For Dummies</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="../css/dfd-system.css">
+</head>
+<body class="dfd-safe" data-access="pro" data-course-id="terraform" data-lesson-id="modules" data-lesson-label="Modules" data-total-lessons="12">
+    <div class="container">
+        <nav class="nav" aria-label="Course">
+            <a href="hub.html">Course hub</a>
+            <a href="../index.html">Home</a>
+            <a href="#check">Knowledge check</a>
+        </nav>
+        <header class="lesson-hero" id="top">
+            <p class="track-kicker">Pro · Lesson 6 of 12</p>
+            <h1>Modules</h1>
+            <p>A module is a set of files you call with inputs and read through outputs. A folder of copied files is not a module until something calls it.</p>
+        </header>
+        <div class="dfd-lesson-progress" data-dfd-progress>
+            <p class="dfd-lesson-progress-label" data-dfd-progress-label>Sign in to save your place.</p>
+            <div class="dfd-lesson-progress-track" data-dfd-progress-bar role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-label="Course progress">
+                <div class="dfd-lesson-progress-fill" data-dfd-progress-fill>
+</div>
+            </div>
+        </div>
+        <section class="section" data-dfd-reveal>
+            <div class="eli5-box">
+                <h4>Picture it this way</h4>
+                <p>A module is a recipe card. The root module is the meal you are cooking tonight. You can use the same card for lunch tomorrow with different ingredients. You do not photocopy the card and then edit both copies until they disagree.</p>
+            </div>
+        </section>
+        <section class="section" data-dfd-reveal id="root">
+<h2>Root and child</h2>
+<p>The directory where you run terraform is the root module. A <code>module</code> block calls a child. The child&#x27;s variables are that block&#x27;s arguments. The child&#x27;s outputs are <code>module.name.output</code>. Resources inside the child get addresses like <code>module.network.aws_subnet.private</code>.</p>
+<p>A child module cannot see the caller&#x27;s locals. Pass what it needs. Return what the caller needs. Hiding an id inside the child and then scraping state is how later refactors break.</p>
+</section>
+<section class="section" data-dfd-reveal id="source">
+<h2>Sources and versions</h2>
+<p>A source can be a local path, a git URL, or a registry. Pin a version on a registry module. An unpinned source will change. <code>terraform init</code> downloads modules. Commit the lock file when the module source supports one.</p>
+<p>Do not point a production root module at a branch named main with no revision. You will apply someone else&#x27;s Tuesday commit by accident.</p>
+<table class="comparison-table dfd-scroll">
+<thead>
+<tr>
+<th>Source</th>
+<th>Pin it with</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Local path</td>
+<td>Code review of that folder</td>
+</tr>
+<tr>
+<td>Git</td>
+<td>A tag or a commit</td>
+</tr>
+<tr>
+<td>Registry</td>
+<td>A version argument</td>
+</tr>
+</tbody>
+</table>
+</section>
+        <section class="section dfd-diagram" data-dfd-diagram data-dfd-reveal>
+            <h2>Call a module</h2>
+            <div data-dfd-diagram-panel="root">
+<svg class="dfd-responsive" viewBox="0 0 640 148" role="img" aria-label="Root module highlighted">
+<rect class="track-drift" x="16" y="36" width="188" height="72" rx="12" fill="#a78bfa">
+</rect>
+<text x="110" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#ffffff">Root</text>
+<path d="M204 72 H224" stroke="#64748b" stroke-width="2" fill="none">
+</path>
+<rect x="224" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
+</rect>
+<text x="318" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">Module</text>
+<path d="M412 72 H432" stroke="#64748b" stroke-width="2" fill="none">
+</path>
+<rect x="432" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
+</rect>
+<text x="526" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">Objects</text>
+</svg>
+<p>The root is where you run plan.</p>
+</div>
+<div data-dfd-diagram-panel="mod" hidden>
+<svg class="dfd-responsive" viewBox="0 0 640 148" role="img" aria-label="Child module highlighted">
+<rect x="16" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
+</rect>
+<text x="110" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">Root</text>
+<path d="M204 72 H224" stroke="#64748b" stroke-width="2" fill="none">
+</path>
+<rect class="track-drift" x="224" y="36" width="188" height="72" rx="12" fill="#a78bfa">
+</rect>
+<text x="318" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#ffffff">Module</text>
+<path d="M412 72 H432" stroke="#64748b" stroke-width="2" fill="none">
+</path>
+<rect x="432" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
+</rect>
+<text x="526" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">Objects</text>
+</svg>
+<p>The child receives variables and returns outputs.</p>
+</div>
+<div data-dfd-diagram-panel="obj" hidden>
+<svg class="dfd-responsive" viewBox="0 0 640 148" role="img" aria-label="Objects highlighted">
+<rect x="16" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
+</rect>
+<text x="110" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">Root</text>
+<path d="M204 72 H224" stroke="#64748b" stroke-width="2" fill="none">
+</path>
+<rect x="224" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
+</rect>
+<text x="318" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">Module</text>
+<path d="M412 72 H432" stroke="#64748b" stroke-width="2" fill="none">
+</path>
+<rect class="track-drift" x="432" y="36" width="188" height="72" rx="12" fill="#a78bfa">
+</rect>
+<text x="526" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#ffffff">Objects</text>
+</svg>
+<p>The real objects get addresses that include the module name.</p>
+</div>
+            <div class="dfd-diagram-controls">
+                <button type="button" data-dfd-diagram-step="root" aria-pressed="true">Root</button>
+<button type="button" data-dfd-diagram-step="mod" aria-pressed="false">Module</button>
+<button type="button" data-dfd-diagram-step="obj" aria-pressed="false">Objects</button>
+            </div>
+        </section>
+        <section class="section" id="lab" data-dfd-reveal>
+            <h2>Lab: a child module that only names a prefix</h2>
+            <p>Two directories. The root passes environment. The child returns a name. No cloud provider.</p>
+            <div class="code-block">
+<pre>
+<code>mkdir -p modules/name
+cat &gt; modules/name/main.tf &lt;&lt;&#x27;EOF&#x27;
+variable &quot;environment&quot; { type = string }
+output &quot;name&quot; { value = &quot;dfd-${var.environment}&quot; }
+EOF
+cat &gt; main.tf &lt;&lt;&#x27;EOF&#x27;
+module &quot;name&quot; {
+  source      = &quot;./modules/name&quot;
+  environment = &quot;dev&quot;
+}
+output &quot;name&quot; { value = module.name.name }
+EOF
+terraform init
+terraform console &lt;&lt;&#x27;EOF&#x27;
+module.name.name
+EOF</code>
+</pre>
+</div>
+            <p>
+<button type="button" data-dfd-complete>Mark lesson complete</button>
+</p>
+            <p data-dfd-complete-status>
+</p>
+        </section>
+        <section class="section" id="summary" data-dfd-reveal>
+            <h2>Concept summary</h2>
+            <ul class="summary-list">
+<li>A module call passes variables in and reads outputs out.</li>
+<li>Pin remote sources.</li>
+<li>Resource addresses include the module name. Renames need a moved block, not a hope.</li>
+</ul>
+        </section>
+        <section class="section" id="check" data-dfd-reveal>
+            <h2>Knowledge check</h2>
+            <section class="dfd-quiz" data-dfd-quiz data-explanation="Through an output.">
+<h3 data-dfd-prompt>How does a root module read a child&#x27;s value?</h3>
+<div data-dfd-choices>
+<button type="button" data-correct="true">module.name.output_name</button>
+<button type="button" data-correct="false">local.child.output</button>
+<button type="button" data-correct="false">By editing the child&#x27;s state by hand</button>
+</div>
+<p class="dfd-quiz-feedback" data-dfd-feedback hidden>
+</p>
+<p class="dfd-quiz-explain" data-dfd-explain hidden>
+</p>
+</section>
+<section class="dfd-quiz" data-dfd-quiz data-explanation="An unpinned module changes under you.">
+<h3 data-dfd-prompt>Why pin a registry module version?</h3>
+<div data-dfd-choices>
+<button type="button" data-correct="true">So next week&#x27;s apply uses the same module</button>
+<button type="button" data-correct="false">Versions are ignored by terraform init</button>
+<button type="button" data-correct="false">Pinning converts Terraform to OpenTofu</button>
+</div>
+<p class="dfd-quiz-feedback" data-dfd-feedback hidden>
+</p>
+<p class="dfd-quiz-explain" data-dfd-explain hidden>
+</p>
+</section>
+<section class="dfd-quiz" data-dfd-quiz data-explanation="Pass it as a variable.">
+<h3 data-dfd-prompt>A child module needs the VPC id. What is the clean path?</h3>
+<div data-dfd-choices>
+<button type="button" data-correct="false">Read the caller&#x27;s locals automatically</button>
+<button type="button" data-correct="true">Add a variable and pass the id</button>
+<button type="button" data-correct="false">Copy the VPC resource into the child</button>
+</div>
+<p class="dfd-quiz-feedback" data-dfd-feedback hidden>
+</p>
+<p class="dfd-quiz-explain" data-dfd-explain hidden>
+</p>
+</section>
+        </section>
+        <section class="section" data-dfd-reveal>
+            <h2>Official sources</h2>
+            <p>Checked against the linked documentation in October 2026. A later release can move a flag, a price, or a supported pair. Use the page for the version you installed.</p>
+            <ul class="source-list">
+<li>
+<a href="https://developer.hashicorp.com/terraform/language/modules" target="_blank" rel="noopener noreferrer">Modules</a>
+</li>
+<li>
+<a href="https://developer.hashicorp.com/terraform/language/modules/sources" target="_blank" rel="noopener noreferrer">Module sources</a>
+</li>
+</ul>
+        </section>
+        <nav class="lesson-nav" aria-label="Lesson order">
+            <a class="secondary" href="state-backends.html">Previous: State, backends, and locking</a>
+            <a href="workspaces.html">Next: Workspaces and environments</a>
+        </nav>
+    </div>
+
+    <script src="../js/code-copy.js">
+</script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2">
+</script>
+    <script src="../js/supabase-config.js">
+</script>
+    <script src="../js/supabase-auth.js">
+</script>
+    <script src="../js/paywall.js">
+</script>
+    <script src="../js/progress.js">
+</script>
+    <script src="../js/lesson-common.js">
+</script>
+    <script src="../js/quiz.js">
+</script>
+    <script src="../js/analytics-tracker.js">
+</script>
+
+</body>
+</html>

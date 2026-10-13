@@ -3,199 +3,178 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>AWS DMS Course Hub | Fakhruddin Khambaty's Learning Hub</title>
-    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    <title>AWS DMS course | Data For Dummies</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../css/hub-light.css">
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Nunito', sans-serif; background: linear-gradient(160deg, #eff6ff 0%, #dbeafe 40%, #e0f2fe 100%); min-height: 100vh; padding: 20px; color: #1e293b; }
-        .container { max-width: 1200px; margin: 0 auto; }
-        .nav { background: rgba(255, 255, 255, 0.8); backdrop-filter: blur(10px); padding: 15px 30px; border-radius: 15px; margin-bottom: 30px; display: flex; justify-content: space-between; align-items: center; border: 1px solid rgba(0,0,0,0.06); }
-        .nav a { color: #3b82f6; text-decoration: none; font-weight: 600; display: flex; align-items: center; gap: 8px; }
-        .nav a:hover { color: #2563eb; }
-        .header { text-align: center; padding: 60px 40px; background: linear-gradient(135deg, #f97316 0%, #ea580c 50%, #1e40af 100%); border-radius: 25px; margin-bottom: 50px; box-shadow: 0 20px 60px rgba(0,0,0,0.3); }
-        .header h1 { font-size: 3em; margin-bottom: 15px; font-weight: 800; }
-        .header p { font-size: 1.3em; opacity: 0.9; max-width: 700px; margin: 0 auto 20px; }
-        .header-badge { background: rgba(255,255,255,0.2); color: white; padding: 10px 25px; border-radius: 30px; font-weight: 700; display: inline-block; margin-bottom: 20px; }
-        .progress-section { background: rgba(255, 255, 255, 0.7); border-radius: 20px; padding: 30px; margin-bottom: 40px; border: 1px solid rgba(0,0,0,0.06); }
-        .progress-section h3 { color: #3b82f6; margin-bottom: 15px; }
-        .progress-bar-bg { background: rgba(0,0,0,0.08); border-radius: 10px; height: 25px; overflow: hidden; }
-        .progress-bar { background: linear-gradient(90deg, #f97316 0%, #fb923c 100%); height: 100%; width: 30%; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-weight: 700; color: white; font-size: 0.9em; }
-        .modules-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(350px, 1fr)); gap: 25px; margin-bottom: 40px; }
-        .module-card { background: rgba(255, 255, 255, 0.7); border-radius: 20px; padding: 30px; border: 2px solid rgba(0,0,0,0.06); transition: all 0.3s; position: relative; overflow: visible; }
-        .module-card::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 5px; background: linear-gradient(90deg, #f97316 0%, #fb923c 100%); }
-        .module-card:hover { transform: translateY(-5px); box-shadow: 0 15px 40px rgba(0,0,0,0.3); border-color: #f97316; }
-        .module-icon { font-size: 3em; margin-bottom: 15px; }
-        .module-card h3 { font-size: 1.4em; margin-bottom: 12px; color: #1e293b; }
-        .module-card p { color: #64748b; margin-bottom: 16px; line-height: 1.6; }
-        .module-status { display: inline-block; padding: 5px 15px; border-radius: 20px; font-size: 0.85em; font-weight: 600; margin-bottom: 15px; }
-        .status-coming { background: #f59e0b; color: #1e293b; }
-        .topic-tags { display: flex; flex-wrap: wrap; gap: 8px; }
-        .topic-tag { padding: 4px 10px; background: rgba(249, 115, 22, 0.2); border-radius: 8px; font-size: 0.85em; color: #c2410c; }
-        .banner-box { background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%); border-radius: 20px; padding: 28px; margin-bottom: 30px; border: 2px solid #f59e0b; text-align: center; }
-        .banner-box h3 { color: #92400e; font-size: 1.5em; margin-bottom: 10px; }
-        .banner-box p { color: #a16207; font-size: 1.05em; }
-        .migration-visual { background: rgba(255, 255, 255, 0.8); border-radius: 24px; padding: 48px; margin: 40px 0; border: 2px solid rgba(0,0,0,0.06); text-align: center; color: #1e293b; }
-        .migration-visual h2 { color: #3b82f6; font-size: 1.8em; margin-bottom: 24px; }
-        .migration-flow { display: flex; align-items: center; justify-content: center; gap: 24px; flex-wrap: wrap; margin: 24px 0; }
-        .migration-box { background: rgba(59, 130, 246, 0.15); border: 2px solid #3b82f6; border-radius: 16px; padding: 24px 32px; min-width: 140px; }
-        .migration-box-icon { font-size: 40px; margin-bottom: 12px; }
-        .migration-box-label { font-size: 1em; font-weight: 600; color: #2563eb; }
-        .migration-arrow { font-size: 32px; color: #f97316; }
-        .migration-subtitle { font-size: 1.05em; opacity: 0.9; margin-top: 16px; }
-        .fun-section { background: linear-gradient(135deg, rgba(249, 115, 22, 0.15) 0%, rgba(59, 130, 246, 0.15) 100%); border-radius: 20px; padding: 40px; margin: 40px 0; border: 2px solid rgba(0,0,0,0.06); text-align: center; }
-        .fun-section h3 { color: #c2410c; font-size: 1.5em; margin-bottom: 16px; }
-        .fun-section p { color: #64748b; max-width: 600px; margin: 0 auto; line-height: 1.7; }
-        .cta-section { text-align: center; padding: 40px 20px; }
-        .btn-cta { display: inline-flex; align-items: center; gap: 10px; padding: 16px 32px; background: linear-gradient(135deg, #f97316 0%, #ea580c 100%); color: white; border: none; border-radius: 12px; font-size: 1.1em; font-weight: 700; cursor: pointer; font-family: 'Nunito', sans-serif; box-shadow: 0 4px 20px rgba(249, 115, 22, 0.4); transition: all 0.2s; }
-        .btn-cta:hover { transform: translateY(-2px); box-shadow: 0 6px 24px rgba(249, 115, 22, 0.5); }
-        .footer { text-align: center; padding: 30px; color: #64748b; font-size: 0.95em; }
-        .footer a { color: #3b82f6; text-decoration: none; }
-        @media (max-width: 768px) { .header h1 { font-size: 2em; } .modules-grid { grid-template-columns: 1fr; } .module-card { padding: 25px 20px; } .migration-flow { flex-direction: column; } .migration-arrow { transform: rotate(90deg); } }
+        :root {
+            --hub-color: #ea580c;
+            --hub-color2: #fb923c;
+            --hub-bg: linear-gradient(165deg, #f8fafc 0%, #eff6ff 42%, #f8fafc 100%);
+        }
+        .hub-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 12px;
+            margin: 0 0 22px;
+        }
+        .hub-stat {
+            background: #fff;
+            border: 1px solid rgba(15, 23, 42, 0.08);
+            border-radius: 16px;
+            padding: 14px 16px;
+        }
+        .hub-stat strong { display: block; color: #ea580c; font-size: 1.35rem; }
+        .hub-stat span { color: #475569; font-size: 0.88rem; }
+        .lesson-link-pro { background: #f8fafc; color: #475569; }
+        .lesson-link .pro-badge {
+            margin-left: auto;
+            font-size: 0.68rem;
+            padding: 2px 8px;
+            border-radius: 999px;
+            background: linear-gradient(135deg, #d97706, #b45309);
+            color: #fff;
+            font-weight: 800;
+        }
     </style>
     <link rel="stylesheet" href="../css/dfd-system.css">
 </head>
-<body data-access="pro">
+<body class="dfd-safe" data-course-id="dms" data-lesson-id="hub" data-lesson-label="AWS DMS hub" data-total-lessons="11">
     <div class="container">
-        <nav class="nav">
-            <a href="../index.html"><i class="fas fa-home"></i><span>Main Website</span></a>
-            <a href="../data_science_course/index.html"><span>Data Science Course</span><i class="fas fa-arrow-right"></i></a>
+        <nav class="nav" aria-label="Site">
+            <a href="../index.html">
+<i class="fas fa-home">
+</i>
+<span>Home</span>
+</a>
+            <a href="../learning-path.html">
+<span>All courses</span>
+</a>
+            <a href="../curriculum.html">
+<span>Curriculum</span>
+</a>
         </nav>
-
-        <div class="header">
-            <span class="header-badge">🚚 AWS DMS</span>
-            <h1>AWS Database Migration Service</h1>
-            <p>Learn to move data between databases like a pro! Zero downtime, zero stress. Same teaching philosophy: simple, step-by-step.</p>
+        <header class="header">
+            <span class="header-badge">AWS DMS · 11 LESSONS · 2 FREE · 9 PRO</span>
+            <h1>AWS Database Migration Service, from the first assessment to cutover</h1>
+            <p>Replication, endpoints, full load, CDC, schema conversion, and the difference between a task assessment and SCT. 2 lessons are free. The other 9 open with Pro.</p>
+        </header>
+        <div class="hub-stats" aria-label="Course size">
+            <div class="hub-stat">
+<strong>11</strong>
+<span>lessons</span>
+</div>
+            <div class="hub-stat">
+<strong>2</strong>
+<span>free to open</span>
+</div>
+            <div class="hub-stat">
+<strong>9</strong>
+<span>Pro lessons</span>
+</div>
+            <div class="hub-stat">
+<strong>3</strong>
+<span>modules</span>
+</div>
         </div>
-
-        <div class="progress-section">
-            <h3>📈 Course Progress</h3>
-            <div class="progress-bar-bg">
-                <div class="progress-bar">Coming Soon</div>
+        <div class="dfd-lesson-progress" data-dfd-progress>
+            <p class="dfd-lesson-progress-label" data-dfd-progress-label>Sign in to save your place.</p>
+            <div class="dfd-lesson-progress-track" data-dfd-progress-bar role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-label="Course progress">
+                <div class="dfd-lesson-progress-fill" data-dfd-progress-fill>
+</div>
             </div>
-            <p style="margin-top: 15px; color: #94a3b8;">Migration fundamentals, Full Load, CDC, Schema Conversion, and troubleshooting — all explained simply!</p>
         </div>
-
-        <div class="banner-box" style="background: linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%); border-color: #3b82f6;">
-            <h3 style="color: #1e40af;">👶 In one sentence</h3>
-            <p style="color: #1e3a8a; margin: 0;"><strong>AWS DMS (Database Migration Service)</strong> copies data from one database to another (e.g. on-prem to AWS) with optional ongoing replication so changes keep syncing—like a continuous backup or live mirror.</p>
-        </div>
-        <div style="background: linear-gradient(135deg, #fef2f2 0%, #fecaca 100%); border-radius: 20px; padding: 28px; margin-bottom: 30px; border: 2px solid #ef4444; color: #7f1d1d;">
-            <h3 style="color: #b91c1c;">🚫 Common Mistakes with DMS</h3>
-            <ul style="margin-left: 20px; margin-top: 10px;">
-                <li><strong>Not testing CDC before cutover</strong> — Run full load + CDC in test first; confirm latency and no data loss.</li>
-                <li><strong>Ignoring task failures</strong> — Monitor replication task status and logs; fix schema or mapping issues before they pile up.</li>
-                <li><strong>Wrong instance size</strong> — Under-provisioned replication instances cause lag; size for peak load.</li>
-            </ul>
-        </div>
-        <div class="banner-box">
-            <h3>🚧 Course Under Construction!</h3>
-            <p>Our AWS experts are building the most beginner-friendly DMS course. Launching soon!</p>
-        </div>
-
-        <div class="migration-visual">
-            <h2>🎬 The Magic of Live Migration</h2>
-            <div class="migration-flow">
-                <div class="migration-box">
-                    <div class="migration-box-icon">🏢</div>
-                    <div class="migration-box-label">Old Database</div>
-                </div>
-                <span class="migration-arrow">→</span>
-                <div class="migration-box" style="border-color: #f97316;">
-                    <div class="migration-box-icon">🚚</div>
-                    <div class="migration-box-label">AWS DMS</div>
-                </div>
-                <span class="migration-arrow">→</span>
-                <div class="migration-box">
-                    <div class="migration-box-icon">☁️</div>
-                    <div class="migration-box-label">Cloud Database</div>
-                </div>
-            </div>
-            <p class="migration-subtitle">Your apps never know the difference! Users keep working while data moves in the background. ✨</p>
-        </div>
-
         <div class="modules-grid">
-            <div class="module-card">
-                <span class="module-status status-coming">📚 COMING</span>
-                <div class="module-icon">1</div>
-                <h3>Why Move Data At All?</h3>
-                <p>Why migrations happen and when you need them. Migration reasons, cloud benefits, planning.</p>
-                <div class="topic-tags"><span class="topic-tag">Migration Reasons</span><span class="topic-tag">Cloud Benefits</span><span class="topic-tag">Planning</span></div>
-            </div>
-            <div class="module-card">
-                <span class="module-status status-coming">📚 COMING</span>
-                <div class="module-icon">2</div>
-                <h3>Meet AWS DMS – Your Moving Truck</h3>
-                <p>What is DMS, how it works, use cases. Professional movers for your data!</p>
-                <div class="topic-tags"><span class="topic-tag">What is DMS?</span><span class="topic-tag">How it Works</span><span class="topic-tag">Use Cases</span></div>
-            </div>
-            <div class="module-card">
-                <span class="module-status status-coming">📚 COMING</span>
-                <div class="module-icon">3</div>
-                <h3>Setting Up Your First Migration</h3>
-                <p>Source endpoint, target endpoint, replication instance. Step-by-step setup.</p>
-                <div class="topic-tags"><span class="topic-tag">Source Endpoint</span><span class="topic-tag">Target Endpoint</span><span class="topic-tag">Replication Instance</span></div>
-            </div>
-            <div class="module-card">
-                <span class="module-status status-coming">📚 COMING</span>
-                <div class="module-icon">4</div>
-                <h3>Full Load vs CDC</h3>
-                <p>Full Load = move everything at once. CDC = keep syncing new changes. Combined mode.</p>
-                <div class="topic-tags"><span class="topic-tag">Full Load</span><span class="topic-tag">CDC</span><span class="topic-tag">Combined Mode</span></div>
-            </div>
-            <div class="module-card">
-                <span class="module-status status-coming">📚 COMING</span>
-                <div class="module-icon">5</div>
-                <h3>Schema Conversion – The Translator</h3>
-                <p>AWS Schema Conversion Tool, data types, handling incompatibilities.</p>
-                <div class="topic-tags"><span class="topic-tag">SCT Tool</span><span class="topic-tag">Data Types</span><span class="topic-tag">Incompatibilities</span></div>
-            </div>
-            <div class="module-card">
-                <span class="module-status status-coming">📚 COMING</span>
-                <div class="module-icon">6</div>
-                <h3>Troubleshooting Like a Pro</h3>
-                <p>Error logs, common issues, best practices. Become the hero who saves migration projects!</p>
-                <div class="topic-tags"><span class="topic-tag">Error Logs</span><span class="topic-tag">Common Issues</span><span class="topic-tag">Best Practices</span></div>
-            </div>
+            <article class="module-card">
+<span class="module-status status-ready">2 lessons</span>
+<h3>Start here</h3>
+<p>What DMS is made of, and which assessment is which.</p>
+<div class="module-lessons">
+<a class="lesson-link" href="architecture.html">
+<i class="fas fa-play-circle">
+</i> How DMS is built<span class="pro-badge" style="background:#059669">Free</span>
+</a>
+<a class="lesson-link" href="assessment.html">
+<i class="fas fa-play-circle">
+</i> Assessments, SCT, and schema conversion<span class="pro-badge" style="background:#059669">Free</span>
+</a>
+</div>
+</article>
+<article class="module-card">
+<span class="module-status status-ready">4 lessons</span>
+<h3>Move the rows</h3>
+<p>Network, full load, change data capture, and the JSON that chooses tables.</p>
+<div class="module-lessons">
+<a class="lesson-link lesson-link-pro" href="endpoints.html">
+<i class="fas fa-lock">
+</i> Endpoints, connectivity, and VPC<span class="pro-badge">Pro</span>
+</a>
+<a class="lesson-link lesson-link-pro" href="full-load.html">
+<i class="fas fa-lock">
+</i> Full load<span class="pro-badge">Pro</span>
+</a>
+<a class="lesson-link lesson-link-pro" href="cdc.html">
+<i class="fas fa-lock">
+</i> CDC and log positions<span class="pro-badge">Pro</span>
+</a>
+<a class="lesson-link lesson-link-pro" href="task-settings.html">
+<i class="fas fa-lock">
+</i> Task settings, mappings, and transforms<span class="pro-badge">Pro</span>
+</a>
+</div>
+</article>
+<article class="module-card">
+<span class="module-status status-ready">5 lessons</span>
+<h3>Finish the move</h3>
+<p>Schema conversion, checks, examples, operations, and a cutover list.</p>
+<div class="module-lessons">
+<a class="lesson-link lesson-link-pro" href="schema-conversion.html">
+<i class="fas fa-lock">
+</i> Schema conversion paths<span class="pro-badge">Pro</span>
+</a>
+<a class="lesson-link lesson-link-pro" href="validation.html">
+<i class="fas fa-lock">
+</i> Validation and CloudWatch<span class="pro-badge">Pro</span>
+</a>
+<a class="lesson-link lesson-link-pro" href="examples.html">
+<i class="fas fa-lock">
+</i> Homogeneous and heterogeneous examples<span class="pro-badge">Pro</span>
+</a>
+<a class="lesson-link lesson-link-pro" href="operations.html">
+<i class="fas fa-lock">
+</i> Serverless, instances, cost, and troubleshooting<span class="pro-badge">Pro</span>
+</a>
+<a class="lesson-link lesson-link-pro" href="capstone.html">
+<i class="fas fa-lock">
+</i> Capstone<span class="pro-badge">Pro</span>
+</a>
+</div>
+</article>
         </div>
-
-        <div class="reflection-prompt" style="background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%); border-radius: 16px; padding: 24px; margin: 25px 0; border-left: 5px solid #f59e0b;">
-            <h4 style="color: #92400e;">💭 Short reflection</h4>
-            <p style="color: #78350f;">In one sentence: when would you choose CDC (Change Data Capture) over a one-time full load for a migration?</p>
-        </div>
-        <div class="core-box" style="background: linear-gradient(135deg, #dcfce7 0%, #bbf7d0 100%); border: 2px solid #22c55e; border-radius: 16px; padding: 24px; margin: 20px 0;">
-            <h4 style="color: #166534;">✅ CORE (Must know)</h4>
-            <ul style="margin-left: 20px;">
-                <li><strong>AWS DMS</strong>: replicate data between source and target (DB to DB); replication instance, endpoints, task.</li>
-                <li><strong>Full load</strong> vs <strong>CDC</strong>: one-time copy vs continuous change capture.</li>
-                <li>Task settings: mapping rules, LOB, validation; monitor with CloudWatch.</li>
-            </ul>
-        </div>
-        <div class="noncore-box" style="background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%); border: 2px solid #f59e0b; border-radius: 16px; padding: 24px; margin: 20px 0;">
-            <h4 style="color: #92400e;">📚 NON-CORE (Good to know)</h4>
-            <ul style="margin-left: 20px;">
-                <li>Schema Conversion Tool (SCT); S3 as target; best practices for minimal downtime.</li>
-            </ul>
-        </div>
-
-        <div class="fun-section">
-            <div style="font-size: 4em; margin-bottom: 16px;">🤖🚚</div>
-            <h3>DataBot's Migration Wisdom</h3>
-            <p>"Migrating databases used to be like moving houses while living in them – terrifying! But with AWS DMS, it's like having a teleporter. Your data appears in the new place while the old place keeps working. By course end, you'll migrate databases in your sleep!"</p>
-        </div>
-
-        <div class="cta-section">
-            <button class="btn-cta" onclick="alert('Course coming soon! 🚧')"><i class="fas fa-bell"></i> Notify Me When Ready</button>
-        </div>
-
-        <div class="footer">
-            <p>© 2026 <a href="../index.html">Fakhruddin Khambaty's Learning Hub</a> | AWS DMS Course</p>
-        </div>
+        
+        <footer>
+<p>&copy; 2026 <a href="../index.html">Data For Dummies</a> · AWS DMS</p>
+</footer>
     </div>
-    <script src="../js/analytics-tracker.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="../js/supabase-config.js"></script>
-<script src="../js/supabase-auth.js"></script>
-<script src="../js/paywall.js"></script>
+
+    <script src="../js/code-copy.js">
+</script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2">
+</script>
+    <script src="../js/supabase-config.js">
+</script>
+    <script src="../js/supabase-auth.js">
+</script>
+    <script src="../js/paywall.js">
+</script>
+    <script src="../js/progress.js">
+</script>
+    <script src="../js/lesson-common.js">
+</script>
+    <script src="../js/quiz.js">
+</script>
+    <script src="../js/analytics-tracker.js">
+</script>
+
 </body>
 </html>

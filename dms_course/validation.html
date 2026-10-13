@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Validation and CloudWatch | AWS DMS | Data For Dummies</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="../css/dfd-system.css">
+</head>
+<body class="dfd-safe" data-access="pro" data-course-id="dms" data-lesson-id="validation" data-lesson-label="Validation and CloudWatch" data-total-lessons="11">
+    <div class="container">
+        <nav class="nav" aria-label="Course">
+            <a href="hub.html">Course hub</a>
+            <a href="../index.html">Home</a>
+            <a href="#check">Knowledge check</a>
+        </nav>
+        <header class="lesson-hero" id="top">
+            <p class="track-kicker">Pro · Lesson 8 of 11</p>
+            <h1>Validation and CloudWatch</h1>
+            <p>Validation compares rows. CloudWatch shows whether the task is keeping up. Neither one proves the application is ready.</p>
+        </header>
+        <div class="dfd-lesson-progress" data-dfd-progress>
+            <p class="dfd-lesson-progress-label" data-dfd-progress-label>Sign in to save your place.</p>
+            <div class="dfd-lesson-progress-track" data-dfd-progress-bar role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-label="Course progress">
+                <div class="dfd-lesson-progress-fill" data-dfd-progress-fill>
+</div>
+            </div>
+        </div>
+        <section class="section" data-dfd-reveal>
+            <div class="eli5-box">
+                <h4>Picture it this way</h4>
+                <p>Validation is counting the boxes on both docks. CloudWatch is the clock on the truck. A matching count does not mean the shop signs were translated.</p>
+            </div>
+        </section>
+        <section class="section" data-dfd-reveal id="valid">
+<h2>Data validation</h2>
+<p>Turn validation on for a task when you need DMS to compare source and target rows. It adds load. It does not replace a query you wrote for a table you care about. Mismatches show up as a validation state, not as a green full-load percentage.</p>
+<p>Validation will not notice a wrong procedure, a missing index you meant to add later, or an application still pointed at the source.</p>
+</section>
+<section class="section" data-dfd-reveal id="metrics">
+<h2>Metrics worth naming</h2>
+<p>CloudWatch metrics include full-load throughput and CDC latency on the source and the target. The useful question is whether latency is growing. A task that is &quot;running&quot; with climbing CDC latency is falling behind.</p>
+<p>Task logs go to a CloudWatch log group. When a table fails, the log line is more useful than the task&#x27;s overall percentage. A replication instance that is out of memory or storage fails in those logs and in instance metrics. Serverless tasks have capacity metrics instead of an instance class graph. Read the page for the compute you chose.</p>
+<table class="comparison-table dfd-scroll">
+<thead>
+<tr>
+<th>Signal</th>
+<th>It means</th>
+<th>It does not mean</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Validation failed</td>
+<td>Some compared rows differ</td>
+<td>Which business rule is wrong</td>
+</tr>
+<tr>
+<td>CDC latency rising</td>
+<td>The target is falling behind the source</td>
+<td>That the task has stopped</td>
+</tr>
+<tr>
+<td>Full load 100%</td>
+<td>The load phase finished</td>
+<td>That CDC has caught up</td>
+</tr>
+</tbody>
+</table>
+</section>
+        <section class="section dfd-diagram" data-dfd-diagram data-dfd-reveal>
+            <h2>Watch the gap</h2>
+            <div data-dfd-diagram-panel="src">
+<svg class="dfd-responsive" viewBox="0 0 640 148" role="img" aria-label="Source highlighted">
+<rect class="track-drift" x="16" y="36" width="188" height="72" rx="12" fill="#fb923c">
+</rect>
+<text x="110" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#ffffff">Source</text>
+<path d="M204 72 H224" stroke="#64748b" stroke-width="2" fill="none">
+</path>
+<rect x="224" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
+</rect>
+<text x="318" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">Latency</text>
+<path d="M412 72 H432" stroke="#64748b" stroke-width="2" fill="none">
+</path>
+<rect x="432" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
+</rect>
+<text x="526" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">Target</text>
+</svg>
+<p>The source keeps changing.</p>
+</div>
+<div data-dfd-diagram-panel="lat" hidden>
+<svg class="dfd-responsive" viewBox="0 0 640 148" role="img" aria-label="Latency highlighted">
+<rect x="16" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
+</rect>
+<text x="110" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">Source</text>
+<path d="M204 72 H224" stroke="#64748b" stroke-width="2" fill="none">
+</path>
+<rect class="track-drift" x="224" y="36" width="188" height="72" rx="12" fill="#fb923c">
+</rect>
+<text x="318" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#ffffff">Latency</text>
+<path d="M412 72 H432" stroke="#64748b" stroke-width="2" fill="none">
+</path>
+<rect x="432" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
+</rect>
+<text x="526" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">Target</text>
+</svg>
+<p>CDC latency is how far behind the copy is.</p>
+</div>
+<div data-dfd-diagram-panel="val" hidden>
+<svg class="dfd-responsive" viewBox="0 0 640 148" role="img" aria-label="Validation highlighted">
+<rect x="16" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
+</rect>
+<text x="110" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">Source rows</text>
+<path d="M204 72 H224" stroke="#64748b" stroke-width="2" fill="none">
+</path>
+<rect x="224" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
+</rect>
+<text x="318" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">Compare</text>
+<path d="M412 72 H432" stroke="#64748b" stroke-width="2" fill="none">
+</path>
+<rect class="track-drift" x="432" y="36" width="188" height="72" rx="12" fill="#fb923c">
+</rect>
+<text x="526" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#ffffff">Target rows</text>
+</svg>
+<p>Validation compares rows. It does not compare application behavior.</p>
+</div>
+            <div class="dfd-diagram-controls">
+                <button type="button" data-dfd-diagram-step="src" aria-pressed="true">Source</button>
+<button type="button" data-dfd-diagram-step="lat" aria-pressed="false">Latency</button>
+<button type="button" data-dfd-diagram-step="val" aria-pressed="false">Compare</button>
+            </div>
+        </section>
+        <section class="section" id="lab" data-dfd-reveal>
+            <h2>Lab: three numbers you will read before cutover</h2>
+            <p>Leave the values blank until a real task exists. The list is the habit.</p>
+            <div class="code-block">
+<pre>
+<code>CDC source latency:
+CDC target latency:
+Validation failures:
+Log group:
+Table that failed, if any:
+Application still on the source: yes/no</code>
+</pre>
+</div>
+            <p>
+<button type="button" data-dfd-complete>Mark lesson complete</button>
+</p>
+            <p data-dfd-complete-status>
+</p>
+        </section>
+        <section class="section" id="summary" data-dfd-reveal>
+            <h2>Concept summary</h2>
+            <ul class="summary-list">
+<li>Validation compares rows. It does not test procedures or the application.</li>
+<li>Watch CDC latency, not only the running badge.</li>
+<li>Logs explain a failed table. The percentage does not.</li>
+</ul>
+        </section>
+        <section class="section" id="check" data-dfd-reveal>
+            <h2>Knowledge check</h2>
+            <section class="dfd-quiz" data-dfd-quiz data-explanation="The target is still behind.">
+<h3 data-dfd-prompt>Full load shows 100 percent and CDC latency is climbing. Are you ready to cut over?</h3>
+<div data-dfd-choices>
+<button type="button" data-correct="false">Yes. 100 percent is the signal</button>
+<button type="button" data-correct="true">No. Climbing latency means the target is behind</button>
+<button type="button" data-correct="false">Yes, if validation was never enabled</button>
+</div>
+<p class="dfd-quiz-feedback" data-dfd-feedback hidden>
+</p>
+<p class="dfd-quiz-explain" data-dfd-explain hidden>
+</p>
+</section>
+<section class="dfd-quiz" data-dfd-quiz data-explanation="That converted code is correct.">
+<h3 data-dfd-prompt>What does row validation not prove?</h3>
+<div data-dfd-choices>
+<button type="button" data-correct="false">That compared rows matched or did not</button>
+<button type="button" data-correct="true">That stored procedures behave</button>
+<button type="button" data-correct="false">That DMS looked at the mapped tables</button>
+</div>
+<p class="dfd-quiz-feedback" data-dfd-feedback hidden>
+</p>
+<p class="dfd-quiz-explain" data-dfd-explain hidden>
+</p>
+</section>
+<section class="dfd-quiz" data-dfd-quiz data-explanation="The task log.">
+<h3 data-dfd-prompt>Where do you read a table-level error?</h3>
+<div data-dfd-choices>
+<button type="button" data-correct="true">In the task&#x27;s CloudWatch log</button>
+<button type="button" data-correct="false">Only in the billing console</button>
+<button type="button" data-correct="false">In the SCT desktop installer</button>
+</div>
+<p class="dfd-quiz-feedback" data-dfd-feedback hidden>
+</p>
+<p class="dfd-quiz-explain" data-dfd-explain hidden>
+</p>
+</section>
+        </section>
+        <section class="section" data-dfd-reveal>
+            <h2>Official sources</h2>
+            <p>Checked against the linked documentation in October 2026. A later release can move a flag, a price, or a supported pair. Use the page for the version you installed.</p>
+            <ul class="source-list">
+<li>
+<a href="https://docs.aws.amazon.com/dms/latest/userguide/CHAP_Validating.html" target="_blank" rel="noopener noreferrer">Data validation</a>
+</li>
+<li>
+<a href="https://docs.aws.amazon.com/dms/latest/userguide/CHAP_Monitoring.html" target="_blank" rel="noopener noreferrer">Monitoring</a>
+</li>
+</ul>
+        </section>
+        <nav class="lesson-nav" aria-label="Lesson order">
+            <a class="secondary" href="schema-conversion.html">Previous: Schema conversion paths</a>
+            <a href="examples.html">Next: Homogeneous and heterogeneous examples</a>
+        </nav>
+    </div>
+
+    <script src="../js/code-copy.js">
+</script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2">
+</script>
+    <script src="../js/supabase-config.js">
+</script>
+    <script src="../js/supabase-auth.js">
+</script>
+    <script src="../js/paywall.js">
+</script>
+    <script src="../js/progress.js">
+</script>
+    <script src="../js/lesson-common.js">
+</script>
+    <script src="../js/quiz.js">
+</script>
+    <script src="../js/analytics-tracker.js">
+</script>
+
+</body>
+</html>

@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Security: RBAC, NetworkPolicy, Pod Security | Kubernetes | Data For Dummies</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="../css/dfd-system.css">
+</head>
+<body class="dfd-safe" data-access="pro" data-course-id="kubernetes" data-lesson-id="security" data-lesson-label="Security: RBAC, NetworkPolicy, Pod Security" data-total-lessons="12">
+    <div class="container">
+        <nav class="nav" aria-label="Course">
+            <a href="hub.html">Course hub</a>
+            <a href="../index.html">Home</a>
+            <a href="#check">Knowledge check</a>
+        </nav>
+        <header class="lesson-hero" id="top">
+            <p class="track-kicker">Pro · Lesson 9 of 12</p>
+            <h1>Security: RBAC, NetworkPolicy, Pod Security</h1>
+            <p>RBAC limits who can ask the API. A NetworkPolicy limits traffic only if the CNI enforces it. Pod Security Admission limits what a Pod may do.</p>
+        </header>
+        <div class="dfd-lesson-progress" data-dfd-progress>
+            <p class="dfd-lesson-progress-label" data-dfd-progress-label>Sign in to save your place.</p>
+            <div class="dfd-lesson-progress-track" data-dfd-progress-bar role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-label="Course progress">
+                <div class="dfd-lesson-progress-fill" data-dfd-progress-fill>
+</div>
+            </div>
+        </div>
+        <section class="section" data-dfd-reveal>
+            <div class="eli5-box">
+                <h4>Picture it this way</h4>
+                <p>RBAC is the list of who may give orders. A NetworkPolicy is a rule about which boats may talk. If the harbour has no one enforcing the rule, the paper does nothing. Pod security is the rule about what a boat is allowed to carry.</p>
+            </div>
+        </section>
+        <section class="section" data-dfd-reveal id="rbac">
+<h2>RBAC</h2>
+<p>A Role or ClusterRole lists verbs on resources. A RoleBinding or ClusterRoleBinding grants that list to a user, group, or ServiceAccount. A Pod uses a ServiceAccount. The default ServiceAccount in a namespace can get more power than you meant if you bind a wide role to it.</p>
+<p>
+<code>kubectl auth can-i</code> answers as the current user. <code>kubectl auth can-i get secrets --as=system:serviceaccount:default:builder</code> checks someone else. Reading Secrets and creating Pods are the verbs attackers want.</p>
+</section>
+<section class="section" data-dfd-reveal id="netpol">
+<h2>NetworkPolicy needs a CNI that implements it</h2>
+<p>A NetworkPolicy selects Pods and lists allowed ingress and egress. Pods that are not selected are unaffected. Once a Pod is selected, traffic that is not allowed is denied, if a controller enforces the API.</p>
+<p>kind&#x27;s default CNI does not enforce NetworkPolicy. Applying a policy there is a silent no-op. To practice enforcement, use a cluster whose CNI documents NetworkPolicy support, such as a minikube cluster started with Calico, or a cloud cluster that says it enforces the API. Cilium and Calico are examples, not the only ones.</p>
+<table class="comparison-table dfd-scroll">
+<thead>
+<tr>
+<th>You applied a policy</th>
+<th>What you know</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>On default kind</td>
+<td>The object exists. Traffic is not filtered by it.</td>
+</tr>
+<tr>
+<td>On a CNI that implements the API</td>
+<td>Selected Pods lose traffic you did not allow.</td>
+</tr>
+<tr>
+<td>No policy selects the Pod</td>
+<td>That Pod is not restricted by NetworkPolicy.</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section class="section" data-dfd-reveal id="pss">
+<h2>Pod Security Admission</h2>
+<p>Pod Security Admission is built in. Namespace labels choose a standard and a mode: privileged, baseline, or restricted, in enforce, audit, or warn. Privileged is the wide-open standard. Restricted is the tight one.</p>
+<p>PodSecurityPolicy was removed in Kubernetes 1.25. Do not follow a guide that tells you to install that admission controller.</p>
+</section>
+        <section class="section dfd-diagram" data-dfd-diagram data-dfd-reveal>
+            <h2>Three different gates</h2>
+            <div data-dfd-diagram-panel="rbac">
+<svg class="dfd-responsive" viewBox="0 0 640 148" role="img" aria-label="RBAC highlighted">
+<rect class="track-drift" x="16" y="36" width="188" height="72" rx="12" fill="#5b8def">
+</rect>
+<text x="110" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#ffffff">RBAC</text>
+<path d="M204 72 H224" stroke="#64748b" stroke-width="2" fill="none">
+</path>
+<rect x="224" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
+</rect>
+<text x="318" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">NetworkPolicy</text>
+<path d="M412 72 H432" stroke="#64748b" stroke-width="2" fill="none">
+</path>
+<rect x="432" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
+</rect>
+<text x="526" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">Pod security</text>
+</svg>
+<p>RBAC is about API verbs. It does not filter packet paths.</p>
+</div>
+<div data-dfd-diagram-panel="np" hidden>
+<svg class="dfd-responsive" viewBox="0 0 640 148" role="img" aria-label="NetworkPolicy highlighted">
+<rect x="16" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
+</rect>
+<text x="110" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">RBAC</text>
+<path d="M204 72 H224" stroke="#64748b" stroke-width="2" fill="none">
+</path>
+<rect class="track-drift" x="224" y="36" width="188" height="72" rx="12" fill="#5b8def">
+</rect>
+<text x="318" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#ffffff">NetworkPolicy</text>
+<path d="M412 72 H432" stroke="#64748b" stroke-width="2" fill="none">
+</path>
+<rect x="432" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
+</rect>
+<text x="526" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">Pod security</text>
+</svg>
+<p>NetworkPolicy is about traffic, and only when the CNI enforces it.</p>
+</div>
+<div data-dfd-diagram-panel="psa" hidden>
+<svg class="dfd-responsive" viewBox="0 0 640 148" role="img" aria-label="Pod Security highlighted">
+<rect x="16" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
+</rect>
+<text x="110" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">RBAC</text>
+<path d="M204 72 H224" stroke="#64748b" stroke-width="2" fill="none">
+</path>
+<rect x="224" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
+</rect>
+<text x="318" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">NetworkPolicy</text>
+<path d="M412 72 H432" stroke="#64748b" stroke-width="2" fill="none">
+</path>
+<rect class="track-drift" x="432" y="36" width="188" height="72" rx="12" fill="#5b8def">
+</rect>
+<text x="526" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#ffffff">Pod security</text>
+</svg>
+<p>Pod Security Admission rejects or warns on Pod specs that break the standard.</p>
+</div>
+            <div class="dfd-diagram-controls">
+                <button type="button" data-dfd-diagram-step="rbac" aria-pressed="true">RBAC</button>
+<button type="button" data-dfd-diagram-step="np" aria-pressed="false">Network</button>
+<button type="button" data-dfd-diagram-step="psa" aria-pressed="false">Pod security</button>
+            </div>
+        </section>
+        <section class="section" id="lab" data-dfd-reveal>
+            <h2>Lab: ask what you are allowed to do</h2>
+            <p>This does not pretend to enforce a NetworkPolicy on kind. It checks RBAC, which the API server does enforce.</p>
+            <div class="code-block">
+<pre>
+<code>kubectl auth can-i create deployments
+kubectl auth can-i get secrets
+kubectl label namespace default pod-security.kubernetes.io/warn=restricted --overwrite
+# a privileged Pod manifest would now warn in this namespace
+# remove the label if you want the namespace back:
+# kubectl label namespace default pod-security.kubernetes.io/warn-</code>
+</pre>
+</div>
+            <p>
+<button type="button" data-dfd-complete>Mark lesson complete</button>
+</p>
+            <p data-dfd-complete-status>
+</p>
+        </section>
+        <section class="section" id="summary" data-dfd-reveal>
+            <h2>Concept summary</h2>
+            <ul class="summary-list">
+<li>RBAC, NetworkPolicy, and Pod Security Admission answer three different questions.</li>
+<li>A NetworkPolicy object is not enforcement.</li>
+<li>PodSecurityPolicy is gone. Use Pod Security Admission labels.</li>
+</ul>
+        </section>
+        <section class="section" id="check" data-dfd-reveal>
+            <h2>Knowledge check</h2>
+            <section class="dfd-quiz" data-dfd-quiz data-explanation="The default kind CNI does not enforce the API.">
+<h3 data-dfd-prompt>You applied a NetworkPolicy on default kind and traffic still flows. Why?</h3>
+<div data-dfd-choices>
+<button type="button" data-correct="false">NetworkPolicy always blocks all traffic</button>
+<button type="button" data-correct="true">Nothing on that cluster is enforcing the policy</button>
+<button type="button" data-correct="false">RBAC deleted the policy</button>
+</div>
+<p class="dfd-quiz-feedback" data-dfd-feedback hidden>
+</p>
+<p class="dfd-quiz-explain" data-dfd-explain hidden>
+</p>
+</section>
+<section class="dfd-quiz" data-dfd-quiz data-explanation="A binding attaches a role to the account.">
+<h3 data-dfd-prompt>Which object grants a ServiceAccount permission to list Pods?</h3>
+<div data-dfd-choices>
+<button type="button" data-correct="true">A RoleBinding or ClusterRoleBinding</button>
+<button type="button" data-correct="false">A NetworkPolicy</button>
+<button type="button" data-correct="false">A ConfigMap</button>
+</div>
+<p class="dfd-quiz-feedback" data-dfd-feedback hidden>
+</p>
+<p class="dfd-quiz-explain" data-dfd-explain hidden>
+</p>
+</section>
+<section class="dfd-quiz" data-dfd-quiz data-explanation="Pod Security Admission and the three standards.">
+<h3 data-dfd-prompt>What replaced PodSecurityPolicy?</h3>
+<div data-dfd-choices>
+<button type="button" data-correct="false">It is still required in every 1.3x cluster</button>
+<button type="button" data-correct="true">Pod Security Admission</button>
+<button type="button" data-correct="false">A NetworkPolicy named psp</button>
+</div>
+<p class="dfd-quiz-feedback" data-dfd-feedback hidden>
+</p>
+<p class="dfd-quiz-explain" data-dfd-explain hidden>
+</p>
+</section>
+        </section>
+        <section class="section" data-dfd-reveal>
+            <h2>Official sources</h2>
+            <p>Checked against the linked documentation in October 2026. A later release can move a flag, a price, or a supported pair. Use the page for the version you installed.</p>
+            <ul class="source-list">
+<li>
+<a href="https://kubernetes.io/docs/reference/access-authn-authz/rbac/" target="_blank" rel="noopener noreferrer">RBAC</a>
+</li>
+<li>
+<a href="https://kubernetes.io/docs/concepts/services-networking/network-policies/" target="_blank" rel="noopener noreferrer">NetworkPolicy</a>
+</li>
+<li>
+<a href="https://kubernetes.io/docs/concepts/security/pod-security-standards/" target="_blank" rel="noopener noreferrer">Pod Security Standards</a>
+</li>
+</ul>
+        </section>
+        <nav class="lesson-nav" aria-label="Lesson order">
+            <a class="secondary" href="observability.html">Previous: Observability and debugging</a>
+            <a href="helm-kustomize.html">Next: Helm and Kustomize</a>
+        </nav>
+    </div>
+
+    <script src="../js/code-copy.js">
+</script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2">
+</script>
+    <script src="../js/supabase-config.js">
+</script>
+    <script src="../js/supabase-auth.js">
+</script>
+    <script src="../js/paywall.js">
+</script>
+    <script src="../js/progress.js">
+</script>
+    <script src="../js/lesson-common.js">
+</script>
+    <script src="../js/quiz.js">
+</script>
+    <script src="../js/analytics-tracker.js">
+</script>
+
+</body>
+</html>

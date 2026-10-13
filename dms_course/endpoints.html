@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Endpoints, connectivity, and VPC | AWS DMS | Data For Dummies</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="../css/dfd-system.css">
+</head>
+<body class="dfd-safe" data-access="pro" data-course-id="dms" data-lesson-id="endpoints" data-lesson-label="Endpoints, connectivity, and VPC" data-total-lessons="11">
+    <div class="container">
+        <nav class="nav" aria-label="Course">
+            <a href="hub.html">Course hub</a>
+            <a href="../index.html">Home</a>
+            <a href="#check">Knowledge check</a>
+        </nav>
+        <header class="lesson-hero" id="top">
+            <p class="track-kicker">Pro · Lesson 3 of 11</p>
+            <h1>Endpoints, connectivity, and VPC</h1>
+            <p>A task can only move data the replication compute can reach. Endpoints, subnet groups, and security groups are that path.</p>
+        </header>
+        <div class="dfd-lesson-progress" data-dfd-progress>
+            <p class="dfd-lesson-progress-label" data-dfd-progress-label>Sign in to save your place.</p>
+            <div class="dfd-lesson-progress-track" data-dfd-progress-bar role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-label="Course progress">
+                <div class="dfd-lesson-progress-fill" data-dfd-progress-fill>
+</div>
+            </div>
+        </div>
+        <section class="section" data-dfd-reveal>
+            <div class="eli5-box">
+                <h4>Picture it this way</h4>
+                <p>The truck has to be allowed into both warehouses. A security group is the guard at the door. A subnet group is which street the truck is parked on. A secret in the endpoint is the key, and it should not be a password pasted into a screenshot.</p>
+            </div>
+        </section>
+        <section class="section" data-dfd-reveal id="reach">
+<h2>The path</h2>
+<p>A replication instance lives in a subnet group inside a VPC. The source and the target must accept connections from that instance, or from the elastic network interfaces DMS Serverless uses. On-premises databases need a private path such as VPN or Direct Connect, or a public endpoint you have chosen on purpose and locked down. Public and open is a common accident.</p>
+<p>Test the endpoint connection in the console or the API before you start the task. A failed test is a network, authentication, or SSL problem. It is cheaper than a failed task at midnight.</p>
+</section>
+<section class="section" data-dfd-reveal id="secrets">
+<h2>Passwords</h2>
+<p>Prefer AWS Secrets Manager for endpoint credentials. An IAM role lets DMS read the secret. A password in a ticket or a chat log will outlive the migration.</p>
+<p>SSL settings depend on the engine. If the source requires TLS and the endpoint says none, the test connection fails. Match the engine&#x27;s requirement. Do not disable TLS on a production database to make a lab green.</p>
+<table class="comparison-table dfd-scroll">
+<thead>
+<tr>
+<th>Failure</th>
+<th>Look at</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Test connection timeout</td>
+<td>Routes, NACLs, and security groups</td>
+</tr>
+<tr>
+<td>Authentication failed</td>
+<td>User, password or secret, and the database&#x27;s auth mode</td>
+</tr>
+<tr>
+<td>SSL error</td>
+<td>The endpoint SSL mode versus what the database asks for</td>
+</tr>
+</tbody>
+</table>
+</section>
+        <section class="section dfd-diagram" data-dfd-diagram data-dfd-reveal>
+            <h2>Who must reach whom</h2>
+            <div data-dfd-diagram-panel="ri">
+<svg class="dfd-responsive" viewBox="0 0 640 148" role="img" aria-label="DMS compute highlighted">
+<rect class="track-drift" x="16" y="36" width="188" height="72" rx="12" fill="#fb923c">
+</rect>
+<text x="110" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#ffffff">DMS compute</text>
+<path d="M204 72 H224" stroke="#64748b" stroke-width="2" fill="none">
+</path>
+<rect x="224" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
+</rect>
+<text x="318" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">Security group</text>
+<path d="M412 72 H432" stroke="#64748b" stroke-width="2" fill="none">
+</path>
+<rect x="432" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
+</rect>
+<text x="526" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">Database</text>
+</svg>
+<p>The instance or the serverless ENI is the client.</p>
+</div>
+<div data-dfd-diagram-panel="sg" hidden>
+<svg class="dfd-responsive" viewBox="0 0 640 148" role="img" aria-label="Security group highlighted">
+<rect x="16" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
+</rect>
+<text x="110" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">DMS compute</text>
+<path d="M204 72 H224" stroke="#64748b" stroke-width="2" fill="none">
+</path>
+<rect class="track-drift" x="224" y="36" width="188" height="72" rx="12" fill="#fb923c">
+</rect>
+<text x="318" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#ffffff">Security group</text>
+<path d="M412 72 H432" stroke="#64748b" stroke-width="2" fill="none">
+</path>
+<rect x="432" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
+</rect>
+<text x="526" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">Database</text>
+</svg>
+<p>The database security group must allow that client on the engine&#x27;s port.</p>
+</div>
+<div data-dfd-diagram-panel="db" hidden>
+<svg class="dfd-responsive" viewBox="0 0 640 148" role="img" aria-label="Database highlighted">
+<rect x="16" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
+</rect>
+<text x="110" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">DMS compute</text>
+<path d="M204 72 H224" stroke="#64748b" stroke-width="2" fill="none">
+</path>
+<rect x="224" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
+</rect>
+<text x="318" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">Security group</text>
+<path d="M412 72 H432" stroke="#64748b" stroke-width="2" fill="none">
+</path>
+<rect class="track-drift" x="432" y="36" width="188" height="72" rx="12" fill="#fb923c">
+</rect>
+<text x="526" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#ffffff">Database</text>
+</svg>
+<p>The database user needs the privileges the engine&#x27;s DMS page lists.</p>
+</div>
+            <div class="dfd-diagram-controls">
+                <button type="button" data-dfd-diagram-step="ri" aria-pressed="true">Compute</button>
+<button type="button" data-dfd-diagram-step="sg" aria-pressed="false">Guard</button>
+<button type="button" data-dfd-diagram-step="db" aria-pressed="false">Database</button>
+            </div>
+        </section>
+        <section class="section" id="lab" data-dfd-reveal>
+            <h2>Lab: write the path in one sentence</h2>
+            <p>Fill the blanks for a source you can actually describe. Do not invent CIDR blocks.</p>
+            <div class="code-block">
+<pre>
+<code>DMS compute lives in VPC ___ subnet group ___.
+Source host ___ listens on port ___.
+Security group ___ allows that compute on that port: yes/no/unknown.
+Credentials come from Secrets Manager: yes/no.
+Test connection result: not run yet.</code>
+</pre>
+</div>
+            <p>
+<button type="button" data-dfd-complete>Mark lesson complete</button>
+</p>
+            <p data-dfd-complete-status>
+</p>
+        </section>
+        <section class="section" id="summary" data-dfd-reveal>
+            <h2>Concept summary</h2>
+            <ul class="summary-list">
+<li>DMS compute must have a network path to both databases.</li>
+<li>Test the endpoint before the task.</li>
+<li>Keep passwords in a secret, not in a ticket.</li>
+</ul>
+        </section>
+        <section class="section" id="check" data-dfd-reveal>
+            <h2>Knowledge check</h2>
+            <section class="dfd-quiz" data-dfd-quiz data-explanation="The network path.">
+<h3 data-dfd-prompt>The endpoint test times out. What is a reasonable first place to look?</h3>
+<div data-dfd-choices>
+<button type="button" data-correct="false">The table mapping JSON</button>
+<button type="button" data-correct="true">Security groups, routes, and the port</button>
+<button type="button" data-correct="false">The CloudWatch dashboard for CDC latency</button>
+</div>
+<p class="dfd-quiz-feedback" data-dfd-feedback hidden>
+</p>
+<p class="dfd-quiz-explain" data-dfd-explain hidden>
+</p>
+</section>
+<section class="dfd-quiz" data-dfd-quiz data-explanation="In a secret the endpoint can read.">
+<h3 data-dfd-prompt>Where should the database password live?</h3>
+<div data-dfd-choices>
+<button type="button" data-correct="false">In the task&#x27;s table mapping</button>
+<button type="button" data-correct="true">In Secrets Manager or an equivalent secret store</button>
+<button type="button" data-correct="false">In a public subnet&#x27;s name tag</button>
+</div>
+<p class="dfd-quiz-feedback" data-dfd-feedback hidden>
+</p>
+<p class="dfd-quiz-explain" data-dfd-explain hidden>
+</p>
+</section>
+<section class="dfd-quiz" data-dfd-quiz data-explanation="Subnets where the replication instance can be placed.">
+<h3 data-dfd-prompt>A subnet group selects what?</h3>
+<div data-dfd-choices>
+<button type="button" data-correct="false">Which tables are copied</button>
+<button type="button" data-correct="true">Subnets for the replication instance</button>
+<button type="button" data-correct="false">The schema conversion report</button>
+</div>
+<p class="dfd-quiz-feedback" data-dfd-feedback hidden>
+</p>
+<p class="dfd-quiz-explain" data-dfd-explain hidden>
+</p>
+</section>
+        </section>
+        <section class="section" data-dfd-reveal>
+            <h2>Official sources</h2>
+            <p>Checked against the linked documentation in October 2026. A later release can move a flag, a price, or a supported pair. Use the page for the version you installed.</p>
+            <ul class="source-list">
+<li>
+<a href="https://docs.aws.amazon.com/dms/latest/userguide/CHAP_Endpoints.html" target="_blank" rel="noopener noreferrer">Endpoints</a>
+</li>
+<li>
+<a href="https://docs.aws.amazon.com/dms/latest/userguide/CHAP_Security.html" target="_blank" rel="noopener noreferrer">Network setup</a>
+</li>
+</ul>
+        </section>
+        <nav class="lesson-nav" aria-label="Lesson order">
+            <a class="secondary" href="assessment.html">Previous: Assessments, SCT, and schema conversion</a>
+            <a href="full-load.html">Next: Full load</a>
+        </nav>
+    </div>
+
+    <script src="../js/code-copy.js">
+</script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2">
+</script>
+    <script src="../js/supabase-config.js">
+</script>
+    <script src="../js/supabase-auth.js">
+</script>
+    <script src="../js/paywall.js">
+</script>
+    <script src="../js/progress.js">
+</script>
+    <script src="../js/lesson-common.js">
+</script>
+    <script src="../js/quiz.js">
+</script>
+    <script src="../js/analytics-tracker.js">
+</script>
+
+</body>
+</html>

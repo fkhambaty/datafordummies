@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Capstone | Terraform and OpenTofu | Data For Dummies</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="../css/dfd-system.css">
+</head>
+<body class="dfd-safe" data-access="pro" data-course-id="terraform" data-lesson-id="capstone" data-lesson-label="Capstone" data-total-lessons="12">
+    <div class="container">
+        <nav class="nav" aria-label="Course">
+            <a href="hub.html">Course hub</a>
+            <a href="../index.html">Home</a>
+            <a href="#check">Knowledge check</a>
+        </nav>
+        <header class="lesson-hero" id="top">
+            <p class="track-kicker">Pro · Lesson 12 of 12</p>
+            <h1>Capstone</h1>
+            <p>Build a small root module you can init, validate, and test without a cloud account. Then write the production differences you did not turn on.</p>
+        </header>
+        <div class="dfd-lesson-progress" data-dfd-progress>
+            <p class="dfd-lesson-progress-label" data-dfd-progress-label>Sign in to save your place.</p>
+            <div class="dfd-lesson-progress-track" data-dfd-progress-bar role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-label="Course progress">
+                <div class="dfd-lesson-progress-fill" data-dfd-progress-fill>
+</div>
+            </div>
+        </div>
+        <section class="section" data-dfd-reveal>
+            <div class="eli5-box">
+                <h4>Picture it this way</h4>
+                <p>You cook the recipe in a toy kitchen: a name, a validation rule, and a test. The real kitchen would add a remote state lock, a reviewed apply, and a binary you named on purpose.</p>
+            </div>
+        </section>
+        <section class="section" data-dfd-reveal id="lab-shape">
+<h2>The lab module</h2>
+<p>One variable, one validation, one local, one <code>terraform_data</code> resource, one output. A test file asserts the output. No AWS provider, so a missing cloud key is not a failure.</p>
+<p>If <code>terraform test</code> is not in your binary, record the version and which check you could run. Do not mark the test passed.</p>
+</section>
+<section class="section" data-dfd-reveal id="prod-gap">
+<h2>What you would add for a shared environment</h2>
+<p>A remote backend with the lock your version documents. A CI job that prints <code>terraform version</code> or <code>tofu version</code> and refuses to apply from a pull request. A moved block if you rename the resource later. No claim that OpenTofu and Terraform will both accept every file you wrote. Run the file with the binary you picked.</p>
+<table class="comparison-table dfd-scroll">
+<thead>
+<tr>
+<th>Production piece</th>
+<th>Lesson</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Remote state and a lock</td>
+<td>State, backends, and locking</td>
+</tr>
+<tr>
+<td>Separate dev and prod</td>
+<td>Workspaces and environments</td>
+</tr>
+<tr>
+<td>Reviewed apply</td>
+<td>CI and HCP Terraform</td>
+</tr>
+<tr>
+<td>Which binary</td>
+<td>Security, policy, and OpenTofu</td>
+</tr>
+</tbody>
+</table>
+</section>
+        <section class="section dfd-diagram" data-dfd-diagram data-dfd-reveal>
+            <h2>Toy kitchen, then the real one</h2>
+            <div data-dfd-diagram-panel="lab">
+<svg class="dfd-responsive" viewBox="0 0 640 148" role="img" aria-label="Lab pieces highlighted">
+<rect class="track-drift" x="16" y="36" width="188" height="72" rx="12" fill="#a78bfa">
+</rect>
+<text x="110" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#ffffff">Variable</text>
+<path d="M204 72 H224" stroke="#64748b" stroke-width="2" fill="none">
+</path>
+<rect x="224" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
+</rect>
+<text x="318" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">Resource</text>
+<path d="M412 72 H432" stroke="#64748b" stroke-width="2" fill="none">
+</path>
+<rect x="432" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
+</rect>
+<text x="526" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">Test</text>
+</svg>
+<p>The lab stays on local state and terraform_data.</p>
+</div>
+<div data-dfd-diagram-panel="review" hidden>
+<svg class="dfd-responsive" viewBox="0 0 640 148" role="img" aria-label="Review steps highlighted">
+<rect x="16" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
+</rect>
+<text x="110" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">fmt</text>
+<path d="M204 72 H224" stroke="#64748b" stroke-width="2" fill="none">
+</path>
+<rect class="track-drift" x="224" y="36" width="188" height="72" rx="12" fill="#a78bfa">
+</rect>
+<text x="318" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#ffffff">validate</text>
+<path d="M412 72 H432" stroke="#64748b" stroke-width="2" fill="none">
+</path>
+<rect x="432" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
+</rect>
+<text x="526" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">plan</text>
+</svg>
+<p>fmt, validate, and a plan are still required when a cloud provider appears.</p>
+</div>
+<div data-dfd-diagram-panel="prod" hidden>
+<svg class="dfd-responsive" viewBox="0 0 640 148" role="img" aria-label="Production pieces highlighted">
+<rect x="16" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
+</rect>
+<text x="110" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">Backend</text>
+<path d="M204 72 H224" stroke="#64748b" stroke-width="2" fill="none">
+</path>
+<rect x="224" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
+</rect>
+<text x="318" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">Lock</text>
+<path d="M412 72 H432" stroke="#64748b" stroke-width="2" fill="none">
+</path>
+<rect class="track-drift" x="432" y="36" width="188" height="72" rx="12" fill="#a78bfa">
+</rect>
+<text x="526" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#ffffff">Apply</text>
+</svg>
+<p>Production adds a backend, a lock, and an apply that a human approved.</p>
+</div>
+            <div class="dfd-diagram-controls">
+                <button type="button" data-dfd-diagram-step="lab" aria-pressed="true">Lab</button>
+<button type="button" data-dfd-diagram-step="review" aria-pressed="false">Review</button>
+<button type="button" data-dfd-diagram-step="prod" aria-pressed="false">Production</button>
+            </div>
+        </section>
+        <section class="section" id="lab" data-dfd-reveal>
+            <h2>Lab: init, validate, and test</h2>
+            <p>Put these files in an empty directory. Use the Terraform binary if that is what you installed. If you use OpenTofu, run tofu and treat a rejected argument as a version note, not as a pass.</p>
+            <div class="code-block">
+<pre>
+<code>cat &gt; main.tf &lt;&lt;&#x27;EOF&#x27;
+terraform {
+  required_version = &quot;&gt;= 1.7.0&quot;
+}
+variable &quot;environment&quot; {
+  type = string
+  validation {
+    condition     = contains([&quot;dev&quot;, &quot;test&quot;], var.environment)
+    error_message = &quot;Use dev or test in this lab.&quot;
+  }
+}
+locals {
+  name_prefix = &quot;dfd-${var.environment}&quot;
+}
+resource &quot;terraform_data&quot; &quot;note&quot; {
+  input = local.name_prefix
+}
+output &quot;name_prefix&quot; {
+  value = local.name_prefix
+}
+EOF
+cat &gt; name.tftest.hcl &lt;&lt;&#x27;EOF&#x27;
+run &quot;dev_prefix&quot; {
+  command = plan
+  variables { environment = &quot;dev&quot; }
+  assert {
+    condition     = output.name_prefix == &quot;dfd-dev&quot;
+    error_message = &quot;Expected dfd-dev.&quot;
+  }
+}
+EOF
+terraform init -input=false
+terraform validate
+terraform test</code>
+</pre>
+</div>
+            <p>
+<button type="button" data-dfd-complete>Mark lesson complete</button>
+</p>
+            <p data-dfd-complete-status>
+</p>
+        </section>
+        <section class="section" id="summary" data-dfd-reveal>
+            <h2>Concept summary</h2>
+            <ul class="summary-list">
+<li>The capstone runs locally with terraform_data.</li>
+<li>A cloud module adds a backend, a lock, and a reviewed apply.</li>
+<li>Name the binary. Do not grade Terraform and OpenTofu as one result.</li>
+</ul>
+        </section>
+        <section class="section" id="check" data-dfd-reveal>
+            <h2>Knowledge check</h2>
+            <section class="dfd-quiz" data-dfd-quiz data-explanation="So the lab can finish without cloud credentials.">
+<h3 data-dfd-prompt>Why does the capstone avoid an AWS resource?</h3>
+<div data-dfd-choices>
+<button type="button" data-correct="false">AWS resources cannot be described in HCL</button>
+<button type="button" data-correct="true">The lab should validate without a cloud account</button>
+<button type="button" data-correct="false">terraform_data talks to AWS</button>
+</div>
+<p class="dfd-quiz-feedback" data-dfd-feedback hidden>
+</p>
+<p class="dfd-quiz-explain" data-dfd-explain hidden>
+</p>
+</section>
+<section class="dfd-quiz" data-dfd-quiz data-explanation="The version, and that the test did not run.">
+<h3 data-dfd-prompt>The test command is missing. What do you record?</h3>
+<div data-dfd-choices>
+<button type="button" data-correct="false">A pass, because validate worked</button>
+<button type="button" data-correct="true">The binary version and that test did not run</button>
+<button type="button" data-correct="false">That OpenTofu and Terraform both passed</button>
+</div>
+<p class="dfd-quiz-feedback" data-dfd-feedback hidden>
+</p>
+<p class="dfd-quiz-explain" data-dfd-explain hidden>
+</p>
+</section>
+<section class="dfd-quiz" data-dfd-quiz data-explanation="A pointer at this course&#x27;s workspaces lesson.">
+<h3 data-dfd-prompt>What is the #workspaces address on the old page?</h3>
+<div data-dfd-choices>
+<button type="button" data-correct="false">A missing section</button>
+<button type="button" data-correct="true">The CLI versus HCP workspace lesson</button>
+<button type="button" data-correct="false">A Sentinel policy</button>
+</div>
+<p class="dfd-quiz-feedback" data-dfd-feedback hidden>
+</p>
+<p class="dfd-quiz-explain" data-dfd-explain hidden>
+</p>
+</section>
+        </section>
+        <section class="section" data-dfd-reveal>
+            <h2>Official sources</h2>
+            <p>Checked against the linked documentation in October 2026. A later release can move a flag, a price, or a supported pair. Use the page for the version you installed.</p>
+            <ul class="source-list">
+<li>
+<a href="https://developer.hashicorp.com/terraform/language/resources/terraform-data" target="_blank" rel="noopener noreferrer">terraform_data</a>
+</li>
+<li>
+<a href="https://developer.hashicorp.com/terraform/language/tests" target="_blank" rel="noopener noreferrer">Tests</a>
+</li>
+<li>
+<a href="https://developer.hashicorp.com/terraform/language/state/workspaces" target="_blank" rel="noopener noreferrer">CLI workspaces</a>
+</li>
+</ul>
+        </section>
+        <nav class="lesson-nav" aria-label="Lesson order">
+            <a class="secondary" href="security-opentofu.html">Previous: Security, policy, and OpenTofu</a>
+            <a href="hub.html">Back to the hub</a>
+        </nav>
+    </div>
+
+    <script src="../js/code-copy.js">
+</script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2">
+</script>
+    <script src="../js/supabase-config.js">
+</script>
+    <script src="../js/supabase-auth.js">
+</script>
+    <script src="../js/paywall.js">
+</script>
+    <script src="../js/progress.js">
+</script>
+    <script src="../js/lesson-common.js">
+</script>
+    <script src="../js/quiz.js">
+</script>
+    <script src="../js/analytics-tracker.js">
+</script>
+
+</body>
+</html>

@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Testing and validation | Terraform and OpenTofu | Data For Dummies</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="../css/dfd-system.css">
+</head>
+<body class="dfd-safe" data-access="pro" data-course-id="terraform" data-lesson-id="testing" data-lesson-label="Testing and validation" data-total-lessons="12">
+    <div class="container">
+        <nav class="nav" aria-label="Course">
+            <a href="hub.html">Course hub</a>
+            <a href="../index.html">Home</a>
+            <a href="#check">Knowledge check</a>
+        </nav>
+        <header class="lesson-hero" id="top">
+            <p class="track-kicker">Pro · Lesson 9 of 12</p>
+            <h1>Testing and validation</h1>
+            <p>validate checks the configuration. A test file checks behavior you describe. Neither replaces reading a plan against production state.</p>
+        </header>
+        <div class="dfd-lesson-progress" data-dfd-progress>
+            <p class="dfd-lesson-progress-label" data-dfd-progress-label>Sign in to save your place.</p>
+            <div class="dfd-lesson-progress-track" data-dfd-progress-bar role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-label="Course progress">
+                <div class="dfd-lesson-progress-fill" data-dfd-progress-fill>
+</div>
+            </div>
+        </div>
+        <section class="section" data-dfd-reveal>
+            <div class="eli5-box">
+                <h4>Picture it this way</h4>
+                <p>validate asks whether the sentence is grammatical. A test asks whether the recipe does what you claimed, sometimes with a pretend shop so you do not buy real vegetables.</p>
+            </div>
+        </section>
+        <section class="section" data-dfd-reveal id="layers">
+<h2>Four different checks</h2>
+<p>
+<code>terraform fmt</code> is style. <code>terraform validate</code> is references and types. A variable <code>validation</code> block rejects a bad input. A <code>precondition</code> or <code>postcondition</code> rejects a plan when a rule fails. A <code>check</code> block records a failure without always stopping the apply the way a postcondition does. Read the current language page before you pick one. The stopping behavior is the point.</p>
+<p>
+<code>terraform test</code> runs files ending in <code>tftest.hcl</code>. Assertions name a condition. A test that needs a real cloud account is an integration test. Treat it like one: separate state, fake names, and a bill you meant to pay.</p>
+</section>
+<section class="section" data-dfd-reveal id="mocks">
+<h2>Mocks are version-specific</h2>
+<p>Terraform can mock providers so a test does not create cloud resources. The mock syntax has changed as the test framework grew. Copy a mock from a page that matches your <code>terraform version</code>. An old snippet that fails validate is a version mismatch, not a reason to skip tests.</p>
+<p>OpenTofu&#x27;s test command is its own documentation. A green <code>terraform test</code> does not certify <code>tofu test</code>, and the reverse is the same.</p>
+<table class="comparison-table dfd-scroll">
+<thead>
+<tr>
+<th>Check</th>
+<th>Fails when</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>validate</td>
+<td>The configuration does not make sense</td>
+</tr>
+<tr>
+<td>validation</td>
+<td>An input breaks your condition</td>
+</tr>
+<tr>
+<td>terraform test</td>
+<td>An assertion you wrote is false</td>
+</tr>
+<tr>
+<td>plan review</td>
+<td>The diff is not what you wanted, even if tests passed</td>
+</tr>
+</tbody>
+</table>
+</section>
+        <section class="section dfd-diagram" data-dfd-diagram data-dfd-reveal>
+            <h2>What each check sees</h2>
+            <div data-dfd-diagram-panel="val">
+<svg class="dfd-responsive" viewBox="0 0 640 148" role="img" aria-label="validate highlighted">
+<rect class="track-drift" x="16" y="36" width="188" height="72" rx="12" fill="#a78bfa">
+</rect>
+<text x="110" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#ffffff">validate</text>
+<path d="M204 72 H224" stroke="#64748b" stroke-width="2" fill="none">
+</path>
+<rect x="224" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
+</rect>
+<text x="318" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">test</text>
+<path d="M412 72 H432" stroke="#64748b" stroke-width="2" fill="none">
+</path>
+<rect x="432" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
+</rect>
+<text x="526" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">plan</text>
+</svg>
+<p>validate never talks to your production account.</p>
+</div>
+<div data-dfd-diagram-panel="test" hidden>
+<svg class="dfd-responsive" viewBox="0 0 640 148" role="img" aria-label="terraform test highlighted">
+<rect x="16" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
+</rect>
+<text x="110" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">validate</text>
+<path d="M204 72 H224" stroke="#64748b" stroke-width="2" fill="none">
+</path>
+<rect class="track-drift" x="224" y="36" width="188" height="72" rx="12" fill="#a78bfa">
+</rect>
+<text x="318" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#ffffff">test</text>
+<path d="M412 72 H432" stroke="#64748b" stroke-width="2" fill="none">
+</path>
+<rect x="432" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
+</rect>
+<text x="526" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">plan</text>
+</svg>
+<p>A test runs the assertions you wrote. A mock avoids real resources only if that syntax exists.</p>
+</div>
+<div data-dfd-diagram-panel="plan" hidden>
+<svg class="dfd-responsive" viewBox="0 0 640 148" role="img" aria-label="plan highlighted">
+<rect x="16" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
+</rect>
+<text x="110" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">validate</text>
+<path d="M204 72 H224" stroke="#64748b" stroke-width="2" fill="none">
+</path>
+<rect x="224" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
+</rect>
+<text x="318" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">test</text>
+<path d="M412 72 H432" stroke="#64748b" stroke-width="2" fill="none">
+</path>
+<rect class="track-drift" x="432" y="36" width="188" height="72" rx="12" fill="#a78bfa">
+</rect>
+<text x="526" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#ffffff">plan</text>
+</svg>
+<p>The production plan is still the diff a human should read.</p>
+</div>
+            <div class="dfd-diagram-controls">
+                <button type="button" data-dfd-diagram-step="val" aria-pressed="true">validate</button>
+<button type="button" data-dfd-diagram-step="test" aria-pressed="false">test</button>
+<button type="button" data-dfd-diagram-step="plan" aria-pressed="false">plan</button>
+            </div>
+        </section>
+        <section class="section" id="lab" data-dfd-reveal>
+            <h2>Lab: one assertion against the name module</h2>
+            <p>Save this next to the module lab if you still have it. Run terraform test. If the command is unknown, your binary is older than the test framework. Say so in your notes instead of inventing a pass.</p>
+            <div class="code-block">
+<pre>
+<code># name.tftest.hcl
+run &quot;dev_prefix&quot; {
+  command = plan
+  variables {
+    environment = &quot;dev&quot;
+  }
+  assert {
+    condition     = output.name_prefix == &quot;dfd-dev&quot;
+    error_message = &quot;Expected the dev prefix.&quot;
+  }
+}</code>
+</pre>
+</div>
+            <p>
+<button type="button" data-dfd-complete>Mark lesson complete</button>
+</p>
+            <p data-dfd-complete-status>
+</p>
+        </section>
+        <section class="section" id="summary" data-dfd-reveal>
+            <h2>Concept summary</h2>
+            <ul class="summary-list">
+<li>fmt, validate, tests, and plan answer different questions.</li>
+<li>Mock providers depend on the Terraform version.</li>
+<li>A passing test is not a reviewed production plan.</li>
+</ul>
+        </section>
+        <section class="section" id="check" data-dfd-reveal>
+            <h2>Knowledge check</h2>
+            <section class="dfd-quiz" data-dfd-quiz data-explanation="No. validate does not show the cloud diff.">
+<h3 data-dfd-prompt>terraform validate passed. Can you skip the plan?</h3>
+<div data-dfd-choices>
+<button type="button" data-correct="false">Yes. validate includes the plan</button>
+<button type="button" data-correct="true">No. plan is still the diff</button>
+<button type="button" data-correct="false">Only on OpenTofu</button>
+</div>
+<p class="dfd-quiz-feedback" data-dfd-feedback hidden>
+</p>
+<p class="dfd-quiz-explain" data-dfd-explain hidden>
+</p>
+</section>
+<section class="dfd-quiz" data-dfd-quiz data-explanation="The test language moved.">
+<h3 data-dfd-prompt>A test snippet from a blog fails on your binary. What is a likely reason?</h3>
+<div data-dfd-choices>
+<button type="button" data-correct="false">Tests are not part of Terraform</button>
+<button type="button" data-correct="true">The syntax may belong to a different version</button>
+<button type="button" data-correct="false">Assertions only run in HCP Terraform</button>
+</div>
+<p class="dfd-quiz-feedback" data-dfd-feedback hidden>
+</p>
+<p class="dfd-quiz-explain" data-dfd-explain hidden>
+</p>
+</section>
+<section class="dfd-quiz" data-dfd-quiz data-explanation="A test that the value stayed out of the repository.">
+<h3 data-dfd-prompt>What is the sensitive flag not a substitute for?</h3>
+<div data-dfd-choices>
+<button type="button" data-correct="false">Reviewing whether secrets were committed</button>
+<button type="button" data-correct="true">It is not a substitute for keeping secrets out of git</button>
+<button type="button" data-correct="false">terraform fmt</button>
+</div>
+<p class="dfd-quiz-feedback" data-dfd-feedback hidden>
+</p>
+<p class="dfd-quiz-explain" data-dfd-explain hidden>
+</p>
+</section>
+        </section>
+        <section class="section" data-dfd-reveal>
+            <h2>Official sources</h2>
+            <p>Checked against the linked documentation in October 2026. A later release can move a flag, a price, or a supported pair. Use the page for the version you installed.</p>
+            <ul class="source-list">
+<li>
+<a href="https://developer.hashicorp.com/terraform/language/tests" target="_blank" rel="noopener noreferrer">Tests</a>
+</li>
+<li>
+<a href="https://developer.hashicorp.com/terraform/language/expressions/custom-conditions" target="_blank" rel="noopener noreferrer">Custom conditions</a>
+</li>
+<li>
+<a href="https://developer.hashicorp.com/terraform/cli/commands/validate" target="_blank" rel="noopener noreferrer">Validate</a>
+</li>
+</ul>
+        </section>
+        <nav class="lesson-nav" aria-label="Lesson order">
+            <a class="secondary" href="lifecycle-blocks.html">Previous: Lifecycle, import, moved, and removed</a>
+            <a href="ci-hcp.html">Next: CI and HCP Terraform</a>
+        </nav>
+    </div>
+
+    <script src="../js/code-copy.js">
+</script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2">
+</script>
+    <script src="../js/supabase-config.js">
+</script>
+    <script src="../js/supabase-auth.js">
+</script>
+    <script src="../js/paywall.js">
+</script>
+    <script src="../js/progress.js">
+</script>
+    <script src="../js/lesson-common.js">
+</script>
+    <script src="../js/quiz.js">
+</script>
+    <script src="../js/analytics-tracker.js">
+</script>
+
+</body>
+</html>

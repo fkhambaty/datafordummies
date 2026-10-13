@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Task settings, mappings, and transforms | AWS DMS | Data For Dummies</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="../css/dfd-system.css">
+</head>
+<body class="dfd-safe" data-access="pro" data-course-id="dms" data-lesson-id="task-settings" data-lesson-label="Task settings, mappings, and transforms" data-total-lessons="11">
+    <div class="container">
+        <nav class="nav" aria-label="Course">
+            <a href="hub.html">Course hub</a>
+            <a href="../index.html">Home</a>
+            <a href="#check">Knowledge check</a>
+        </nav>
+        <header class="lesson-hero" id="top">
+            <p class="track-kicker">Pro · Lesson 6 of 11</p>
+            <h1>Task settings, mappings, and transforms</h1>
+            <p>Table mappings are JSON selection rules. Transformations rename or drop columns. Task settings choose LOB mode, history, and validation. The defaults are not a design.</p>
+        </header>
+        <div class="dfd-lesson-progress" data-dfd-progress>
+            <p class="dfd-lesson-progress-label" data-dfd-progress-label>Sign in to save your place.</p>
+            <div class="dfd-lesson-progress-track" data-dfd-progress-bar role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-label="Course progress">
+                <div class="dfd-lesson-progress-fill" data-dfd-progress-fill>
+</div>
+            </div>
+        </div>
+        <section class="section" data-dfd-reveal>
+            <div class="eli5-box">
+                <h4>Picture it this way</h4>
+                <p>The mapping is the list of boxes allowed on the truck. A transformation is a label maker that renames a box on the way. Task settings are the truck&#x27;s rules: how heavy a box may be, and whether someone counts the boxes at the other end.</p>
+            </div>
+        </section>
+        <section class="section" data-dfd-reveal id="json">
+<h2>Selection rules</h2>
+<p>A selection rule includes or excludes a schema and a table. Rules run in order. A later exclude can remove what an earlier include added. Wildcards are convenient and dangerous. <code>public.%</code> on a PostgreSQL source will take tables you forgot, including ones the application still writes.</p>
+<p>Start with an explicit include list for the first test. Widen it when the test is boring.</p>
+</section>
+<section class="section" data-dfd-reveal id="transform">
+<h2>Transformations</h2>
+<p>A transformation can rename a schema, rename a table, rename or remove a column, or change case. It does not translate a stored procedure. That is schema conversion.</p>
+<p>Adding a column with a transformation is a small, explicit change. Doing business logic in a DMS expression is how the migration becomes an untested program. Prefer a later SQL step you can review.</p>
+<table class="comparison-table dfd-scroll">
+<thead>
+<tr>
+<th>Knob</th>
+<th>If you leave the default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Table mapping</td>
+<td>You might move every table the wildcard matches</td>
+</tr>
+<tr>
+<td>LOB mode</td>
+<td>You might truncate or slow the load</td>
+</tr>
+<tr>
+<td>Target table prep</td>
+<td>You might drop and recreate target tables</td>
+</tr>
+<tr>
+<td>Validation</td>
+<td>You might not notice a missed row</td>
+</tr>
+</tbody>
+</table>
+</section>
+        <section class="section dfd-diagram" data-dfd-diagram data-dfd-reveal>
+            <h2>Rules, then rows</h2>
+            <div data-dfd-diagram-panel="sel">
+<svg class="dfd-responsive" viewBox="0 0 640 148" role="img" aria-label="Include rule highlighted">
+<rect class="track-drift" x="16" y="36" width="188" height="72" rx="12" fill="#fb923c">
+</rect>
+<text x="110" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#ffffff">Include</text>
+<path d="M204 72 H224" stroke="#64748b" stroke-width="2" fill="none">
+</path>
+<rect x="224" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
+</rect>
+<text x="318" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">Exclude</text>
+<path d="M412 72 H432" stroke="#64748b" stroke-width="2" fill="none">
+</path>
+<rect x="432" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
+</rect>
+<text x="526" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">Tables</text>
+</svg>
+<p>Include names the tables that may move.</p>
+</div>
+<div data-dfd-diagram-panel="exc" hidden>
+<svg class="dfd-responsive" viewBox="0 0 640 148" role="img" aria-label="Exclude rule highlighted">
+<rect x="16" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
+</rect>
+<text x="110" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">Include</text>
+<path d="M204 72 H224" stroke="#64748b" stroke-width="2" fill="none">
+</path>
+<rect class="track-drift" x="224" y="36" width="188" height="72" rx="12" fill="#fb923c">
+</rect>
+<text x="318" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#ffffff">Exclude</text>
+<path d="M412 72 H432" stroke="#64748b" stroke-width="2" fill="none">
+</path>
+<rect x="432" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
+</rect>
+<text x="526" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">Tables</text>
+</svg>
+<p>A later exclude removes a table from that set.</p>
+</div>
+<div data-dfd-diagram-panel="go" hidden>
+<svg class="dfd-responsive" viewBox="0 0 640 148" role="img" aria-label="Transform highlighted">
+<rect x="16" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
+</rect>
+<text x="110" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">Mappings</text>
+<path d="M204 72 H224" stroke="#64748b" stroke-width="2" fill="none">
+</path>
+<rect x="224" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
+</rect>
+<text x="318" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">Transform</text>
+<path d="M412 72 H432" stroke="#64748b" stroke-width="2" fill="none">
+</path>
+<rect class="track-drift" x="432" y="36" width="188" height="72" rx="12" fill="#fb923c">
+</rect>
+<text x="526" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#ffffff">Target</text>
+</svg>
+<p>Transforms change names on the way. They do not convert procedural code.</p>
+</div>
+            <div class="dfd-diagram-controls">
+                <button type="button" data-dfd-diagram-step="sel" aria-pressed="true">Select</button>
+<button type="button" data-dfd-diagram-step="exc" aria-pressed="false">Exclude</button>
+<button type="button" data-dfd-diagram-step="go" aria-pressed="false">Apply</button>
+            </div>
+        </section>
+        <section class="section" id="lab" data-dfd-reveal>
+            <h2>Lab: include two tables and exclude a third</h2>
+            <p>This JSON is the shape of a selection. Replace the names. Do not start a task until the endpoint test from the earlier lesson is green.</p>
+            <div class="code-block">
+<pre>
+<code>{
+  &quot;rules&quot;: [
+    {
+      &quot;rule-type&quot;: &quot;selection&quot;,
+      &quot;rule-id&quot;: &quot;1&quot;,
+      &quot;rule-name&quot;: &quot;include-orders&quot;,
+      &quot;object-locator&quot;: {&quot;schema-name&quot;: &quot;shop&quot;, &quot;table-name&quot;: &quot;orders&quot;},
+      &quot;rule-action&quot;: &quot;include&quot;
+    },
+    {
+      &quot;rule-type&quot;: &quot;selection&quot;,
+      &quot;rule-id&quot;: &quot;2&quot;,
+      &quot;rule-name&quot;: &quot;include-customers&quot;,
+      &quot;object-locator&quot;: {&quot;schema-name&quot;: &quot;shop&quot;, &quot;table-name&quot;: &quot;customers&quot;},
+      &quot;rule-action&quot;: &quot;include&quot;
+    }
+  ]
+}</code>
+</pre>
+</div>
+            <p>
+<button type="button" data-dfd-complete>Mark lesson complete</button>
+</p>
+            <p data-dfd-complete-status>
+</p>
+        </section>
+        <section class="section" id="summary" data-dfd-reveal>
+            <h2>Concept summary</h2>
+            <ul class="summary-list">
+<li>Mappings are ordered include and exclude rules.</li>
+<li>Wildcards copy more than you think.</li>
+<li>Transforms rename. They are not schema conversion.</li>
+</ul>
+        </section>
+        <section class="section" id="check" data-dfd-reveal>
+            <h2>Knowledge check</h2>
+            <section class="dfd-quiz" data-dfd-quiz data-explanation="The excluded table does not.">
+<h3 data-dfd-prompt>Two rules include a schema and then exclude one table. Which table moves?</h3>
+<div data-dfd-choices>
+<button type="button" data-correct="false">Every table, because include came first</button>
+<button type="button" data-correct="true">The included tables except the excluded one</button>
+<button type="button" data-correct="false">None. Exclude cancels the task</button>
+</div>
+<p class="dfd-quiz-feedback" data-dfd-feedback hidden>
+</p>
+<p class="dfd-quiz-explain" data-dfd-explain hidden>
+</p>
+</section>
+<section class="dfd-quiz" data-dfd-quiz data-explanation="It did not convert a procedure.">
+<h3 data-dfd-prompt>A transformation renames a column. What did it not do?</h3>
+<div data-dfd-choices>
+<button type="button" data-correct="false">Change the column name on the target side of the task</button>
+<button type="button" data-correct="true">Translate a stored procedure into another dialect</button>
+<button type="button" data-correct="false">Affect the mapped table</button>
+</div>
+<p class="dfd-quiz-feedback" data-dfd-feedback hidden>
+</p>
+<p class="dfd-quiz-explain" data-dfd-explain hidden>
+</p>
+</section>
+<section class="dfd-quiz" data-dfd-quiz data-explanation="It selects tables you have not reviewed.">
+<h3 data-dfd-prompt>Why avoid a wildcard on the first test?</h3>
+<div data-dfd-choices>
+<button type="button" data-correct="false">Wildcards are invalid JSON</button>
+<button type="button" data-correct="true">You can copy tables you did not mean to move</button>
+<button type="button" data-correct="false">DMS rejects wildcards</button>
+</div>
+<p class="dfd-quiz-feedback" data-dfd-feedback hidden>
+</p>
+<p class="dfd-quiz-explain" data-dfd-explain hidden>
+</p>
+</section>
+        </section>
+        <section class="section" data-dfd-reveal>
+            <h2>Official sources</h2>
+            <p>Checked against the linked documentation in October 2026. A later release can move a flag, a price, or a supported pair. Use the page for the version you installed.</p>
+            <ul class="source-list">
+<li>
+<a href="https://docs.aws.amazon.com/dms/latest/userguide/CHAP_Tasks.CustomizingTasks.TableMapping.html" target="_blank" rel="noopener noreferrer">Table mapping</a>
+</li>
+<li>
+<a href="https://docs.aws.amazon.com/dms/latest/userguide/CHAP_Tasks.CustomizingTasks.TableMapping.SelectionTransformation.html" target="_blank" rel="noopener noreferrer">Transformation rules</a>
+</li>
+</ul>
+        </section>
+        <nav class="lesson-nav" aria-label="Lesson order">
+            <a class="secondary" href="cdc.html">Previous: CDC and log positions</a>
+            <a href="schema-conversion.html">Next: Schema conversion paths</a>
+        </nav>
+    </div>
+
+    <script src="../js/code-copy.js">
+</script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2">
+</script>
+    <script src="../js/supabase-config.js">
+</script>
+    <script src="../js/supabase-auth.js">
+</script>
+    <script src="../js/paywall.js">
+</script>
+    <script src="../js/progress.js">
+</script>
+    <script src="../js/lesson-common.js">
+</script>
+    <script src="../js/quiz.js">
+</script>
+    <script src="../js/analytics-tracker.js">
+</script>
+
+</body>
+</html>

@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Assessments, SCT, and schema conversion | AWS DMS | Data For Dummies</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="../css/dfd-system.css">
+</head>
+<body class="dfd-safe" data-course-id="dms" data-lesson-id="assessment" data-lesson-label="Assessments, SCT, and schema conversion" data-total-lessons="11">
+    <div class="container">
+        <nav class="nav" aria-label="Course">
+            <a href="hub.html">Course hub</a>
+            <a href="../index.html">Home</a>
+            <a href="#check">Knowledge check</a>
+        </nav>
+        <header class="lesson-hero" id="top">
+            <p class="track-kicker">Free · Lesson 2 of 11</p>
+            <h1>Assessments, SCT, and schema conversion</h1>
+            <p>DMS has a premigration assessment on a task, a schema conversion assessment inside DMS Schema Conversion, and the older AWS Schema Conversion Tool. They are three reports. Mixing the names is how a project skips the wrong work.</p>
+        </header>
+        <div class="dfd-lesson-progress" data-dfd-progress>
+            <p class="dfd-lesson-progress-label" data-dfd-progress-label>Sign in to save your place.</p>
+            <div class="dfd-lesson-progress-track" data-dfd-progress-bar role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-label="Course progress">
+                <div class="dfd-lesson-progress-fill" data-dfd-progress-fill>
+</div>
+            </div>
+        </div>
+        <section class="section" data-dfd-reveal>
+            <div class="eli5-box">
+                <h4>Picture it this way</h4>
+                <p>One checklist asks whether the moving truck can get out of the driveway. Another checklist asks whether the furniture will fit in the new house. A desktop app can write that second checklist too. They are not the same clipboard.</p>
+            </div>
+        </section>
+        <section class="section" data-dfd-reveal id="premig">
+<h2>Premigration assessment</h2>
+<p>A premigration assessment runs against a replication task. It looks for DMS prerequisites: supplemental logging, primary keys, unsupported data types, LOB settings, and similar task blockers. It does not convert a stored procedure from one database language to another.</p>
+<p>Read the assessment before the first full load, and again if you change table mappings. A green assessment is not a green cutover.</p>
+</section>
+<section class="section" data-dfd-reveal id="sct">
+<h2>AWS SCT is a separate application</h2>
+<p>The AWS Schema Conversion Tool is a desktop application you install. It assesses and converts schema and database code for heterogeneous moves. It is not a replication task and it is not installed by creating a DMS endpoint.</p>
+<p>DMS Schema Conversion is a feature in the DMS console. AWS describes it as built on the SCT conversion engine, and as serverless in the sense that a migration project provisions its own resources. You do not manage that project as a replication instance. It can write a conversion assessment that counts what converts automatically and what needs a person.</p>
+<p>That conversion report is still not the premigration assessment. One is about schema and code. The other is about whether a DMS task can run.</p>
+<table class="comparison-table dfd-scroll">
+<thead>
+<tr>
+<th>Report</th>
+<th>Asks</th>
+<th>Does not ask</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Premigration assessment</td>
+<td>Can this DMS task run?</td>
+<td>Whether PL/SQL became PL/pgSQL</td>
+</tr>
+<tr>
+<td>DMS Schema Conversion assessment</td>
+<td>What schema and code convert?</td>
+<td>Whether the replication instance is large enough</td>
+</tr>
+<tr>
+<td>AWS SCT assessment</td>
+<td>A desktop view of conversion work</td>
+<td>It is not a serverless DMS task</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section class="section" data-dfd-reveal id="lists">
+<h2>Do not memorize the engine matrix</h2>
+<p>Supported pairs for data movement and supported pairs for schema conversion overlap and are not identical. AWS has added generative AI help for some conversion paths and not others. The console and the current user guide are the list. This course will not freeze a matrix that the next service update would make wrong.</p>
+</section>
+        <section class="section dfd-diagram" data-dfd-diagram data-dfd-reveal>
+            <h2>Three reports</h2>
+            <div data-dfd-diagram-panel="task">
+<svg class="dfd-responsive" viewBox="0 0 640 148" role="img" aria-label="Premigration assessment highlighted">
+<rect class="track-drift" x="16" y="36" width="188" height="72" rx="12" fill="#fb923c">
+</rect>
+<text x="110" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#ffffff">Task check</text>
+<path d="M204 72 H224" stroke="#64748b" stroke-width="2" fill="none">
+</path>
+<rect x="224" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
+</rect>
+<text x="318" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">Schema report</text>
+<path d="M412 72 H432" stroke="#64748b" stroke-width="2" fill="none">
+</path>
+<rect x="432" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
+</rect>
+<text x="526" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">Desktop SCT</text>
+</svg>
+<p>The premigration assessment belongs to the replication task.</p>
+</div>
+<div data-dfd-diagram-panel="sc" hidden>
+<svg class="dfd-responsive" viewBox="0 0 640 148" role="img" aria-label="DMS Schema Conversion highlighted">
+<rect x="16" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
+</rect>
+<text x="110" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">Task check</text>
+<path d="M204 72 H224" stroke="#64748b" stroke-width="2" fill="none">
+</path>
+<rect class="track-drift" x="224" y="36" width="188" height="72" rx="12" fill="#fb923c">
+</rect>
+<text x="318" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#ffffff">Schema report</text>
+<path d="M412 72 H432" stroke="#64748b" stroke-width="2" fill="none">
+</path>
+<rect x="432" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
+</rect>
+<text x="526" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">Desktop SCT</text>
+</svg>
+<p>DMS Schema Conversion reports what it can translate.</p>
+</div>
+<div data-dfd-diagram-panel="sct" hidden>
+<svg class="dfd-responsive" viewBox="0 0 640 148" role="img" aria-label="AWS SCT highlighted">
+<rect x="16" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
+</rect>
+<text x="110" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">Task check</text>
+<path d="M204 72 H224" stroke="#64748b" stroke-width="2" fill="none">
+</path>
+<rect x="224" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
+</rect>
+<text x="318" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">Schema report</text>
+<path d="M412 72 H432" stroke="#64748b" stroke-width="2" fill="none">
+</path>
+<rect class="track-drift" x="432" y="36" width="188" height="72" rx="12" fill="#fb923c">
+</rect>
+<text x="526" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#ffffff">Desktop SCT</text>
+</svg>
+<p>AWS SCT is the installable application. Related engine, different product.</p>
+</div>
+            <div class="dfd-diagram-controls">
+                <button type="button" data-dfd-diagram-step="task" aria-pressed="true">Task</button>
+<button type="button" data-dfd-diagram-step="sc" aria-pressed="false">Schema</button>
+<button type="button" data-dfd-diagram-step="sct" aria-pressed="false">SCT</button>
+            </div>
+        </section>
+        <section class="section" id="lab" data-dfd-reveal>
+            <h2>Lab: label a finding</h2>
+            <p>For each line, write task, schema, or neither. The answers are in the comments.</p>
+            <div class="code-block">
+<pre>
+<code>Supplemental logging is off on Oracle.            # task
+A procedure uses a built-in the target lacks.     # schema
+The security group blocks port 5432.            # neither — that is the network lesson
+Fifty tables have no primary key.                # task, and it also hurts CDC</code>
+</pre>
+</div>
+            <p>
+<button type="button" data-dfd-complete>Mark lesson complete</button>
+</p>
+            <p data-dfd-complete-status>
+</p>
+        </section>
+        <section class="section" id="summary" data-dfd-reveal>
+            <h2>Concept summary</h2>
+            <ul class="summary-list">
+<li>Premigration assessment is about the DMS task.</li>
+<li>DMS Schema Conversion and AWS SCT are about schema and code. SCT is the desktop tool.</li>
+<li>Supported pairs live in the current guide, not in a memorized table.</li>
+</ul>
+        </section>
+        <section class="section" id="check" data-dfd-reveal>
+            <h2>Knowledge check</h2>
+            <section class="dfd-quiz" data-dfd-quiz data-explanation="Schema conversion, not the task premigration check.">
+<h3 data-dfd-prompt>A procedure failed to convert. Which report is the right place to read why?</h3>
+<div data-dfd-choices>
+<button type="button" data-correct="false">The premigration assessment only</button>
+<button type="button" data-correct="true">The schema conversion assessment</button>
+<button type="button" data-correct="false">The replication instance CPU graph</button>
+</div>
+<p class="dfd-quiz-feedback" data-dfd-feedback hidden>
+</p>
+<p class="dfd-quiz-explain" data-dfd-explain hidden>
+</p>
+</section>
+<section class="dfd-quiz" data-dfd-quiz data-explanation="A separate desktop application.">
+<h3 data-dfd-prompt>What is AWS SCT?</h3>
+<div data-dfd-choices>
+<button type="button" data-correct="false">A tab that appears on every replication instance</button>
+<button type="button" data-correct="true">An installable schema conversion application</button>
+<button type="button" data-correct="false">Another name for DMS Serverless</button>
+</div>
+<p class="dfd-quiz-feedback" data-dfd-feedback hidden>
+</p>
+<p class="dfd-quiz-explain" data-dfd-explain hidden>
+</p>
+</section>
+<section class="dfd-quiz" data-dfd-quiz data-explanation="Same family of conversion logic, different way you run it.">
+<h3 data-dfd-prompt>DMS Schema Conversion uses the SCT engine. Are the products the same?</h3>
+<div data-dfd-choices>
+<button type="button" data-correct="false">Yes. Installing SCT is required for the console feature</button>
+<button type="button" data-correct="true">No. One is a console feature and one is a desktop tool</button>
+<button type="button" data-correct="false">Yes. They write the premigration assessment</button>
+</div>
+<p class="dfd-quiz-feedback" data-dfd-feedback hidden>
+</p>
+<p class="dfd-quiz-explain" data-dfd-explain hidden>
+</p>
+</section>
+        </section>
+        <section class="section" data-dfd-reveal>
+            <h2>Official sources</h2>
+            <p>Checked against the linked documentation in October 2026. A later release can move a flag, a price, or a supported pair. Use the page for the version you installed.</p>
+            <ul class="source-list">
+<li>
+<a href="https://docs.aws.amazon.com/dms/latest/userguide/CHAP_Tasks.AssessmentReport.html" target="_blank" rel="noopener noreferrer">Premigration assessment</a>
+</li>
+<li>
+<a href="https://docs.aws.amazon.com/dms/latest/userguide/CHAP_SchemaConversion.html" target="_blank" rel="noopener noreferrer">DMS Schema Conversion</a>
+</li>
+<li>
+<a href="https://docs.aws.amazon.com/SchemaConversionTool/latest/userguide/CHAP_Welcome.html" target="_blank" rel="noopener noreferrer">AWS SCT</a>
+</li>
+</ul>
+        </section>
+        <nav class="lesson-nav" aria-label="Lesson order">
+            <a class="secondary" href="architecture.html">Previous: How DMS is built</a>
+            <a href="endpoints.html">Next: Endpoints, connectivity, and VPC</a>
+        </nav>
+    </div>
+
+    <script src="../js/code-copy.js">
+</script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2">
+</script>
+    <script src="../js/supabase-config.js">
+</script>
+    <script src="../js/supabase-auth.js">
+</script>
+    <script src="../js/paywall.js">
+</script>
+    <script src="../js/progress.js">
+</script>
+    <script src="../js/lesson-common.js">
+</script>
+    <script src="../js/quiz.js">
+</script>
+    <script src="../js/analytics-tracker.js">
+</script>
+
+</body>
+</html>

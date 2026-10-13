@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>How DMS is built | AWS DMS | Data For Dummies</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="../css/dfd-system.css">
+</head>
+<body class="dfd-safe" data-course-id="dms" data-lesson-id="architecture" data-lesson-label="How DMS is built" data-total-lessons="11">
+    <div class="container">
+        <nav class="nav" aria-label="Course">
+            <a href="hub.html">Course hub</a>
+            <a href="../index.html">Home</a>
+            <a href="#check">Knowledge check</a>
+        </nav>
+        <header class="lesson-hero" id="top">
+            <p class="track-kicker">Free · Lesson 1 of 11</p>
+            <h1>How DMS is built</h1>
+            <p>DMS copies data from a source endpoint to a target endpoint by running a task. The compute is either a replication instance you size, or a serverless task with a capacity range. Those are different choices, and both still exist.</p>
+        </header>
+        <div class="dfd-lesson-progress" data-dfd-progress>
+            <p class="dfd-lesson-progress-label" data-dfd-progress-label>Sign in to save your place.</p>
+            <div class="dfd-lesson-progress-track" data-dfd-progress-bar role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-label="Course progress">
+                <div class="dfd-lesson-progress-fill" data-dfd-progress-fill>
+</div>
+            </div>
+        </div>
+        <section class="section" data-dfd-reveal>
+            <div class="eli5-box">
+                <h4>Picture it this way</h4>
+                <p>The endpoints are the two warehouses. The task is the work order: move everything, keep copying changes, or both. The replication instance is a truck you rent by the hour. Serverless is a truck yard that assigns trucks inside a range you set. You still write the work order.</p>
+            </div>
+        </section>
+        <section class="section" data-dfd-reveal id="parts">
+<h2>Four pieces</h2>
+<p>A source endpoint describes how to log into the database you are leaving. A target endpoint describes the database you are filling. A replication task says which tables move and whether you want a full load, CDC, or both.</p>
+<p>A replication instance is an Amazon-managed compute node that runs the task. You pick an instance class and storage. It exists, and it can cost money, even when the task is idle. Multi-AZ is an option on that instance, not a property of every task.</p>
+<p>DMS Serverless is a different way to run a task. You set capacity bounds. AWS documents capacity in DMS capacity units. The minimum, the maximum, and what happens when a task is idle have been updated in the service docs. Read the current serverless page before you tell someone it scales to zero or that it replaced replication instances. It has not removed them.</p>
+<table class="comparison-table dfd-scroll">
+<thead>
+<tr>
+<th>Piece</th>
+<th>You create it</th>
+<th>It is not</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Endpoint</td>
+<td>Connection details for one database</td>
+<td>The task</td>
+</tr>
+<tr>
+<td>Replication instance</td>
+<td>A sized computer for tasks</td>
+<td>Required for every serverless task</td>
+</tr>
+<tr>
+<td>Serverless task</td>
+<td>A task plus a capacity range</td>
+<td>A schema conversion project</td>
+</tr>
+<tr>
+<td>Task</td>
+<td>Tables, rules, and full load or CDC</td>
+<td>A backup of the source</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section class="section" data-dfd-reveal id="not">
+<h2>What this service does not decide</h2>
+<p>DMS does not choose your cutover window, your application connection string, or whether a stored procedure was translated. Heterogeneous schema and code conversion is a separate step, covered later. Homogeneous moves can still fail on extensions, large objects, and sequences.</p>
+<p>Supported engines change. The user guide&#x27;s sources and targets pages are the list. A conference slide is not.</p>
+</section>
+        <section class="section dfd-diagram" data-dfd-diagram data-dfd-reveal>
+            <h2>One task, two doors</h2>
+            <div data-dfd-diagram-panel="src">
+<svg class="dfd-responsive" viewBox="0 0 640 148" role="img" aria-label="Source endpoint highlighted">
+<rect class="track-drift" x="16" y="36" width="188" height="72" rx="12" fill="#fb923c">
+</rect>
+<text x="110" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#ffffff">Source</text>
+<path d="M204 72 H224" stroke="#64748b" stroke-width="2" fill="none">
+</path>
+<rect x="224" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
+</rect>
+<text x="318" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">Task</text>
+<path d="M412 72 H432" stroke="#64748b" stroke-width="2" fill="none">
+</path>
+<rect x="432" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
+</rect>
+<text x="526" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">Target</text>
+</svg>
+<p>The source endpoint is a connection, not a copy of the data.</p>
+</div>
+<div data-dfd-diagram-panel="task" hidden>
+<svg class="dfd-responsive" viewBox="0 0 640 148" role="img" aria-label="Replication task highlighted">
+<rect x="16" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
+</rect>
+<text x="110" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">Source</text>
+<path d="M204 72 H224" stroke="#64748b" stroke-width="2" fill="none">
+</path>
+<rect class="track-drift" x="224" y="36" width="188" height="72" rx="12" fill="#fb923c">
+</rect>
+<text x="318" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#ffffff">Task</text>
+<path d="M412 72 H432" stroke="#64748b" stroke-width="2" fill="none">
+</path>
+<rect x="432" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
+</rect>
+<text x="526" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">Target</text>
+</svg>
+<p>The task is the work order. It runs on an instance or as a serverless task.</p>
+</div>
+<div data-dfd-diagram-panel="tgt" hidden>
+<svg class="dfd-responsive" viewBox="0 0 640 148" role="img" aria-label="Target endpoint highlighted">
+<rect x="16" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
+</rect>
+<text x="110" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">Source</text>
+<path d="M204 72 H224" stroke="#64748b" stroke-width="2" fill="none">
+</path>
+<rect x="224" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
+</rect>
+<text x="318" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">Task</text>
+<path d="M412 72 H432" stroke="#64748b" stroke-width="2" fill="none">
+</path>
+<rect class="track-drift" x="432" y="36" width="188" height="72" rx="12" fill="#fb923c">
+</rect>
+<text x="526" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#ffffff">Target</text>
+</svg>
+<p>The target endpoint receives rows. It does not, by itself, rewrite application SQL.</p>
+</div>
+            <div class="dfd-diagram-controls">
+                <button type="button" data-dfd-diagram-step="src" aria-pressed="true">Source</button>
+<button type="button" data-dfd-diagram-step="task" aria-pressed="false">Task</button>
+<button type="button" data-dfd-diagram-step="tgt" aria-pressed="false">Target</button>
+            </div>
+        </section>
+        <section class="section" id="lab" data-dfd-reveal>
+            <h2>Lab: name the four pieces before you open the console</h2>
+            <p>Write this for a move you actually care about. Use &quot;unknown&quot; where you have not decided. Unknown is a better answer than a guess.</p>
+            <div class="code-block">
+<pre>
+<code>Source engine and version:
+Target engine and version:
+Compute: replication instance OR serverless (undecided is allowed):
+Task type: full load, CDC, or both:
+Who will change the application connection string:</code>
+</pre>
+</div>
+            <p>
+<button type="button" data-dfd-complete>Mark lesson complete</button>
+</p>
+            <p data-dfd-complete-status>
+</p>
+        </section>
+        <section class="section" id="summary" data-dfd-reveal>
+            <h2>Concept summary</h2>
+            <ul class="summary-list">
+<li>Endpoints connect. Tasks move data. Compute is an instance or a serverless capacity range.</li>
+<li>Serverless did not delete replication instances.</li>
+<li>Engine support is a current docs question, not a memory question.</li>
+</ul>
+        </section>
+        <section class="section" id="check" data-dfd-reveal>
+            <h2>Knowledge check</h2>
+            <section class="dfd-quiz" data-dfd-quiz data-explanation="Connection information for one database.">
+<h3 data-dfd-prompt>What does an endpoint represent?</h3>
+<div data-dfd-choices>
+<button type="button" data-correct="false">The full load of every table</button>
+<button type="button" data-correct="true">How DMS connects to one database</button>
+<button type="button" data-correct="false">A CloudWatch alarm</button>
+</div>
+<p class="dfd-quiz-feedback" data-dfd-feedback hidden>
+</p>
+<p class="dfd-quiz-explain" data-dfd-explain hidden>
+</p>
+</section>
+<section class="dfd-quiz" data-dfd-quiz data-explanation="It is another way to run tasks. Instances still exist.">
+<h3 data-dfd-prompt>Which statement about DMS Serverless is fair?</h3>
+<div data-dfd-choices>
+<button type="button" data-correct="false">It removed replication instances from the service</button>
+<button type="button" data-correct="true">It runs a task inside a capacity range you set</button>
+<button type="button" data-correct="false">It converts stored procedures</button>
+</div>
+<p class="dfd-quiz-feedback" data-dfd-feedback hidden>
+</p>
+<p class="dfd-quiz-explain" data-dfd-explain hidden>
+</p>
+</section>
+<section class="dfd-quiz" data-dfd-quiz data-explanation="The task can run while the application still points at the source.">
+<h3 data-dfd-prompt>A task status of running means the application has cut over. True or false?</h3>
+<div data-dfd-choices>
+<button type="button" data-correct="false">True. Running means cutover is finished</button>
+<button type="button" data-correct="true">False. Cutover is an application change</button>
+<button type="button" data-correct="false">True, but only for serverless</button>
+</div>
+<p class="dfd-quiz-feedback" data-dfd-feedback hidden>
+</p>
+<p class="dfd-quiz-explain" data-dfd-explain hidden>
+</p>
+</section>
+        </section>
+        <section class="section" data-dfd-reveal>
+            <h2>Official sources</h2>
+            <p>Checked against the linked documentation in October 2026. A later release can move a flag, a price, or a supported pair. Use the page for the version you installed.</p>
+            <ul class="source-list">
+<li>
+<a href="https://docs.aws.amazon.com/dms/latest/userguide/Welcome.html" target="_blank" rel="noopener noreferrer">What is AWS DMS?</a>
+</li>
+<li>
+<a href="https://docs.aws.amazon.com/dms/latest/userguide/CHAP_ReplicationInstance.html" target="_blank" rel="noopener noreferrer">Replication instances</a>
+</li>
+<li>
+<a href="https://docs.aws.amazon.com/dms/latest/userguide/CHAP_Serverless.html" target="_blank" rel="noopener noreferrer">DMS Serverless</a>
+</li>
+</ul>
+        </section>
+        <nav class="lesson-nav" aria-label="Lesson order">
+            <a class="secondary" href="hub.html">Course hub</a>
+            <a href="assessment.html">Next: Assessments, SCT, and schema conversion</a>
+        </nav>
+    </div>
+
+    <script src="../js/code-copy.js">
+</script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2">
+</script>
+    <script src="../js/supabase-config.js">
+</script>
+    <script src="../js/supabase-auth.js">
+</script>
+    <script src="../js/paywall.js">
+</script>
+    <script src="../js/progress.js">
+</script>
+    <script src="../js/lesson-common.js">
+</script>
+    <script src="../js/quiz.js">
+</script>
+    <script src="../js/analytics-tracker.js">
+</script>
+
+</body>
+</html>

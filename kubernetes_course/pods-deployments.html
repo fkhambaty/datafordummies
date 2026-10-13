@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Pods and Deployments | Kubernetes | Data For Dummies</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="../css/dfd-system.css">
+</head>
+<body class="dfd-safe" data-access="pro" data-course-id="kubernetes" data-lesson-id="pods-deployments" data-lesson-label="Pods and Deployments" data-total-lessons="12">
+    <div class="container">
+        <nav class="nav" aria-label="Course">
+            <a href="hub.html">Course hub</a>
+            <a href="../index.html">Home</a>
+            <a href="#check">Knowledge check</a>
+        </nav>
+        <header class="lesson-hero" id="top">
+            <p class="track-kicker">Pro · Lesson 3 of 12</p>
+            <h1>Pods and Deployments</h1>
+            <p>A Pod runs. A Deployment keeps the right number of Pods running and replaces them on purpose.</p>
+        </header>
+        <div class="dfd-lesson-progress" data-dfd-progress>
+            <p class="dfd-lesson-progress-label" data-dfd-progress-label>Sign in to save your place.</p>
+            <div class="dfd-lesson-progress-track" data-dfd-progress-bar role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-label="Course progress">
+                <div class="dfd-lesson-progress-fill" data-dfd-progress-fill>
+</div>
+            </div>
+        </div>
+        <section class="section" data-dfd-reveal>
+            <div class="eli5-box">
+                <h4>Picture it this way</h4>
+                <p>A Pod is one boat. A ReplicaSet is the rule &quot;keep three boats&quot;. A Deployment is the harbour master who can swap the boats for a new design without sinking all three at once.</p>
+            </div>
+        </section>
+        <section class="section" data-dfd-reveal id="pod">
+<h2>What a Pod actually shares</h2>
+<p>Containers in the same Pod share the Pod IP address and can reach each other on localhost. They do not share a filesystem unless you mount a volume into both. If the node dies, that Pod is gone. Kubernetes can start a new Pod elsewhere. It will not be the same Pod name.</p>
+<p>A bare Pod has no one to recreate it. Use a bare Pod for a short debug, not for the app you expect to stay up.</p>
+</section>
+<section class="section" data-dfd-reveal id="deploy">
+<h2>Deployments and ReplicaSets</h2>
+<p>A Deployment names a Pod template, a replica count, and a strategy. The Deployment controller creates a ReplicaSet. The ReplicaSet controller creates or deletes Pods until the count matches.</p>
+<p>A rolling update starts Pods from a new template before it removes the old ones, as far as <code>maxUnavailable</code> and <code>maxSurge</code> allow. <code>kubectl rollout status</code> and <code>kubectl rollout undo</code> talk to that history. The old ReplicaSet is how undo works.</p>
+<table class="comparison-table dfd-scroll">
+<thead>
+<tr>
+<th>Field</th>
+<th>Meaning</th>
+<th>If you ignore it</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>replicas</td>
+<td>How many Pods you want</td>
+<td>The default is one</td>
+</tr>
+<tr>
+<td>selector</td>
+<td>Which Pods this object owns</td>
+<td>A mismatch is rejected or strands Pods</td>
+</tr>
+<tr>
+<td>strategy</td>
+<td>How a new template replaces the old</td>
+<td>The default rolling update can still stall if the new Pods never become Ready</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section class="section" data-dfd-reveal id="probes-intro">
+<h2>A Pod that is running can still be useless</h2>
+<p>A container can be process-alive and still refuse traffic. Readiness probes are how a Service learns to skip that Pod. Liveness probes are how Kubernetes decides to restart a stuck container. Startup probes cover slow starts so liveness does not kill the process during boot. The observability lesson uses them while you debug.</p>
+</section>
+        <section class="section dfd-diagram" data-dfd-diagram data-dfd-reveal>
+            <h2>Who owns the Pods</h2>
+            <div data-dfd-diagram-panel="dep">
+<svg class="dfd-responsive" viewBox="0 0 640 148" role="img" aria-label="Deployment highlighted">
+<rect class="track-drift" x="16" y="36" width="188" height="72" rx="12" fill="#5b8def">
+</rect>
+<text x="110" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#ffffff">Deployment</text>
+<path d="M204 72 H224" stroke="#64748b" stroke-width="2" fill="none">
+</path>
+<rect x="224" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
+</rect>
+<text x="318" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">ReplicaSet</text>
+<path d="M412 72 H432" stroke="#64748b" stroke-width="2" fill="none">
+</path>
+<rect x="432" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
+</rect>
+<text x="526" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">Pods</text>
+</svg>
+<p>You edit the Deployment. You do not hand-edit the ReplicaSet it owns.</p>
+</div>
+<div data-dfd-diagram-panel="rs" hidden>
+<svg class="dfd-responsive" viewBox="0 0 640 148" role="img" aria-label="ReplicaSet highlighted">
+<rect x="16" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
+</rect>
+<text x="110" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">Deployment</text>
+<path d="M204 72 H224" stroke="#64748b" stroke-width="2" fill="none">
+</path>
+<rect class="track-drift" x="224" y="36" width="188" height="72" rx="12" fill="#5b8def">
+</rect>
+<text x="318" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#ffffff">ReplicaSet</text>
+<path d="M412 72 H432" stroke="#64748b" stroke-width="2" fill="none">
+</path>
+<rect x="432" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
+</rect>
+<text x="526" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">Pods</text>
+</svg>
+<p>The current ReplicaSet is the count and the template. The previous one stays so you can undo.</p>
+</div>
+<div data-dfd-diagram-panel="pods" hidden>
+<svg class="dfd-responsive" viewBox="0 0 640 148" role="img" aria-label="Pods highlighted">
+<rect x="16" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
+</rect>
+<text x="110" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">Deployment</text>
+<path d="M204 72 H224" stroke="#64748b" stroke-width="2" fill="none">
+</path>
+<rect x="224" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
+</rect>
+<text x="318" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">ReplicaSet</text>
+<path d="M412 72 H432" stroke="#64748b" stroke-width="2" fill="none">
+</path>
+<rect class="track-drift" x="432" y="36" width="188" height="72" rx="12" fill="#5b8def">
+</rect>
+<text x="526" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#ffffff">Pods</text>
+</svg>
+<p>Pods are replaceable. A new Pod gets a new name and a new IP.</p>
+</div>
+            <div class="dfd-diagram-controls">
+                <button type="button" data-dfd-diagram-step="dep" aria-pressed="true">Deployment</button>
+<button type="button" data-dfd-diagram-step="rs" aria-pressed="false">ReplicaSet</button>
+<button type="button" data-dfd-diagram-step="pods" aria-pressed="false">Pods</button>
+            </div>
+        </section>
+        <section class="section" id="lab" data-dfd-reveal>
+            <h2>Lab: three replicas of a tiny web server</h2>
+            <p>Apply this on the local cluster from the previous lesson. Then change the image tag and watch the rollout. Delete one Pod and watch it come back with a new name.</p>
+            <div class="code-block">
+<pre>
+<code>apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hello
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: hello
+  template:
+    metadata:
+      labels:
+        app: hello
+    spec:
+      containers:
+      - name: web
+        image: nginx:1.27
+        ports:
+        - containerPort: 80
+        readinessProbe:
+          httpGet:
+            path: /
+            port: 80</code>
+</pre>
+</div>
+            <p>
+<button type="button" data-dfd-complete>Mark lesson complete</button>
+</p>
+            <p data-dfd-complete-status>
+</p>
+        </section>
+        <section class="section" id="summary" data-dfd-reveal>
+            <h2>Concept summary</h2>
+            <ul class="summary-list">
+<li>Pods are mortal. Deployments replace them.</li>
+<li>A rolling update can stall when new Pods never become Ready.</li>
+<li>Do not edit the ReplicaSet that a Deployment owns.</li>
+</ul>
+        </section>
+        <section class="section" id="check" data-dfd-reveal>
+            <h2>Knowledge check</h2>
+            <section class="dfd-quiz" data-dfd-quiz data-explanation="The ReplicaSet creates a replacement. The name will differ.">
+<h3 data-dfd-prompt>You delete a Pod that belongs to a Deployment. What happens?</h3>
+<div data-dfd-choices>
+<button type="button" data-correct="false">The Deployment is deleted too</button>
+<button type="button" data-correct="true">A replacement Pod is created</button>
+<button type="button" data-correct="false">The replica count drops by one forever</button>
+</div>
+<p class="dfd-quiz-feedback" data-dfd-feedback hidden>
+</p>
+<p class="dfd-quiz-explain" data-dfd-explain hidden>
+</p>
+</section>
+<section class="dfd-quiz" data-dfd-quiz data-explanation="Services skip Pods that are not ready.">
+<h3 data-dfd-prompt>Why add a readiness probe?</h3>
+<div data-dfd-choices>
+<button type="button" data-correct="false">It encrypts the container image</button>
+<button type="button" data-correct="true">So traffic waits until the process can answer</button>
+<button type="button" data-correct="false">It replaces the need for a Deployment</button>
+</div>
+<p class="dfd-quiz-feedback" data-dfd-feedback hidden>
+</p>
+<p class="dfd-quiz-explain" data-dfd-explain hidden>
+</p>
+</section>
+<section class="dfd-quiz" data-dfd-quiz data-explanation="Change the Deployment template. It will roll the ReplicaSet.">
+<h3 data-dfd-prompt>What should you edit to change the container image of an app?</h3>
+<div data-dfd-choices>
+<button type="button" data-correct="false">The ReplicaSet the Deployment created</button>
+<button type="button" data-correct="true">The Deployment Pod template</button>
+<button type="button" data-correct="false">etcd, with a text editor</button>
+</div>
+<p class="dfd-quiz-feedback" data-dfd-feedback hidden>
+</p>
+<p class="dfd-quiz-explain" data-dfd-explain hidden>
+</p>
+</section>
+        </section>
+        <section class="section" data-dfd-reveal>
+            <h2>Official sources</h2>
+            <p>Checked against the linked documentation in October 2026. A later release can move a flag, a price, or a supported pair. Use the page for the version you installed.</p>
+            <ul class="source-list">
+<li>
+<a href="https://kubernetes.io/docs/concepts/workloads/pods/" target="_blank" rel="noopener noreferrer">Pod concept</a>
+</li>
+<li>
+<a href="https://kubernetes.io/docs/concepts/workloads/controllers/deployment/" target="_blank" rel="noopener noreferrer">Deployment concept</a>
+</li>
+<li>
+<a href="https://kubernetes.io/docs/concepts/configuration/liveness-readiness-startup-probes/" target="_blank" rel="noopener noreferrer">Container probes</a>
+</li>
+</ul>
+        </section>
+        <nav class="lesson-nav" aria-label="Lesson order">
+            <a class="secondary" href="local-setup.html">Previous: Local clusters</a>
+            <a href="services-networking.html">Next: Services, Ingress, and Gateway API</a>
+        </nav>
+    </div>
+
+    <script src="../js/code-copy.js">
+</script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2">
+</script>
+    <script src="../js/supabase-config.js">
+</script>
+    <script src="../js/supabase-auth.js">
+</script>
+    <script src="../js/paywall.js">
+</script>
+    <script src="../js/progress.js">
+</script>
+    <script src="../js/lesson-common.js">
+</script>
+    <script src="../js/quiz.js">
+</script>
+    <script src="../js/analytics-tracker.js">
+</script>
+
+</body>
+</html>

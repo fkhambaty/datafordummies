@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Meet Terraform and OpenTofu | Terraform and OpenTofu | Data For Dummies</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="../css/dfd-system.css">
+</head>
+<body class="dfd-safe" data-course-id="terraform" data-lesson-id="meet-terraform" data-lesson-label="Meet Terraform and OpenTofu" data-total-lessons="12">
+    <div class="container">
+        <nav class="nav" aria-label="Course">
+            <a href="hub.html">Course hub</a>
+            <a href="../index.html">Home</a>
+            <a href="#check">Knowledge check</a>
+        </nav>
+        <header class="lesson-hero" id="top">
+            <p class="track-kicker">Free · Lesson 1 of 12</p>
+            <h1>Meet Terraform and OpenTofu</h1>
+            <p>Terraform and OpenTofu both read HCL and both keep a state file. They are not one product with two names.</p>
+        </header>
+        <div class="dfd-lesson-progress" data-dfd-progress>
+            <p class="dfd-lesson-progress-label" data-dfd-progress-label>Sign in to save your place.</p>
+            <div class="dfd-lesson-progress-track" data-dfd-progress-bar role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-label="Course progress">
+                <div class="dfd-lesson-progress-fill" data-dfd-progress-fill>
+</div>
+            </div>
+        </div>
+        <section class="section" data-dfd-reveal>
+            <div class="eli5-box">
+                <h4>Picture it this way</h4>
+                <p>You write a shopping list for servers and databases. The tool goes to the shop and tries to make the shop match the list. Terraform is HashiCorp&#x27;s list-runner. OpenTofu is a separate list-runner that started from an older public copy of the same idea.</p>
+            </div>
+        </section>
+        <section class="section" data-dfd-reveal id="iac">
+<h2>Infrastructure as code</h2>
+<p>A Terraform configuration describes resources. <code>terraform plan</code> prints what would change. <code>terraform apply</code> asks the providers to make those changes and writes the result into a state file. The state file is how the next plan knows which real object belongs to which block.</p>
+<p>The tool does not invent your cloud account. A provider plugin talks to AWS, Azure, Google Cloud, or something else. No provider, no resources.</p>
+</section>
+<section class="section" data-dfd-reveal id="split">
+<h2>Two projects after 2023</h2>
+<p>HashiCorp changed the Terraform license to the Business Source License on 10 August 2023. OpenTofu is a Linux Foundation project under the Mozilla Public License 2.0. It was forked from the Terraform codebase that was still under that public license.</p>
+<p>The commands look alike because of that history. <code>terraform plan</code> and <code>tofu plan</code> are not a contract that every later feature exists in both, or that a HashiCorp cloud product will run the OpenTofu binary. The security lesson compares them without calling them equivalent.</p>
+<table class="comparison-table dfd-scroll">
+<thead>
+<tr>
+<th>Name</th>
+<th>Who publishes it</th>
+<th>Do not assume</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Terraform</td>
+<td>HashiCorp</td>
+<td>That OpenTofu has the same license</td>
+</tr>
+<tr>
+<td>OpenTofu</td>
+<td>The OpenTofu project, under the Linux Foundation</td>
+<td>That HCP Terraform runs it</td>
+</tr>
+<tr>
+<td>HCP Terraform</td>
+<td>HashiCorp&#x27;s hosted product, formerly Terraform Cloud</td>
+<td>That it is an OpenTofu control plane</td>
+</tr>
+</tbody>
+</table>
+</section>
+        <section class="section dfd-diagram" data-dfd-diagram data-dfd-reveal>
+            <h2>List, plan, reality</h2>
+            <div data-dfd-diagram-panel="cfg">
+<svg class="dfd-responsive" viewBox="0 0 640 148" role="img" aria-label="HCL highlighted">
+<rect class="track-drift" x="16" y="36" width="188" height="72" rx="12" fill="#a78bfa">
+</rect>
+<text x="110" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#ffffff">HCL</text>
+<path d="M204 72 H224" stroke="#64748b" stroke-width="2" fill="none">
+</path>
+<rect x="224" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
+</rect>
+<text x="318" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">Plan</text>
+<path d="M412 72 H432" stroke="#64748b" stroke-width="2" fill="none">
+</path>
+<rect x="432" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
+</rect>
+<text x="526" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">Cloud</text>
+</svg>
+<p>The configuration is the list. It is not the cloud.</p>
+</div>
+<div data-dfd-diagram-panel="plan" hidden>
+<svg class="dfd-responsive" viewBox="0 0 640 148" role="img" aria-label="Plan highlighted">
+<rect x="16" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
+</rect>
+<text x="110" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">HCL</text>
+<path d="M204 72 H224" stroke="#64748b" stroke-width="2" fill="none">
+</path>
+<rect class="track-drift" x="224" y="36" width="188" height="72" rx="12" fill="#a78bfa">
+</rect>
+<text x="318" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#ffffff">Plan</text>
+<path d="M412 72 H432" stroke="#64748b" stroke-width="2" fill="none">
+</path>
+<rect x="432" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
+</rect>
+<text x="526" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">Cloud</text>
+</svg>
+<p>The plan is a diff against state and the provider. Read it.</p>
+</div>
+<div data-dfd-diagram-panel="cloud" hidden>
+<svg class="dfd-responsive" viewBox="0 0 640 148" role="img" aria-label="Cloud highlighted">
+<rect x="16" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
+</rect>
+<text x="110" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">HCL</text>
+<path d="M204 72 H224" stroke="#64748b" stroke-width="2" fill="none">
+</path>
+<rect x="224" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
+</rect>
+<text x="318" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">Plan</text>
+<path d="M412 72 H432" stroke="#64748b" stroke-width="2" fill="none">
+</path>
+<rect class="track-drift" x="432" y="36" width="188" height="72" rx="12" fill="#a78bfa">
+</rect>
+<text x="526" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#ffffff">Cloud</text>
+</svg>
+<p>Apply asks the provider to change the cloud, then updates state.</p>
+</div>
+            <div class="dfd-diagram-controls">
+                <button type="button" data-dfd-diagram-step="cfg" aria-pressed="true">Config</button>
+<button type="button" data-dfd-diagram-step="plan" aria-pressed="false">Plan</button>
+<button type="button" data-dfd-diagram-step="cloud" aria-pressed="false">Cloud</button>
+            </div>
+        </section>
+        <section class="section" id="lab" data-dfd-reveal>
+            <h2>Lab: say which binary you mean</h2>
+            <p>You may not have either tool installed yet. Write the sentence anyway. The next lesson installs one on purpose.</p>
+            <div class="code-block">
+<pre>
+<code>I will install: terraform OR tofu (pick one for this week).
+I will not call the other one a drop-in replacement.
+HCP Terraform is a HashiCorp service. It is not OpenTofu.</code>
+</pre>
+</div>
+            <p>
+<button type="button" data-dfd-complete>Mark lesson complete</button>
+</p>
+            <p data-dfd-complete-status>
+</p>
+        </section>
+        <section class="section" id="summary" data-dfd-reveal>
+            <h2>Concept summary</h2>
+            <ul class="summary-list">
+<li>Plan shows a diff. Apply changes real resources and writes state.</li>
+<li>OpenTofu and Terraform share ancestry and not a license or a cloud product.</li>
+<li>HCP Terraform is HashiCorp&#x27;s hosted product.</li>
+</ul>
+        </section>
+        <section class="section" id="check" data-dfd-reveal>
+            <h2>Knowledge check</h2>
+            <section class="dfd-quiz" data-dfd-quiz data-explanation="It prints the diff. It does not by itself change the cloud.">
+<h3 data-dfd-prompt>What does a plan do?</h3>
+<div data-dfd-choices>
+<button type="button" data-correct="false">It destroys every resource</button>
+<button type="button" data-correct="true">It shows what apply would change</button>
+<button type="button" data-correct="false">It converts Terraform into OpenTofu</button>
+</div>
+<p class="dfd-quiz-feedback" data-dfd-feedback hidden>
+</p>
+<p class="dfd-quiz-explain" data-dfd-explain hidden>
+</p>
+</section>
+<section class="dfd-quiz" data-dfd-quiz data-explanation="They are related tools. They are not the same product.">
+<h3 data-dfd-prompt>Which statement is fair?</h3>
+<div data-dfd-choices>
+<button type="button" data-correct="false">OpenTofu is a license mode inside the terraform binary</button>
+<button type="button" data-correct="true">OpenTofu is a separate project with its own license</button>
+<button type="button" data-correct="false">HCP Terraform runs whichever binary you prefer with no extra work</button>
+</div>
+<p class="dfd-quiz-feedback" data-dfd-feedback hidden>
+</p>
+<p class="dfd-quiz-explain" data-dfd-explain hidden>
+</p>
+</section>
+<section class="dfd-quiz" data-dfd-quiz data-explanation="State maps blocks to real objects.">
+<h3 data-dfd-prompt>Why does the next plan need a state file?</h3>
+<div data-dfd-choices>
+<button type="button" data-correct="true">So the tool can match config to objects it already created</button>
+<button type="button" data-correct="false">State is only a log of comments</button>
+<button type="button" data-correct="false">Providers refuse to start without a public Git repo</button>
+</div>
+<p class="dfd-quiz-feedback" data-dfd-feedback hidden>
+</p>
+<p class="dfd-quiz-explain" data-dfd-explain hidden>
+</p>
+</section>
+        </section>
+        <section class="section" data-dfd-reveal>
+            <h2>Official sources</h2>
+            <p>Checked against the linked documentation in October 2026. A later release can move a flag, a price, or a supported pair. Use the page for the version you installed.</p>
+            <ul class="source-list">
+<li>
+<a href="https://developer.hashicorp.com/terraform/intro" target="_blank" rel="noopener noreferrer">Terraform introduction</a>
+</li>
+<li>
+<a href="https://opentofu.org/docs/intro/" target="_blank" rel="noopener noreferrer">OpenTofu introduction</a>
+</li>
+<li>
+<a href="https://www.hashicorp.com/en/license-faq" target="_blank" rel="noopener noreferrer">HashiCorp license change, August 2023</a>
+</li>
+</ul>
+        </section>
+        <nav class="lesson-nav" aria-label="Lesson order">
+            <a class="secondary" href="hub.html">Course hub</a>
+            <a href="setup.html">Next: Install and version managers</a>
+        </nav>
+    </div>
+
+    <script src="../js/code-copy.js">
+</script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2">
+</script>
+    <script src="../js/supabase-config.js">
+</script>
+    <script src="../js/supabase-auth.js">
+</script>
+    <script src="../js/paywall.js">
+</script>
+    <script src="../js/progress.js">
+</script>
+    <script src="../js/lesson-common.js">
+</script>
+    <script src="../js/quiz.js">
+</script>
+    <script src="../js/analytics-tracker.js">
+</script>
+
+</body>
+</html>

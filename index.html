@@ -251,6 +251,9 @@
                 <button type="button" onclick="enterCourse('metabase')">Metabase</button>
                 <button type="button" onclick="enterCourse('datascience')">Data Science</button>
                 <button type="button" onclick="enterCourse('llm')">LLMs</button>
+                <button type="button" onclick="enterCourse('kubernetes')">Kubernetes</button>
+                <button type="button" onclick="enterCourse('terraform')">Terraform</button>
+                <button type="button" onclick="enterCourse('dms')">AWS DMS</button>
             </div>
             <div class="home-trivia" id="heroTrivia" aria-live="polite">
                 <span class="ticker-icon" aria-hidden="true">💡</span>
@@ -379,6 +382,18 @@
                 <div class="ux-tool-icon" style="background:linear-gradient(135deg,#6d28d9,#7c3aed)"><i class="fas fa-brain"></i></div>
                 <span>LLMs</span>
             </div>
+            <div class="ux-tool" onclick="enterCourse('kubernetes')">
+                <div class="ux-tool-icon" style="background:linear-gradient(135deg,#326ce5,#1d4ed8)"><i class="fas fa-dharmachakra"></i></div>
+                <span>Kubernetes</span>
+            </div>
+            <div class="ux-tool" onclick="enterCourse('terraform')">
+                <div class="ux-tool-icon" style="background:linear-gradient(135deg,#7c3aed,#5b21b6)"><i class="fas fa-cubes"></i></div>
+                <span>Terraform</span>
+            </div>
+            <div class="ux-tool" onclick="enterCourse('dms')">
+                <div class="ux-tool-icon" style="background:linear-gradient(135deg,#ea580c,#c2410c)"><i class="fas fa-truck"></i></div>
+                <span>AWS DMS</span>
+            </div>
         </div>
     </div>
 
@@ -488,10 +503,10 @@
                     <a href="redshift_course/hub.html" onclick="enterCourse('redshift'); return false;">AWS Redshift</a>
                     <a href="snowflake_course/hub.html" onclick="enterCourse('snowflake'); return false;">Snowflake</a>
                     <a href="metabase_course/hub.html" onclick="enterCourse('metabase'); return false;">Metabase BI</a>
-                    <a href="kubernetes_course/index.html">Kubernetes</a>
-                    <a href="terraform_course/index.html">Terraform</a>
+                    <a href="kubernetes_course/hub.html" onclick="enterCourse('kubernetes'); return false;">Kubernetes</a>
+                    <a href="terraform_course/hub.html" onclick="enterCourse('terraform'); return false;">Terraform</a>
                     <a href="llm_course/index.html">LLMs</a>
-                    <a href="dms_course/index.html">AWS DMS</a>
+                    <a href="dms_course/hub.html" onclick="enterCourse('dms'); return false;">AWS DMS</a>
                 </div>
                 <div class="footer-column">
                     <h4>Connect</h4>

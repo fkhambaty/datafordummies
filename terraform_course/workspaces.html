@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Workspaces and environments | Terraform and OpenTofu | Data For Dummies</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="../css/dfd-system.css">
+</head>
+<body class="dfd-safe" data-access="pro" data-course-id="terraform" data-lesson-id="workspaces" data-lesson-label="Workspaces and environments" data-total-lessons="12">
+    <div class="container">
+        <nav class="nav" aria-label="Course">
+            <a href="hub.html">Course hub</a>
+            <a href="../index.html">Home</a>
+            <a href="#check">Knowledge check</a>
+        </nav>
+        <header class="lesson-hero" id="top">
+            <p class="track-kicker">Pro · Lesson 7 of 12</p>
+            <h1>Workspaces and environments</h1>
+            <p>A CLI workspace is a separate state name inside one backend. An HCP Terraform workspace is a remote run environment. They share a word and not a meaning.</p>
+        </header>
+        <div class="dfd-lesson-progress" data-dfd-progress>
+            <p class="dfd-lesson-progress-label" data-dfd-progress-label>Sign in to save your place.</p>
+            <div class="dfd-lesson-progress-track" data-dfd-progress-bar role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-label="Course progress">
+                <div class="dfd-lesson-progress-fill" data-dfd-progress-fill>
+</div>
+            </div>
+        </div>
+        <section class="section" data-dfd-reveal>
+            <div class="eli5-box">
+                <h4>Picture it this way</h4>
+                <p>CLI workspaces are extra notebooks in the same desk, all using the same shopping list. An HCP workspace is a different desk, with its own notebook, its own keys, and its own clerk. Calling both a workspace is how people apply the wrong notebook.</p>
+            </div>
+        </section>
+        <section class="section" data-dfd-reveal id="cli">
+<h2>CLI workspaces</h2>
+<p>
+<code>terraform workspace new dev</code> creates a named state. <code>terraform workspace select dev</code> points the next plan at it. The configuration is the same. <code>terraform.workspace</code> returns the name so a config can branch. The default name is <code>default</code>.</p>
+<p>This is a weak way to separate production from development. One directory, one set of files, and a selected name. The mistake is selecting the wrong name and applying. Many teams use separate directories or separate backend keys instead, so production is a different folder you have to mean to enter.</p>
+</section>
+<section class="section" data-dfd-reveal id="hcp">
+<h2>HCP Terraform workspaces</h2>
+<p>In HCP Terraform, a workspace is the remote object that holds variables, state, a run history, and permissions. It is not the CLI command <code>terraform workspace</code>. You can connect a CLI to one HCP workspace. Creating a second CLI workspace inside that remote setup is a different feature and easy to confuse.</p>
+<p>OpenTofu does not gain HCP workspaces by using similar CLI flags. HCP Terraform runs HashiCorp&#x27;s product. If a team standardizes on <code>tofu</code>, they need a runner that executes that binary. Pointing an HCP workspace at the code does not switch the binary for you.</p>
+<table class="comparison-table dfd-scroll">
+<thead>
+<tr>
+<th>Word</th>
+<th>What it is</th>
+<th>What it is not</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>terraform workspace</td>
+<td>A state namespace in the backend</td>
+<td>A separate permission boundary</td>
+</tr>
+<tr>
+<td>HCP Terraform workspace</td>
+<td>A remote run, with variables and state</td>
+<td>The OpenTofu control plane</td>
+</tr>
+<tr>
+<td>A second directory</td>
+<td>A separate root module</td>
+<td>Automatically a different cloud account</td>
+</tr>
+</tbody>
+</table>
+</section>
+        <section class="section dfd-diagram" data-dfd-diagram data-dfd-reveal>
+            <h2>Same word, two objects</h2>
+            <div data-dfd-diagram-panel="cli">
+<svg class="dfd-responsive" viewBox="0 0 640 148" role="img" aria-label="CLI workspace highlighted">
+<rect class="track-drift" x="16" y="36" width="188" height="72" rx="12" fill="#a78bfa">
+</rect>
+<text x="110" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#ffffff">CLI workspace</text>
+<path d="M204 72 H224" stroke="#64748b" stroke-width="2" fill="none">
+</path>
+<rect x="224" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
+</rect>
+<text x="318" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">One config</text>
+<path d="M412 72 H432" stroke="#64748b" stroke-width="2" fill="none">
+</path>
+<rect x="432" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
+</rect>
+<text x="526" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">Many states</text>
+</svg>
+<p>One configuration, several state names. You select one.</p>
+</div>
+<div data-dfd-diagram-panel="hcp" hidden>
+<svg class="dfd-responsive" viewBox="0 0 640 148" role="img" aria-label="HCP workspace highlighted">
+<rect x="16" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
+</rect>
+<text x="110" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">HCP workspace</text>
+<path d="M204 72 H224" stroke="#64748b" stroke-width="2" fill="none">
+</path>
+<rect class="track-drift" x="224" y="36" width="188" height="72" rx="12" fill="#a78bfa">
+</rect>
+<text x="318" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#ffffff">Variables</text>
+<path d="M412 72 H432" stroke="#64748b" stroke-width="2" fill="none">
+</path>
+<rect x="432" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
+</rect>
+<text x="526" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">Remote state</text>
+</svg>
+<p>An HCP workspace is a remote environment with its own settings.</p>
+</div>
+<div data-dfd-diagram-panel="dir" hidden>
+<svg class="dfd-responsive" viewBox="0 0 640 148" role="img" aria-label="Separate folders highlighted">
+<rect x="16" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
+</rect>
+<text x="110" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">dev folder</text>
+<path d="M204 72 H224" stroke="#64748b" stroke-width="2" fill="none">
+</path>
+<rect x="224" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
+</rect>
+<text x="318" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">prod folder</text>
+<path d="M412 72 H432" stroke="#64748b" stroke-width="2" fill="none">
+</path>
+<rect class="track-drift" x="432" y="36" width="188" height="72" rx="12" fill="#a78bfa">
+</rect>
+<text x="526" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#ffffff">Review</text>
+</svg>
+<p>Separate root modules make the production apply a deliberate directory change.</p>
+</div>
+            <div class="dfd-diagram-controls">
+                <button type="button" data-dfd-diagram-step="cli" aria-pressed="true">CLI</button>
+<button type="button" data-dfd-diagram-step="hcp" aria-pressed="false">HCP</button>
+<button type="button" data-dfd-diagram-step="dir" aria-pressed="false">Folders</button>
+            </div>
+        </section>
+        <section class="section" id="lab" data-dfd-reveal>
+            <h2>Lab: list CLI workspaces without creating a second cloud</h2>
+            <p>From a lab directory that already ran terraform init. Do not select a workspace you do not understand in a directory that has real cloud resources.</p>
+            <div class="code-block">
+<pre>
+<code>terraform workspace list
+# default is the one you already have
+# terraform workspace new lab-only
+# terraform workspace select default</code>
+</pre>
+</div>
+            <p>
+<button type="button" data-dfd-complete>Mark lesson complete</button>
+</p>
+            <p data-dfd-complete-status>
+</p>
+        </section>
+        <section class="section" id="summary" data-dfd-reveal>
+            <h2>Concept summary</h2>
+            <ul class="summary-list">
+<li>CLI workspaces are state names. The config stays the same.</li>
+<li>HCP Terraform workspaces are remote run environments.</li>
+<li>Separate directories are often clearer than a workspace switch for production.</li>
+</ul>
+        </section>
+        <section class="section" id="check" data-dfd-reveal>
+            <h2>Knowledge check</h2>
+            <section class="dfd-quiz" data-dfd-quiz data-explanation="Which state name the next command uses.">
+<h3 data-dfd-prompt>What does terraform workspace select change?</h3>
+<div data-dfd-choices>
+<button type="button" data-correct="false">The HCP Terraform organization</button>
+<button type="button" data-correct="true">The state namespace for this backend</button>
+<button type="button" data-correct="false">The license of the binary</button>
+</div>
+<p class="dfd-quiz-feedback" data-dfd-feedback hidden>
+</p>
+<p class="dfd-quiz-explain" data-dfd-explain hidden>
+</p>
+</section>
+<section class="dfd-quiz" data-dfd-quiz data-explanation="No. The product object and the CLI command differ.">
+<h3 data-dfd-prompt>Is an HCP Terraform workspace the same as terraform workspace?</h3>
+<div data-dfd-choices>
+<button type="button" data-correct="false">Yes. The names match, so the objects match</button>
+<button type="button" data-correct="true">No. One is a remote environment and one is a state name</button>
+<button type="button" data-correct="false">Only when you use OpenTofu</button>
+</div>
+<p class="dfd-quiz-feedback" data-dfd-feedback hidden>
+</p>
+<p class="dfd-quiz-explain" data-dfd-explain hidden>
+</p>
+</section>
+<section class="dfd-quiz" data-dfd-quiz data-explanation="The same files apply to whichever state is selected.">
+<h3 data-dfd-prompt>Why do many teams avoid CLI workspaces for prod versus dev?</h3>
+<div data-dfd-choices>
+<button type="button" data-correct="true">A wrong selection applies the same config to the wrong state</button>
+<button type="button" data-correct="false">CLI workspaces cannot store state</button>
+<button type="button" data-correct="false">HCP Terraform requires CLI workspaces</button>
+</div>
+<p class="dfd-quiz-feedback" data-dfd-feedback hidden>
+</p>
+<p class="dfd-quiz-explain" data-dfd-explain hidden>
+</p>
+</section>
+        </section>
+        <section class="section" data-dfd-reveal>
+            <h2>Official sources</h2>
+            <p>Checked against the linked documentation in October 2026. A later release can move a flag, a price, or a supported pair. Use the page for the version you installed.</p>
+            <ul class="source-list">
+<li>
+<a href="https://developer.hashicorp.com/terraform/language/state/workspaces" target="_blank" rel="noopener noreferrer">CLI workspaces</a>
+</li>
+<li>
+<a href="https://developer.hashicorp.com/terraform/cloud-docs/workspaces" target="_blank" rel="noopener noreferrer">HCP Terraform workspaces</a>
+</li>
+</ul>
+        </section>
+        <nav class="lesson-nav" aria-label="Lesson order">
+            <a class="secondary" href="modules.html">Previous: Modules</a>
+            <a href="lifecycle-blocks.html">Next: Lifecycle, import, moved, and removed</a>
+        </nav>
+    </div>
+
+    <script src="../js/code-copy.js">
+</script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2">
+</script>
+    <script src="../js/supabase-config.js">
+</script>
+    <script src="../js/supabase-auth.js">
+</script>
+    <script src="../js/paywall.js">
+</script>
+    <script src="../js/progress.js">
+</script>
+    <script src="../js/lesson-common.js">
+</script>
+    <script src="../js/quiz.js">
+</script>
+    <script src="../js/analytics-tracker.js">
+</script>
+
+</body>
+</html>

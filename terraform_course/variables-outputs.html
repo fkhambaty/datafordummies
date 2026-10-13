@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Variables, outputs, and locals | Terraform and OpenTofu | Data For Dummies</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="../css/dfd-system.css">
+</head>
+<body class="dfd-safe" data-access="pro" data-course-id="terraform" data-lesson-id="variables-outputs" data-lesson-label="Variables, outputs, and locals" data-total-lessons="12">
+    <div class="container">
+        <nav class="nav" aria-label="Course">
+            <a href="hub.html">Course hub</a>
+            <a href="../index.html">Home</a>
+            <a href="#check">Knowledge check</a>
+        </nav>
+        <header class="lesson-hero" id="top">
+            <p class="track-kicker">Pro · Lesson 4 of 12</p>
+            <h1>Variables, outputs, and locals</h1>
+            <p>Variables are inputs. Outputs are results. Locals are names you reuse inside one module. None of them belong in state as a hiding place for secrets you then print.</p>
+        </header>
+        <div class="dfd-lesson-progress" data-dfd-progress>
+            <p class="dfd-lesson-progress-label" data-dfd-progress-label>Sign in to save your place.</p>
+            <div class="dfd-lesson-progress-track" data-dfd-progress-bar role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-label="Course progress">
+                <div class="dfd-lesson-progress-fill" data-dfd-progress-fill>
+</div>
+            </div>
+        </div>
+        <section class="section" data-dfd-reveal>
+            <div class="eli5-box">
+                <h4>Picture it this way</h4>
+                <p>A variable is the blank on the form. A local is a nickname you use while filling the form. An output is the receipt you hand to the next module.</p>
+            </div>
+        </section>
+        <section class="section" data-dfd-reveal id="var">
+<h2>Variables</h2>
+<p>Declare a type. Add a description. Use <code>validation</code> when a bad string should fail before any cloud call. Set values with a <code>terraform.tfvars</code> file, <code>TF_VAR_</code> environment variables, or <code>-var</code>. A tfvars file with real secrets should not be committed. A tfvars.example file with fake values can be.</p>
+<p>Sensitive variables are still stored in state if a resource uses them. The sensitive flag hides them in the plan output. It does not encrypt the state file.</p>
+</section>
+<section class="section" data-dfd-reveal id="out">
+<h2>Outputs and locals</h2>
+<p>Outputs are the supported way for a root module, or a child module, to hand a value to someone else. Mark an output sensitive when it contains a password so the CLI redacts it. The value is still in state.</p>
+<p>Locals compute a value once in the module. They are not inputs. Another module cannot set them. If a teammate needs to change it per environment, it is a variable.</p>
+<table class="comparison-table dfd-scroll">
+<thead>
+<tr>
+<th>Name</th>
+<th>Who sets it</th>
+<th>Shows up in plan</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>variable</td>
+<td>The caller</td>
+<td>As an input, redacted if sensitive</td>
+</tr>
+<tr>
+<td>local</td>
+<td>This module</td>
+<td>Only as part of a resource change</td>
+</tr>
+<tr>
+<td>output</td>
+<td>This module publishes it</td>
+<td>Yes, redacted if sensitive</td>
+</tr>
+</tbody>
+</table>
+</section>
+        <section class="section dfd-diagram" data-dfd-diagram data-dfd-reveal>
+            <h2>Input, nickname, receipt</h2>
+            <div data-dfd-diagram-panel="var">
+<svg class="dfd-responsive" viewBox="0 0 640 148" role="img" aria-label="Variable highlighted">
+<rect class="track-drift" x="16" y="36" width="188" height="72" rx="12" fill="#a78bfa">
+</rect>
+<text x="110" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#ffffff">Variable</text>
+<path d="M204 72 H224" stroke="#64748b" stroke-width="2" fill="none">
+</path>
+<rect x="224" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
+</rect>
+<text x="318" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">Local</text>
+<path d="M412 72 H432" stroke="#64748b" stroke-width="2" fill="none">
+</path>
+<rect x="432" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
+</rect>
+<text x="526" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">Output</text>
+</svg>
+<p>The caller sets variables. Validation can reject them early.</p>
+</div>
+<div data-dfd-diagram-panel="local" hidden>
+<svg class="dfd-responsive" viewBox="0 0 640 148" role="img" aria-label="Local highlighted">
+<rect x="16" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
+</rect>
+<text x="110" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">Variable</text>
+<path d="M204 72 H224" stroke="#64748b" stroke-width="2" fill="none">
+</path>
+<rect class="track-drift" x="224" y="36" width="188" height="72" rx="12" fill="#a78bfa">
+</rect>
+<text x="318" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#ffffff">Local</text>
+<path d="M412 72 H432" stroke="#64748b" stroke-width="2" fill="none">
+</path>
+<rect x="432" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
+</rect>
+<text x="526" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">Output</text>
+</svg>
+<p>Locals are private nicknames. Callers cannot set them.</p>
+</div>
+<div data-dfd-diagram-panel="out" hidden>
+<svg class="dfd-responsive" viewBox="0 0 640 148" role="img" aria-label="Output highlighted">
+<rect x="16" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
+</rect>
+<text x="110" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">Variable</text>
+<path d="M204 72 H224" stroke="#64748b" stroke-width="2" fill="none">
+</path>
+<rect x="224" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
+</rect>
+<text x="318" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">Local</text>
+<path d="M412 72 H432" stroke="#64748b" stroke-width="2" fill="none">
+</path>
+<rect class="track-drift" x="432" y="36" width="188" height="72" rx="12" fill="#a78bfa">
+</rect>
+<text x="526" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#ffffff">Output</text>
+</svg>
+<p>Outputs are the values you meant to publish.</p>
+</div>
+            <div class="dfd-diagram-controls">
+                <button type="button" data-dfd-diagram-step="var" aria-pressed="true">Variable</button>
+<button type="button" data-dfd-diagram-step="local" aria-pressed="false">Local</button>
+<button type="button" data-dfd-diagram-step="out" aria-pressed="false">Output</button>
+            </div>
+        </section>
+        <section class="section" id="lab" data-dfd-reveal>
+            <h2>Lab: reject a bad environment name</h2>
+            <p>Validation runs during plan. Use a value that fails, read the error, then use dev.</p>
+            <div class="code-block">
+<pre>
+<code>variable &quot;environment&quot; {
+  type = string
+  validation {
+    condition     = contains([&quot;dev&quot;, &quot;test&quot;], var.environment)
+    error_message = &quot;This lab allows dev or test.&quot;
+  }
+}
+
+locals {
+  name_prefix = &quot;dfd-${var.environment}&quot;
+}
+
+output &quot;name_prefix&quot; {
+  value = local.name_prefix
+}</code>
+</pre>
+</div>
+            <p>
+<button type="button" data-dfd-complete>Mark lesson complete</button>
+</p>
+            <p data-dfd-complete-status>
+</p>
+        </section>
+        <section class="section" id="summary" data-dfd-reveal>
+            <h2>Concept summary</h2>
+            <ul class="summary-list">
+<li>Variables are the inputs. Locals are internal. Outputs are published.</li>
+<li>sensitive hides CLI output. It does not encrypt state.</li>
+<li>validation is for rules you can write without calling the cloud.</li>
+</ul>
+        </section>
+        <section class="section" id="check" data-dfd-reveal>
+            <h2>Knowledge check</h2>
+            <section class="dfd-quiz" data-dfd-quiz data-explanation="State stores the value the provider used.">
+<h3 data-dfd-prompt>A variable is marked sensitive and used by a resource. Where does the value still go?</h3>
+<div data-dfd-choices>
+<button type="button" data-correct="false">Only in the plan text</button>
+<button type="button" data-correct="true">Into state</button>
+<button type="button" data-correct="false">It is discarded after apply</button>
+</div>
+<p class="dfd-quiz-feedback" data-dfd-feedback hidden>
+</p>
+<p class="dfd-quiz-explain" data-dfd-explain hidden>
+</p>
+</section>
+<section class="dfd-quiz" data-dfd-quiz data-explanation="When a caller must set it.">
+<h3 data-dfd-prompt>When should a value be a variable instead of a local?</h3>
+<div data-dfd-choices>
+<button type="button" data-correct="true">When another environment must change it</button>
+<button type="button" data-correct="false">When you want a nickname inside one module</button>
+<button type="button" data-correct="false">When you want to hide it from state</button>
+</div>
+<p class="dfd-quiz-feedback" data-dfd-feedback hidden>
+</p>
+<p class="dfd-quiz-explain" data-dfd-explain hidden>
+</p>
+</section>
+<section class="dfd-quiz" data-dfd-quiz data-explanation="The condition you wrote, before apply.">
+<h3 data-dfd-prompt>What does a validation block check?</h3>
+<div data-dfd-choices>
+<button type="button" data-correct="false">That the cloud account exists</button>
+<button type="button" data-correct="true">That the value meets the condition</button>
+<button type="button" data-correct="false">That the state lock is free</button>
+</div>
+<p class="dfd-quiz-feedback" data-dfd-feedback hidden>
+</p>
+<p class="dfd-quiz-explain" data-dfd-explain hidden>
+</p>
+</section>
+        </section>
+        <section class="section" data-dfd-reveal>
+            <h2>Official sources</h2>
+            <p>Checked against the linked documentation in October 2026. A later release can move a flag, a price, or a supported pair. Use the page for the version you installed.</p>
+            <ul class="source-list">
+<li>
+<a href="https://developer.hashicorp.com/terraform/language/values/variables" target="_blank" rel="noopener noreferrer">Input variables</a>
+</li>
+<li>
+<a href="https://developer.hashicorp.com/terraform/language/values/outputs" target="_blank" rel="noopener noreferrer">Outputs</a>
+</li>
+<li>
+<a href="https://developer.hashicorp.com/terraform/language/values/locals" target="_blank" rel="noopener noreferrer">Locals</a>
+</li>
+</ul>
+        </section>
+        <nav class="lesson-nav" aria-label="Lesson order">
+            <a class="secondary" href="hcl-resources.html">Previous: HCL, providers, resources, and data</a>
+            <a href="state-backends.html">Next: State, backends, and locking</a>
+        </nav>
+    </div>
+
+    <script src="../js/code-copy.js">
+</script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2">
+</script>
+    <script src="../js/supabase-config.js">
+</script>
+    <script src="../js/supabase-auth.js">
+</script>
+    <script src="../js/paywall.js">
+</script>
+    <script src="../js/progress.js">
+</script>
+    <script src="../js/lesson-common.js">
+</script>
+    <script src="../js/quiz.js">
+</script>
+    <script src="../js/analytics-tracker.js">
+</script>
+
+</body>
+</html>

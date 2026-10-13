@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Helm and Kustomize | Kubernetes | Data For Dummies</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="../css/dfd-system.css">
+</head>
+<body class="dfd-safe" data-access="pro" data-course-id="kubernetes" data-lesson-id="helm-kustomize" data-lesson-label="Helm and Kustomize" data-total-lessons="12">
+    <div class="container">
+        <nav class="nav" aria-label="Course">
+            <a href="hub.html">Course hub</a>
+            <a href="../index.html">Home</a>
+            <a href="#check">Knowledge check</a>
+        </nav>
+        <header class="lesson-hero" id="top">
+            <p class="track-kicker">Pro · Lesson 10 of 12</p>
+            <h1>Helm and Kustomize</h1>
+            <p>Helm packages charts. Kustomize patches plain manifests. kubectl includes a Kustomize build. That copy can be older than the standalone kustomize binary.</p>
+        </header>
+        <div class="dfd-lesson-progress" data-dfd-progress>
+            <p class="dfd-lesson-progress-label" data-dfd-progress-label>Sign in to save your place.</p>
+            <div class="dfd-lesson-progress-track" data-dfd-progress-bar role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-label="Course progress">
+                <div class="dfd-lesson-progress-fill" data-dfd-progress-fill>
+</div>
+            </div>
+        </div>
+        <section class="section" data-dfd-reveal>
+            <div class="eli5-box">
+                <h4>Picture it this way</h4>
+                <p>Helm is a boxed kit with a parts list and a few knobs. Kustomize is a stack of transparent sheets you lay over the same drawing: one sheet for the lab, one sheet for production.</p>
+            </div>
+        </section>
+        <section class="section" data-dfd-reveal id="helm">
+<h2>Helm 3</h2>
+<p>Helm 3 has no Tiller. A release is a chart plus values, stored as Secrets or another driver in the cluster. <code>helm install</code>, <code>helm upgrade</code>, and <code>helm uninstall</code> are the everyday verbs. <code>helm template</code> renders without installing, which is the right first step when you do not trust a chart.</p>
+<p>A chart you did not read can create ClusterRoles, LoadBalancers, and CRDs. Read <code>helm show values</code> and the templates before you point it at a shared cluster. Pin the chart version. A floating tag will change under you.</p>
+</section>
+<section class="section" data-dfd-reveal id="kust">
+<h2>Kustomize overlays</h2>
+<p>A kustomization lists resources and patches. Overlays for dev and prod change names, replica counts, and image tags without copying the whole Deployment. <code>kubectl apply -k</code> builds with the Kustomize library compiled into that kubectl.</p>
+<p>The standalone <code>kustomize</code> release can be newer than the one inside kubectl. If a feature works in one and not the other, that gap is the reason. <code>kustomize version</code> is the standalone binary. Do not assume <code>kubectl version</code> prints the same Kustomize version on every release.</p>
+<table class="comparison-table dfd-scroll">
+<thead>
+<tr>
+<th>Tool</th>
+<th>You commit</th>
+<th>It is weak at</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Helm</td>
+<td>A chart version and a values file</td>
+<td>Understanding a chart you did not read</td>
+</tr>
+<tr>
+<td>Kustomize</td>
+<td>Base manifests and small patches</td>
+<td>Packaging someone else&#x27;s app with dependencies</td>
+</tr>
+<tr>
+<td>Plain YAML</td>
+<td>Exactly what you apply</td>
+<td>Repeating the same edit across ten environments</td>
+</tr>
+</tbody>
+</table>
+</section>
+        <section class="section dfd-diagram" data-dfd-diagram data-dfd-reveal>
+            <h2>Same app, two packagings</h2>
+            <div data-dfd-diagram-panel="chart">
+<svg class="dfd-responsive" viewBox="0 0 640 148" role="img" aria-label="Helm chart highlighted">
+<rect class="track-drift" x="16" y="36" width="188" height="72" rx="12" fill="#5b8def">
+</rect>
+<text x="110" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#ffffff">Chart</text>
+<path d="M204 72 H224" stroke="#64748b" stroke-width="2" fill="none">
+</path>
+<rect x="224" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
+</rect>
+<text x="318" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">Values</text>
+<path d="M412 72 H432" stroke="#64748b" stroke-width="2" fill="none">
+</path>
+<rect x="432" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
+</rect>
+<text x="526" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">Release</text>
+</svg>
+<p>The chart is the template. Values fill it in. The release is what the cluster remembers.</p>
+</div>
+<div data-dfd-diagram-panel="base" hidden>
+<svg class="dfd-responsive" viewBox="0 0 640 148" role="img" aria-label="Kustomize base highlighted">
+<rect x="16" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
+</rect>
+<text x="110" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">Base</text>
+<path d="M204 72 H224" stroke="#64748b" stroke-width="2" fill="none">
+</path>
+<rect class="track-drift" x="224" y="36" width="188" height="72" rx="12" fill="#5b8def">
+</rect>
+<text x="318" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#ffffff">Overlay</text>
+<path d="M412 72 H432" stroke="#64748b" stroke-width="2" fill="none">
+</path>
+<rect x="432" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
+</rect>
+<text x="526" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">Apply</text>
+</svg>
+<p>The base is shared YAML. You do not edit it for one environment.</p>
+</div>
+<div data-dfd-diagram-panel="overlay" hidden>
+<svg class="dfd-responsive" viewBox="0 0 640 148" role="img" aria-label="Overlay highlighted">
+<rect x="16" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
+</rect>
+<text x="110" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">Base</text>
+<path d="M204 72 H224" stroke="#64748b" stroke-width="2" fill="none">
+</path>
+<rect x="224" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
+</rect>
+<text x="318" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">Overlay</text>
+<path d="M412 72 H432" stroke="#64748b" stroke-width="2" fill="none">
+</path>
+<rect class="track-drift" x="432" y="36" width="188" height="72" rx="12" fill="#5b8def">
+</rect>
+<text x="526" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#ffffff">Apply</text>
+</svg>
+<p>The overlay patches names and counts, then kubectl apply -k sends the result.</p>
+</div>
+            <div class="dfd-diagram-controls">
+                <button type="button" data-dfd-diagram-step="chart" aria-pressed="true">Chart</button>
+<button type="button" data-dfd-diagram-step="base" aria-pressed="false">Base</button>
+<button type="button" data-dfd-diagram-step="overlay" aria-pressed="false">Overlay</button>
+            </div>
+        </section>
+        <section class="section" id="lab" data-dfd-reveal>
+            <h2>Lab: render a Kustomize overlay without a cluster change</h2>
+            <p>Build the YAML and read it. Apply only if the context is still your lab cluster.</p>
+            <div class="code-block">
+<pre>
+<code>mkdir -p lab/base lab/overlays/dev
+cat &gt; lab/base/deploy.yaml &lt;&lt;&#x27;EOF&#x27;
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hello
+spec:
+  replicas: 1
+  selector:
+    matchLabels: {app: hello}
+  template:
+    metadata:
+      labels: {app: hello}
+    spec:
+      containers:
+      - name: web
+        image: nginx:1.27
+EOF
+cat &gt; lab/base/kustomization.yaml &lt;&lt;&#x27;EOF&#x27;
+resources: [deploy.yaml]
+EOF
+kubectl kustomize lab/base</code>
+</pre>
+</div>
+            <p>
+<button type="button" data-dfd-complete>Mark lesson complete</button>
+</p>
+            <p data-dfd-complete-status>
+</p>
+        </section>
+        <section class="section" id="summary" data-dfd-reveal>
+            <h2>Concept summary</h2>
+            <ul class="summary-list">
+<li>Helm 3 installs charts. There is no Tiller to secure.</li>
+<li>Kustomize patches manifests. kubectl&#x27;s copy and the standalone binary can differ.</li>
+<li>Render first. Apply second.</li>
+</ul>
+        </section>
+        <section class="section" id="check" data-dfd-reveal>
+            <h2>Knowledge check</h2>
+            <section class="dfd-quiz" data-dfd-quiz data-explanation="Helm 3 does not use it.">
+<h3 data-dfd-prompt>What happened to Tiller?</h3>
+<div data-dfd-choices>
+<button type="button" data-correct="false">It is still required on every cluster</button>
+<button type="button" data-correct="true">Helm 3 removed it</button>
+<button type="button" data-correct="false">It is the Gateway API controller</button>
+</div>
+<p class="dfd-quiz-feedback" data-dfd-feedback hidden>
+</p>
+<p class="dfd-quiz-explain" data-dfd-explain hidden>
+</p>
+</section>
+<section class="dfd-quiz" data-dfd-quiz data-explanation="The versions can differ.">
+<h3 data-dfd-prompt>Why might `kubectl apply -k` reject a feature that standalone kustomize accepts?</h3>
+<div data-dfd-choices>
+<button type="button" data-correct="false">They are always the same release</button>
+<button type="button" data-correct="true">kubectl ships its own Kustomize library</button>
+<button type="button" data-correct="false">Kustomize cannot build Deployments</button>
+</div>
+<p class="dfd-quiz-feedback" data-dfd-feedback hidden>
+</p>
+<p class="dfd-quiz-explain" data-dfd-explain hidden>
+</p>
+</section>
+<section class="dfd-quiz" data-dfd-quiz data-explanation="Read the values and the templates.">
+<h3 data-dfd-prompt>What should you do before installing a public chart into a shared cluster?</h3>
+<div data-dfd-choices>
+<button type="button" data-correct="false">helm install with the default values immediately</button>
+<button type="button" data-correct="true">Read helm show values and helm template</button>
+<button type="button" data-correct="false">Commit the chart&#x27;s images into a ConfigMap</button>
+</div>
+<p class="dfd-quiz-feedback" data-dfd-feedback hidden>
+</p>
+<p class="dfd-quiz-explain" data-dfd-explain hidden>
+</p>
+</section>
+        </section>
+        <section class="section" data-dfd-reveal>
+            <h2>Official sources</h2>
+            <p>Checked against the linked documentation in October 2026. A later release can move a flag, a price, or a supported pair. Use the page for the version you installed.</p>
+            <ul class="source-list">
+<li>
+<a href="https://helm.sh/docs/" target="_blank" rel="noopener noreferrer">Helm docs</a>
+</li>
+<li>
+<a href="https://kubectl.docs.kubernetes.io/references/kustomize/" target="_blank" rel="noopener noreferrer">Kustomize</a>
+</li>
+<li>
+<a href="https://kubernetes.io/docs/tasks/manage-kubernetes-objects/kustomization/" target="_blank" rel="noopener noreferrer">kubectl apply -k</a>
+</li>
+</ul>
+        </section>
+        <nav class="lesson-nav" aria-label="Lesson order">
+            <a class="secondary" href="security.html">Previous: Security: RBAC, NetworkPolicy, Pod Security</a>
+            <a href="production-clouds.html">Next: Production on EKS, GKE, and AKS</a>
+        </nav>
+    </div>
+
+    <script src="../js/code-copy.js">
+</script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2">
+</script>
+    <script src="../js/supabase-config.js">
+</script>
+    <script src="../js/supabase-auth.js">
+</script>
+    <script src="../js/paywall.js">
+</script>
+    <script src="../js/progress.js">
+</script>
+    <script src="../js/lesson-common.js">
+</script>
+    <script src="../js/quiz.js">
+</script>
+    <script src="../js/analytics-tracker.js">
+</script>
+
+</body>
+</html>

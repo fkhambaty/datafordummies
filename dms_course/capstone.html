@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Capstone | AWS DMS | Data For Dummies</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="../css/dfd-system.css">
+</head>
+<body class="dfd-safe" data-access="pro" data-course-id="dms" data-lesson-id="capstone" data-lesson-label="Capstone" data-total-lessons="11">
+    <div class="container">
+        <nav class="nav" aria-label="Course">
+            <a href="hub.html">Course hub</a>
+            <a href="../index.html">Home</a>
+            <a href="#check">Knowledge check</a>
+        </nav>
+        <header class="lesson-hero" id="top">
+            <p class="track-kicker">Pro · Lesson 11 of 11</p>
+            <h1>Capstone</h1>
+            <p>Write the cutover plan for one migration. You do not need an AWS account to finish the writing. You do need the decisions from the earlier lessons.</p>
+        </header>
+        <div class="dfd-lesson-progress" data-dfd-progress>
+            <p class="dfd-lesson-progress-label" data-dfd-progress-label>Sign in to save your place.</p>
+            <div class="dfd-lesson-progress-track" data-dfd-progress-bar role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-label="Course progress">
+                <div class="dfd-lesson-progress-fill" data-dfd-progress-fill>
+</div>
+            </div>
+        </div>
+        <section class="section" data-dfd-reveal>
+            <div class="eli5-box">
+                <h4>Picture it this way</h4>
+                <p>The capstone is the moving-day list: which truck, which boxes, who keeps the diary, who counts, and who flips the shop sign. The sign flip is the application, not the task status.</p>
+            </div>
+        </section>
+        <section class="section" data-dfd-reveal id="plan">
+<h2>The plan you will write</h2>
+<p>Name the source, the target, homogeneous or heterogeneous, the schema tool, the compute choice, the task type, the log you must retain, the validation you will read, and the person who changes the application connection string.</p>
+<p>Include a rollback sentence. If CDC latency is not acceptable at the decision time, the application stays on the source. A running task is not permission to cut over.</p>
+</section>
+<section class="section" data-dfd-reveal id="mapping">
+<h2>A mapping you can explain</h2>
+<p>Use an explicit include list. Say which table you left out and why. If you need a rename, put it in a transformation and say so. Do not hide a rename inside a hope that the target table already matches.</p>
+<table class="comparison-table dfd-scroll">
+<thead>
+<tr>
+<th>Cutover check</th>
+<th>Go only if</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Endpoint test</td>
+<td>Both ends pass from the DMS network</td>
+</tr>
+<tr>
+<td>CDC latency</td>
+<td>It is steady and small enough for this application</td>
+</tr>
+<tr>
+<td>Validation</td>
+<td>No unexplained mismatches on the tables you included</td>
+</tr>
+<tr>
+<td>Sequences or identity</td>
+<td>The next key is above the loaded maximum</td>
+</tr>
+<tr>
+<td>Application</td>
+<td>The connection change is rehearsed and reversible</td>
+</tr>
+</tbody>
+</table>
+</section>
+        <section class="section dfd-diagram" data-dfd-diagram data-dfd-reveal>
+            <h2>The sign flips last</h2>
+            <div data-dfd-diagram-panel="copy">
+<svg class="dfd-responsive" viewBox="0 0 640 148" role="img" aria-label="Copy steps highlighted">
+<rect class="track-drift" x="16" y="36" width="188" height="72" rx="12" fill="#fb923c">
+</rect>
+<text x="110" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#ffffff">Schema</text>
+<path d="M204 72 H224" stroke="#64748b" stroke-width="2" fill="none">
+</path>
+<rect x="224" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
+</rect>
+<text x="318" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">Load</text>
+<path d="M412 72 H432" stroke="#64748b" stroke-width="2" fill="none">
+</path>
+<rect x="432" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
+</rect>
+<text x="526" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">CDC</text>
+</svg>
+<p>Schema, load, and CDC happen while the application still uses the source.</p>
+</div>
+<div data-dfd-diagram-panel="check" hidden>
+<svg class="dfd-responsive" viewBox="0 0 640 148" role="img" aria-label="Checks highlighted">
+<rect x="16" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
+</rect>
+<text x="110" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">Latency</text>
+<path d="M204 72 H224" stroke="#64748b" stroke-width="2" fill="none">
+</path>
+<rect class="track-drift" x="224" y="36" width="188" height="72" rx="12" fill="#fb923c">
+</rect>
+<text x="318" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#ffffff">Validation</text>
+<path d="M412 72 H432" stroke="#64748b" stroke-width="2" fill="none">
+</path>
+<rect x="432" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
+</rect>
+<text x="526" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">Keys</text>
+</svg>
+<p>Latency, validation, and keys are the gate.</p>
+</div>
+<div data-dfd-diagram-panel="app" hidden>
+<svg class="dfd-responsive" viewBox="0 0 640 148" role="img" aria-label="Application cutover highlighted">
+<rect x="16" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
+</rect>
+<text x="110" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">Decision</text>
+<path d="M204 72 H224" stroke="#64748b" stroke-width="2" fill="none">
+</path>
+<rect x="224" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
+</rect>
+<text x="318" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">App</text>
+<path d="M412 72 H432" stroke="#64748b" stroke-width="2" fill="none">
+</path>
+<rect class="track-drift" x="432" y="36" width="188" height="72" rx="12" fill="#fb923c">
+</rect>
+<text x="526" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#ffffff">Rollback</text>
+</svg>
+<p>The application moves last, with a way back.</p>
+</div>
+            <div class="dfd-diagram-controls">
+                <button type="button" data-dfd-diagram-step="copy" aria-pressed="true">Copy</button>
+<button type="button" data-dfd-diagram-step="check" aria-pressed="false">Check</button>
+<button type="button" data-dfd-diagram-step="app" aria-pressed="false">App</button>
+            </div>
+        </section>
+        <section class="section" id="lab" data-dfd-reveal>
+            <h2>Lab: the cutover page</h2>
+            <p>Fill every line. Unknown is allowed. A blank is not.</p>
+            <div class="code-block">
+<pre>
+<code>Source and version:
+Target and version:
+Homogeneous or heterogeneous:
+Schema tool:
+Compute (instance class or serverless range):
+Task: full load and CDC, or another mode, and why:
+Log retention owner:
+Mapping includes:
+Mapping excludes:
+Validation result required:
+Sequence or identity check:
+Who changes the application:
+Rollback:</code>
+</pre>
+</div>
+            <p>
+<button type="button" data-dfd-complete>Mark lesson complete</button>
+</p>
+            <p data-dfd-complete-status>
+</p>
+        </section>
+        <section class="section" id="summary" data-dfd-reveal>
+            <h2>Concept summary</h2>
+            <ul class="summary-list">
+<li>Cutover is an application decision after the copy is caught up.</li>
+<li>The mapping, the log, the latency, and the keys are the evidence.</li>
+<li>A running DMS task is not the cutover.</li>
+</ul>
+        </section>
+        <section class="section" id="check" data-dfd-reveal>
+            <h2>Knowledge check</h2>
+            <section class="dfd-quiz" data-dfd-quiz data-explanation="The application connection change.">
+<h3 data-dfd-prompt>What flips the users onto the new database?</h3>
+<div data-dfd-choices>
+<button type="button" data-correct="false">The task status changing to running</button>
+<button type="button" data-correct="true">The application connection string</button>
+<button type="button" data-correct="false">A green premigration assessment</button>
+</div>
+<p class="dfd-quiz-feedback" data-dfd-feedback hidden>
+</p>
+<p class="dfd-quiz-explain" data-dfd-explain hidden>
+</p>
+</section>
+<section class="dfd-quiz" data-dfd-quiz data-explanation="Stay on the source.">
+<h3 data-dfd-prompt>CDC latency is still climbing at the decision time. What does the plan say?</h3>
+<div data-dfd-choices>
+<button type="button" data-correct="false">Cut over and hope</button>
+<button type="button" data-correct="true">Do not cut over</button>
+<button type="button" data-correct="false">Turn validation off so the task looks idle</button>
+</div>
+<p class="dfd-quiz-feedback" data-dfd-feedback hidden>
+</p>
+<p class="dfd-quiz-explain" data-dfd-explain hidden>
+</p>
+</section>
+<section class="dfd-quiz" data-dfd-quiz data-explanation="The schema conversion work, and the task premigration checks. They are both real and they are not the same.">
+<h3 data-dfd-prompt>Which assessment must be green before a heterogeneous load?</h3>
+<div data-dfd-choices>
+<button type="button" data-correct="false">Only the desktop installer version number</button>
+<button type="button" data-correct="true">Schema conversion reviewed, and the task assessment read</button>
+<button type="button" data-correct="false">Neither. Full load converts code</button>
+</div>
+<p class="dfd-quiz-feedback" data-dfd-feedback hidden>
+</p>
+<p class="dfd-quiz-explain" data-dfd-explain hidden>
+</p>
+</section>
+        </section>
+        <section class="section" data-dfd-reveal>
+            <h2>Official sources</h2>
+            <p>Checked against the linked documentation in October 2026. A later release can move a flag, a price, or a supported pair. Use the page for the version you installed.</p>
+            <ul class="source-list">
+<li>
+<a href="https://docs.aws.amazon.com/dms/latest/userguide/CHAP_Tasks.html" target="_blank" rel="noopener noreferrer">Tasks</a>
+</li>
+<li>
+<a href="https://docs.aws.amazon.com/dms/latest/userguide/CHAP_Validating.html" target="_blank" rel="noopener noreferrer">Validation</a>
+</li>
+<li>
+<a href="https://docs.aws.amazon.com/dms/latest/userguide/CHAP_SchemaConversion.html" target="_blank" rel="noopener noreferrer">Schema conversion</a>
+</li>
+</ul>
+        </section>
+        <nav class="lesson-nav" aria-label="Lesson order">
+            <a class="secondary" href="operations.html">Previous: Serverless, instances, cost, and troubleshooting</a>
+            <a href="hub.html">Back to the hub</a>
+        </nav>
+    </div>
+
+    <script src="../js/code-copy.js">
+</script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2">
+</script>
+    <script src="../js/supabase-config.js">
+</script>
+    <script src="../js/supabase-auth.js">
+</script>
+    <script src="../js/paywall.js">
+</script>
+    <script src="../js/progress.js">
+</script>
+    <script src="../js/lesson-common.js">
+</script>
+    <script src="../js/quiz.js">
+</script>
+    <script src="../js/analytics-tracker.js">
+</script>
+
+</body>
+</html>

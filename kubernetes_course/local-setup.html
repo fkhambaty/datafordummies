@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Local clusters | Kubernetes | Data For Dummies</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="../css/dfd-system.css">
+</head>
+<body class="dfd-safe" data-course-id="kubernetes" data-lesson-id="local-setup" data-lesson-label="Local clusters" data-total-lessons="12">
+    <div class="container">
+        <nav class="nav" aria-label="Course">
+            <a href="hub.html">Course hub</a>
+            <a href="../index.html">Home</a>
+            <a href="#check">Knowledge check</a>
+        </nav>
+        <header class="lesson-hero" id="top">
+            <p class="track-kicker">Free · Lesson 2 of 12</p>
+            <h1>Local clusters</h1>
+            <p>kind, minikube, and Docker Desktop can each give you a cluster. They do not behave like a cloud load balancer.</p>
+        </header>
+        <div class="dfd-lesson-progress" data-dfd-progress>
+            <p class="dfd-lesson-progress-label" data-dfd-progress-label>Sign in to save your place.</p>
+            <div class="dfd-lesson-progress-track" data-dfd-progress-bar role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-label="Course progress">
+                <div class="dfd-lesson-progress-fill" data-dfd-progress-fill>
+</div>
+            </div>
+        </div>
+        <section class="section" data-dfd-reveal>
+            <div class="eli5-box">
+                <h4>Picture it this way</h4>
+                <p>Three practice harbours. kind builds the docks out of containers. minikube builds a small harbour with a driver you choose. Docker Desktop hides a harbour inside the Docker app. The boats are still Pods.</p>
+            </div>
+        </section>
+        <section class="section" data-dfd-reveal id="three">
+<h2>Three tools, three limits</h2>
+<p>kind runs Kubernetes nodes as containers. It needs a container runtime such as Docker. <code>kind create cluster</code> is enough for a short-lived cluster. A Service of type LoadBalancer does not get a public address by itself.</p>
+<p>minikube starts a local cluster. The driver depends on the operating system: Docker is common, and hypervisor drivers exist where the OS supports them. <code>minikube tunnel</code> is how a LoadBalancer Service gets an address, and that tunnel is not an AWS, Google, or Azure load balancer.</p>
+<p>Docker Desktop can enable Kubernetes on macOS (Apple silicon and Intel), Windows, and Linux. The context name is often <code>docker-desktop</code>. The Kubernetes minor version is the one that Desktop release bundled. Read that release note. Turning Kubernetes on uses extra memory.</p>
+<table class="comparison-table dfd-scroll">
+<thead>
+<tr>
+<th>Tool</th>
+<th>Good for</th>
+<th>Do not assume</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>kind</td>
+<td>A disposable cluster and CI</td>
+<td>LoadBalancer just works</td>
+</tr>
+<tr>
+<td>minikube</td>
+<td>A single-node cluster with addons</td>
+<td>The tunnel is a cloud load balancer</td>
+</tr>
+<tr>
+<td>Docker Desktop</td>
+<td>A cluster next to other containers</td>
+<td>The bundled minor never changes</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section class="section" data-dfd-reveal id="kubectl-use">
+<h2>kubectl and version skew</h2>
+<p>Install kubectl from the Kubernetes release matching the cluster you will talk to. The project documents a version skew policy: kubectl is supported only a small number of minor versions away from the API server. <code>kubectl version</code> shows both sides when the cluster is reachable.</p>
+<p>
+<code>kubectl config current-context</code> tells you which cluster the next command will hit. If you have kind, minikube, and Desktop installed, the wrong context is the usual mistake.</p>
+</section>
+<section class="section" data-dfd-reveal id="networkpolicy-hint">
+<h2>NetworkPolicy will not prove itself here</h2>
+<p>kind&#x27;s default networking does not enforce NetworkPolicy. A policy object will sit in the API and do nothing. The security lesson says how to practice that for real. Do not treat a successful <code>kubectl apply</code> as proof the policy is enforced.</p>
+</section>
+        <section class="section dfd-diagram" data-dfd-diagram data-dfd-reveal>
+            <h2>Pick a local cluster</h2>
+            <div data-dfd-diagram-panel="kind">
+<svg class="dfd-responsive" viewBox="0 0 640 148" role="img" aria-label="kind highlighted">
+<rect class="track-drift" x="16" y="36" width="188" height="72" rx="12" fill="#5b8def">
+</rect>
+<text x="110" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#ffffff">kind</text>
+<path d="M204 72 H224" stroke="#64748b" stroke-width="2" fill="none">
+</path>
+<rect x="224" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
+</rect>
+<text x="318" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">minikube</text>
+<path d="M412 72 H432" stroke="#64748b" stroke-width="2" fill="none">
+</path>
+<rect x="432" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
+</rect>
+<text x="526" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">Desktop</text>
+</svg>
+<p>kind: nodes are containers. Fast to delete. Weak stand-in for cloud load balancers.</p>
+</div>
+<div data-dfd-diagram-panel="mini" hidden>
+<svg class="dfd-responsive" viewBox="0 0 640 148" role="img" aria-label="minikube highlighted">
+<rect x="16" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
+</rect>
+<text x="110" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">kind</text>
+<path d="M204 72 H224" stroke="#64748b" stroke-width="2" fill="none">
+</path>
+<rect class="track-drift" x="224" y="36" width="188" height="72" rx="12" fill="#5b8def">
+</rect>
+<text x="318" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#ffffff">minikube</text>
+<path d="M412 72 H432" stroke="#64748b" stroke-width="2" fill="none">
+</path>
+<rect x="432" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
+</rect>
+<text x="526" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">Desktop</text>
+</svg>
+<p>minikube: one cluster, a driver, and an optional tunnel for LoadBalancer Services.</p>
+</div>
+<div data-dfd-diagram-panel="desk" hidden>
+<svg class="dfd-responsive" viewBox="0 0 640 148" role="img" aria-label="Docker Desktop highlighted">
+<rect x="16" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
+</rect>
+<text x="110" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">kind</text>
+<path d="M204 72 H224" stroke="#64748b" stroke-width="2" fill="none">
+</path>
+<rect x="224" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
+</rect>
+<text x="318" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">minikube</text>
+<path d="M412 72 H432" stroke="#64748b" stroke-width="2" fill="none">
+</path>
+<rect class="track-drift" x="432" y="36" width="188" height="72" rx="12" fill="#5b8def">
+</rect>
+<text x="526" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#ffffff">Desktop</text>
+</svg>
+<p>Docker Desktop: a checkbox on macOS, Windows, or Linux. Check which minor it installed.</p>
+</div>
+            <div class="dfd-diagram-controls">
+                <button type="button" data-dfd-diagram-step="kind" aria-pressed="true">kind</button>
+<button type="button" data-dfd-diagram-step="mini" aria-pressed="false">minikube</button>
+<button type="button" data-dfd-diagram-step="desk" aria-pressed="false">Desktop</button>
+            </div>
+        </section>
+        <section class="section" id="lab" data-dfd-reveal>
+            <h2>Lab: see the node you actually have</h2>
+            <p>Run the block that matches the tool you started. Then confirm the context before you apply anything else.</p>
+            <div class="code-block">
+<pre>
+<code>kind create cluster --name dfd-lab
+kubectl config current-context
+kubectl get nodes
+
+# or: minikube start
+# or: enable Kubernetes in Docker Desktop, then:
+# kubectl config use-context docker-desktop
+kubectl version</code>
+</pre>
+</div>
+            <p>
+<button type="button" data-dfd-complete>Mark lesson complete</button>
+</p>
+            <p data-dfd-complete-status>
+</p>
+        </section>
+        <section class="section" id="summary" data-dfd-reveal>
+            <h2>Concept summary</h2>
+            <ul class="summary-list">
+<li>kind, minikube, and Docker Desktop are three local clusters, not three names for the same thing.</li>
+<li>Check the context before every lab.</li>
+<li>A local LoadBalancer is not a cloud load balancer.</li>
+</ul>
+        </section>
+        <section class="section" id="check" data-dfd-reveal>
+            <h2>Knowledge check</h2>
+            <section class="dfd-quiz" data-dfd-quiz data-explanation="Desktop bundles a Kubernetes version. The release note is the record.">
+<h3 data-dfd-prompt>You enabled Kubernetes in Docker Desktop on Windows. What should you read for the minor version?</h3>
+<div data-dfd-choices>
+<button type="button" data-correct="false">A Mac-only screenshot from an old course</button>
+<button type="button" data-correct="true">The Docker Desktop release note for the build you installed</button>
+<button type="button" data-correct="false">Nothing. Desktop always tracks the newest Kubernetes patch the same day</button>
+</div>
+<p class="dfd-quiz-feedback" data-dfd-feedback hidden>
+</p>
+<p class="dfd-quiz-explain" data-dfd-explain hidden>
+</p>
+</section>
+<section class="dfd-quiz" data-dfd-quiz data-explanation="kind does not give LoadBalancer addresses by default.">
+<h3 data-dfd-prompt>Why might a LoadBalancer Service stay pending on kind?</h3>
+<div data-dfd-choices>
+<button type="button" data-correct="false">kind creates a cloud load balancer automatically</button>
+<button type="button" data-correct="true">kind does not provide a load balancer unless you add one</button>
+<button type="button" data-correct="false">LoadBalancer is rejected by the API on every cluster</button>
+</div>
+<p class="dfd-quiz-feedback" data-dfd-feedback hidden>
+</p>
+<p class="dfd-quiz-explain" data-dfd-explain hidden>
+</p>
+</section>
+<section class="dfd-quiz" data-dfd-quiz data-explanation="It shows which cluster the next command will change.">
+<h3 data-dfd-prompt>What does `kubectl config current-context` protect you from?</h3>
+<div data-dfd-choices>
+<button type="button" data-correct="false">It upgrades the node</button>
+<button type="button" data-correct="true">It shows which cluster you are about to change</button>
+<button type="button" data-correct="false">It encrypts Secrets</button>
+</div>
+<p class="dfd-quiz-feedback" data-dfd-feedback hidden>
+</p>
+<p class="dfd-quiz-explain" data-dfd-explain hidden>
+</p>
+</section>
+        </section>
+        <section class="section" data-dfd-reveal>
+            <h2>Official sources</h2>
+            <p>Checked against the linked documentation in October 2026. A later release can move a flag, a price, or a supported pair. Use the page for the version you installed.</p>
+            <ul class="source-list">
+<li>
+<a href="https://kind.sigs.k8s.io/docs/user/quick-start/" target="_blank" rel="noopener noreferrer">kind quick start</a>
+</li>
+<li>
+<a href="https://minikube.sigs.k8s.io/docs/start/" target="_blank" rel="noopener noreferrer">minikube start</a>
+</li>
+<li>
+<a href="https://kubernetes.io/releases/version-skew-policy/" target="_blank" rel="noopener noreferrer">kubectl version skew</a>
+</li>
+</ul>
+        </section>
+        <nav class="lesson-nav" aria-label="Lesson order">
+            <a class="secondary" href="meet-kubernetes.html">Previous: Meet Kubernetes</a>
+            <a href="pods-deployments.html">Next: Pods and Deployments</a>
+        </nav>
+    </div>
+
+    <script src="../js/code-copy.js">
+</script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2">
+</script>
+    <script src="../js/supabase-config.js">
+</script>
+    <script src="../js/supabase-auth.js">
+</script>
+    <script src="../js/paywall.js">
+</script>
+    <script src="../js/progress.js">
+</script>
+    <script src="../js/lesson-common.js">
+</script>
+    <script src="../js/quiz.js">
+</script>
+    <script src="../js/analytics-tracker.js">
+</script>
+
+</body>
+</html>

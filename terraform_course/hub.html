@@ -3,55 +3,190 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>Terraform Course Hub | Fakhruddin Khambaty's Learning Hub</title>
-    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <title>Terraform and OpenTofu course | Data For Dummies</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <link rel="stylesheet" href="../css/hub-light.css">
     <style>
-        :root { --hub-color: #7c3aed; --hub-color2: #a78bfa; --hub-bg: linear-gradient(160deg, #f5f3ff 0%, #ede9fe 40%, #faf5ff 100%); }
-        .progress-section { background: rgba(255,255,255,0.75); backdrop-filter: blur(8px); border-radius: 20px; padding: 30px; margin-bottom: 40px; border: 1px solid rgba(0,0,0,0.06); box-shadow: 0 2px 12px rgba(0,0,0,0.04); }
-        .progress-section h3 { color: #7c3aed; margin-bottom: 15px; }
-        .progress-bar-bg { background: #e5e7eb; border-radius: 10px; height: 25px; overflow: hidden; }
-        .progress-bar { background: linear-gradient(90deg, #7c3aed 0%, #a78bfa 100%); height: 100%; width: 85%; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-weight: 700; color: white; font-size: 0.9em; }
-        .modules-grid { grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); }
-        .module-card { text-decoration: none; color: inherit; display: block; }
-        .btn-full { display: inline-flex; align-items: center; gap: 10px; margin-top: 20px; padding: 14px 28px; background: linear-gradient(135deg, #7c3aed 0%, #6d28d9 100%); color: white; border-radius: 12px; font-weight: 700; text-decoration: none; font-family: 'Nunito', sans-serif; transition: all 0.2s; }
-        .btn-full:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(124, 58, 237, 0.4); }
+        :root {
+            --hub-color: #7c3aed;
+            --hub-color2: #a78bfa;
+            --hub-bg: linear-gradient(165deg, #f8fafc 0%, #eff6ff 42%, #f8fafc 100%);
+        }
+        .hub-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 12px;
+            margin: 0 0 22px;
+        }
+        .hub-stat {
+            background: #fff;
+            border: 1px solid rgba(15, 23, 42, 0.08);
+            border-radius: 16px;
+            padding: 14px 16px;
+        }
+        .hub-stat strong { display: block; color: #7c3aed; font-size: 1.35rem; }
+        .hub-stat span { color: #475569; font-size: 0.88rem; }
+        .lesson-link-pro { background: #f8fafc; color: #475569; }
+        .lesson-link .pro-badge {
+            margin-left: auto;
+            font-size: 0.68rem;
+            padding: 2px 8px;
+            border-radius: 999px;
+            background: linear-gradient(135deg, #d97706, #b45309);
+            color: #fff;
+            font-weight: 800;
+        }
     </style>
     <link rel="stylesheet" href="../css/dfd-system.css">
 </head>
-<body>
+<body class="dfd-safe" data-course-id="terraform" data-lesson-id="hub" data-lesson-label="Terraform and OpenTofu hub" data-total-lessons="12">
     <div class="container">
-        <nav class="nav">
-            <a href="../index.html"><i class="fas fa-home"></i><span>Main Website</span></a>
-            <a href="../data_science_course/index.html"><span>Data Science Course</span><i class="fas fa-arrow-right"></i></a>
+        <nav class="nav" aria-label="Site">
+            <a href="../index.html">
+<i class="fas fa-home">
+</i>
+<span>Home</span>
+</a>
+            <a href="../learning-path.html">
+<span>All courses</span>
+</a>
+            <a href="../curriculum.html">
+<span>Curriculum</span>
+</a>
         </nav>
-        <div class="header">
-            <span class="header-badge">🏗️ Terraform</span>
-            <h1>Terraform Course Hub</h1>
-            <p>Infrastructure as Code made simple. Same teaching philosophy: step-by-step, hands-on.</p>
+        <header class="header">
+            <span class="header-badge">TERRAFORM · 12 LESSONS · 2 FREE · 10 PRO</span>
+            <h1>Terraform and OpenTofu, without pretending they are the same product</h1>
+            <p>HCL, state, modules, workspaces, tests, HCP Terraform, and a separate OpenTofu comparison. 2 lessons are free. The other 10 open with Pro.</p>
+        </header>
+        <div class="hub-stats" aria-label="Course size">
+            <div class="hub-stat">
+<strong>12</strong>
+<span>lessons</span>
+</div>
+            <div class="hub-stat">
+<strong>2</strong>
+<span>free to open</span>
+</div>
+            <div class="hub-stat">
+<strong>10</strong>
+<span>Pro lessons</span>
+</div>
+            <div class="hub-stat">
+<strong>4</strong>
+<span>modules</span>
+</div>
         </div>
-        <div class="progress-section">
-            <h3>📈 Course Progress</h3>
-            <div class="progress-bar-bg"><div class="progress-bar">Full Course Ready</div></div>
-            <p style="margin-top: 15px; color: #94a3b8;">Welcome, History, Installation, Basics, Providers, Resources, Variables, Modules, State, Projects & Exercises.</p>
+        <div class="dfd-lesson-progress" data-dfd-progress>
+            <p class="dfd-lesson-progress-label" data-dfd-progress-label>Sign in to save your place.</p>
+            <div class="dfd-lesson-progress-track" data-dfd-progress-bar role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-label="Course progress">
+                <div class="dfd-lesson-progress-fill" data-dfd-progress-fill>
+</div>
+            </div>
         </div>
         <div class="modules-grid">
-            <a href="index.html#welcome" class="module-card"><div class="module-icon">🏠</div><h3>Welcome</h3><p>What you'll learn, why Terraform.</p></a>
-            <a href="index.html#history" class="module-card"><div class="module-icon">📜</div><h3>History</h3><p>How Terraform and IaC evolved.</p></a>
-            <a href="index.html#installation" class="module-card"><div class="module-icon">⚙️</div><h3>Installation</h3><p>Windows, macOS, Linux, and cloud.</p></a>
-            <a href="index.html#basics" class="module-card"><div class="module-icon">📚</div><h3>Basics</h3><p>Terraform syntax and workflow.</p></a>
-            <a href="index.html#providers" class="module-card"><div class="module-icon">🔌</div><h3>Providers</h3><p>AWS, Azure, GCP, and more.</p></a>
-            <a href="index.html#resources" class="module-card"><div class="module-icon">📦</div><h3>Resources</h3><p>Defining and managing resources.</p></a>
-            <a href="index.html#variables" class="module-card"><div class="module-icon">🔧</div><h3>Variables</h3><p>Inputs, outputs, and locals.</p></a>
-            <a href="index.html#modules" class="module-card"><div class="module-icon">📁</div><h3>Modules</h3><p>Reusable code and organization.</p></a>
-            <a href="index.html#state" class="module-card"><div class="module-icon">🗃️</div><h3>State</h3><p>State management and remote backends.</p></a>
-            <a href="index.html#workspaces" class="module-card"><div class="module-icon">🔀</div><h3>Workspaces</h3><p>Multiple environments (dev, staging, prod).</p></a>
-            <a href="index.html#projects" class="module-card"><div class="module-icon">💡</div><h3>Projects</h3><p>Real-world infrastructure projects.</p></a>
-            <a href="index.html#exercises" class="module-card"><div class="module-icon">🎯</div><h3>Exercises</h3><p>Hands-on exercises and quizzes.</p></a>
+            <article class="module-card">
+<span class="module-status status-ready">2 lessons</span>
+<h3>Start here</h3>
+<p>What the tools are, and how to install a version on purpose.</p>
+<div class="module-lessons">
+<a class="lesson-link" href="meet-terraform.html">
+<i class="fas fa-play-circle">
+</i> Meet Terraform and OpenTofu<span class="pro-badge" style="background:#059669">Free</span>
+</a>
+<a class="lesson-link" href="setup.html">
+<i class="fas fa-play-circle">
+</i> Install and version managers<span class="pro-badge" style="background:#059669">Free</span>
+</a>
+</div>
+</article>
+<article class="module-card">
+<span class="module-status status-ready">4 lessons</span>
+<h3>Language</h3>
+<p>HCL, variables, state, and modules.</p>
+<div class="module-lessons">
+<a class="lesson-link lesson-link-pro" href="hcl-resources.html">
+<i class="fas fa-lock">
+</i> HCL, providers, resources, and data<span class="pro-badge">Pro</span>
+</a>
+<a class="lesson-link lesson-link-pro" href="variables-outputs.html">
+<i class="fas fa-lock">
+</i> Variables, outputs, and locals<span class="pro-badge">Pro</span>
+</a>
+<a class="lesson-link lesson-link-pro" href="state-backends.html">
+<i class="fas fa-lock">
+</i> State, backends, and locking<span class="pro-badge">Pro</span>
+</a>
+<a class="lesson-link lesson-link-pro" href="modules.html">
+<i class="fas fa-lock">
+</i> Modules<span class="pro-badge">Pro</span>
+</a>
+</div>
+</article>
+<article class="module-card">
+<span class="module-status status-ready">3 lessons</span>
+<h3>Change safely</h3>
+<p>Workspaces, renames, imports, and tests.</p>
+<div class="module-lessons">
+<a class="lesson-link lesson-link-pro" href="workspaces.html">
+<i class="fas fa-lock">
+</i> Workspaces and environments<span class="pro-badge">Pro</span>
+</a>
+<a class="lesson-link lesson-link-pro" href="lifecycle-blocks.html">
+<i class="fas fa-lock">
+</i> Lifecycle, import, moved, and removed<span class="pro-badge">Pro</span>
+</a>
+<a class="lesson-link lesson-link-pro" href="testing.html">
+<i class="fas fa-lock">
+</i> Testing and validation<span class="pro-badge">Pro</span>
+</a>
+</div>
+</article>
+<article class="module-card">
+<span class="module-status status-ready">3 lessons</span>
+<h3>Run it</h3>
+<p>Automation, secrets, OpenTofu, and a local capstone.</p>
+<div class="module-lessons">
+<a class="lesson-link lesson-link-pro" href="ci-hcp.html">
+<i class="fas fa-lock">
+</i> CI and HCP Terraform<span class="pro-badge">Pro</span>
+</a>
+<a class="lesson-link lesson-link-pro" href="security-opentofu.html">
+<i class="fas fa-lock">
+</i> Security, policy, and OpenTofu<span class="pro-badge">Pro</span>
+</a>
+<a class="lesson-link lesson-link-pro" href="capstone.html">
+<i class="fas fa-lock">
+</i> Capstone<span class="pro-badge">Pro</span>
+</a>
+</div>
+</article>
         </div>
-        <p style="text-align: center;"><a href="index.html" class="btn-full"><i class="fas fa-book-open"></i> Open Full Course</a></p>
-        <div class="footer"><p>© 2026 <a href="../index.html">Fakhruddin Khambaty's Learning Hub</a> | Terraform Course</p></div>
+        <p>
+<a href="index.html">Older single-page section addresses</a> still open. The lessons above are the course.</p>
+        <footer>
+<p>&copy; 2026 <a href="../index.html">Data For Dummies</a> · Terraform and OpenTofu</p>
+</footer>
     </div>
+
+    <script src="../js/code-copy.js">
+</script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2">
+</script>
+    <script src="../js/supabase-config.js">
+</script>
+    <script src="../js/supabase-auth.js">
+</script>
+    <script src="../js/paywall.js">
+</script>
+    <script src="../js/progress.js">
+</script>
+    <script src="../js/lesson-common.js">
+</script>
+    <script src="../js/quiz.js">
+</script>
+    <script src="../js/analytics-tracker.js">
+</script>
+
 </body>
 </html>

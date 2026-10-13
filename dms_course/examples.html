@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Homogeneous and heterogeneous examples | AWS DMS | Data For Dummies</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="../css/dfd-system.css">
+</head>
+<body class="dfd-safe" data-access="pro" data-course-id="dms" data-lesson-id="examples" data-lesson-label="Homogeneous and heterogeneous examples" data-total-lessons="11">
+    <div class="container">
+        <nav class="nav" aria-label="Course">
+            <a href="hub.html">Course hub</a>
+            <a href="../index.html">Home</a>
+            <a href="#check">Knowledge check</a>
+        </nav>
+        <header class="lesson-hero" id="top">
+            <p class="track-kicker">Pro · Lesson 9 of 11</p>
+            <h1>Homogeneous and heterogeneous examples</h1>
+            <p>Two worked shapes. PostgreSQL to Aurora PostgreSQL, and SQL Server to Aurora PostgreSQL. The steps are the decisions, not a claim that your account&#x27;s console looks identical.</p>
+        </header>
+        <div class="dfd-lesson-progress" data-dfd-progress>
+            <p class="dfd-lesson-progress-label" data-dfd-progress-label>Sign in to save your place.</p>
+            <div class="dfd-lesson-progress-track" data-dfd-progress-bar role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-label="Course progress">
+                <div class="dfd-lesson-progress-fill" data-dfd-progress-fill>
+</div>
+            </div>
+        </div>
+        <section class="section" data-dfd-reveal>
+            <div class="eli5-box">
+                <h4>Picture it this way</h4>
+                <p>One move stays in the same language. The other hires a translator before the movers. Both still need a truck, a diary of changes, and a count at the end.</p>
+            </div>
+        </section>
+        <section class="section" data-dfd-reveal id="pg">
+<h2>PostgreSQL to Aurora PostgreSQL</h2>
+<p>Create the target schema with the tools you trust: the database&#x27;s own dump of schema, or a reviewed script. Check extensions Aurora does not offer. Plan sequences so the target does not reuse a key the source will still issue during CDC.</p>
+<p>If you use DMS, set <code>wal_level</code> and a slot, test the endpoint from the replication network, include the tables explicitly, run full load and CDC, and watch slot lag so the source disk does not fill. If you use native logical replication instead, you are not in DMS, and that is a valid outcome. Write down which one you picked.</p>
+</section>
+<section class="section" data-dfd-reveal id="sql">
+<h2>SQL Server to Aurora PostgreSQL</h2>
+<p>This one is heterogeneous. Run a conversion assessment. Expect manual work on procedural code. Apply the reviewed schema to Aurora. Only then create the DMS task. SQL Server CDC or the replication feature the current DMS source page requires must be on, with log retention that covers the load.</p>
+<p>Identity columns and empty tables are a common surprise. Validation can show matching counts while an application insert fails because a sequence was not set past the maximum key. Check the keys with SQL, not only with the DMS percentage.</p>
+<table class="comparison-table dfd-scroll">
+<thead>
+<tr>
+<th>Example</th>
+<th>Schema</th>
+<th>Log</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>PostgreSQL to Aurora PostgreSQL</td>
+<td>Mostly the same dialect. Check extensions.</td>
+<td>Logical WAL and a slot if DMS CDC is the tool</td>
+</tr>
+<tr>
+<td>SQL Server to Aurora PostgreSQL</td>
+<td>Convert first. Read the action items.</td>
+<td>The SQL Server CDC setup DMS documents for that edition</td>
+</tr>
+</tbody>
+</table>
+</section>
+        <section class="section dfd-diagram" data-dfd-diagram data-dfd-reveal>
+            <h2>Same language, or a translator</h2>
+            <div data-dfd-diagram-panel="same">
+<svg class="dfd-responsive" viewBox="0 0 640 148" role="img" aria-label="Homogeneous path highlighted">
+<rect class="track-drift" x="16" y="36" width="188" height="72" rx="12" fill="#fb923c">
+</rect>
+<text x="110" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#ffffff">PostgreSQL</text>
+<path d="M204 72 H224" stroke="#64748b" stroke-width="2" fill="none">
+</path>
+<rect x="224" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
+</rect>
+<text x="318" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">Schema</text>
+<path d="M412 72 H432" stroke="#64748b" stroke-width="2" fill="none">
+</path>
+<rect x="432" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
+</rect>
+<text x="526" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">Aurora</text>
+</svg>
+<p>Same family: review extensions and keys, then copy.</p>
+</div>
+<div data-dfd-diagram-panel="convert" hidden>
+<svg class="dfd-responsive" viewBox="0 0 640 148" role="img" aria-label="Conversion highlighted">
+<rect x="16" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
+</rect>
+<text x="110" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">SQL Server</text>
+<path d="M204 72 H224" stroke="#64748b" stroke-width="2" fill="none">
+</path>
+<rect class="track-drift" x="224" y="36" width="188" height="72" rx="12" fill="#fb923c">
+</rect>
+<text x="318" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#ffffff">Convert</text>
+<path d="M412 72 H432" stroke="#64748b" stroke-width="2" fill="none">
+</path>
+<rect x="432" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
+</rect>
+<text x="526" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">Aurora</text>
+</svg>
+<p>Different family: convert and review before the load.</p>
+</div>
+<div data-dfd-diagram-panel="cdc" hidden>
+<svg class="dfd-responsive" viewBox="0 0 640 148" role="img" aria-label="CDC step highlighted">
+<rect x="16" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
+</rect>
+<text x="110" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">Log</text>
+<path d="M204 72 H224" stroke="#64748b" stroke-width="2" fill="none">
+</path>
+<rect x="224" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
+</rect>
+<text x="318" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">DMS</text>
+<path d="M412 72 H432" stroke="#64748b" stroke-width="2" fill="none">
+</path>
+<rect class="track-drift" x="432" y="36" width="188" height="72" rx="12" fill="#fb923c">
+</rect>
+<text x="526" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#ffffff">Target</text>
+</svg>
+<p>Both examples still need a change log if the source stays live.</p>
+</div>
+            <div class="dfd-diagram-controls">
+                <button type="button" data-dfd-diagram-step="same" aria-pressed="true">Same</button>
+<button type="button" data-dfd-diagram-step="convert" aria-pressed="false">Convert</button>
+<button type="button" data-dfd-diagram-step="cdc" aria-pressed="false">CDC</button>
+            </div>
+        </section>
+        <section class="section" id="lab" data-dfd-reveal>
+            <h2>Lab: write the sequence check</h2>
+            <p>This query shape is PostgreSQL. Run it on a source you are allowed to read. The number is the point of the habit, not a value this page can know.</p>
+            <div class="code-block">
+<pre>
+<code>SELECT MAX(id) AS max_id FROM shop.orders;
+-- After load, the target sequence must start above max_id
+-- or the first application insert collides.
+-- SQL Server identity needs the same conversation
+-- with that engine&#x27;s words, not these words.</code>
+</pre>
+</div>
+            <p>
+<button type="button" data-dfd-complete>Mark lesson complete</button>
+</p>
+            <p data-dfd-complete-status>
+</p>
+        </section>
+        <section class="section" id="summary" data-dfd-reveal>
+            <h2>Concept summary</h2>
+            <ul class="summary-list">
+<li>Homogeneous PostgreSQL still needs extension, slot, and sequence checks.</li>
+<li>SQL Server to PostgreSQL converts schema before DMS loads rows.</li>
+<li>Matching validation counts can hide a sequence that will collide.</li>
+</ul>
+        </section>
+        <section class="section" id="check" data-dfd-reveal>
+            <h2>Knowledge check</h2>
+            <section class="dfd-quiz" data-dfd-quiz data-explanation="The heterogeneous one.">
+<h3 data-dfd-prompt>Which example needs a schema conversion assessment first?</h3>
+<div data-dfd-choices>
+<button type="button" data-correct="false">PostgreSQL to Aurora PostgreSQL, always</button>
+<button type="button" data-correct="true">SQL Server to Aurora PostgreSQL</button>
+<button type="button" data-correct="false">Neither. DMS converts both during full load</button>
+</div>
+<p class="dfd-quiz-feedback" data-dfd-feedback hidden>
+</p>
+<p class="dfd-quiz-explain" data-dfd-explain hidden>
+</p>
+</section>
+<section class="dfd-quiz" data-dfd-quiz data-explanation="New inserts must not reuse loaded keys.">
+<h3 data-dfd-prompt>Why check MAX(id) against a sequence?</h3>
+<div data-dfd-choices>
+<button type="button" data-correct="false">So CDC latency stays at zero</button>
+<button type="button" data-correct="true">So the next insert does not collide</button>
+<button type="button" data-correct="false">So the premigration assessment can be skipped</button>
+</div>
+<p class="dfd-quiz-feedback" data-dfd-feedback hidden>
+</p>
+<p class="dfd-quiz-explain" data-dfd-explain hidden>
+</p>
+</section>
+<section class="dfd-quiz" data-dfd-quiz data-explanation="No. It is one option.">
+<h3 data-dfd-prompt>Is DMS required for PostgreSQL to Aurora PostgreSQL?</h3>
+<div data-dfd-choices>
+<button type="button" data-correct="false">Yes</button>
+<button type="button" data-correct="true">No</button>
+<button type="button" data-correct="false">Only if you also use SCT</button>
+</div>
+<p class="dfd-quiz-feedback" data-dfd-feedback hidden>
+</p>
+<p class="dfd-quiz-explain" data-dfd-explain hidden>
+</p>
+</section>
+        </section>
+        <section class="section" data-dfd-reveal>
+            <h2>Official sources</h2>
+            <p>Checked against the linked documentation in October 2026. A later release can move a flag, a price, or a supported pair. Use the page for the version you installed.</p>
+            <ul class="source-list">
+<li>
+<a href="https://docs.aws.amazon.com/dms/latest/userguide/CHAP_Source.PostgreSQL.html" target="_blank" rel="noopener noreferrer">PostgreSQL source</a>
+</li>
+<li>
+<a href="https://docs.aws.amazon.com/dms/latest/userguide/CHAP_Source.SQLServer.html" target="_blank" rel="noopener noreferrer">SQL Server source</a>
+</li>
+<li>
+<a href="https://docs.aws.amazon.com/dms/latest/userguide/CHAP_Target.PostgreSQL.html" target="_blank" rel="noopener noreferrer">PostgreSQL target</a>
+</li>
+</ul>
+        </section>
+        <nav class="lesson-nav" aria-label="Lesson order">
+            <a class="secondary" href="validation.html">Previous: Validation and CloudWatch</a>
+            <a href="operations.html">Next: Serverless, instances, cost, and troubleshooting</a>
+        </nav>
+    </div>
+
+    <script src="../js/code-copy.js">
+</script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2">
+</script>
+    <script src="../js/supabase-config.js">
+</script>
+    <script src="../js/supabase-auth.js">
+</script>
+    <script src="../js/paywall.js">
+</script>
+    <script src="../js/progress.js">
+</script>
+    <script src="../js/lesson-common.js">
+</script>
+    <script src="../js/quiz.js">
+</script>
+    <script src="../js/analytics-tracker.js">
+</script>
+
+</body>
+</html>

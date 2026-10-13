@@ -3,52 +3,190 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>Kubernetes Course Hub | Fakhruddin Khambaty's Learning Hub</title>
-    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <title>Kubernetes course | Data For Dummies</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <link rel="stylesheet" href="../css/hub-light.css">
     <style>
-        :root { --hub-color: #326ce5; --hub-color2: #5b8def; --hub-bg: linear-gradient(160deg, #eff6ff 0%, #dbeafe 40%, #e0f2fe 100%); }
-        .progress-section { background: rgba(255,255,255,0.75); backdrop-filter: blur(8px); border-radius: 20px; padding: 30px; margin-bottom: 40px; border: 1px solid rgba(0,0,0,0.06); box-shadow: 0 2px 12px rgba(0,0,0,0.04); }
-        .progress-section h3 { color: #326ce5; margin-bottom: 15px; }
-        .progress-bar-bg { background: #e5e7eb; border-radius: 10px; height: 25px; overflow: hidden; }
-        .progress-bar { background: linear-gradient(90deg, #326ce5 0%, #5b8def 100%); height: 100%; width: 90%; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-weight: 700; color: white; font-size: 0.9em; }
-        .modules-grid { grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); }
-        .module-card { text-decoration: none; color: inherit; display: block; }
-        .btn-full { display: inline-flex; align-items: center; gap: 10px; margin-top: 20px; padding: 14px 28px; background: linear-gradient(135deg, #326ce5 0%, #1a365d 100%); color: white; border-radius: 12px; font-weight: 700; text-decoration: none; font-family: 'Nunito', sans-serif; transition: all 0.2s; }
-        .btn-full:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(50, 108, 229, 0.4); }
+        :root {
+            --hub-color: #326ce5;
+            --hub-color2: #5b8def;
+            --hub-bg: linear-gradient(165deg, #f8fafc 0%, #eff6ff 42%, #f8fafc 100%);
+        }
+        .hub-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 12px;
+            margin: 0 0 22px;
+        }
+        .hub-stat {
+            background: #fff;
+            border: 1px solid rgba(15, 23, 42, 0.08);
+            border-radius: 16px;
+            padding: 14px 16px;
+        }
+        .hub-stat strong { display: block; color: #326ce5; font-size: 1.35rem; }
+        .hub-stat span { color: #475569; font-size: 0.88rem; }
+        .lesson-link-pro { background: #f8fafc; color: #475569; }
+        .lesson-link .pro-badge {
+            margin-left: auto;
+            font-size: 0.68rem;
+            padding: 2px 8px;
+            border-radius: 999px;
+            background: linear-gradient(135deg, #d97706, #b45309);
+            color: #fff;
+            font-weight: 800;
+        }
     </style>
     <link rel="stylesheet" href="../css/dfd-system.css">
 </head>
-<body>
+<body class="dfd-safe" data-course-id="kubernetes" data-lesson-id="hub" data-lesson-label="Kubernetes hub" data-total-lessons="12">
     <div class="container">
-        <nav class="nav">
-            <a href="../index.html"><i class="fas fa-home"></i><span>Main Website</span></a>
-            <a href="index.html"><span>Full Kubernetes Course</span><i class="fas fa-arrow-right"></i></a>
+        <nav class="nav" aria-label="Site">
+            <a href="../index.html">
+<i class="fas fa-home">
+</i>
+<span>Home</span>
+</a>
+            <a href="../learning-path.html">
+<span>All courses</span>
+</a>
+            <a href="../curriculum.html">
+<span>Curriculum</span>
+</a>
         </nav>
-        <div class="header">
-            <span class="header-badge">🚢 Kubernetes</span>
-            <h1>Kubernetes Course Hub</h1>
-            <p>Containers and orchestration explained like you're five. Step-by-step Docker Desktop (Mac) setup with screenshots.</p>
+        <header class="header">
+            <span class="header-badge">KUBERNETES · 12 LESSONS · 2 FREE · 10 PRO</span>
+            <h1>Kubernetes, from a laptop cluster to a production upgrade</h1>
+            <p>Pods, networking, storage, security, Helm, and the managed clouds. 2 lessons are free. The other 10 open with Pro.</p>
+        </header>
+        <div class="hub-stats" aria-label="Course size">
+            <div class="hub-stat">
+<strong>12</strong>
+<span>lessons</span>
+</div>
+            <div class="hub-stat">
+<strong>2</strong>
+<span>free to open</span>
+</div>
+            <div class="hub-stat">
+<strong>10</strong>
+<span>Pro lessons</span>
+</div>
+            <div class="hub-stat">
+<strong>4</strong>
+<span>modules</span>
+</div>
         </div>
-        <div class="progress-section">
-            <h3>📈 Course Progress</h3>
-            <div class="progress-bar-bg"><div class="progress-bar">Full Course Ready</div></div>
-            <p style="margin-top: 15px; color: #94a3b8;">Welcome, What is K8s, Install on Docker Desktop (Mac), Pods, Deployments, Services, ConfigMaps & Secrets, kubectl, and real apps.</p>
+        <div class="dfd-lesson-progress" data-dfd-progress>
+            <p class="dfd-lesson-progress-label" data-dfd-progress-label>Sign in to save your place.</p>
+            <div class="dfd-lesson-progress-track" data-dfd-progress-bar role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-label="Course progress">
+                <div class="dfd-lesson-progress-fill" data-dfd-progress-fill>
+</div>
+            </div>
         </div>
         <div class="modules-grid">
-            <a href="index.html#welcome" class="module-card"><div class="module-icon">🏠</div><h3>Welcome</h3><p>What you'll learn and why Kubernetes.</p></a>
-            <a href="index.html#what-is-k8s" class="module-card"><div class="module-icon">👶</div><h3>What is Kubernetes? (ELI5)</h3><p>Explain like you're 5: containers, captains, and ships.</p></a>
-            <a href="index.html#install-docker-mac" class="module-card"><div class="module-icon">⚙️</div><h3>Install K8s on Docker Desktop (Mac)</h3><p>Step-by-step with lots of screenshots.</p></a>
-            <a href="index.html#pods" class="module-card"><div class="module-icon">📦</div><h3>Pods</h3><p>The smallest runnable unit in Kubernetes.</p></a>
-            <a href="index.html#deployments" class="module-card"><div class="module-icon">🔄</div><h3>Deployments & ReplicaSets</h3><p>Keep your app running and scale it.</p></a>
-            <a href="index.html#services" class="module-card"><div class="module-icon">🌐</div><h3>Services</h3><p>Give your app a stable address.</p></a>
-            <a href="index.html#configmaps-secrets" class="module-card"><div class="module-icon">🔐</div><h3>ConfigMaps & Secrets</h3><p>Configuration and sensitive data.</p></a>
-            <a href="index.html#kubectl" class="module-card"><div class="module-icon">⌨️</div><h3>kubectl Basics</h3><p>Talk to your cluster from the terminal.</p></a>
-            <a href="index.html#real-apps" class="module-card"><div class="module-icon">🚀</div><h3>Running Real Apps</h3><p>Deploy a data app on your cluster.</p></a>
+            <article class="module-card">
+<span class="module-status status-ready">2 lessons</span>
+<h3>Start here</h3>
+<p>What a cluster is, and three ways to run one on your own machine.</p>
+<div class="module-lessons">
+<a class="lesson-link" href="meet-kubernetes.html">
+<i class="fas fa-play-circle">
+</i> Meet Kubernetes<span class="pro-badge" style="background:#059669">Free</span>
+</a>
+<a class="lesson-link" href="local-setup.html">
+<i class="fas fa-play-circle">
+</i> Local clusters<span class="pro-badge" style="background:#059669">Free</span>
+</a>
+</div>
+</article>
+<article class="module-card">
+<span class="module-status status-ready">4 lessons</span>
+<h3>Run the app</h3>
+<p>Pods, networking, configuration, and disks.</p>
+<div class="module-lessons">
+<a class="lesson-link lesson-link-pro" href="pods-deployments.html">
+<i class="fas fa-lock">
+</i> Pods and Deployments<span class="pro-badge">Pro</span>
+</a>
+<a class="lesson-link lesson-link-pro" href="services-networking.html">
+<i class="fas fa-lock">
+</i> Services, Ingress, and Gateway API<span class="pro-badge">Pro</span>
+</a>
+<a class="lesson-link lesson-link-pro" href="config-secrets.html">
+<i class="fas fa-lock">
+</i> ConfigMaps and Secrets<span class="pro-badge">Pro</span>
+</a>
+<a class="lesson-link lesson-link-pro" href="storage-statefulsets.html">
+<i class="fas fa-lock">
+</i> Storage and StatefulSets<span class="pro-badge">Pro</span>
+</a>
+</div>
+</article>
+<article class="module-card">
+<span class="module-status status-ready">3 lessons</span>
+<h3>Operate it</h3>
+<p>Batch work, debugging, and the security objects that do nothing until something enforces them.</p>
+<div class="module-lessons">
+<a class="lesson-link lesson-link-pro" href="jobs-cronjobs.html">
+<i class="fas fa-lock">
+</i> Jobs and CronJobs<span class="pro-badge">Pro</span>
+</a>
+<a class="lesson-link lesson-link-pro" href="observability.html">
+<i class="fas fa-lock">
+</i> Observability and debugging<span class="pro-badge">Pro</span>
+</a>
+<a class="lesson-link lesson-link-pro" href="security.html">
+<i class="fas fa-lock">
+</i> Security: RBAC, NetworkPolicy, Pod Security<span class="pro-badge">Pro</span>
+</a>
+</div>
+</article>
+<article class="module-card">
+<span class="module-status status-ready">3 lessons</span>
+<h3>Ship it</h3>
+<p>Packaging, managed clusters, and a capstone you can apply locally.</p>
+<div class="module-lessons">
+<a class="lesson-link lesson-link-pro" href="helm-kustomize.html">
+<i class="fas fa-lock">
+</i> Helm and Kustomize<span class="pro-badge">Pro</span>
+</a>
+<a class="lesson-link lesson-link-pro" href="production-clouds.html">
+<i class="fas fa-lock">
+</i> Production on EKS, GKE, and AKS<span class="pro-badge">Pro</span>
+</a>
+<a class="lesson-link lesson-link-pro" href="capstone.html">
+<i class="fas fa-lock">
+</i> Capstone<span class="pro-badge">Pro</span>
+</a>
+</div>
+</article>
         </div>
-        <p style="text-align: center;"><a href="index.html" class="btn-full"><i class="fas fa-book-open"></i> Open Full Course</a></p>
-        <div class="footer"><p>© 2026 <a href="../index.html">Fakhruddin Khambaty's Learning Hub</a> | Kubernetes Course</p></div>
+        <p>
+<a href="index.html">Older single-page section addresses</a> still open. The lessons above are the course.</p>
+        <footer>
+<p>&copy; 2026 <a href="../index.html">Data For Dummies</a> · Kubernetes</p>
+</footer>
     </div>
+
+    <script src="../js/code-copy.js">
+</script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2">
+</script>
+    <script src="../js/supabase-config.js">
+</script>
+    <script src="../js/supabase-auth.js">
+</script>
+    <script src="../js/paywall.js">
+</script>
+    <script src="../js/progress.js">
+</script>
+    <script src="../js/lesson-common.js">
+</script>
+    <script src="../js/quiz.js">
+</script>
+    <script src="../js/analytics-tracker.js">
+</script>
+
 </body>
 </html>

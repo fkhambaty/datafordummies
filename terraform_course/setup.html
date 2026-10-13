@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Install and version managers | Terraform and OpenTofu | Data For Dummies</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="../css/dfd-system.css">
+</head>
+<body class="dfd-safe" data-course-id="terraform" data-lesson-id="setup" data-lesson-label="Install and version managers" data-total-lessons="12">
+    <div class="container">
+        <nav class="nav" aria-label="Course">
+            <a href="hub.html">Course hub</a>
+            <a href="../index.html">Home</a>
+            <a href="#check">Knowledge check</a>
+        </nav>
+        <header class="lesson-hero" id="top">
+            <p class="track-kicker">Free · Lesson 2 of 12</p>
+            <h1>Install and version managers</h1>
+            <p>Install one version on purpose. A version manager is how a directory can pick a different version without hiding which binary is first on PATH.</p>
+        </header>
+        <div class="dfd-lesson-progress" data-dfd-progress>
+            <p class="dfd-lesson-progress-label" data-dfd-progress-label>Sign in to save your place.</p>
+            <div class="dfd-lesson-progress-track" data-dfd-progress-bar role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-label="Course progress">
+                <div class="dfd-lesson-progress-fill" data-dfd-progress-fill>
+</div>
+            </div>
+        </div>
+        <section class="section" data-dfd-reveal>
+            <div class="eli5-box">
+                <h4>Picture it this way</h4>
+                <p>Two rulers in the same pencil case will not measure the same if you grab the wrong one. <code>terraform version</code> is you reading the ruler before you cut.</p>
+            </div>
+        </section>
+        <section class="section" data-dfd-reveal id="install">
+<h2>Official packages and zip files</h2>
+<p>HashiCorp publishes Terraform packages and a zip you can unpack. OpenTofu publishes its own install instructions and binaries named <code>tofu</code>. Follow the page for the tool you chose. Do not rename <code>tofu</code> to <code>terraform</code> to satisfy an old script. You will forget which one you ran.</p>
+<p>Homebrew, apt, and yum repositories exist for HashiCorp. A distribution package can lag. <code>terraform version</code> after install is the check, not the package manager&#x27;s advertisement.</p>
+</section>
+<section class="section" data-dfd-reveal id="managers">
+<h2>tfenv, asdf, and tofuenv</h2>
+<p>
+<code>tfenv</code> and the asdf Terraform plugin install HashiCorp Terraform versions. OpenTofu has its own install paths, including a tofuenv-style manager and asdf plugins. A manager that only knows Terraform will not install OpenTofu, and the reverse is not a promise either.</p>
+<p>A <code>.terraform-version</code> file pins Terraform for tfenv in that directory. It does nothing for a teammate who does not use tfenv. Commit a note of the version next to the code, and still run <code>terraform version</code> in CI so the runner proves it.</p>
+<table class="comparison-table dfd-scroll">
+<thead>
+<tr>
+<th>Command</th>
+<th>Tells you</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>terraform version</td>
+<td>The HashiCorp binary on PATH, if that name exists</td>
+</tr>
+<tr>
+<td>tofu version</td>
+<td>The OpenTofu binary on PATH</td>
+</tr>
+<tr>
+<td>which terraform</td>
+<td>The path of the file you are about to run</td>
+</tr>
+</tbody>
+</table>
+</section>
+        <section class="section dfd-diagram" data-dfd-diagram data-dfd-reveal>
+            <h2>Which binary</h2>
+            <div data-dfd-diagram-panel="path">
+<svg class="dfd-responsive" viewBox="0 0 640 148" role="img" aria-label="PATH highlighted">
+<rect class="track-drift" x="16" y="36" width="188" height="72" rx="12" fill="#a78bfa">
+</rect>
+<text x="110" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#ffffff">PATH</text>
+<path d="M204 72 H224" stroke="#64748b" stroke-width="2" fill="none">
+</path>
+<rect x="224" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
+</rect>
+<text x="318" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">Binary</text>
+<path d="M412 72 H432" stroke="#64748b" stroke-width="2" fill="none">
+</path>
+<rect x="432" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
+</rect>
+<text x="526" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">Version</text>
+</svg>
+<p>The shell runs the first matching name. A manager changes what that name points at.</p>
+</div>
+<div data-dfd-diagram-panel="bin" hidden>
+<svg class="dfd-responsive" viewBox="0 0 640 148" role="img" aria-label="Binary highlighted">
+<rect x="16" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
+</rect>
+<text x="110" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">PATH</text>
+<path d="M204 72 H224" stroke="#64748b" stroke-width="2" fill="none">
+</path>
+<rect class="track-drift" x="224" y="36" width="188" height="72" rx="12" fill="#a78bfa">
+</rect>
+<text x="318" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#ffffff">Binary</text>
+<path d="M412 72 H432" stroke="#64748b" stroke-width="2" fill="none">
+</path>
+<rect x="432" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
+</rect>
+<text x="526" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">Version</text>
+</svg>
+<p>terraform and tofu are different files. Similar flags are not a shared identity.</p>
+</div>
+<div data-dfd-diagram-panel="ver" hidden>
+<svg class="dfd-responsive" viewBox="0 0 640 148" role="img" aria-label="Version highlighted">
+<rect x="16" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
+</rect>
+<text x="110" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">PATH</text>
+<path d="M204 72 H224" stroke="#64748b" stroke-width="2" fill="none">
+</path>
+<rect x="224" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
+</rect>
+<text x="318" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">Binary</text>
+<path d="M412 72 H432" stroke="#64748b" stroke-width="2" fill="none">
+</path>
+<rect class="track-drift" x="432" y="36" width="188" height="72" rx="12" fill="#a78bfa">
+</rect>
+<text x="526" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#ffffff">Version</text>
+</svg>
+<p>Print the version in the directory of the lab before you trust a blog command.</p>
+</div>
+            <div class="dfd-diagram-controls">
+                <button type="button" data-dfd-diagram-step="path" aria-pressed="true">PATH</button>
+<button type="button" data-dfd-diagram-step="bin" aria-pressed="false">Binary</button>
+<button type="button" data-dfd-diagram-step="ver" aria-pressed="false">Version</button>
+            </div>
+        </section>
+        <section class="section" id="lab" data-dfd-reveal>
+            <h2>Lab: print the version and stop</h2>
+            <p>Run the command for the tool you installed. If the command is not found, that is a successful reading of this lesson. Install from the official page, then print the version again.</p>
+            <div class="code-block">
+<pre>
+<code>terraform version
+# or, if you chose OpenTofu:
+tofu version
+which terraform || true
+which tofu || true</code>
+</pre>
+</div>
+            <p>
+<button type="button" data-dfd-complete>Mark lesson complete</button>
+</p>
+            <p data-dfd-complete-status>
+</p>
+        </section>
+        <section class="section" id="summary" data-dfd-reveal>
+            <h2>Concept summary</h2>
+            <ul class="summary-list">
+<li>Install from the project that publishes the tool you mean.</li>
+<li>terraform and tofu are different binaries.</li>
+<li>A version file only helps people who use the same version manager.</li>
+</ul>
+        </section>
+        <section class="section" id="check" data-dfd-reveal>
+            <h2>Knowledge check</h2>
+            <section class="dfd-quiz" data-dfd-quiz data-explanation="The OpenTofu binary is tofu.">
+<h3 data-dfd-prompt>You need OpenTofu. Which command should print the version?</h3>
+<div data-dfd-choices>
+<button type="button" data-correct="false">terraform version, because they are the same file</button>
+<button type="button" data-correct="true">tofu version</button>
+<button type="button" data-correct="false">hcp version</button>
+</div>
+<p class="dfd-quiz-feedback" data-dfd-feedback hidden>
+</p>
+<p class="dfd-quiz-explain" data-dfd-explain hidden>
+</p>
+</section>
+<section class="dfd-quiz" data-dfd-quiz data-explanation="The file does not force every installer.">
+<h3 data-dfd-prompt>A directory contains .terraform-version but CI installed Terraform another way. What is true?</h3>
+<div data-dfd-choices>
+<button type="button" data-correct="false">Every CI system reads .terraform-version</button>
+<button type="button" data-correct="true">The pin works for tools that know that file</button>
+<button type="button" data-correct="false">The file changes the license</button>
+</div>
+<p class="dfd-quiz-feedback" data-dfd-feedback hidden>
+</p>
+<p class="dfd-quiz-explain" data-dfd-explain hidden>
+</p>
+</section>
+<section class="dfd-quiz" data-dfd-quiz data-explanation="The next person cannot see which project they ran.">
+<h3 data-dfd-prompt>Why avoid renaming tofu to terraform?</h3>
+<div data-dfd-choices>
+<button type="button" data-correct="false">The rename is required by HCL</button>
+<button type="button" data-correct="true">You will lose track of which binary ran</button>
+<button type="button" data-correct="false">OpenTofu refuses to read HCL</button>
+</div>
+<p class="dfd-quiz-feedback" data-dfd-feedback hidden>
+</p>
+<p class="dfd-quiz-explain" data-dfd-explain hidden>
+</p>
+</section>
+        </section>
+        <section class="section" data-dfd-reveal>
+            <h2>Official sources</h2>
+            <p>Checked against the linked documentation in October 2026. A later release can move a flag, a price, or a supported pair. Use the page for the version you installed.</p>
+            <ul class="source-list">
+<li>
+<a href="https://developer.hashicorp.com/terraform/install" target="_blank" rel="noopener noreferrer">Install Terraform</a>
+</li>
+<li>
+<a href="https://opentofu.org/docs/intro/install/" target="_blank" rel="noopener noreferrer">Install OpenTofu</a>
+</li>
+</ul>
+        </section>
+        <nav class="lesson-nav" aria-label="Lesson order">
+            <a class="secondary" href="meet-terraform.html">Previous: Meet Terraform and OpenTofu</a>
+            <a href="hcl-resources.html">Next: HCL, providers, resources, and data</a>
+        </nav>
+    </div>
+
+    <script src="../js/code-copy.js">
+</script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2">
+</script>
+    <script src="../js/supabase-config.js">
+</script>
+    <script src="../js/supabase-auth.js">
+</script>
+    <script src="../js/paywall.js">
+</script>
+    <script src="../js/progress.js">
+</script>
+    <script src="../js/lesson-common.js">
+</script>
+    <script src="../js/quiz.js">
+</script>
+    <script src="../js/analytics-tracker.js">
+</script>
+
+</body>
+</html>

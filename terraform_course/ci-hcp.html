@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>CI and HCP Terraform | Terraform and OpenTofu | Data For Dummies</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="../css/dfd-system.css">
+</head>
+<body class="dfd-safe" data-access="pro" data-course-id="terraform" data-lesson-id="ci-hcp" data-lesson-label="CI and HCP Terraform" data-total-lessons="12">
+    <div class="container">
+        <nav class="nav" aria-label="Course">
+            <a href="hub.html">Course hub</a>
+            <a href="../index.html">Home</a>
+            <a href="#check">Knowledge check</a>
+        </nav>
+        <header class="lesson-hero" id="top">
+            <p class="track-kicker">Pro · Lesson 10 of 12</p>
+            <h1>CI and HCP Terraform</h1>
+            <p>A pipeline should run the same commands a careful person runs: format, validate, test, plan, and a reviewed apply. HCP Terraform is one place those remote runs can live. It is a HashiCorp product.</p>
+        </header>
+        <div class="dfd-lesson-progress" data-dfd-progress>
+            <p class="dfd-lesson-progress-label" data-dfd-progress-label>Sign in to save your place.</p>
+            <div class="dfd-lesson-progress-track" data-dfd-progress-bar role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-label="Course progress">
+                <div class="dfd-lesson-progress-fill" data-dfd-progress-fill>
+</div>
+            </div>
+        </div>
+        <section class="section" data-dfd-reveal>
+            <div class="eli5-box">
+                <h4>Picture it this way</h4>
+                <p>CI is a clerk who refuses to file a plan they did not print. HCP Terraform is HashiCorp&#x27;s office for that clerk. You can hire a different clerk. Do not assume the other clerk has the same keys.</p>
+            </div>
+        </section>
+        <section class="section" data-dfd-reveal id="pipeline">
+<h2>A small pipeline</h2>
+<p>Pin the Terraform version in the runner image or the version manager the runner actually uses. Run <code>terraform fmt -check</code>, <code>terraform init -input=false</code>, <code>terraform validate</code>, and <code>terraform test</code> on pull requests. Run <code>terraform plan</code> with saved output when the change should be reviewed. Apply from a protected branch or a reviewed run, not from a laptop that happens to have production credentials.</p>
+<p>Store the plan and the state where the team can see them. A plan file is stale if someone else applies first. That is what the lock is for.</p>
+</section>
+<section class="section" data-dfd-reveal id="hcp">
+<h2>What HCP Terraform adds, and what it does not</h2>
+<p>HCP Terraform, the product formerly called Terraform Cloud, runs remote plans and applies, stores remote state, and can require a human to confirm a run. Workspaces there are the remote environments from the workspaces lesson. Policy sets can use Sentinel, which is HashiCorp&#x27;s policy product. Open Policy Agent shows up in some HashiCorp policy stories as well. Read the current policy page before you name a policy engine in a design.</p>
+<p>HCP Terraform does not apply an OpenTofu configuration by you selecting OpenTofu in your heart. The runner is theirs. If you need <code>tofu</code>, use a CI job that installs OpenTofu and calls it, or a product that documents OpenTofu support. Do not write &quot;HCP Terraform or any OpenTofu equivalent&quot; as if a specific equivalent shipped with the same features.</p>
+<table class="comparison-table dfd-scroll">
+<thead>
+<tr>
+<th>Step</th>
+<th>Pull request</th>
+<th>Protected apply</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>fmt -check</td>
+<td>Yes</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>validate and test</td>
+<td>Yes</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>plan</td>
+<td>Yes, as a comment or artifact</td>
+<td>Yes, and a human reads it</td>
+</tr>
+<tr>
+<td>apply</td>
+<td>No</td>
+<td>Yes, after the plan is approved</td>
+</tr>
+</tbody>
+</table>
+</section>
+        <section class="section dfd-diagram" data-dfd-diagram data-dfd-reveal>
+            <h2>A change becomes a run</h2>
+            <div data-dfd-diagram-panel="pr">
+<svg class="dfd-responsive" viewBox="0 0 640 148" role="img" aria-label="Pull request highlighted">
+<rect class="track-drift" x="16" y="36" width="188" height="72" rx="12" fill="#a78bfa">
+</rect>
+<text x="110" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#ffffff">Pull request</text>
+<path d="M204 72 H224" stroke="#64748b" stroke-width="2" fill="none">
+</path>
+<rect x="224" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
+</rect>
+<text x="318" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">Plan</text>
+<path d="M412 72 H432" stroke="#64748b" stroke-width="2" fill="none">
+</path>
+<rect x="432" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
+</rect>
+<text x="526" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">Apply</text>
+</svg>
+<p>The pull request runs fmt, validate, and tests.</p>
+</div>
+<div data-dfd-diagram-panel="plan" hidden>
+<svg class="dfd-responsive" viewBox="0 0 640 148" role="img" aria-label="Plan highlighted">
+<rect x="16" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
+</rect>
+<text x="110" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">Pull request</text>
+<path d="M204 72 H224" stroke="#64748b" stroke-width="2" fill="none">
+</path>
+<rect class="track-drift" x="224" y="36" width="188" height="72" rx="12" fill="#a78bfa">
+</rect>
+<text x="318" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#ffffff">Plan</text>
+<path d="M412 72 H432" stroke="#64748b" stroke-width="2" fill="none">
+</path>
+<rect x="432" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
+</rect>
+<text x="526" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">Apply</text>
+</svg>
+<p>The plan is an artifact. It is not an apply.</p>
+</div>
+<div data-dfd-diagram-panel="apply" hidden>
+<svg class="dfd-responsive" viewBox="0 0 640 148" role="img" aria-label="Apply highlighted">
+<rect x="16" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
+</rect>
+<text x="110" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">Pull request</text>
+<path d="M204 72 H224" stroke="#64748b" stroke-width="2" fill="none">
+</path>
+<rect x="224" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
+</rect>
+<text x="318" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">Plan</text>
+<path d="M412 72 H432" stroke="#64748b" stroke-width="2" fill="none">
+</path>
+<rect class="track-drift" x="432" y="36" width="188" height="72" rx="12" fill="#a78bfa">
+</rect>
+<text x="526" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#ffffff">Apply</text>
+</svg>
+<p>Apply waits for review and a lock.</p>
+</div>
+            <div class="dfd-diagram-controls">
+                <button type="button" data-dfd-diagram-step="pr" aria-pressed="true">Pull request</button>
+<button type="button" data-dfd-diagram-step="plan" aria-pressed="false">Plan</button>
+<button type="button" data-dfd-diagram-step="apply" aria-pressed="false">Apply</button>
+            </div>
+        </section>
+        <section class="section" id="lab" data-dfd-reveal>
+            <h2>Lab: write the pipeline as comments you could paste into CI</h2>
+            <p>Do not point this at a production backend. The commands are the contract.</p>
+            <div class="code-block">
+<pre>
+<code>terraform version
+terraform fmt -check -recursive
+terraform init -input=false
+terraform validate
+terraform test
+terraform plan -input=false -out=tfplan
+# apply only on the protected path:
+# terraform apply -input=false tfplan</code>
+</pre>
+</div>
+            <p>
+<button type="button" data-dfd-complete>Mark lesson complete</button>
+</p>
+            <p data-dfd-complete-status>
+</p>
+        </section>
+        <section class="section" id="summary" data-dfd-reveal>
+            <h2>Concept summary</h2>
+            <ul class="summary-list">
+<li>CI pins a version and separates plan from apply.</li>
+<li>HCP Terraform is HashiCorp&#x27;s remote-run product.</li>
+<li>An OpenTofu pipeline has to execute tofu. HCP Terraform is not that pipeline by default.</li>
+</ul>
+        </section>
+        <section class="section" id="check" data-dfd-reveal>
+            <h2>Knowledge check</h2>
+            <section class="dfd-quiz" data-dfd-quiz data-explanation="On a reviewed, protected path.">
+<h3 data-dfd-prompt>Where should apply run?</h3>
+<div data-dfd-choices>
+<button type="button" data-correct="false">On every pull request</button>
+<button type="button" data-correct="true">After a reviewed plan, on a protected path</button>
+<button type="button" data-correct="false">Only on a laptop</button>
+</div>
+<p class="dfd-quiz-feedback" data-dfd-feedback hidden>
+</p>
+<p class="dfd-quiz-explain" data-dfd-explain hidden>
+</p>
+</section>
+<section class="dfd-quiz" data-dfd-quiz data-explanation="A HashiCorp policy feature, not an OpenTofu built-in.">
+<h3 data-dfd-prompt>What is Sentinel in this lesson?</h3>
+<div data-dfd-choices>
+<button type="button" data-correct="false">The OpenTofu license</button>
+<button type="button" data-correct="true">A HashiCorp policy engine used with their product</button>
+<button type="button" data-correct="false">Another name for terraform validate</button>
+</div>
+<p class="dfd-quiz-feedback" data-dfd-feedback hidden>
+</p>
+<p class="dfd-quiz-explain" data-dfd-explain hidden>
+</p>
+</section>
+<section class="dfd-quiz" data-dfd-quiz data-explanation="A job that runs the tofu binary.">
+<h3 data-dfd-prompt>A team standardizes on OpenTofu. What do they need in CI?</h3>
+<div data-dfd-choices>
+<button type="button" data-correct="false">An HCP Terraform workspace, because the names match</button>
+<button type="button" data-correct="true">A runner that installs and executes tofu</button>
+<button type="button" data-correct="false">Nothing. terraform apply runs tofu</button>
+</div>
+<p class="dfd-quiz-feedback" data-dfd-feedback hidden>
+</p>
+<p class="dfd-quiz-explain" data-dfd-explain hidden>
+</p>
+</section>
+        </section>
+        <section class="section" data-dfd-reveal>
+            <h2>Official sources</h2>
+            <p>Checked against the linked documentation in October 2026. A later release can move a flag, a price, or a supported pair. Use the page for the version you installed.</p>
+            <ul class="source-list">
+<li>
+<a href="https://developer.hashicorp.com/terraform/cloud-docs" target="_blank" rel="noopener noreferrer">HCP Terraform</a>
+</li>
+<li>
+<a href="https://developer.hashicorp.com/terraform/tutorials/automation/automate-terraform" target="_blank" rel="noopener noreferrer">Automate Terraform</a>
+</li>
+<li>
+<a href="https://developer.hashicorp.com/terraform/cloud-docs/run/cli" target="_blank" rel="noopener noreferrer">CLI workspaces versus remote runs</a>
+</li>
+</ul>
+        </section>
+        <nav class="lesson-nav" aria-label="Lesson order">
+            <a class="secondary" href="testing.html">Previous: Testing and validation</a>
+            <a href="security-opentofu.html">Next: Security, policy, and OpenTofu</a>
+        </nav>
+    </div>
+
+    <script src="../js/code-copy.js">
+</script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2">
+</script>
+    <script src="../js/supabase-config.js">
+</script>
+    <script src="../js/supabase-auth.js">
+</script>
+    <script src="../js/paywall.js">
+</script>
+    <script src="../js/progress.js">
+</script>
+    <script src="../js/lesson-common.js">
+</script>
+    <script src="../js/quiz.js">
+</script>
+    <script src="../js/analytics-tracker.js">
+</script>
+
+</body>
+</html>

@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Production on EKS, GKE, and AKS | Kubernetes | Data For Dummies</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="../css/dfd-system.css">
+</head>
+<body class="dfd-safe" data-access="pro" data-course-id="kubernetes" data-lesson-id="production-clouds" data-lesson-label="Production on EKS, GKE, and AKS" data-total-lessons="12">
+    <div class="container">
+        <nav class="nav" aria-label="Course">
+            <a href="hub.html">Course hub</a>
+            <a href="../index.html">Home</a>
+            <a href="#check">Knowledge check</a>
+        </nav>
+        <header class="lesson-hero" id="top">
+            <p class="track-kicker">Pro · Lesson 11 of 12</p>
+            <h1>Production on EKS, GKE, and AKS</h1>
+            <p>EKS, GKE, and AKS run the control plane for you. They do not remove the bill for nodes, load balancers, disks, or a bad upgrade.</p>
+        </header>
+        <div class="dfd-lesson-progress" data-dfd-progress>
+            <p class="dfd-lesson-progress-label" data-dfd-progress-label>Sign in to save your place.</p>
+            <div class="dfd-lesson-progress-track" data-dfd-progress-bar role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-label="Course progress">
+                <div class="dfd-lesson-progress-fill" data-dfd-progress-fill>
+</div>
+            </div>
+        </div>
+        <section class="section" data-dfd-reveal>
+            <div class="eli5-box">
+                <h4>Picture it this way</h4>
+                <p>The cloud rents you the harbour master. You still pay for the docks, the cranes, and the electricity. Each harbour has a different price card, and the card changes.</p>
+            </div>
+        </section>
+        <section class="section" data-dfd-reveal id="three-clouds">
+<h2>Same API, different edges</h2>
+<p>A Deployment from this course can run on EKS, GKE, and AKS. The edges differ: how you log in, how load balancers are created, how disks are named, and how the cloud bills the control plane.</p>
+<p>EKS documents a per-cluster control plane charge, plus the cost of worker nodes and anything those nodes use. Older Kubernetes versions can fall into an extended-support price. Read the current EKS pricing page before you quote a number.</p>
+<p>GKE Standard and Autopilot bill differently. Autopilot charges from Pod requests. Standard charges from nodes. Google has changed cluster-management fees before. Use the current GKE pricing page.</p>
+<p>AKS has offered a free control plane tier and a paid tier with an SLA. Nodes, load balancers, and disks are still billed. Use the current AKS pricing page. Do not copy a fee from a blog into a budget.</p>
+<table class="comparison-table dfd-scroll">
+<thead>
+<tr>
+<th>Cloud</th>
+<th>You still choose</th>
+<th>Look up, do not memorize</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>EKS</td>
+<td>Node groups or another node manager, VPC, IAM</td>
+<td>Control plane fee and version calendar</td>
+</tr>
+<tr>
+<td>GKE</td>
+<td>Standard or Autopilot, region, release channel</td>
+<td>How Pods or nodes are billed</td>
+</tr>
+<tr>
+<td>AKS</td>
+<td>Node pools, SLA tier, network plugin</td>
+<td>Whether the control plane tier you picked is free</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section class="section" data-dfd-reveal id="upgrade">
+<h2>Upgrades one minor at a time</h2>
+<p>Kubernetes clusters are upgraded one minor version at a time. Skipping a minor is how add-ons and APIs break in a pile. Drain a node before the cloud replaces it. A PodDisruptionBudget tells the drain how many Pods of an app may be down.</p>
+<p>Test the same minor jump on a non-production cluster first. Read the cloud&#x27;s version calendar for end of standard support. A version that still runs is not a version you should stay on past that date.</p>
+</section>
+<section class="section" data-dfd-reveal id="cost">
+<h2>The bill is more than the control plane</h2>
+<p>NAT gateways, load balancers, unused disks, and log ingestion often cost more than the control plane fee. Requests and limits decide how many Pods fit on a node. A Pod with no requests is hard to schedule honestly. A Pod with huge requests leaves nodes empty.</p>
+<p>Cluster autoscalers and, on AWS, tools such as Karpenter, add and remove nodes. Karpenter is not a Kubernetes built-in and it is not the GKE or AKS autoscaler. Name the tool the cluster actually runs.</p>
+</section>
+        <section class="section dfd-diagram" data-dfd-diagram data-dfd-reveal>
+            <h2>What you pay attention to</h2>
+            <div data-dfd-diagram-panel="cp">
+<svg class="dfd-responsive" viewBox="0 0 640 148" role="img" aria-label="Control plane highlighted">
+<rect class="track-drift" x="16" y="36" width="188" height="72" rx="12" fill="#5b8def">
+</rect>
+<text x="110" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#ffffff">Control plane</text>
+<path d="M204 72 H224" stroke="#64748b" stroke-width="2" fill="none">
+</path>
+<rect x="224" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
+</rect>
+<text x="318" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">Nodes</text>
+<path d="M412 72 H432" stroke="#64748b" stroke-width="2" fill="none">
+</path>
+<rect x="432" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
+</rect>
+<text x="526" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">Add-ons</text>
+</svg>
+<p>The managed control plane is the cloud&#x27;s job. The fee, if any, is on that cloud&#x27;s price page.</p>
+</div>
+<div data-dfd-diagram-panel="nodes" hidden>
+<svg class="dfd-responsive" viewBox="0 0 640 148" role="img" aria-label="Nodes highlighted">
+<rect x="16" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
+</rect>
+<text x="110" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">Control plane</text>
+<path d="M204 72 H224" stroke="#64748b" stroke-width="2" fill="none">
+</path>
+<rect class="track-drift" x="224" y="36" width="188" height="72" rx="12" fill="#5b8def">
+</rect>
+<text x="318" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#ffffff">Nodes</text>
+<path d="M412 72 H432" stroke="#64748b" stroke-width="2" fill="none">
+</path>
+<rect x="432" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
+</rect>
+<text x="526" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">Add-ons</text>
+</svg>
+<p>Nodes, disks, and load balancers are the large lines on many bills.</p>
+</div>
+<div data-dfd-diagram-panel="ops" hidden>
+<svg class="dfd-responsive" viewBox="0 0 640 148" role="img" aria-label="Upgrade steps highlighted">
+<rect x="16" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
+</rect>
+<text x="110" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">Version</text>
+<path d="M204 72 H224" stroke="#64748b" stroke-width="2" fill="none">
+</path>
+<rect x="224" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
+</rect>
+<text x="318" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">Drain</text>
+<path d="M412 72 H432" stroke="#64748b" stroke-width="2" fill="none">
+</path>
+<rect class="track-drift" x="432" y="36" width="188" height="72" rx="12" fill="#5b8def">
+</rect>
+<text x="526" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#ffffff">PDB</text>
+</svg>
+<p>One minor at a time, drain, and a disruption budget so the app stays up.</p>
+</div>
+            <div class="dfd-diagram-controls">
+                <button type="button" data-dfd-diagram-step="cp" aria-pressed="true">Control plane</button>
+<button type="button" data-dfd-diagram-step="nodes" aria-pressed="false">Nodes</button>
+<button type="button" data-dfd-diagram-step="ops" aria-pressed="false">Upgrades</button>
+            </div>
+        </section>
+        <section class="section" id="lab" data-dfd-reveal>
+            <h2>Lab: write the upgrade note before you touch production</h2>
+            <p>Fill this in for a real cluster. Do not invent the prices. Paste the links you actually opened.</p>
+            <div class="code-block">
+<pre>
+<code>Cluster:
+Current minor:
+Target minor (one step only):
+Cloud version calendar URL:
+Pricing page URL:
+PodDisruptionBudget in place for the app: yes/no
+Non-prod cluster where this jump already ran: name</code>
+</pre>
+</div>
+            <p>
+<button type="button" data-dfd-complete>Mark lesson complete</button>
+</p>
+            <p data-dfd-complete-status>
+</p>
+        </section>
+        <section class="section" id="summary" data-dfd-reveal>
+            <h2>Concept summary</h2>
+            <ul class="summary-list">
+<li>EKS, GKE, and AKS share the Kubernetes API and not the bill.</li>
+<li>Upgrade one minor at a time, with a disruption budget.</li>
+<li>Look up fees. They change, and extended support is often a different price.</li>
+</ul>
+        </section>
+        <section class="section" id="check" data-dfd-reveal>
+            <h2>Knowledge check</h2>
+            <section class="dfd-quiz" data-dfd-quiz data-explanation="One. Then the next.">
+<h3 data-dfd-prompt>How many minor versions should a cluster jump in one upgrade?</h3>
+<div data-dfd-choices>
+<button type="button" data-correct="false">As many as you like</button>
+<button type="button" data-correct="true">One</button>
+<button type="button" data-correct="false">Only patch versions, minors are forbidden</button>
+</div>
+<p class="dfd-quiz-feedback" data-dfd-feedback hidden>
+</p>
+<p class="dfd-quiz-explain" data-dfd-explain hidden>
+</p>
+</section>
+<section class="dfd-quiz" data-dfd-quiz data-explanation="Every cloud price in this lesson.">
+<h3 data-dfd-prompt>Which cost should you look up rather than memorize?</h3>
+<div data-dfd-choices>
+<button type="button" data-correct="true">The current EKS, GKE, or AKS price page</button>
+<button type="button" data-correct="false">A number from an old course</button>
+<button type="button" data-correct="false">A flat fee that is identical on all three clouds</button>
+</div>
+<p class="dfd-quiz-feedback" data-dfd-feedback hidden>
+</p>
+<p class="dfd-quiz-explain" data-dfd-explain hidden>
+</p>
+</section>
+<section class="dfd-quiz" data-dfd-quiz data-explanation="An AWS node-management tool, not a Kubernetes built-in.">
+<h3 data-dfd-prompt>What is Karpenter?</h3>
+<div data-dfd-choices>
+<button type="button" data-correct="false">The Kubernetes built-in autoscaler on every cloud</button>
+<button type="button" data-correct="true">A node provisioner used with AWS, not a core API</button>
+<button type="button" data-correct="false">A Gateway API channel</button>
+</div>
+<p class="dfd-quiz-feedback" data-dfd-feedback hidden>
+</p>
+<p class="dfd-quiz-explain" data-dfd-explain hidden>
+</p>
+</section>
+        </section>
+        <section class="section" data-dfd-reveal>
+            <h2>Official sources</h2>
+            <p>Checked against the linked documentation in October 2026. A later release can move a flag, a price, or a supported pair. Use the page for the version you installed.</p>
+            <ul class="source-list">
+<li>
+<a href="https://docs.aws.amazon.com/eks/latest/userguide/kubernetes-versions.html" target="_blank" rel="noopener noreferrer">EKS Kubernetes versions</a>
+</li>
+<li>
+<a href="https://cloud.google.com/kubernetes-engine/docs/concepts/release-channels" target="_blank" rel="noopener noreferrer">GKE release channels</a>
+</li>
+<li>
+<a href="https://learn.microsoft.com/en-us/azure/aks/supported-kubernetes-versions" target="_blank" rel="noopener noreferrer">AKS supported versions</a>
+</li>
+</ul>
+        </section>
+        <nav class="lesson-nav" aria-label="Lesson order">
+            <a class="secondary" href="helm-kustomize.html">Previous: Helm and Kustomize</a>
+            <a href="capstone.html">Next: Capstone</a>
+        </nav>
+    </div>
+
+    <script src="../js/code-copy.js">
+</script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2">
+</script>
+    <script src="../js/supabase-config.js">
+</script>
+    <script src="../js/supabase-auth.js">
+</script>
+    <script src="../js/paywall.js">
+</script>
+    <script src="../js/progress.js">
+</script>
+    <script src="../js/lesson-common.js">
+</script>
+    <script src="../js/quiz.js">
+</script>
+    <script src="../js/analytics-tracker.js">
+</script>
+
+</body>
+</html>

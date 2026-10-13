@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>HCL, providers, resources, and data | Terraform and OpenTofu | Data For Dummies</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="../css/dfd-system.css">
+</head>
+<body class="dfd-safe" data-access="pro" data-course-id="terraform" data-lesson-id="hcl-resources" data-lesson-label="HCL, providers, resources, and data" data-total-lessons="12">
+    <div class="container">
+        <nav class="nav" aria-label="Course">
+            <a href="hub.html">Course hub</a>
+            <a href="../index.html">Home</a>
+            <a href="#check">Knowledge check</a>
+        </nav>
+        <header class="lesson-hero" id="top">
+            <p class="track-kicker">Pro · Lesson 3 of 12</p>
+            <h1>HCL, providers, resources, and data</h1>
+            <p>HCL is the language. A provider is a plugin. A resource is something the plugin manages. A data source is a read.</p>
+        </header>
+        <div class="dfd-lesson-progress" data-dfd-progress>
+            <p class="dfd-lesson-progress-label" data-dfd-progress-label>Sign in to save your place.</p>
+            <div class="dfd-lesson-progress-track" data-dfd-progress-bar role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-label="Course progress">
+                <div class="dfd-lesson-progress-fill" data-dfd-progress-fill>
+</div>
+            </div>
+        </div>
+        <section class="section" data-dfd-reveal>
+            <div class="eli5-box">
+                <h4>Picture it this way</h4>
+                <p>The provider is the shop. A resource is an item you asked the shop to keep on the shelf. A data source is you asking the shop what is already on the shelf, without ordering a new one.</p>
+            </div>
+        </section>
+        <section class="section" data-dfd-reveal id="hcl">
+<h2>Blocks you will see every day</h2>
+<p>
+<code>terraform</code> sets the required version and providers. <code>provider</code> configures one plugin. <code>resource</code> declares an object. <code>data</code> reads an existing object. Arguments use <code>=</code> and blocks use braces. <code>terraform fmt</code> rewrites spacing. It does not check whether AWS will accept the values.</p>
+<p>
+<code>terraform validate</code> checks syntax and references. It does not prove the cloud account allows the change. Only a plan against that account, or a test you wrote, goes further.</p>
+</section>
+<section class="section" data-dfd-reveal id="init">
+<h2>Init downloads providers</h2>
+<p>
+<code>terraform init</code> reads the lock file if you have one, downloads providers, and configures the backend. Commit <code>.terraform.lock.hcl</code> so the next machine does not silently pick a different provider build. Do not commit the <code>.terraform</code> directory or a state file full of ids.</p>
+<table class="comparison-table dfd-scroll">
+<thead>
+<tr>
+<th>Command</th>
+<th>Touches the cloud?</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>fmt</td>
+<td>No. It edits local files.</td>
+</tr>
+<tr>
+<td>validate</td>
+<td>No. It checks the configuration.</td>
+</tr>
+<tr>
+<td>plan</td>
+<td>It reads state and the provider. A refresh can read the cloud.</td>
+</tr>
+<tr>
+<td>apply</td>
+<td>Yes. It changes resources.</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section class="section" data-dfd-reveal id="data">
+<h2>Data sources are not resources</h2>
+<p>A data source looks up something that already exists, such as an AMI or a network. It does not create it. If the object is gone, the plan fails. That is different from a resource, which Terraform would offer to create.</p>
+</section>
+        <section class="section dfd-diagram" data-dfd-diagram data-dfd-reveal>
+            <h2>Who talks to the cloud</h2>
+            <div data-dfd-diagram-panel="hcl">
+<svg class="dfd-responsive" viewBox="0 0 640 148" role="img" aria-label="HCL highlighted">
+<rect class="track-drift" x="16" y="36" width="188" height="72" rx="12" fill="#a78bfa">
+</rect>
+<text x="110" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#ffffff">HCL</text>
+<path d="M204 72 H224" stroke="#64748b" stroke-width="2" fill="none">
+</path>
+<rect x="224" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
+</rect>
+<text x="318" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">Provider</text>
+<path d="M412 72 H432" stroke="#64748b" stroke-width="2" fill="none">
+</path>
+<rect x="432" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
+</rect>
+<text x="526" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">API</text>
+</svg>
+<p>HCL is local text until a provider is configured.</p>
+</div>
+<div data-dfd-diagram-panel="prov" hidden>
+<svg class="dfd-responsive" viewBox="0 0 640 148" role="img" aria-label="Provider highlighted">
+<rect x="16" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
+</rect>
+<text x="110" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">HCL</text>
+<path d="M204 72 H224" stroke="#64748b" stroke-width="2" fill="none">
+</path>
+<rect class="track-drift" x="224" y="36" width="188" height="72" rx="12" fill="#a78bfa">
+</rect>
+<text x="318" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#ffffff">Provider</text>
+<path d="M412 72 H432" stroke="#64748b" stroke-width="2" fill="none">
+</path>
+<rect x="432" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
+</rect>
+<text x="526" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">API</text>
+</svg>
+<p>The provider plugin knows one API.</p>
+</div>
+<div data-dfd-diagram-panel="api" hidden>
+<svg class="dfd-responsive" viewBox="0 0 640 148" role="img" aria-label="API highlighted">
+<rect x="16" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
+</rect>
+<text x="110" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">HCL</text>
+<path d="M204 72 H224" stroke="#64748b" stroke-width="2" fill="none">
+</path>
+<rect x="224" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
+</rect>
+<text x="318" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">Provider</text>
+<path d="M412 72 H432" stroke="#64748b" stroke-width="2" fill="none">
+</path>
+<rect class="track-drift" x="432" y="36" width="188" height="72" rx="12" fill="#a78bfa">
+</rect>
+<text x="526" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#ffffff">API</text>
+</svg>
+<p>Resources create and update. Data sources read.</p>
+</div>
+            <div class="dfd-diagram-controls">
+                <button type="button" data-dfd-diagram-step="hcl" aria-pressed="true">HCL</button>
+<button type="button" data-dfd-diagram-step="prov" aria-pressed="false">Provider</button>
+<button type="button" data-dfd-diagram-step="api" aria-pressed="false">API</button>
+            </div>
+        </section>
+        <section class="section" id="lab" data-dfd-reveal>
+            <h2>Lab: a local resource with no cloud account</h2>
+            <p>This uses terraform_data, which ships with Terraform, so plan can run without AWS keys. The required_version floor is a hint. If your binary is older, read the error and install a newer Terraform or skip to the version lesson.</p>
+            <div class="code-block">
+<pre>
+<code>cat &gt; main.tf &lt;&lt;&#x27;EOF&#x27;
+terraform {
+  required_version = &quot;&gt;= 1.7.0&quot;
+}
+
+resource &quot;terraform_data&quot; &quot;note&quot; {
+  input = &quot;hello from the lab&quot;
+}
+
+output &quot;note&quot; {
+  value = terraform_data.note.output
+}
+EOF
+terraform fmt
+terraform init
+terraform validate</code>
+</pre>
+</div>
+            <p>
+<button type="button" data-dfd-complete>Mark lesson complete</button>
+</p>
+            <p data-dfd-complete-status>
+</p>
+        </section>
+        <section class="section" id="summary" data-dfd-reveal>
+            <h2>Concept summary</h2>
+            <ul class="summary-list">
+<li>Resources are managed. Data sources are reads.</li>
+<li>fmt and validate do not change the cloud.</li>
+<li>Commit the provider lock file, not the state secrets.</li>
+</ul>
+        </section>
+        <section class="section" id="check" data-dfd-reveal>
+            <h2>Knowledge check</h2>
+            <section class="dfd-quiz" data-dfd-quiz data-explanation="Syntax and references, not cloud permission.">
+<h3 data-dfd-prompt>What does terraform validate prove?</h3>
+<div data-dfd-choices>
+<button type="button" data-correct="false">That AWS will accept the apply</button>
+<button type="button" data-correct="true">That the configuration is internally consistent</button>
+<button type="button" data-correct="false">That state is locked</button>
+</div>
+<p class="dfd-quiz-feedback" data-dfd-feedback hidden>
+</p>
+<p class="dfd-quiz-explain" data-dfd-explain hidden>
+</p>
+</section>
+<section class="dfd-quiz" data-dfd-quiz data-explanation="Data sources do not recreate the object.">
+<h3 data-dfd-prompt>A data source for a subnet fails because the subnet was deleted. Why is that different from a resource?</h3>
+<div data-dfd-choices>
+<button type="button" data-correct="false">Terraform will recreate it automatically</button>
+<button type="button" data-correct="true">A data source only reads</button>
+<button type="button" data-correct="false">Data sources are stored in HCP Terraform only</button>
+</div>
+<p class="dfd-quiz-feedback" data-dfd-feedback hidden>
+</p>
+<p class="dfd-quiz-explain" data-dfd-explain hidden>
+</p>
+</section>
+<section class="dfd-quiz" data-dfd-quiz data-explanation="The lock file. Not the .terraform cache.">
+<h3 data-dfd-prompt>What should you commit?</h3>
+<div data-dfd-choices>
+<button type="button" data-correct="true">.terraform.lock.hcl</button>
+<button type="button" data-correct="false">The .terraform directory</button>
+<button type="button" data-correct="false">A state file with production passwords</button>
+</div>
+<p class="dfd-quiz-feedback" data-dfd-feedback hidden>
+</p>
+<p class="dfd-quiz-explain" data-dfd-explain hidden>
+</p>
+</section>
+        </section>
+        <section class="section" data-dfd-reveal>
+            <h2>Official sources</h2>
+            <p>Checked against the linked documentation in October 2026. A later release can move a flag, a price, or a supported pair. Use the page for the version you installed.</p>
+            <ul class="source-list">
+<li>
+<a href="https://developer.hashicorp.com/terraform/language/resources" target="_blank" rel="noopener noreferrer">Resources</a>
+</li>
+<li>
+<a href="https://developer.hashicorp.com/terraform/language/data-sources" target="_blank" rel="noopener noreferrer">Data sources</a>
+</li>
+<li>
+<a href="https://developer.hashicorp.com/terraform/language/providers/requirements" target="_blank" rel="noopener noreferrer">Provider requirements</a>
+</li>
+</ul>
+        </section>
+        <nav class="lesson-nav" aria-label="Lesson order">
+            <a class="secondary" href="setup.html">Previous: Install and version managers</a>
+            <a href="variables-outputs.html">Next: Variables, outputs, and locals</a>
+        </nav>
+    </div>
+
+    <script src="../js/code-copy.js">
+</script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2">
+</script>
+    <script src="../js/supabase-config.js">
+</script>
+    <script src="../js/supabase-auth.js">
+</script>
+    <script src="../js/paywall.js">
+</script>
+    <script src="../js/progress.js">
+</script>
+    <script src="../js/lesson-common.js">
+</script>
+    <script src="../js/quiz.js">
+</script>
+    <script src="../js/analytics-tracker.js">
+</script>
+
+</body>
+</html>

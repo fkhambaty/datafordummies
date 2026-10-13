@@ -191,7 +191,10 @@ function enterCourse(courseType) {
         'metabase': 'metabase_course/hub.html',
         'postgres': 'postgres_course/hub.html',
         'llm': 'llm_course/index.html',
-        'snowflake': 'snowflake_course/hub.html'
+        'snowflake': 'snowflake_course/hub.html',
+        'kubernetes': 'kubernetes_course/hub.html',
+        'terraform': 'terraform_course/hub.html',
+        'dms': 'dms_course/hub.html'
     };
     
     const url = courseUrls[courseType];

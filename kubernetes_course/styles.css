@@ -1,2 +1,63 @@
-/* Kubernetes Course - Minimal overrides */
-/* Main styling from fkti-light-theme.css */
+@import url('../css/course-light-theme.css');
+
+:root {
+    --course-primary: #326ce5;
+    --course-accent: #5b8def;
+    --bg-page: linear-gradient(165deg, #f8fafc 0%, #eff6ff 42%, #f8fafc 100%);
+}
+
+.lesson-hero h1,
+.section h2,
+.section h3,
+.summary-list li,
+.source-list li,
+.lesson-nav a {
+    overflow-wrap: anywhere;
+}
+
+.comparison-table {
+    display: block;
+    max-width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+.summary-list,
+.source-list {
+    margin: 12px 0 0 1.2rem;
+    color: var(--text-secondary);
+}
+
+.source-list a { color: var(--course-primary); font-weight: 700; }
+
+.track-kicker {
+    display: inline-block;
+    margin-bottom: 12px;
+    padding: 4px 12px;
+    border-radius: 999px;
+    background: rgba(50, 108, 229, 0.12);
+    color: var(--course-primary);
+    font-size: 0.78rem;
+    font-weight: 800;
+    letter-spacing: 0.04em;
+}
+
+.lesson-nav {
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.lesson-nav a {
+    max-width: 100%;
+}
+
+@keyframes trackDrift {
+    from { transform: translateY(0); }
+    to { transform: translateY(-4px); }
+}
+
+.track-drift { animation: trackDrift 2.6s ease-in-out infinite alternate; }
+
+@media (prefers-reduced-motion: reduce) {
+    .track-drift { animation: none; }
+}

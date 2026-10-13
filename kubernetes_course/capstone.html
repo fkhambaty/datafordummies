@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Capstone | Kubernetes | Data For Dummies</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="../css/dfd-system.css">
+</head>
+<body class="dfd-safe" data-access="pro" data-course-id="kubernetes" data-lesson-id="capstone" data-lesson-label="Capstone" data-total-lessons="12">
+    <div class="container">
+        <nav class="nav" aria-label="Course">
+            <a href="hub.html">Course hub</a>
+            <a href="../index.html">Home</a>
+            <a href="#check">Knowledge check</a>
+        </nav>
+        <header class="lesson-hero" id="top">
+            <p class="track-kicker">Pro · Lesson 12 of 12</p>
+            <h1>Capstone</h1>
+            <p>Ship a small app on your local cluster, then write the production list you have not turned on yet.</p>
+        </header>
+        <div class="dfd-lesson-progress" data-dfd-progress>
+            <p class="dfd-lesson-progress-label" data-dfd-progress-label>Sign in to save your place.</p>
+            <div class="dfd-lesson-progress-track" data-dfd-progress-bar role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-label="Course progress">
+                <div class="dfd-lesson-progress-fill" data-dfd-progress-fill>
+</div>
+            </div>
+        </div>
+        <section class="section" data-dfd-reveal>
+            <div class="eli5-box">
+                <h4>Picture it this way</h4>
+                <p>You built one boat, gave it a phone number, a sticky note, and a health check. The capstone is that boat, plus a written list of the harbour rules you would add before real passengers arrive.</p>
+            </div>
+        </section>
+        <section class="section" data-dfd-reveal id="app">
+<h2>What you will apply</h2>
+<p>One Deployment with three replicas, requests, a readiness probe, and a ConfigMap for a plain setting. One ClusterIP Service. No LoadBalancer, because the local cluster may not give you one.</p>
+<p>The image is a public nginx tag. Pin the tag you actually pulled. If the tag moves, your lab moves with it.</p>
+</section>
+<section class="section" data-dfd-reveal id="not-yet">
+<h2>What this lab does not prove</h2>
+<p>It does not prove NetworkPolicy enforcement, encryption of Secrets at rest, a Gateway controller, or a cloud upgrade. The checklist below is the honest list. Tick an item only after you have seen it work on a cluster that can enforce it.</p>
+<table class="comparison-table dfd-scroll">
+<thead>
+<tr>
+<th>Before production</th>
+<th>Done when</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Restricted Pod Security on the namespace</td>
+<td>A too-wide Pod is rejected or warned</td>
+</tr>
+<tr>
+<td>NetworkPolicy on a CNI that enforces it</td>
+<td>A denied path fails</td>
+</tr>
+<tr>
+<td>Requests, limits, and a disruption budget</td>
+<td>A drain does not take every Pod</td>
+</tr>
+<tr>
+<td>An Ingress or Gateway with a real controller</td>
+<td>A host answers without port-forward</td>
+</tr>
+<tr>
+<td>A one-minor upgrade rehearsed off production</td>
+<td>The app stayed ready</td>
+</tr>
+</tbody>
+</table>
+</section>
+        <section class="section dfd-diagram" data-dfd-diagram data-dfd-reveal>
+            <h2>Lab versus production</h2>
+            <div data-dfd-diagram-panel="lab">
+<svg class="dfd-responsive" viewBox="0 0 640 148" role="img" aria-label="Lab objects highlighted">
+<rect class="track-drift" x="16" y="36" width="188" height="72" rx="12" fill="#5b8def">
+</rect>
+<text x="110" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#ffffff">Deployment</text>
+<path d="M204 72 H224" stroke="#64748b" stroke-width="2" fill="none">
+</path>
+<rect x="224" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
+</rect>
+<text x="318" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">Service</text>
+<path d="M412 72 H432" stroke="#64748b" stroke-width="2" fill="none">
+</path>
+<rect x="432" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
+</rect>
+<text x="526" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">ConfigMap</text>
+</svg>
+<p>These three are enough for the local lab.</p>
+</div>
+<div data-dfd-diagram-panel="edge" hidden>
+<svg class="dfd-responsive" viewBox="0 0 640 148" role="img" aria-label="Edge highlighted">
+<rect x="16" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
+</rect>
+<text x="110" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">Gateway</text>
+<path d="M204 72 H224" stroke="#64748b" stroke-width="2" fill="none">
+</path>
+<rect class="track-drift" x="224" y="36" width="188" height="72" rx="12" fill="#5b8def">
+</rect>
+<text x="318" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#ffffff">Controller</text>
+<path d="M412 72 H432" stroke="#64748b" stroke-width="2" fill="none">
+</path>
+<rect x="432" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
+</rect>
+<text x="526" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">DNS</text>
+</svg>
+<p>The public edge needs a controller and a name. The lab skips it on purpose.</p>
+</div>
+<div data-dfd-diagram-panel="guard" hidden>
+<svg class="dfd-responsive" viewBox="0 0 640 148" role="img" aria-label="Guards highlighted">
+<rect x="16" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
+</rect>
+<text x="110" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">RBAC</text>
+<path d="M204 72 H224" stroke="#64748b" stroke-width="2" fill="none">
+</path>
+<rect x="224" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
+</rect>
+<text x="318" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">Policy</text>
+<path d="M412 72 H432" stroke="#64748b" stroke-width="2" fill="none">
+</path>
+<rect class="track-drift" x="432" y="36" width="188" height="72" rx="12" fill="#5b8def">
+</rect>
+<text x="526" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#ffffff">Backup</text>
+</svg>
+<p>RBAC, an enforced network policy, and a backup plan are production work.</p>
+</div>
+            <div class="dfd-diagram-controls">
+                <button type="button" data-dfd-diagram-step="lab" aria-pressed="true">Lab</button>
+<button type="button" data-dfd-diagram-step="edge" aria-pressed="false">Edge</button>
+<button type="button" data-dfd-diagram-step="guard" aria-pressed="false">Guards</button>
+            </div>
+        </section>
+        <section class="section" id="lab" data-dfd-reveal>
+            <h2>Lab: apply the app, then write the gap list</h2>
+            <p>Apply the manifest. Port-forward. Then write five lines: what you would add for a managed cluster, and which lesson in this course covers it.</p>
+            <div class="code-block">
+<pre>
+<code>kubectl apply -f - &lt;&lt;&#x27;EOF&#x27;
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: hello-config
+data:
+  MESSAGE: hello from the capstone
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hello
+spec:
+  replicas: 3
+  selector:
+    matchLabels: {app: hello}
+  template:
+    metadata:
+      labels: {app: hello}
+    spec:
+      containers:
+      - name: web
+        image: nginx:1.27
+        ports: [{containerPort: 80}]
+        resources:
+          requests: {cpu: 50m, memory: 64Mi}
+          limits: {cpu: 200m, memory: 128Mi}
+        readinessProbe:
+          httpGet: {path: /, port: 80}
+        env:
+        - name: MESSAGE
+          valueFrom:
+            configMapKeyRef: {name: hello-config, key: MESSAGE}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: hello
+spec:
+  selector: {app: hello}
+  ports: [{port: 80, targetPort: 80}]
+EOF
+kubectl rollout status deploy/hello
+kubectl port-forward svc/hello 8080:80</code>
+</pre>
+</div>
+            <p>
+<button type="button" data-dfd-complete>Mark lesson complete</button>
+</p>
+            <p data-dfd-complete-status>
+</p>
+        </section>
+        <section class="section" id="summary" data-dfd-reveal>
+            <h2>Concept summary</h2>
+            <ul class="summary-list">
+<li>The capstone app is a Deployment, a Service, and a ConfigMap.</li>
+<li>Port-forward is the local door. It is not an Ingress.</li>
+<li>The production list is unfinished until a cluster that can enforce it says so.</li>
+</ul>
+        </section>
+        <section class="section" id="check" data-dfd-reveal>
+            <h2>Knowledge check</h2>
+            <section class="dfd-quiz" data-dfd-quiz data-explanation="The lab should work without a cloud load balancer.">
+<h3 data-dfd-prompt>Why is the capstone Service a ClusterIP?</h3>
+<div data-dfd-choices>
+<button type="button" data-correct="false">ClusterIP is reachable from the public internet</button>
+<button type="button" data-correct="true">A local cluster may not give a LoadBalancer address</button>
+<button type="button" data-correct="false">Deployments cannot use any other type</button>
+</div>
+<p class="dfd-quiz-feedback" data-dfd-feedback hidden>
+</p>
+<p class="dfd-quiz-explain" data-dfd-explain hidden>
+</p>
+</section>
+<section class="dfd-quiz" data-dfd-quiz data-explanation="NetworkPolicy enforcement needs a CNI that implements it.">
+<h3 data-dfd-prompt>Which item is not proved by a green rollout on kind?</h3>
+<div data-dfd-choices>
+<button type="button" data-correct="false">The Deployment can become Ready</button>
+<button type="button" data-correct="true">A NetworkPolicy is being enforced</button>
+<button type="button" data-correct="false">The Service selects the Pods</button>
+</div>
+<p class="dfd-quiz-feedback" data-dfd-feedback hidden>
+</p>
+<p class="dfd-quiz-explain" data-dfd-explain hidden>
+</p>
+</section>
+<section class="dfd-quiz" data-dfd-quiz data-explanation="The production controls this lab did not turn on.">
+<h3 data-dfd-prompt>What belongs in the written gap list?</h3>
+<div data-dfd-choices>
+<button type="button" data-correct="false">A claim that EKS, GKE, and AKS cost the same</button>
+<button type="button" data-correct="true">Security, edge, and upgrade items you have not rehearsed</button>
+<button type="button" data-correct="false">A fake screenshot of a cloud console</button>
+</div>
+<p class="dfd-quiz-feedback" data-dfd-feedback hidden>
+</p>
+<p class="dfd-quiz-explain" data-dfd-explain hidden>
+</p>
+</section>
+        </section>
+        <section class="section" data-dfd-reveal>
+            <h2>Official sources</h2>
+            <p>Checked against the linked documentation in October 2026. A later release can move a flag, a price, or a supported pair. Use the page for the version you installed.</p>
+            <ul class="source-list">
+<li>
+<a href="https://kubernetes.io/docs/concepts/workloads/controllers/deployment/" target="_blank" rel="noopener noreferrer">Deployments</a>
+</li>
+<li>
+<a href="https://kubernetes.io/docs/tasks/run-application/configure-pdb/" target="_blank" rel="noopener noreferrer">Pod disruption budgets</a>
+</li>
+<li>
+<a href="https://kubernetes.io/releases/" target="_blank" rel="noopener noreferrer">Kubernetes releases</a>
+</li>
+</ul>
+        </section>
+        <nav class="lesson-nav" aria-label="Lesson order">
+            <a class="secondary" href="production-clouds.html">Previous: Production on EKS, GKE, and AKS</a>
+            <a href="hub.html">Back to the hub</a>
+        </nav>
+    </div>
+
+    <script src="../js/code-copy.js">
+</script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2">
+</script>
+    <script src="../js/supabase-config.js">
+</script>
+    <script src="../js/supabase-auth.js">
+</script>
+    <script src="../js/paywall.js">
+</script>
+    <script src="../js/progress.js">
+</script>
+    <script src="../js/lesson-common.js">
+</script>
+    <script src="../js/quiz.js">
+</script>
+    <script src="../js/analytics-tracker.js">
+</script>
+
+</body>
+</html>

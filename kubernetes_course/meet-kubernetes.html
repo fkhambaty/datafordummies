@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Meet Kubernetes | Kubernetes | Data For Dummies</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="../css/dfd-system.css">
+</head>
+<body class="dfd-safe" data-course-id="kubernetes" data-lesson-id="meet-kubernetes" data-lesson-label="Meet Kubernetes" data-total-lessons="12">
+    <div class="container">
+        <nav class="nav" aria-label="Course">
+            <a href="hub.html">Course hub</a>
+            <a href="../index.html">Home</a>
+            <a href="#check">Knowledge check</a>
+        </nav>
+        <header class="lesson-hero" id="top">
+            <p class="track-kicker">Free · Lesson 1 of 12</p>
+            <h1>Meet Kubernetes</h1>
+            <p>Kubernetes runs containers. It does not replace the container runtime, and it does not install itself on a cloud until you ask a managed service to do that.</p>
+        </header>
+        <div class="dfd-lesson-progress" data-dfd-progress>
+            <p class="dfd-lesson-progress-label" data-dfd-progress-label>Sign in to save your place.</p>
+            <div class="dfd-lesson-progress-track" data-dfd-progress-bar role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-label="Course progress">
+                <div class="dfd-lesson-progress-fill" data-dfd-progress-fill>
+</div>
+            </div>
+        </div>
+        <section class="section" data-dfd-reveal>
+            <div class="eli5-box">
+                <h4>Picture it this way</h4>
+                <p>A pod is one small boat. A node is the dock. The control plane is the harbour master who decides which dock gets the boat, and who sends a new boat if one sinks.</p>
+            </div>
+        </section>
+        <section class="section" data-dfd-reveal id="cluster">
+<h2>A cluster is two jobs</h2>
+<p>The control plane stores the desired state and makes decisions. The API server is the front door. <code>etcd</code> holds the cluster data. The scheduler picks a node. Controllers notice when the real world drifts from what you asked for.</p>
+<p>A node runs the work. On the node, a kubelet talks to the API server, and a container runtime starts the containers. Your laptop can be one node. A cloud cluster is many nodes plus a control plane you often do not log into.</p>
+<table class="comparison-table dfd-scroll">
+<thead>
+<tr>
+<th>Piece</th>
+<th>What it decides</th>
+<th>What it does not do</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Control plane</td>
+<td>Desired state, scheduling, and the API</td>
+<td>It does not run your app containers</td>
+</tr>
+<tr>
+<td>Node</td>
+<td>Where pods are placed</td>
+<td>It is not a backup of etcd</td>
+</tr>
+<tr>
+<td>Container runtime</td>
+<td>Starts and stops containers</td>
+<td>It is not the Kubernetes API</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section class="section" data-dfd-reveal id="pod-word">
+<h2>Pod, container, and virtual machine</h2>
+<p>A container is a process with its own filesystem view. A Pod is the Kubernetes object around one or more containers that share a network namespace and can share volumes. You almost never create a bare Pod for a long-running app. A Deployment owns that.</p>
+<p>A virtual machine includes a guest operating system. A container shares the node&#x27;s kernel. Kubernetes schedules Pods, not virtual machines. Some clusters run Pods inside lightweight VMs for isolation. That is a node setup choice, not a different API.</p>
+</section>
+<section class="section" data-dfd-reveal id="release">
+<h2>Versions move. Do not freeze a number in your head</h2>
+<p>The Kubernetes project publishes a new minor release about every four months. A minor version branch is maintained for about 14 months. Patch releases land on that branch.</p>
+<p>This course does not name one patch as the version you must install. <code>kubectl version</code> and your cloud&#x27;s version calendar are the numbers that matter. A tutorial that says &quot;install 1.xx&quot; without a date is already drifting.</p>
+</section>
+        <section class="section dfd-diagram" data-dfd-diagram data-dfd-reveal>
+            <h2>Follow one request</h2>
+            <div data-dfd-diagram-panel="ask">
+<svg class="dfd-responsive" viewBox="0 0 640 148" role="img" aria-label="kubectl highlighted as the client">
+<rect class="track-drift" x="16" y="36" width="188" height="72" rx="12" fill="#5b8def">
+</rect>
+<text x="110" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#ffffff">kubectl</text>
+<path d="M204 72 H224" stroke="#64748b" stroke-width="2" fill="none">
+</path>
+<rect x="224" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
+</rect>
+<text x="318" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">API server</text>
+<path d="M412 72 H432" stroke="#64748b" stroke-width="2" fill="none">
+</path>
+<rect x="432" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
+</rect>
+<text x="526" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">Node</text>
+</svg>
+<p>kubectl sends the object to the API server. It does not start the container itself.</p>
+</div>
+<div data-dfd-diagram-panel="store" hidden>
+<svg class="dfd-responsive" viewBox="0 0 640 148" role="img" aria-label="API server highlighted">
+<rect x="16" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
+</rect>
+<text x="110" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">kubectl</text>
+<path d="M204 72 H224" stroke="#64748b" stroke-width="2" fill="none">
+</path>
+<rect class="track-drift" x="224" y="36" width="188" height="72" rx="12" fill="#5b8def">
+</rect>
+<text x="318" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#ffffff">API server</text>
+<path d="M412 72 H432" stroke="#64748b" stroke-width="2" fill="none">
+</path>
+<rect x="432" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
+</rect>
+<text x="526" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">Node</text>
+</svg>
+<p>The API server checks the object and stores it. Controllers and the scheduler watch that store.</p>
+</div>
+<div data-dfd-diagram-panel="run" hidden>
+<svg class="dfd-responsive" viewBox="0 0 640 148" role="img" aria-label="Node highlighted">
+<rect x="16" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
+</rect>
+<text x="110" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">kubectl</text>
+<path d="M204 72 H224" stroke="#64748b" stroke-width="2" fill="none">
+</path>
+<rect x="224" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
+</rect>
+<text x="318" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">API server</text>
+<path d="M412 72 H432" stroke="#64748b" stroke-width="2" fill="none">
+</path>
+<rect class="track-drift" x="432" y="36" width="188" height="72" rx="12" fill="#5b8def">
+</rect>
+<text x="526" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#ffffff">Node</text>
+</svg>
+<p>A kubelet on a node sees the Pod and asks the container runtime to start it.</p>
+</div>
+            <div class="dfd-diagram-controls">
+                <button type="button" data-dfd-diagram-step="ask" aria-pressed="true">You ask</button>
+<button type="button" data-dfd-diagram-step="store" aria-pressed="false">API stores</button>
+<button type="button" data-dfd-diagram-step="run" aria-pressed="false">Node runs</button>
+            </div>
+        </section>
+        <section class="section" id="lab" data-dfd-reveal>
+            <h2>Lab: read the words before you install</h2>
+            <p>You do not need a cluster yet. Say which sentence is about a Pod and which is about a node.</p>
+            <div class="code-block">
+<pre>
+<code>Pod: the smallest object Kubernetes runs. It can hold more than one container.
+Node: a machine, virtual or physical, that runs Pods.
+Control plane: the API and the decision makers. Not where your web server process lives.</code>
+</pre>
+</div>
+            <p>
+<button type="button" data-dfd-complete>Mark lesson complete</button>
+</p>
+            <p data-dfd-complete-status>
+</p>
+        </section>
+        <section class="section" id="summary" data-dfd-reveal>
+            <h2>Concept summary</h2>
+            <ul class="summary-list">
+<li>Kubernetes keeps desired state and tries to make the nodes match it.</li>
+<li>A Pod wraps containers. A Deployment is what you usually want for an app.</li>
+<li>Minor releases move. Check the release and the cloud calendar instead of a hardcoded patch.</li>
+</ul>
+        </section>
+        <section class="section" id="check" data-dfd-reveal>
+            <h2>Knowledge check</h2>
+            <section class="dfd-quiz" data-dfd-quiz data-explanation="The API server is the front door and the store of desired state.">
+<h3 data-dfd-prompt>What does the API server do?</h3>
+<div data-dfd-choices>
+<button type="button" data-correct="false">It builds your container image</button>
+<button type="button" data-correct="true">It accepts objects and stores desired state</button>
+<button type="button" data-correct="false">It replaces the container runtime</button>
+</div>
+<p class="dfd-quiz-feedback" data-dfd-feedback hidden>
+</p>
+<p class="dfd-quiz-explain" data-dfd-explain hidden>
+</p>
+</section>
+<section class="dfd-quiz" data-dfd-quiz data-explanation="A Pod is the smallest deployable object. A Deployment manages Pods.">
+<h3 data-dfd-prompt>Which object is the smallest thing Kubernetes runs?</h3>
+<div data-dfd-choices>
+<button type="button" data-correct="false">A Deployment</button>
+<button type="button" data-correct="true">A Pod</button>
+<button type="button" data-correct="false">A virtual machine</button>
+</div>
+<p class="dfd-quiz-feedback" data-dfd-feedback hidden>
+</p>
+<p class="dfd-quiz-explain" data-dfd-explain hidden>
+</p>
+</section>
+<section class="dfd-quiz" data-dfd-quiz data-explanation="The release branch and the tool&#x27;s default both move. Read them.">
+<h3 data-dfd-prompt>How should you pick a Kubernetes version for a new lab?</h3>
+<div data-dfd-choices>
+<button type="button" data-correct="false">Memorize one patch number from an old page</button>
+<button type="button" data-correct="true">Read the current release note for the tool you are about to run</button>
+<button type="button" data-correct="false">Assume every cloud supports every minor forever</button>
+</div>
+<p class="dfd-quiz-feedback" data-dfd-feedback hidden>
+</p>
+<p class="dfd-quiz-explain" data-dfd-explain hidden>
+</p>
+</section>
+        </section>
+        <section class="section" data-dfd-reveal>
+            <h2>Official sources</h2>
+            <p>Checked against the linked documentation in October 2026. A later release can move a flag, a price, or a supported pair. Use the page for the version you installed.</p>
+            <ul class="source-list">
+<li>
+<a href="https://kubernetes.io/docs/concepts/overview/" target="_blank" rel="noopener noreferrer">Kubernetes overview</a>
+</li>
+<li>
+<a href="https://kubernetes.io/docs/concepts/overview/components/" target="_blank" rel="noopener noreferrer">Kubernetes components</a>
+</li>
+<li>
+<a href="https://kubernetes.io/releases/version-skew-policy/" target="_blank" rel="noopener noreferrer">Release versioning</a>
+</li>
+</ul>
+        </section>
+        <nav class="lesson-nav" aria-label="Lesson order">
+            <a class="secondary" href="hub.html">Course hub</a>
+            <a href="local-setup.html">Next: Local clusters</a>
+        </nav>
+    </div>
+
+    <script src="../js/code-copy.js">
+</script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2">
+</script>
+    <script src="../js/supabase-config.js">
+</script>
+    <script src="../js/supabase-auth.js">
+</script>
+    <script src="../js/paywall.js">
+</script>
+    <script src="../js/progress.js">
+</script>
+    <script src="../js/lesson-common.js">
+</script>
+    <script src="../js/quiz.js">
+</script>
+    <script src="../js/analytics-tracker.js">
+</script>
+
+</body>
+</html>

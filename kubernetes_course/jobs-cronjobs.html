@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Jobs and CronJobs | Kubernetes | Data For Dummies</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="../css/dfd-system.css">
+</head>
+<body class="dfd-safe" data-access="pro" data-course-id="kubernetes" data-lesson-id="jobs-cronjobs" data-lesson-label="Jobs and CronJobs" data-total-lessons="12">
+    <div class="container">
+        <nav class="nav" aria-label="Course">
+            <a href="hub.html">Course hub</a>
+            <a href="../index.html">Home</a>
+            <a href="#check">Knowledge check</a>
+        </nav>
+        <header class="lesson-hero" id="top">
+            <p class="track-kicker">Pro · Lesson 7 of 12</p>
+            <h1>Jobs and CronJobs</h1>
+            <p>A Job runs until it succeeds or hits its limit. A CronJob creates Jobs on a schedule.</p>
+        </header>
+        <div class="dfd-lesson-progress" data-dfd-progress>
+            <p class="dfd-lesson-progress-label" data-dfd-progress-label>Sign in to save your place.</p>
+            <div class="dfd-lesson-progress-track" data-dfd-progress-bar role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-label="Course progress">
+                <div class="dfd-lesson-progress-fill" data-dfd-progress-fill>
+</div>
+            </div>
+        </div>
+        <section class="section" data-dfd-reveal>
+            <div class="eli5-box">
+                <h4>Picture it this way</h4>
+                <p>A Job is a boat you send once, with a note that says how many times it may try. A CronJob is the clock that sends that boat every night.</p>
+            </div>
+        </section>
+        <section class="section" data-dfd-reveal id="job">
+<h2>Jobs finish</h2>
+<p>A Job&#x27;s Pod should use <code>restartPolicy</code> of Never or OnFailure. Always is for long-running Pods, and the API rejects it on a Job.</p>
+<p>
+<code>completions</code> is how many successes you want. <code>parallelism</code> is how many Pods may run at once. <code>backoffLimit</code> is how many failures you tolerate. A Job that ignores a failed container will look green while the work did not happen. Read the Pod status, not only the Job&#x27;s first line.</p>
+<table class="comparison-table dfd-scroll">
+<thead>
+<tr>
+<th>Field</th>
+<th>Question it answers</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>completions</td>
+<td>How many successful Pods count as done?</td>
+</tr>
+<tr>
+<td>parallelism</td>
+<td>How many may run together?</td>
+</tr>
+<tr>
+<td>backoffLimit</td>
+<td>How many retries before the Job fails?</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section class="section" data-dfd-reveal id="cron">
+<h2>CronJobs and clocks</h2>
+<p>A CronJob stores a schedule in cron format and a Job template. <code>concurrencyPolicy</code> is Allow, Forbid, or Replace. Forbid is the one you want when a slow run must not overlap the next night. Replace kills the previous run.</p>
+<p>The <code>timeZone</code> field exists on the CronJob API. Confirm it on the cluster version you use before you depend on it. Without it, the schedule is evaluated in the controller&#x27;s timezone, which you should not guess.</p>
+<p>
+<code>startingDeadlineSeconds</code> decides how late a missed start can still run. Leave it unset only if you understand that a paused controller can later fire a burst of missed jobs.</p>
+</section>
+        <section class="section dfd-diagram" data-dfd-diagram data-dfd-reveal>
+            <h2>Nightly work</h2>
+            <div data-dfd-diagram-panel="clock">
+<svg class="dfd-responsive" viewBox="0 0 640 148" role="img" aria-label="CronJob highlighted">
+<rect class="track-drift" x="16" y="36" width="188" height="72" rx="12" fill="#5b8def">
+</rect>
+<text x="110" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#ffffff">CronJob</text>
+<path d="M204 72 H224" stroke="#64748b" stroke-width="2" fill="none">
+</path>
+<rect x="224" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
+</rect>
+<text x="318" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">Job</text>
+<path d="M412 72 H432" stroke="#64748b" stroke-width="2" fill="none">
+</path>
+<rect x="432" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
+</rect>
+<text x="526" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">Pod</text>
+</svg>
+<p>The CronJob does not do the work. It creates a Job.</p>
+</div>
+<div data-dfd-diagram-panel="job" hidden>
+<svg class="dfd-responsive" viewBox="0 0 640 148" role="img" aria-label="Job highlighted">
+<rect x="16" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
+</rect>
+<text x="110" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">CronJob</text>
+<path d="M204 72 H224" stroke="#64748b" stroke-width="2" fill="none">
+</path>
+<rect class="track-drift" x="224" y="36" width="188" height="72" rx="12" fill="#5b8def">
+</rect>
+<text x="318" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#ffffff">Job</text>
+<path d="M412 72 H432" stroke="#64748b" stroke-width="2" fill="none">
+</path>
+<rect x="432" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
+</rect>
+<text x="526" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">Pod</text>
+</svg>
+<p>The Job counts successes and failures.</p>
+</div>
+<div data-dfd-diagram-panel="pod" hidden>
+<svg class="dfd-responsive" viewBox="0 0 640 148" role="img" aria-label="Pod highlighted">
+<rect x="16" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
+</rect>
+<text x="110" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">CronJob</text>
+<path d="M204 72 H224" stroke="#64748b" stroke-width="2" fill="none">
+</path>
+<rect x="224" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
+</rect>
+<text x="318" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">Job</text>
+<path d="M412 72 H432" stroke="#64748b" stroke-width="2" fill="none">
+</path>
+<rect class="track-drift" x="432" y="36" width="188" height="72" rx="12" fill="#5b8def">
+</rect>
+<text x="526" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#ffffff">Pod</text>
+</svg>
+<p>The Pod exits. A restart policy of Always does not belong here.</p>
+</div>
+            <div class="dfd-diagram-controls">
+                <button type="button" data-dfd-diagram-step="clock" aria-pressed="true">Schedule</button>
+<button type="button" data-dfd-diagram-step="job" aria-pressed="false">Job</button>
+<button type="button" data-dfd-diagram-step="pod" aria-pressed="false">Pod</button>
+            </div>
+        </section>
+        <section class="section" id="lab" data-dfd-reveal>
+            <h2>Lab: one Job that prints and exits</h2>
+            <p>Apply it, wait, and read the logs. Then look at the Job status. Delete the Job when you are done so it does not sit in the namespace.</p>
+            <div class="code-block">
+<pre>
+<code>kubectl apply -f - &lt;&lt;&#x27;EOF&#x27;
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: once
+spec:
+  backoffLimit: 2
+  template:
+    spec:
+      restartPolicy: Never
+      containers:
+      - name: work
+        image: busybox:1.36
+        command: [&quot;sh&quot;, &quot;-c&quot;, &quot;echo done &amp;&amp; exit 0&quot;]
+EOF
+kubectl wait --for=condition=complete job/once --timeout=60s
+kubectl logs job/once</code>
+</pre>
+</div>
+            <p>
+<button type="button" data-dfd-complete>Mark lesson complete</button>
+</p>
+            <p data-dfd-complete-status>
+</p>
+        </section>
+        <section class="section" id="summary" data-dfd-reveal>
+            <h2>Concept summary</h2>
+            <ul class="summary-list">
+<li>Jobs run to completion. Deployments run forever.</li>
+<li>CronJob concurrency policy matters more than the cron expression when a run runs long.</li>
+<li>Confirm timeZone on your API version before you depend on a city clock.</li>
+</ul>
+        </section>
+        <section class="section" id="check" data-dfd-reveal>
+            <h2>Knowledge check</h2>
+            <section class="dfd-quiz" data-dfd-quiz data-explanation="Jobs allow Never or OnFailure.">
+<h3 data-dfd-prompt>Which restartPolicy is valid on a Job Pod?</h3>
+<div data-dfd-choices>
+<button type="button" data-correct="false">Always</button>
+<button type="button" data-correct="true">Never</button>
+<button type="button" data-correct="false">OnSuccess</button>
+</div>
+<p class="dfd-quiz-feedback" data-dfd-feedback hidden>
+</p>
+<p class="dfd-quiz-explain" data-dfd-explain hidden>
+</p>
+</section>
+<section class="dfd-quiz" data-dfd-quiz data-explanation="Forbid skips the new run if the old one is still going.">
+<h3 data-dfd-prompt>A nightly job sometimes takes 26 hours. Which concurrencyPolicy avoids two copies?</h3>
+<div data-dfd-choices>
+<button type="button" data-correct="false">Allow</button>
+<button type="button" data-correct="true">Forbid</button>
+<button type="button" data-correct="false">Always</button>
+</div>
+<p class="dfd-quiz-feedback" data-dfd-feedback hidden>
+</p>
+<p class="dfd-quiz-explain" data-dfd-explain hidden>
+</p>
+</section>
+<section class="dfd-quiz" data-dfd-quiz data-explanation="The CronJob creates a Job. The Job creates the Pod.">
+<h3 data-dfd-prompt>Who creates the Pod for a CronJob?</h3>
+<div data-dfd-choices>
+<button type="button" data-correct="false">The CronJob creates the Pod directly and skips Jobs</button>
+<button type="button" data-correct="true">The Job that the CronJob created</button>
+<button type="button" data-correct="false">A Deployment named cron</button>
+</div>
+<p class="dfd-quiz-feedback" data-dfd-feedback hidden>
+</p>
+<p class="dfd-quiz-explain" data-dfd-explain hidden>
+</p>
+</section>
+        </section>
+        <section class="section" data-dfd-reveal>
+            <h2>Official sources</h2>
+            <p>Checked against the linked documentation in October 2026. A later release can move a flag, a price, or a supported pair. Use the page for the version you installed.</p>
+            <ul class="source-list">
+<li>
+<a href="https://kubernetes.io/docs/concepts/workloads/controllers/job/" target="_blank" rel="noopener noreferrer">Job</a>
+</li>
+<li>
+<a href="https://kubernetes.io/docs/concepts/workloads/controllers/cron-jobs/" target="_blank" rel="noopener noreferrer">CronJob</a>
+</li>
+</ul>
+        </section>
+        <nav class="lesson-nav" aria-label="Lesson order">
+            <a class="secondary" href="storage-statefulsets.html">Previous: Storage and StatefulSets</a>
+            <a href="observability.html">Next: Observability and debugging</a>
+        </nav>
+    </div>
+
+    <script src="../js/code-copy.js">
+</script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2">
+</script>
+    <script src="../js/supabase-config.js">
+</script>
+    <script src="../js/supabase-auth.js">
+</script>
+    <script src="../js/paywall.js">
+</script>
+    <script src="../js/progress.js">
+</script>
+    <script src="../js/lesson-common.js">
+</script>
+    <script src="../js/quiz.js">
+</script>
+    <script src="../js/analytics-tracker.js">
+</script>
+
+</body>
+</html>

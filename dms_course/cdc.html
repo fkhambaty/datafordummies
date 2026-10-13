@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>CDC and log positions | AWS DMS | Data For Dummies</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="../css/dfd-system.css">
+</head>
+<body class="dfd-safe" data-access="pro" data-course-id="dms" data-lesson-id="cdc" data-lesson-label="CDC and log positions" data-total-lessons="11">
+    <div class="container">
+        <nav class="nav" aria-label="Course">
+            <a href="hub.html">Course hub</a>
+            <a href="../index.html">Home</a>
+            <a href="#check">Knowledge check</a>
+        </nav>
+        <header class="lesson-hero" id="top">
+            <p class="track-kicker">Pro · Lesson 5 of 11</p>
+            <h1>CDC and log positions</h1>
+            <p>Change data capture reads the source database&#x27;s change log from a saved position. The log name is different on every engine. If the log is gone, DMS cannot invent the missing changes.</p>
+        </header>
+        <div class="dfd-lesson-progress" data-dfd-progress>
+            <p class="dfd-lesson-progress-label" data-dfd-progress-label>Sign in to save your place.</p>
+            <div class="dfd-lesson-progress-track" data-dfd-progress-bar role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-label="Course progress">
+                <div class="dfd-lesson-progress-fill" data-dfd-progress-fill>
+</div>
+            </div>
+        </div>
+        <section class="section" data-dfd-reveal>
+            <div class="eli5-box">
+                <h4>Picture it this way</h4>
+                <p>CDC is reading the shop&#x27;s diary instead of recounting every item. If someone throws the diary away, you cannot reconstruct Tuesday afternoon.</p>
+            </div>
+        </section>
+        <section class="section" data-dfd-reveal id="idea">
+<h2>A position, not a feeling</h2>
+<p>The task stores a position in the source log. After a restart it tries to continue from that position. Full load plus CDC starts the log reader before or as the load runs, so changes during the load are not dropped on the floor. The exact handshake is in the engine&#x27;s DMS page. Do not skip that page for the engine you use.</p>
+<p>If the position is older than the logs the source still has, CDC cannot resume. Retention is a source-database setting: binary log days on MySQL, a replication slot that stops PostgreSQL from recycling WAL, archive logs on Oracle, and the SQL Server retention for CDC. A slot or a log that fills the disk is the other failure. Watch it.</p>
+</section>
+<section class="section" data-dfd-reveal id="engines">
+<h2>The log is not the same object</h2>
+<p>MySQL and MariaDB: the binary log, usually row format, a file and position or a GTID, and enough retention. PostgreSQL: <code>wal_level = logical</code>, a replication slot, and an LSN. The PostgreSQL course&#x27;s replication lesson is the database side of slots. Oracle: supplemental logging and an SCN. SQL Server: the CDC or replication feature the DMS source page requires for that edition, and an LSN.</p>
+<p>Turning those settings on can require a restart or extra disk. Do it in a change window, not as a surprise during the load.</p>
+<table class="comparison-table dfd-scroll">
+<thead>
+<tr>
+<th>Engine</th>
+<th>DMS remembers</th>
+<th>You must keep</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>MySQL</td>
+<td>Binlog file and position, or GTID</td>
+<td>Binlog retention</td>
+</tr>
+<tr>
+<td>PostgreSQL</td>
+<td>LSN and a slot</td>
+<td>WAL for that slot</td>
+</tr>
+<tr>
+<td>Oracle</td>
+<td>SCN</td>
+<td>Supplemental logging and archive logs</td>
+</tr>
+<tr>
+<td>SQL Server</td>
+<td>LSN</td>
+<td>The CDC or replication feature DMS asked for</td>
+</tr>
+</tbody>
+</table>
+</section>
+        <section class="section dfd-diagram" data-dfd-diagram data-dfd-reveal>
+            <h2>Continue from the mark</h2>
+            <div data-dfd-diagram-panel="log">
+<svg class="dfd-responsive" viewBox="0 0 640 148" role="img" aria-label="Source log highlighted">
+<rect class="track-drift" x="16" y="36" width="188" height="72" rx="12" fill="#fb923c">
+</rect>
+<text x="110" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#ffffff">Source log</text>
+<path d="M204 72 H224" stroke="#64748b" stroke-width="2" fill="none">
+</path>
+<rect x="224" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
+</rect>
+<text x="318" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">Position</text>
+<path d="M412 72 H432" stroke="#64748b" stroke-width="2" fill="none">
+</path>
+<rect x="432" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
+</rect>
+<text x="526" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">Target</text>
+</svg>
+<p>The database writes changes to its own log.</p>
+</div>
+<div data-dfd-diagram-panel="pos" hidden>
+<svg class="dfd-responsive" viewBox="0 0 640 148" role="img" aria-label="Position highlighted">
+<rect x="16" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
+</rect>
+<text x="110" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">Source log</text>
+<path d="M204 72 H224" stroke="#64748b" stroke-width="2" fill="none">
+</path>
+<rect class="track-drift" x="224" y="36" width="188" height="72" rx="12" fill="#fb923c">
+</rect>
+<text x="318" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#ffffff">Position</text>
+<path d="M412 72 H432" stroke="#64748b" stroke-width="2" fill="none">
+</path>
+<rect x="432" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
+</rect>
+<text x="526" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">Target</text>
+</svg>
+<p>DMS stores how far it has read.</p>
+</div>
+<div data-dfd-diagram-panel="apply" hidden>
+<svg class="dfd-responsive" viewBox="0 0 640 148" role="img" aria-label="Target highlighted">
+<rect x="16" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
+</rect>
+<text x="110" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">Source log</text>
+<path d="M204 72 H224" stroke="#64748b" stroke-width="2" fill="none">
+</path>
+<rect x="224" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
+</rect>
+<text x="318" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">Position</text>
+<path d="M412 72 H432" stroke="#64748b" stroke-width="2" fill="none">
+</path>
+<rect class="track-drift" x="432" y="36" width="188" height="72" rx="12" fill="#fb923c">
+</rect>
+<text x="526" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#ffffff">Target</text>
+</svg>
+<p>The task applies those changes on the target until you stop it.</p>
+</div>
+            <div class="dfd-diagram-controls">
+                <button type="button" data-dfd-diagram-step="log" aria-pressed="true">Log</button>
+<button type="button" data-dfd-diagram-step="pos" aria-pressed="false">Position</button>
+<button type="button" data-dfd-diagram-step="apply" aria-pressed="false">Apply</button>
+            </div>
+        </section>
+        <section class="section" id="lab" data-dfd-reveal>
+            <h2>Lab: write the retention sentence for your engine</h2>
+            <p>Pick one engine. If you do not know the retention setting today, write unknown and the doc page you will open. A PostgreSQL reader can continue in the replication lesson.</p>
+            <div class="code-block">
+<pre>
+<code>Engine:
+Log object DMS will read:
+Position name (file/pos, GTID, LSN, or SCN):
+Who deletes old logs, and after how long:
+Disk alarm if a slot or CDC capture holds logs:</code>
+</pre>
+</div>
+            <p>
+<button type="button" data-dfd-complete>Mark lesson complete</button>
+</p>
+            <p data-dfd-complete-status>
+</p>
+        </section>
+        <section class="section" id="summary" data-dfd-reveal>
+            <h2>Concept summary</h2>
+            <ul class="summary-list">
+<li>CDC resumes from a stored log position.</li>
+<li>MySQL, PostgreSQL, Oracle, and SQL Server do not share one setting name.</li>
+<li>If the log is gone, the task cannot catch up. You reload.</li>
+</ul>
+        </section>
+        <section class="section" id="check" data-dfd-reveal>
+            <h2>Knowledge check</h2>
+            <section class="dfd-quiz" data-dfd-quiz data-explanation="Logical WAL and a slot.">
+<h3 data-dfd-prompt>PostgreSQL CDC needs which source setting?</h3>
+<div data-dfd-choices>
+<button type="button" data-correct="true">wal_level = logical and a replication slot</button>
+<button type="button" data-correct="false">binlog_format = ROW</button>
+<button type="button" data-correct="false">No source change. DMS always reads PostgreSQL</button>
+</div>
+<p class="dfd-quiz-feedback" data-dfd-feedback hidden>
+</p>
+<p class="dfd-quiz-explain" data-dfd-explain hidden>
+</p>
+</section>
+<section class="dfd-quiz" data-dfd-quiz data-explanation="It cannot reconstruct discarded changes.">
+<h3 data-dfd-prompt>The stored position is older than the binary logs MySQL still has. What can DMS do?</h3>
+<div data-dfd-choices>
+<button type="button" data-correct="false">Resume CDC</button>
+<button type="button" data-correct="true">Not resume. The missing changes are gone</button>
+<button type="button" data-correct="false">Switch to SCT automatically</button>
+</div>
+<p class="dfd-quiz-feedback" data-dfd-feedback hidden>
+</p>
+<p class="dfd-quiz-explain" data-dfd-explain hidden>
+</p>
+</section>
+<section class="dfd-quiz" data-dfd-quiz data-explanation="A copy plus the changes that happen during and after the copy.">
+<h3 data-dfd-prompt>Full load and CDC together are for what?</h3>
+<div data-dfd-choices>
+<button type="button" data-correct="false">Schema conversion</button>
+<button type="button" data-correct="true">Catching changes that happen while the load runs</button>
+<button type="button" data-correct="false">Replacing a database backup</button>
+</div>
+<p class="dfd-quiz-feedback" data-dfd-feedback hidden>
+</p>
+<p class="dfd-quiz-explain" data-dfd-explain hidden>
+</p>
+</section>
+        </section>
+        <section class="section" data-dfd-reveal>
+            <h2>Official sources</h2>
+            <p>Checked against the linked documentation in October 2026. A later release can move a flag, a price, or a supported pair. Use the page for the version you installed.</p>
+            <ul class="source-list">
+<li>
+<a href="https://docs.aws.amazon.com/dms/latest/userguide/CHAP_Task.CDC.html" target="_blank" rel="noopener noreferrer">Change data capture</a>
+</li>
+<li>
+<a href="https://docs.aws.amazon.com/dms/latest/userguide/CHAP_Source.PostgreSQL.html" target="_blank" rel="noopener noreferrer">PostgreSQL source</a>
+</li>
+<li>
+<a href="https://docs.aws.amazon.com/dms/latest/userguide/CHAP_Source.MySQL.html" target="_blank" rel="noopener noreferrer">MySQL source</a>
+</li>
+</ul>
+        </section>
+        <nav class="lesson-nav" aria-label="Lesson order">
+            <a class="secondary" href="full-load.html">Previous: Full load</a>
+            <a href="task-settings.html">Next: Task settings, mappings, and transforms</a>
+        </nav>
+    </div>
+
+    <script src="../js/code-copy.js">
+</script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2">
+</script>
+    <script src="../js/supabase-config.js">
+</script>
+    <script src="../js/supabase-auth.js">
+</script>
+    <script src="../js/paywall.js">
+</script>
+    <script src="../js/progress.js">
+</script>
+    <script src="../js/lesson-common.js">
+</script>
+    <script src="../js/quiz.js">
+</script>
+    <script src="../js/analytics-tracker.js">
+</script>
+
+</body>
+</html>

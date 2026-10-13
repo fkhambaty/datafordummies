@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Schema conversion paths | AWS DMS | Data For Dummies</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="../css/dfd-system.css">
+</head>
+<body class="dfd-safe" data-access="pro" data-course-id="dms" data-lesson-id="schema-conversion" data-lesson-label="Schema conversion paths" data-total-lessons="11">
+    <div class="container">
+        <nav class="nav" aria-label="Course">
+            <a href="hub.html">Course hub</a>
+            <a href="../index.html">Home</a>
+            <a href="#check">Knowledge check</a>
+        </nav>
+        <header class="lesson-hero" id="top">
+            <p class="track-kicker">Pro · Lesson 7 of 11</p>
+            <h1>Schema conversion paths</h1>
+            <p>Same engine family can often keep its schema. A different engine needs a conversion step before DMS is asked to load rows into tables that make sense.</p>
+        </header>
+        <div class="dfd-lesson-progress" data-dfd-progress>
+            <p class="dfd-lesson-progress-label" data-dfd-progress-label>Sign in to save your place.</p>
+            <div class="dfd-lesson-progress-track" data-dfd-progress-bar role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-label="Course progress">
+                <div class="dfd-lesson-progress-fill" data-dfd-progress-fill>
+</div>
+            </div>
+        </div>
+        <section class="section" data-dfd-reveal>
+            <div class="eli5-box">
+                <h4>Picture it this way</h4>
+                <p>Moving shelves between two shops of the same chain is mostly carrying boxes. Moving into a shop that uses different shelf labels means reprinting the labels first. The boxes come after.</p>
+            </div>
+        </section>
+        <section class="section" data-dfd-reveal id="homo">
+<h2>Homogeneous path</h2>
+<p>PostgreSQL to PostgreSQL, or PostgreSQL to Aurora PostgreSQL, is homogeneous. Tables, types, and many constraints already match. You still check extensions, large objects, sequences, and users. Native logical replication or dump and restore can be a better tool than DMS. DMS is one option, not a rule.</p>
+<p>The PostgreSQL replication lesson covers slots if you choose the database&#x27;s own replication instead of DMS.</p>
+</section>
+<section class="section" data-dfd-reveal id="hetero">
+<h2>Heterogeneous path</h2>
+<p>Oracle or SQL Server to Aurora PostgreSQL is heterogeneous. Run a conversion assessment with DMS Schema Conversion or with AWS SCT, fix the action items a person must touch, and apply the schema before the full load. DMS can create tables, and those tables will not include a correct translation of procedural code.</p>
+<p>Generative AI conversion, where AWS offers it for a pair, still needs a person to read the result. The user guide marks which pairs have it. Do not assume every source and target pair does.</p>
+<p>A virtual target in DMS Schema Conversion lets you assess before the real database exists. You still need a real target before you apply the code and start the data task.</p>
+<table class="comparison-table dfd-scroll">
+<thead>
+<tr>
+<th>Path</th>
+<th>Schema first?</th>
+<th>Then</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Same engine</td>
+<td>Usually create or restore the schema you already trust</td>
+<td>Full load, CDC, or a native tool</td>
+</tr>
+<tr>
+<td>Different engine</td>
+<td>Yes. Convert and review</td>
+<td>Full load and CDC into that schema</td>
+</tr>
+<tr>
+<td>Data warehouse such as Redshift</td>
+<td>Design the target tables for the warehouse</td>
+<td>Load. Do not expect transactional procedures to come along</td>
+</tr>
+</tbody>
+</table>
+</section>
+        <section class="section dfd-diagram" data-dfd-diagram data-dfd-reveal>
+            <h2>Schema, then rows</h2>
+            <div data-dfd-diagram-panel="assess">
+<svg class="dfd-responsive" viewBox="0 0 640 148" role="img" aria-label="Assessment highlighted">
+<rect class="track-drift" x="16" y="36" width="188" height="72" rx="12" fill="#fb923c">
+</rect>
+<text x="110" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#ffffff">Assess</text>
+<path d="M204 72 H224" stroke="#64748b" stroke-width="2" fill="none">
+</path>
+<rect x="224" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
+</rect>
+<text x="318" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">Convert</text>
+<path d="M412 72 H432" stroke="#64748b" stroke-width="2" fill="none">
+</path>
+<rect x="432" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
+</rect>
+<text x="526" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">Load</text>
+</svg>
+<p>The conversion assessment lists automatic work and manual work.</p>
+</div>
+<div data-dfd-diagram-panel="convert" hidden>
+<svg class="dfd-responsive" viewBox="0 0 640 148" role="img" aria-label="Convert highlighted">
+<rect x="16" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
+</rect>
+<text x="110" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">Assess</text>
+<path d="M204 72 H224" stroke="#64748b" stroke-width="2" fill="none">
+</path>
+<rect class="track-drift" x="224" y="36" width="188" height="72" rx="12" fill="#fb923c">
+</rect>
+<text x="318" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#ffffff">Convert</text>
+<path d="M412 72 H432" stroke="#64748b" stroke-width="2" fill="none">
+</path>
+<rect x="432" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
+</rect>
+<text x="526" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">Load</text>
+</svg>
+<p>Apply reviewed schema to the target. Read generated code.</p>
+</div>
+<div data-dfd-diagram-panel="load" hidden>
+<svg class="dfd-responsive" viewBox="0 0 640 148" role="img" aria-label="Load highlighted">
+<rect x="16" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
+</rect>
+<text x="110" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">Assess</text>
+<path d="M204 72 H224" stroke="#64748b" stroke-width="2" fill="none">
+</path>
+<rect x="224" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
+</rect>
+<text x="318" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">Convert</text>
+<path d="M412 72 H432" stroke="#64748b" stroke-width="2" fill="none">
+</path>
+<rect class="track-drift" x="432" y="36" width="188" height="72" rx="12" fill="#fb923c">
+</rect>
+<text x="526" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#ffffff">Load</text>
+</svg>
+<p>The DMS data task fills tables that already match the design.</p>
+</div>
+            <div class="dfd-diagram-controls">
+                <button type="button" data-dfd-diagram-step="assess" aria-pressed="true">Assess</button>
+<button type="button" data-dfd-diagram-step="convert" aria-pressed="false">Convert</button>
+<button type="button" data-dfd-diagram-step="load" aria-pressed="false">Load</button>
+            </div>
+        </section>
+        <section class="section" id="lab" data-dfd-reveal>
+            <h2>Lab: pick the path</h2>
+            <p>Write homogeneous or heterogeneous, and the tool that will touch the schema. Unknown is allowed if you have not opened the sources-and-targets page.</p>
+            <div class="code-block">
+<pre>
+<code>Source:
+Target:
+Path:
+Schema tool: none, DMS Schema Conversion, or AWS SCT
+Action items a person must fix before load:
+Data tool: DMS, or a native option we will compare:</code>
+</pre>
+</div>
+            <p>
+<button type="button" data-dfd-complete>Mark lesson complete</button>
+</p>
+            <p data-dfd-complete-status>
+</p>
+        </section>
+        <section class="section" id="summary" data-dfd-reveal>
+            <h2>Concept summary</h2>
+            <ul class="summary-list">
+<li>Homogeneous moves still need a check. They do not always need DMS.</li>
+<li>Heterogeneous moves convert schema before the row copy.</li>
+<li>Generated code and generated AI output are drafts.</li>
+</ul>
+        </section>
+        <section class="section" id="check" data-dfd-reveal>
+            <h2>Knowledge check</h2>
+            <section class="dfd-quiz" data-dfd-quiz data-explanation="The target will not have a reviewed translation of the source code objects.">
+<h3 data-dfd-prompt>Oracle to Aurora PostgreSQL. What happens if you skip schema conversion?</h3>
+<div data-dfd-choices>
+<button type="button" data-correct="false">DMS translates every procedure during full load</button>
+<button type="button" data-correct="true">Tables and code can be wrong or missing</button>
+<button type="button" data-correct="false">SCT runs automatically inside every task</button>
+</div>
+<p class="dfd-quiz-feedback" data-dfd-feedback hidden>
+</p>
+<p class="dfd-quiz-explain" data-dfd-explain hidden>
+</p>
+</section>
+<section class="dfd-quiz" data-dfd-quiz data-explanation="Native options exist. DMS is a choice.">
+<h3 data-dfd-prompt>PostgreSQL to Aurora PostgreSQL must use DMS. True or false?</h3>
+<div data-dfd-choices>
+<button type="button" data-correct="false">True</button>
+<button type="button" data-correct="true">False. Native replication or dump tools may fit better</button>
+<button type="button" data-correct="false">True, because the engines differ</button>
+</div>
+<p class="dfd-quiz-feedback" data-dfd-feedback hidden>
+</p>
+<p class="dfd-quiz-explain" data-dfd-explain hidden>
+</p>
+</section>
+<section class="dfd-quiz" data-dfd-quiz data-explanation="A person who can read the target dialect.">
+<h3 data-dfd-prompt>Who reviews AI-generated conversion output?</h3>
+<div data-dfd-choices>
+<button type="button" data-correct="false">Nobody. The model is the review</button>
+<button type="button" data-correct="true">A person, before it is applied</button>
+<button type="button" data-correct="false">The premigration assessment, only</button>
+</div>
+<p class="dfd-quiz-feedback" data-dfd-feedback hidden>
+</p>
+<p class="dfd-quiz-explain" data-dfd-explain hidden>
+</p>
+</section>
+        </section>
+        <section class="section" data-dfd-reveal>
+            <h2>Official sources</h2>
+            <p>Checked against the linked documentation in October 2026. A later release can move a flag, a price, or a supported pair. Use the page for the version you installed.</p>
+            <ul class="source-list">
+<li>
+<a href="https://docs.aws.amazon.com/dms/latest/userguide/CHAP_SchemaConversion.html" target="_blank" rel="noopener noreferrer">DMS Schema Conversion</a>
+</li>
+<li>
+<a href="https://docs.aws.amazon.com/dms/latest/userguide/CHAP_Source.html" target="_blank" rel="noopener noreferrer">Sources for DMS</a>
+</li>
+<li>
+<a href="https://docs.aws.amazon.com/dms/latest/userguide/CHAP_Target.html" target="_blank" rel="noopener noreferrer">Targets for DMS</a>
+</li>
+</ul>
+        </section>
+        <nav class="lesson-nav" aria-label="Lesson order">
+            <a class="secondary" href="task-settings.html">Previous: Task settings, mappings, and transforms</a>
+            <a href="validation.html">Next: Validation and CloudWatch</a>
+        </nav>
+    </div>
+
+    <script src="../js/code-copy.js">
+</script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2">
+</script>
+    <script src="../js/supabase-config.js">
+</script>
+    <script src="../js/supabase-auth.js">
+</script>
+    <script src="../js/paywall.js">
+</script>
+    <script src="../js/progress.js">
+</script>
+    <script src="../js/lesson-common.js">
+</script>
+    <script src="../js/quiz.js">
+</script>
+    <script src="../js/analytics-tracker.js">
+</script>
+
+</body>
+</html>

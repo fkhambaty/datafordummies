@@ -3,411 +3,194 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>Kubernetes Course | Fakhruddin Khambaty's Learning Hub</title>
-    <link rel="stylesheet" href="../css/fkti-light-theme.css">
-    <link rel="stylesheet" href="styles.css">
-    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    <title>Kubernetes section map | Data For Dummies</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <style>
-        .content-section { display: none; padding: 40px 0; }
-        .content-section.active { display: block; }
-        .screenshot-placeholder { background: #f1f5f9; border: 2px dashed #94a3b8; border-radius: 12px; padding: 24px; margin: 20px 0; text-align: center; color: #64748b; }
-        .screenshot-placeholder h4 { color: #475569; margin-bottom: 10px; }
-        .mock-screenshot { background: #e2e8f0; border-radius: 8px; padding: 20px; min-height: 120px; }
-        .step-by-step .step { display: flex; gap: 20px; margin-bottom: 30px; align-items: flex-start; }
-        .step-number { width: 48px; height: 48px; background: linear-gradient(135deg, #326ce5 0%, #1a365d 100%); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 800; flex-shrink: 0; }
-        .eli5-box { background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%); border-radius: 20px; padding: 30px; margin: 25px 0; border: 3px dashed #f59e0b; }
-        .eli5-box h4 { color: #92400e; }
-        .code-block { background: #0f172a; color: #f8fafc; padding: 20px; border-radius: 12px; overflow-x: auto; font-family: 'Fira Code', monospace; font-weight: 500; }
-        .code-block pre { margin: 0; color: #f8fafc; }
-        .terminal-mock { background: #0f172a; color: #f8fafc; border-radius: 8px; padding: 16px 20px; font-family: 'Fira Code', monospace; font-size: 0.95em; overflow-x: auto; border: 1px solid #334155; font-weight: 500; }
-        .terminal-mock .prompt { color: #22c55e; font-weight: 600; }
-        .terminal-mock .output { color: #e2e8f0; }
-        .terminal-mock pre { color: inherit; }
-        .what-you-see { background: #dbeafe; border-left: 4px solid #2563eb; padding: 16px 20px; margin: 16px 0; border-radius: 0 8px 8px 0; }
-        .what-you-see h4 { color: #1e40af; margin-bottom: 8px; font-size: 1em; }
-        .diagram-box { background: #f8fafc; border: 2px solid #e2e8f0; border-radius: 12px; padding: 24px; margin: 20px 0; font-family: 'Fira Code', monospace; font-size: 0.85em; line-height: 1.6; color: #334155; overflow-x: auto; }
-        /* Nav: high contrast + all buttons visible (no fixed height clip) */
-        #navbar { background: #1e293b !important; padding: 12px 0 !important; }
-        #navbar .container { height: auto !important; min-height: 48px !important; flex-wrap: wrap !important; padding: 12px 20px !important; align-content: center !important; }
-        #navbar .nav-btn { color: #ffffff !important; background: rgba(255,255,255,0.15) !important; border: 1px solid rgba(255,255,255,0.3) !important; font-weight: 600 !important; font-size: 13px !important; padding: 10px 14px !important; white-space: nowrap !important; border-radius: 8px; cursor: pointer; }
-        #navbar .nav-btn:hover { background: rgba(255,255,255,0.3) !important; color: #ffffff !important; }
-    </style>
+    <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="../css/dfd-system.css">
 </head>
-<body data-access="pro">
-    <header style="background: linear-gradient(135deg, #326ce5 0%, #1a365d 100%); color: white; padding: 20px 0;">
-        <div class="container">
-            <div style="display: flex; align-items: center; gap: 20px;">
-                <span style="font-size: 2.5rem;">🚢</span>
-                <div>
-                    <h1 style="margin: 0;">Kubernetes – Container Captain</h1>
-                    <p style="margin: 5px 0 0; opacity: 0.9;">Data For Dummies – Explained like you're 5. Install on Docker Desktop (Mac) step by step.</p>
-                </div>
-            </div>
-        </div>
-    </header>
-
-    <nav id="navbar" style="background: #1e293b; padding: 12px 0; position: sticky; top: 0; z-index: 100;">
-        <div class="container" style="display: flex; flex-wrap: wrap; gap: 10px; align-items: center; height: auto; min-height: 48px;">
-            <a href="../index.html" style="background: rgba(255,255,255,0.2); color: #ffffff; border: 1px solid rgba(255,255,255,0.35); padding: 10px 14px; border-radius: 8px; font-weight: 600; text-decoration: none;">Home</a>
-            <button class="nav-btn" onclick="window.location.href='hub.html'" style="background: rgba(255,255,255,0.2); color: #ffffff; border: 1px solid rgba(255,255,255,0.35); padding: 10px 14px; border-radius: 8px; cursor: pointer; font-weight: 600;">← Course Hub</button>
-            <button class="nav-btn" onclick="showSection('welcome')">🏠 Welcome</button>
-            <button class="nav-btn" onclick="showSection('what-is-k8s')">👶 What is K8s</button>
-            <button class="nav-btn" onclick="showSection('install-docker-mac')">⚙️ Install (Docker Mac)</button>
-            <button class="nav-btn" onclick="showSection('pods')">📦 Pods</button>
-            <button class="nav-btn" onclick="showSection('deployments')">🔄 Deployments</button>
-            <button class="nav-btn" onclick="showSection('services')">🌐 Services</button>
-            <button class="nav-btn" onclick="showSection('configmaps-secrets')">🔐 Config & Secrets</button>
-            <button class="nav-btn" onclick="showSection('kubectl')">⌨️ kubectl</button>
-            <button class="nav-btn" onclick="showSection('real-apps')">🚀 Real Apps</button>
-        </div>
-    </nav>
-
-    <main class="container" style="padding: 30px 20px; max-width: 900px; margin: 0 auto;">
-
-        <!-- Welcome -->
-        <section id="welcome" class="content-section active">
-            <h2>🎯 Welcome to Kubernetes!</h2>
-            <p>This course teaches you Kubernetes from zero. We explain every idea like you're five years old and walk you through installing Kubernetes on <strong>Docker Desktop for Mac</strong> with lots of screenshots.</p>
-            <div class="eli5-box">
-                <h4>👶 In one sentence</h4>
-                <p><strong>Kubernetes</strong> is a system that runs lots of small “boxes” (containers) for you. It starts them, restarts them if they break, and scales them when more people use your app. Like a captain for a fleet of little ships! 🚢</p>
-            </div>
-            <p><strong>What you get after setup:</strong> Once Kubernetes is enabled in Docker Desktop, you have a one-node “cluster” on your Mac. You talk to it with <code>kubectl</code> (e.g. <code>kubectl get nodes</code>). Conceptually it looks like this:</p>
-            <div class="diagram-box">
-<pre>     ┌─────────────────────────────────────────────────────────┐
-     │                  Kubernetes cluster                      │
-     │  ┌─────────────────┐    ┌─────────────────────────────┐ │
-     │  │ Control plane   │    │ Node (your Mac / Docker)     │ │
-     │  │ (scheduler,     │───▶│  Pod 1   Pod 2   Pod 3       │ │
-     │  │  API server)    │    │  (app)   (app)   (db)        │ │
-     │  └─────────────────┘    └─────────────────────────────┘ │
-     └─────────────────────────────────────────────────────────┘</pre>
-            </div>
-            <p>You'll run <code>kubectl get nodes</code> and see one node (e.g. <code>docker-desktop</code>) in <code>Ready</code> state. That's your cluster. We'll get there in the installation steps.</p>
+<body class="dfd-safe" data-course-id="kubernetes" data-lesson-id="index" data-lesson-label="Kubernetes section map" data-total-lessons="12">
+    <div class="container">
+        <nav class="nav" aria-label="Course">
+            <a href="hub.html">Course hub</a>
+            <a href="../index.html">Home</a>
+        </nav>
+        <header class="lesson-hero" id="top">
+            <p class="track-kicker">12 lessons · this page keeps old addresses</p>
+            <h1>Kubernetes section map</h1>
+            <p>The old Kubernetes page used these section addresses. Each one now opens the lesson that replaced it.</p>
+        </header>
+        <section class="section" data-dfd-reveal>
+            <h2>Where each old address goes</h2>
+            <table class="comparison-table dfd-scroll">
+                <thead>
+<tr>
+<th>Address</th>
+<th>Lesson</th>
+</tr>
+</thead>
+                <tbody>
+<tr>
+<td>
+<a href="#welcome">welcome</a>
+</td>
+<td>
+<a href="meet-kubernetes.html">Welcome</a>
+</td>
+</tr>
+<tr>
+<td>
+<a href="#what-is-k8s">what-is-k8s</a>
+</td>
+<td>
+<a href="meet-kubernetes.html">What Kubernetes is</a>
+</td>
+</tr>
+<tr>
+<td>
+<a href="#install-docker-mac">install-docker-mac</a>
+</td>
+<td>
+<a href="local-setup.html">Install on a laptop</a>
+</td>
+</tr>
+<tr>
+<td>
+<a href="#pods">pods</a>
+</td>
+<td>
+<a href="pods-deployments.html">Pods</a>
+</td>
+</tr>
+<tr>
+<td>
+<a href="#deployments">deployments</a>
+</td>
+<td>
+<a href="pods-deployments.html">Deployments</a>
+</td>
+</tr>
+<tr>
+<td>
+<a href="#services">services</a>
+</td>
+<td>
+<a href="services-networking.html">Services</a>
+</td>
+</tr>
+<tr>
+<td>
+<a href="#configmaps-secrets">configmaps-secrets</a>
+</td>
+<td>
+<a href="config-secrets.html">Config and Secrets</a>
+</td>
+</tr>
+<tr>
+<td>
+<a href="#kubectl">kubectl</a>
+</td>
+<td>
+<a href="local-setup.html">kubectl</a>
+</td>
+</tr>
+<tr>
+<td>
+<a href="#real-apps">real-apps</a>
+</td>
+<td>
+<a href="capstone.html">A real app</a>
+</td>
+</tr>
+</tbody>
+            </table>
         </section>
+        <section class="section" id="welcome" data-dfd-reveal>
+<h2>Welcome</h2>
+<p>The welcome text now lives in Meet Kubernetes, with the control plane and a node drawn as a diagram rather than a placeholder image.</p>
+<p>
+<a href="meet-kubernetes.html">Open the lesson</a>
+</p>
+</section>
+<section class="section" id="what-is-k8s" data-dfd-reveal>
+<h2>What Kubernetes is</h2>
+<p>Containers, pods, and clusters are the first lesson. The comparison with virtual machines is a table you can scroll on a phone.</p>
+<p>
+<a href="meet-kubernetes.html">Open the lesson</a>
+</p>
+</section>
+<section class="section" id="install-docker-mac" data-dfd-reveal>
+<h2>Install on a laptop</h2>
+<p>Docker Desktop is one option, on macOS, Windows, and Linux. kind and minikube are the other two. The steps are commands, not screenshots of one Mac dialog.</p>
+<p>
+<a href="local-setup.html">Open the lesson</a>
+</p>
+</section>
+<section class="section" id="pods" data-dfd-reveal>
+<h2>Pods</h2>
+<p>A Pod is the smallest object Kubernetes runs. The lesson pairs it with the Deployment that recreates it.</p>
+<p>
+<a href="pods-deployments.html">Open the lesson</a>
+</p>
+</section>
+<section class="section" id="deployments" data-dfd-reveal>
+<h2>Deployments</h2>
+<p>ReplicaSets and rolling updates are in the same lesson as Pods.</p>
+<p>
+<a href="pods-deployments.html">Open the lesson</a>
+</p>
+</section>
+<section class="section" id="services" data-dfd-reveal>
+<h2>Services</h2>
+<p>ClusterIP, NodePort, and LoadBalancer sit beside Ingress and the Gateway API.</p>
+<p>
+<a href="services-networking.html">Open the lesson</a>
+</p>
+</section>
+<section class="section" id="configmaps-secrets" data-dfd-reveal>
+<h2>Config and Secrets</h2>
+<p>ConfigMaps and Secrets, including the fact that base64 is not encryption.</p>
+<p>
+<a href="config-secrets.html">Open the lesson</a>
+</p>
+</section>
+<section class="section" id="kubectl" data-dfd-reveal>
+<h2>kubectl</h2>
+<p>The kubectl commands for contexts, nodes, and version skew are in the local-setup lesson.</p>
+<p>
+<a href="local-setup.html">Open the lesson</a>
+</p>
+</section>
+<section class="section" id="real-apps" data-dfd-reveal>
+<h2>A real app</h2>
+<p>The capstone is a small app you can apply on kind, plus the production list you would add before a managed cluster.</p>
+<p>
+<a href="capstone.html">Open the lesson</a>
+</p>
+</section>
+        <nav class="lesson-nav" aria-label="Lesson order">
+            <a class="secondary" href="../index.html">Home</a>
+            <a href="hub.html">Open the course hub</a>
+        </nav>
+    </div>
 
-        <!-- What is Kubernetes (ELI5) -->
-        <section id="what-is-k8s" class="content-section">
-            <h2>👶 What is Kubernetes? (Explain Like I'm 5)</h2>
-            <p>Imagine you have a <strong>big toy box</strong> (your computer or the cloud). Inside, you want to run many <strong>small boats</strong> (these are called <strong>containers</strong>). Each boat runs one app: one runs a website, one runs a database, one runs your data pipeline.</p>
-            <p><strong>Kubernetes</strong> is the <strong>captain</strong> that:</p>
-            <ul style="margin: 15px 0 15px 25px;">
-                <li>Starts the boats when you ask</li>
-                <li>Restarts a boat if it sinks (crashes)</li>
-                <li>Adds more boats when many people want to use your app</li>
-                <li>Gives each boat a name and address so others can find it</li>
-            </ul>
-            <div class="eli5-box">
-                <h4>🔑 Key words (simple)</h4>
-                <p><strong>Container</strong> = one small, runnable “box” (like a single boat).<br>
-                <strong>Pod</strong> = the smallest unit Kubernetes runs; it can hold one or a few containers that always run together.<br>
-                <strong>Cluster</strong> = the whole “sea” where your boats run (your Mac with Docker Desktop, or a cloud).</p>
-            </div>
-            <h3>Containers vs virtual machines</h3>
-            <p>With <strong>VMs</strong>, you run several full “fake computers” (each with its own OS) on one machine. With <strong>containers</strong>, you run many small, lightweight “boxes” that share the host OS. Kubernetes schedules <em>containers</em> (wrapped in Pods), so you can pack more apps onto the same hardware and start/stop them in seconds.</p>
-            <div class="diagram-box">
-<pre>VMs:  [ Host ] → [ VM1: full OS + app ] [ VM2: full OS + app ] [ VM3: full OS + app ]
-       One machine, 3 complete operating systems.
+    <script src="../js/code-copy.js">
+</script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2">
+</script>
+    <script src="../js/supabase-config.js">
+</script>
+    <script src="../js/supabase-auth.js">
+</script>
+    <script src="../js/paywall.js">
+</script>
+    <script src="../js/progress.js">
+</script>
+    <script src="../js/lesson-common.js">
+</script>
+    <script src="../js/quiz.js">
+</script>
+    <script src="../js/analytics-tracker.js">
+</script>
 
-Containers: [ Host OS ] → [ container A ] [ container B ] [ container C ] ...
-            One OS, many isolated processes (containers). Kubernetes runs these.</pre>
-            </div>
-        </section>
-
-        <!-- Install Kubernetes on Docker Desktop for Mac -->
-        <section id="install-docker-mac" class="content-section">
-            <h2>⚙️ Install Kubernetes on Docker Desktop for Mac – Step by Step</h2>
-            <p>We use <strong>Docker Desktop</strong> on a <strong>Mac</strong>. It gives you a small Kubernetes “cluster” on your laptop so you can learn without paying for the cloud. Follow every step and use the screenshots to check you’re in the right place.</p>
-
-            <div class="step-by-step">
-                <div class="step">
-                    <div class="step-number">1</div>
-                    <div class="step-content">
-                        <h4>Download Docker Desktop for Mac</h4>
-                        <p>Open your browser and go to: <a href="https://www.docker.com/products/docker-desktop/" target="_blank" rel="noopener">docker.com/products/docker-desktop</a>. Choose <strong>Mac</strong> (Apple Silicon or Intel, depending on your Mac).</p>
-                        <div class="what-you-see">
-                            <h4>What you'll see</h4>
-                            <p>The page title is “Docker Desktop for Mac.” You'll see two prominent download options: <strong>Mac with Intel chip</strong> and <strong>Mac with Apple chip</strong>. On M1/M2/M3 Macs choose Apple chip; on older Intel Macs choose Intel. The download is a <code>.dmg</code> file (several hundred MB).</p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="step">
-                    <div class="step-number">2</div>
-                    <div class="step-content">
-                        <h4>Run the installer</h4>
-                        <p>Open the downloaded <code>.dmg</code> file. A window opens with the Docker whale icon and an arrow pointing to the Applications folder. <strong>Drag the Docker icon into the Applications folder.</strong> When the copy finishes, you can eject the DMG (right-click → Eject) and open Docker from Applications.</p>
-                        <div class="what-you-see">
-                            <h4>What you'll see</h4>
-                            <p>Two icons in the window: left side = Docker (whale), right side = Applications folder. Drag left → right. A progress indicator may appear. When done, Docker appears in your Applications list.</p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="step">
-                    <div class="step-number">3</div>
-                    <div class="step-content">
-                        <h4>Open Docker Desktop for the first time</h4>
-                        <p>From Applications, open <strong>Docker</strong>. You may see a security prompt: “Docker is an app downloaded from the internet.” Click <strong>Open</strong>. If macOS asks for your password or Touch ID to install helper tools, allow it.</p>
-                        <div class="what-you-see">
-                            <h4>First dialog</h4>
-                            <p>Title: “Docker” or similar. Message: the app was downloaded from the internet. Buttons: <strong>Cancel</strong> and <strong>Open</strong>. Click <strong>Open</strong> to continue.</p>
-                        </div>
-                        <div class="what-you-see">
-                            <h4>Second dialog (helper tool)</h4>
-                            <p>Message: “Docker is trying to add a new helper tool. Touch ID or enter your password to allow this.” Buttons: <strong>Use Password...</strong> (or similar) and <strong>Cancel</strong>. Enter your Mac password or use Touch ID so Docker can install its background components. This is normal and required for Docker to work.</p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="step">
-                    <div class="step-number">4</div>
-                    <div class="step-content">
-                        <h4>Accept terms and sign in (optional)</h4>
-                        <p>Docker may show a welcome screen and ask you to accept the terms. You can sign in with a Docker account or skip for now. The important part is to get to the main Docker Desktop window where you see the whale and status.</p>
-                        <div class="what-you-see">
-                            <h4>What you'll see</h4>
-                            <p>“Welcome to Docker Desktop” (or similar), a checkbox to accept terms, and optionally “Sign in” or “Skip.” Accept terms and skip sign-in if you like. After that, the main window opens with a sidebar (Containers, Images, etc.) and a status area. Wait until you see <strong>Engine running</strong> (green).</p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="step">
-                    <div class="step-number">5</div>
-                    <div class="step-content">
-                        <h4>Open Settings (Preferences)</h4>
-                        <p>Click the <strong>gear icon</strong> (⚙️) in the top-right of the Docker Desktop window to open <strong>Settings</strong> (or use the menu: Docker → Preferences).</p>
-                        <div class="what-you-see">
-                            <h4>What you'll see</h4>
-                            <p>Top-right of the window: a small gear (⚙️). The main area shows “Engine running” and possibly “No containers running.” The left sidebar has items like Containers, Images, Volumes. Click the gear to open Settings; a new panel or window opens with categories (General, Resources, Kubernetes, etc.) on the left.</p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="step">
-                    <div class="step-number">6</div>
-                    <div class="step-content">
-                        <h4>Turn on Kubernetes</h4>
-                        <p>In the left sidebar of Settings, click <strong>Kubernetes</strong>. Check the box: <strong>Enable Kubernetes</strong>. Click <strong>Apply &amp; Restart</strong>. Docker will download the Kubernetes components and restart. This can take a few minutes; a progress indicator may appear.</p>
-                        <div class="what-you-see">
-                            <h4>What you'll see</h4>
-                            <p>Under Settings → Kubernetes: a checkbox labeled “Enable Kubernetes.” Check it. At the bottom, a blue button “Apply &amp; Restart.” After you click it, Docker may show “Kubernetes is starting…” or a spinner. Wait until the main window shows Kubernetes with a green indicator (running). Do not quit Docker during this.</p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="step">
-                    <div class="step-number">7</div>
-                    <div class="step-content">
-                        <h4>Wait until Kubernetes is running</h4>
-                        <p>In the Docker Desktop window, you'll see “Kubernetes” in the left sidebar. Wait until it shows a <strong>green</strong> light or “Running.” Do not close Docker while it's starting.</p>
-                        <div class="what-you-see">
-                            <h4>What you'll see</h4>
-                            <p>Left sidebar: an entry for <strong>Kubernetes</strong> with a green dot or “Running” label. The main area may still show “Kubernetes is starting…” until it's done. When ready, the icon turns green and you can proceed to the next step.</p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="step">
-                    <div class="step-number">8</div>
-                    <div class="step-content">
-                        <h4>Install kubectl (command-line tool)</h4>
-                        <p>Docker Desktop can add <code>kubectl</code> to your PATH. In Settings → Kubernetes, ensure the option <strong>“Show system containers”</strong> is off if you want a clean view. Then check: “From the Docker Desktop menu, open the terminal” or use your Mac Terminal.</p>
-                        <p>Install kubectl with Homebrew (if you have it):</p>
-                        <div class="code-block">
-                            <pre>brew install kubectl</pre>
-                        </div>
-                        <p>If you don't use Homebrew, Docker Desktop usually installs kubectl; you can select “Use kubectl from Docker Desktop” in Kubernetes settings.</p>
-                        <div class="terminal-mock">
-<pre><span class="prompt">user@MacBook-Pro ~ %</span> kubectl version --client
-<span class="output">Client Version: v1.28.2
-...</span></pre>
-                        </div>
-                        <p>Seeing a version (e.g. v1.28.x) means <code>kubectl</code> is installed and on your PATH.</p>
-                    </div>
-                </div>
-
-                <div class="step">
-                    <div class="step-number">9</div>
-                    <div class="step-content">
-                        <h4>Point kubectl at Docker’s Kubernetes</h4>
-                        <p>Docker Desktop sets the “context” for you. In Terminal run:</p>
-                        <div class="code-block">
-                            <pre>kubectl config current-context</pre>
-                        </div>
-                        <p>You should see something like <code>docker-desktop</code> or <code>docker-for-desktop</code>. That means kubectl is talking to the Kubernetes inside Docker Desktop.</p>
-                        <div class="terminal-mock">
-<pre><span class="prompt">user@MacBook-Pro ~ %</span> kubectl config current-context
-<span class="output">docker-desktop</span></pre>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="step">
-                    <div class="step-number">10</div>
-                    <div class="step-content">
-                        <h4>Verify the cluster</h4>
-                        <p>Run:</p>
-                        <div class="code-block">
-                            <pre>kubectl get nodes</pre>
-                        </div>
-                        <p>You should see one node (e.g. <code>docker-desktop</code>) with status <code>Ready</code>. Congratulations – Kubernetes is installed and running on your Mac!</p>
-                        <div class="terminal-mock">
-<pre><span class="prompt">user@MacBook-Pro ~ %</span> kubectl get nodes
-<span class="output">NAME             STATUS   ROLES           AGE   VERSION
-docker-desktop   Ready    control-plane   5m    v1.28.2</span></pre>
-                        </div>
-                        <p><strong>Ready</strong> means the node is healthy and can run Pods. You're set to create your first Pod in the next section.</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Pods -->
-        <section id="pods" class="content-section">
-            <h2>📦 Pods – The Smallest Unit Kubernetes Runs</h2>
-            <div class="eli5-box">
-                <h4>👶 In one sentence</h4>
-                <p>A <strong>Pod</strong> is like one “boat” that can hold one or a few containers that always run and are stopped together. Kubernetes doesn’t run containers directly; it runs Pods.</p>
-            </div>
-            <p>You usually describe Pods in a YAML file and create them with <code>kubectl apply -f pod.yaml</code>. Save the following as <code>pod.yaml</code>:</p>
-            <div class="code-block">
-                <pre>apiVersion: v1
-kind: Pod
-metadata:
-  name: my-first-pod
-spec:
-  containers:
-  - name: nginx
-    image: nginx:latest</pre>
-            </div>
-            <p>Then run:</p>
-            <div class="terminal-mock">
-<pre><span class="prompt">user@MacBook-Pro ~ %</span> kubectl apply -f pod.yaml
-<span class="output">pod/my-first-pod created</span></pre>
-            </div>
-            <p>Check that the Pod is running:</p>
-            <div class="terminal-mock">
-<pre><span class="prompt">user@MacBook-Pro ~ %</span> kubectl get pods
-<span class="output">NAME           READY   STATUS    RESTARTS   AGE
-my-first-pod   1/1     Running   0          30s</span></pre>
-            </div>
-            <p><strong>1/1 Ready</strong> and <strong>Running</strong> mean the container inside the Pod started successfully. If you see <code>ContainerCreating</code>, wait a few seconds and run <code>kubectl get pods</code> again.</p>
-        </section>
-
-        <!-- Deployments -->
-        <section id="deployments" class="content-section">
-            <h2>🔄 Deployments – Keep Your App Running and Scale It</h2>
-            <div class="eli5-box">
-                <h4>👶 In one sentence</h4>
-                <p>A <strong>Deployment</strong> tells Kubernetes: “Run this many copies of this app (Pods), and if one dies, start another. If I change the image, roll out the new version.”</p>
-            </div>
-            <p><strong>Layman problem:</strong> “I want three copies of my API running. If one crashes, start a new one. When I push a new image, replace the old Pods gradually.” That’s what a Deployment does. You set <code>replicas: 3</code> and a Pod template; Kubernetes keeps 3 Pods running and replaces any that fail.</p>
-            <p>Example: run 3 copies of nginx.</p>
-            <div class="code-block">
-                <pre>apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: my-app
-spec:
-  replicas: 3
-  selector:
-    matchLabels:
-      app: my-app
-  template:
-    metadata:
-      labels:
-        app: my-app
-    spec:
-      containers:
-      - name: my-app
-        image: nginx:latest</pre>
-            </div>
-            <p>After <code>kubectl apply -f deployment.yaml</code>, run <code>kubectl get pods</code>. You'll see three Pods with names like <code>my-app-7d8b9c5f6-xxxxx</code>, all in <code>Running</code> state. Scale to 5 with: <code>kubectl scale deployment my-app --replicas=5</code>.</p>
-        </section>
-
-        <!-- Services -->
-        <section id="services" class="content-section">
-            <h2>🌐 Services – A Stable Address for Your App</h2>
-            <div class="eli5-box">
-                <h4>👶 In one sentence</h4>
-                <p>Pods get new IPs when they restart. A <strong>Service</strong> gives your app one stable name and IP. Other Pods (or you) call the Service; Kubernetes sends traffic to a healthy Pod behind it.</p>
-            </div>
-            <p><strong>Problem:</strong> Your Deployment has 3 Pods, each with a different IP. You want “one address” (e.g. <code>my-app</code>) that always points to a healthy Pod. Create a Service that selects Pods by label (e.g. <code>app: my-app</code>). Other apps call <code>http://my-app</code> (or the Service’s cluster IP); Kubernetes load-balances to a Pod.</p>
-            <p>Types: <strong>ClusterIP</strong> (default, internal only), <strong>NodePort</strong> (expose a port on each node), <strong>LoadBalancer</strong> (cloud load balancer). Example ClusterIP Service:</p>
-            <div class="code-block">
-                <pre>apiVersion: v1
-kind: Service
-metadata:
-  name: my-app
-spec:
-  selector:
-    app: my-app
-  ports:
-  - port: 80
-    targetPort: 80</pre>
-            </div>
-            <p>After applying, other Pods in the cluster can reach this app at <code>http://my-app</code> or <code>http://my-app.default.svc.cluster.local</code>.</p>
-        </section>
-
-        <!-- ConfigMaps & Secrets -->
-        <section id="configmaps-secrets" class="content-section">
-            <h2>🔐 ConfigMaps and Secrets</h2>
-            <p><strong>ConfigMaps</strong> store non-secret config (URLs, feature flags). <strong>Secrets</strong> store sensitive data (passwords, API keys). You mount them into Pods as files or env vars. Never put real secrets in your YAML or image!</p>
-            <p><strong>Layman example:</strong> Your app needs a “database URL” and an “API key.” Put the URL in a ConfigMap and the API key in a Secret. In the Pod spec, inject them as environment variables or as files under <code>/etc/config</code>. If you change the ConfigMap/Secret, you can restart the Pod to pick up new values (or use a tool that does that for you).</p>
-            <p>Create a ConfigMap from a key-value pair:</p>
-            <div class="code-block">
-                <pre>kubectl create configmap my-config --from-literal=DB_HOST=db.example.com</pre>
-            </div>
-            <p>In your Pod spec, use <code>envFrom</code> or <code>volumeMounts</code> to expose the ConfigMap to the container. For secrets, use <code>kubectl create secret generic my-secret --from-literal=API_KEY=xxx</code> and reference it the same way with <code>secretRef</code> or a secret volume.</p>
-        </section>
-
-        <!-- kubectl -->
-        <section id="kubectl" class="content-section">
-            <h2>⌨️ kubectl – Your Remote Control</h2>
-            <p><code>kubectl</code> is how you talk to the cluster from the terminal. You already used:</p>
-            <ul style="margin-left: 25px;">
-                <li><code>kubectl get nodes</code> – list nodes</li>
-                <li><code>kubectl get pods</code> – list pods</li>
-            </ul>
-            <p><strong>Cheat sheet:</strong></p>
-            <div class="diagram-box">
-<pre>kubectl get deployments    # list Deployments
-kubectl get services      # list Services
-kubectl describe pod &lt;name&gt;   # full details of a Pod (events, state)
-kubectl logs &lt;pod&gt;        # stdout of the main container
-kubectl logs -f &lt;pod&gt;     # follow logs (like tail -f)
-kubectl apply -f file.yaml    # create/update resources from YAML
-kubectl delete -f file.yaml   # delete resources in the file
-kubectl exec -it &lt;pod&gt; -- /bin/sh   # shell into a running Pod</pre>
-            </div>
-            <p>If a Pod is not starting, <code>kubectl describe pod &lt;name&gt;</code> shows Events at the bottom (e.g. “Failed to pull image”). <code>kubectl logs</code> shows what the app printed before it crashed.</p>
-        </section>
-
-        <!-- Real Apps -->
-        <section id="real-apps" class="content-section">
-            <h2>🚀 Running Real Apps</h2>
-            <p>Once Pods, Deployments, and Services make sense, you can run real data tools on Kubernetes. Build your app into a Docker image and push to a registry; write a Deployment YAML and a Service; put config in ConfigMaps and secrets in Secrets; run <code>kubectl apply -f ...</code>. On Docker Desktop use images from Docker Hub or local builds. In the cloud, use the same YAML on EKS, GKE, or AKS. Example: run a hello API as a Deployment with 2 replicas and a ClusterIP Service, then <code>kubectl scale deployment hello-api --replicas=5</code> to watch new Pods come up. Same pattern for Airflow workers, Metabase, or any data service.</p>
-        </section>
-    </main>
-
-    <script>
-        function showSection(id) {
-            document.querySelectorAll('.content-section').forEach(function(s) { s.classList.remove('active'); });
-            var el = document.getElementById(id);
-            if (el) el.classList.add('active');
-            document.querySelectorAll('#navbar .nav-btn').forEach(function(b) {
-                b.style.background = b.onclick && b.onclick.toString().indexOf(id) !== -1 ? '#326ce5' : 'transparent';
-                b.style.color = b.style.background === 'rgb(50, 108, 229)' ? 'white' : '#e2e8f0';
-            });
-        }
-    </script>
-    <script src="../js/code-copy.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="../js/supabase-config.js"></script>
-<script src="../js/supabase-auth.js"></script>
-<script src="../js/paywall.js"></script>
 </body>
 </html>

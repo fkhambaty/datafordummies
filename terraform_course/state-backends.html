@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>State, backends, and locking | Terraform and OpenTofu | Data For Dummies</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="../css/dfd-system.css">
+</head>
+<body class="dfd-safe" data-access="pro" data-course-id="terraform" data-lesson-id="state-backends" data-lesson-label="State, backends, and locking" data-total-lessons="12">
+    <div class="container">
+        <nav class="nav" aria-label="Course">
+            <a href="hub.html">Course hub</a>
+            <a href="../index.html">Home</a>
+            <a href="#check">Knowledge check</a>
+        </nav>
+        <header class="lesson-hero" id="top">
+            <p class="track-kicker">Pro · Lesson 5 of 12</p>
+            <h1>State, backends, and locking</h1>
+            <p>State maps your config to real objects. A shared backend keeps one copy. Locking stops two applies from writing that copy at once. The lock mechanism depends on the backend and the version.</p>
+        </header>
+        <div class="dfd-lesson-progress" data-dfd-progress>
+            <p class="dfd-lesson-progress-label" data-dfd-progress-label>Sign in to save your place.</p>
+            <div class="dfd-lesson-progress-track" data-dfd-progress-bar role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-label="Course progress">
+                <div class="dfd-lesson-progress-fill" data-dfd-progress-fill>
+</div>
+            </div>
+        </div>
+        <section class="section" data-dfd-reveal>
+            <div class="eli5-box">
+                <h4>Picture it this way</h4>
+                <p>State is the notebook that says which locker number belongs to which name on the list. If two people write in the notebook at once, the numbers get crossed. A lock is the pencil you have to be holding to write.</p>
+            </div>
+        </section>
+        <section class="section" data-dfd-reveal id="local">
+<h2>Local state is a starting point</h2>
+<p>By default the state file is <code>terraform.tfstate</code> in the working directory. That is fine for a solo lab. It is a bad place for a team. The file contains ids and any secret attributes the provider stored. Do not commit it.</p>
+<p>Never edit the state file by hand to fix a typo. Use the commands and blocks in the lifecycle lesson. A hand edit is how the next plan destroys something real.</p>
+</section>
+<section class="section" data-dfd-reveal id="s3">
+<h2>S3 locking changed</h2>
+<p>The S3 backend can store state in a bucket. Older Terraform releases locked that state with a DynamoDB table. Terraform 1.10 added an S3 lock file through <code>use_lockfile</code>. Current HashiCorp S3 backend docs describe DynamoDB locking as deprecated and scheduled for removal, and describe <code>use_lockfile</code> as the lock switch.</p>
+<p>Those sentences are about HashiCorp Terraform&#x27;s documented backend. An older binary does not grow <code>use_lockfile</code> because a doc page mentions it. OpenTofu has its own S3 locking work. Do not delete a DynamoDB lock table until every runner that touches that state is on a version that locks the way you think.</p>
+<p>After a backend change, <code>terraform init -reconfigure</code> is the usual next command. Read the upgrade guide for the version you are moving to before you drop the old lock.</p>
+<table class="comparison-table dfd-scroll">
+<thead>
+<tr>
+<th>Situation</th>
+<th>What to do</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>One person, a lab, terraform_data</td>
+<td>Local state is enough</td>
+</tr>
+<tr>
+<td>A team on current Terraform S3 docs</td>
+<td>Turn on use_lockfile and grant access to the .tflock object</td>
+</tr>
+<tr>
+<td>Runners still on an older Terraform</td>
+<td>Keep the lock mechanism those runners understand</td>
+</tr>
+<tr>
+<td>OpenTofu in the same bucket</td>
+<td>Read OpenTofu&#x27;s backend page, not only HashiCorp&#x27;s</td>
+</tr>
+</tbody>
+</table>
+</section>
+        <section class="section dfd-diagram" data-dfd-diagram data-dfd-reveal>
+            <h2>One state, one writer</h2>
+            <div data-dfd-diagram-panel="cfg">
+<svg class="dfd-responsive" viewBox="0 0 640 148" role="img" aria-label="Config highlighted">
+<rect class="track-drift" x="16" y="36" width="188" height="72" rx="12" fill="#a78bfa">
+</rect>
+<text x="110" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#ffffff">Config</text>
+<path d="M204 72 H224" stroke="#64748b" stroke-width="2" fill="none">
+</path>
+<rect x="224" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
+</rect>
+<text x="318" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">State</text>
+<path d="M412 72 H432" stroke="#64748b" stroke-width="2" fill="none">
+</path>
+<rect x="432" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
+</rect>
+<text x="526" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">Lock</text>
+</svg>
+<p>Config is what you want. It is not a record of what exists.</p>
+</div>
+<div data-dfd-diagram-panel="state" hidden>
+<svg class="dfd-responsive" viewBox="0 0 640 148" role="img" aria-label="State highlighted">
+<rect x="16" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
+</rect>
+<text x="110" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">Config</text>
+<path d="M204 72 H224" stroke="#64748b" stroke-width="2" fill="none">
+</path>
+<rect class="track-drift" x="224" y="36" width="188" height="72" rx="12" fill="#a78bfa">
+</rect>
+<text x="318" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#ffffff">State</text>
+<path d="M412 72 H432" stroke="#64748b" stroke-width="2" fill="none">
+</path>
+<rect x="432" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
+</rect>
+<text x="526" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">Lock</text>
+</svg>
+<p>State records the ids. Lose it and the next plan looks like everything is new.</p>
+</div>
+<div data-dfd-diagram-panel="lock" hidden>
+<svg class="dfd-responsive" viewBox="0 0 640 148" role="img" aria-label="Lock highlighted">
+<rect x="16" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
+</rect>
+<text x="110" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">Config</text>
+<path d="M204 72 H224" stroke="#64748b" stroke-width="2" fill="none">
+</path>
+<rect x="224" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
+</rect>
+<text x="318" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">State</text>
+<path d="M412 72 H432" stroke="#64748b" stroke-width="2" fill="none">
+</path>
+<rect class="track-drift" x="432" y="36" width="188" height="72" rx="12" fill="#a78bfa">
+</rect>
+<text x="526" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#ffffff">Lock</text>
+</svg>
+<p>The lock stops a second apply. The lock&#x27;s storage depends on version and backend.</p>
+</div>
+            <div class="dfd-diagram-controls">
+                <button type="button" data-dfd-diagram-step="cfg" aria-pressed="true">Config</button>
+<button type="button" data-dfd-diagram-step="state" aria-pressed="false">State</button>
+<button type="button" data-dfd-diagram-step="lock" aria-pressed="false">Lock</button>
+            </div>
+        </section>
+        <section class="section" id="lab" data-dfd-reveal>
+            <h2>Lab: find the local state file and do not commit it</h2>
+            <p>From the previous lab directory, list the state file after a plan or apply. Add it to a local ignore file if you use git.</p>
+            <div class="code-block">
+<pre>
+<code>terraform plan
+ls -la terraform.tfstate 2&gt;/dev/null || echo &quot;no state yet — plan may be enough&quot;
+printf &#x27;%s\n&#x27; &#x27;.terraform/&#x27; &#x27;*.tfstate&#x27; &#x27;*.tfstate.*&#x27; &gt;&gt; .gitignore</code>
+</pre>
+</div>
+            <p>
+<button type="button" data-dfd-complete>Mark lesson complete</button>
+</p>
+            <p data-dfd-complete-status>
+</p>
+        </section>
+        <section class="section" id="summary" data-dfd-reveal>
+            <h2>Concept summary</h2>
+            <ul class="summary-list">
+<li>State is the map from blocks to real objects. Do not commit it.</li>
+<li>S3 locking with use_lockfile and DynamoDB locking are not the same mechanism.</li>
+<li>Check the backend page for the binary version that will run apply.</li>
+</ul>
+        </section>
+        <section class="section" id="check" data-dfd-reveal>
+            <h2>Knowledge check</h2>
+            <section class="dfd-quiz" data-dfd-quiz data-explanation="Both applies can write state.">
+<h3 data-dfd-prompt>Why is a second apply dangerous without a lock?</h3>
+<div data-dfd-choices>
+<button type="button" data-correct="true">Two applies can corrupt the shared state</button>
+<button type="button" data-correct="false">Terraform refuses to plan twice</button>
+<button type="button" data-correct="false">Locks are only a billing feature</button>
+</div>
+<p class="dfd-quiz-feedback" data-dfd-feedback hidden>
+</p>
+<p class="dfd-quiz-explain" data-dfd-explain hidden>
+</p>
+</section>
+<section class="dfd-quiz" data-dfd-quiz data-explanation="The binary you run is the one that matters.">
+<h3 data-dfd-prompt>You read that use_lockfile exists. Your CI image is an older Terraform. What is true?</h3>
+<div data-dfd-choices>
+<button type="button" data-correct="false">The old binary ignores the doc and still locks with S3</button>
+<button type="button" data-correct="true">The old binary may only know DynamoDB locking</button>
+<button type="button" data-correct="false">OpenTofu and Terraform share one lock file format by definition</button>
+</div>
+<p class="dfd-quiz-feedback" data-dfd-feedback hidden>
+</p>
+<p class="dfd-quiz-explain" data-dfd-explain hidden>
+</p>
+</section>
+<section class="dfd-quiz" data-dfd-quiz data-explanation="The configuration. Not the state.">
+<h3 data-dfd-prompt>What belongs in git?</h3>
+<div data-dfd-choices>
+<button type="button" data-correct="false">terraform.tfstate</button>
+<button type="button" data-correct="true">The .tf files and the lock file</button>
+<button type="button" data-correct="false">A tfvars file of production passwords</button>
+</div>
+<p class="dfd-quiz-feedback" data-dfd-feedback hidden>
+</p>
+<p class="dfd-quiz-explain" data-dfd-explain hidden>
+</p>
+</section>
+        </section>
+        <section class="section" data-dfd-reveal>
+            <h2>Official sources</h2>
+            <p>Checked against the linked documentation in October 2026. A later release can move a flag, a price, or a supported pair. Use the page for the version you installed.</p>
+            <ul class="source-list">
+<li>
+<a href="https://developer.hashicorp.com/terraform/language/state" target="_blank" rel="noopener noreferrer">State</a>
+</li>
+<li>
+<a href="https://developer.hashicorp.com/terraform/language/backend/s3" target="_blank" rel="noopener noreferrer">S3 backend</a>
+</li>
+<li>
+<a href="https://developer.hashicorp.com/terraform/language/settings/backends" target="_blank" rel="noopener noreferrer">Backends</a>
+</li>
+</ul>
+        </section>
+        <nav class="lesson-nav" aria-label="Lesson order">
+            <a class="secondary" href="variables-outputs.html">Previous: Variables, outputs, and locals</a>
+            <a href="modules.html">Next: Modules</a>
+        </nav>
+    </div>
+
+    <script src="../js/code-copy.js">
+</script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2">
+</script>
+    <script src="../js/supabase-config.js">
+</script>
+    <script src="../js/supabase-auth.js">
+</script>
+    <script src="../js/paywall.js">
+</script>
+    <script src="../js/progress.js">
+</script>
+    <script src="../js/lesson-common.js">
+</script>
+    <script src="../js/quiz.js">
+</script>
+    <script src="../js/analytics-tracker.js">
+</script>
+
+</body>
+</html>

@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Serverless, instances, cost, and troubleshooting | AWS DMS | Data For Dummies</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="../css/dfd-system.css">
+</head>
+<body class="dfd-safe" data-access="pro" data-course-id="dms" data-lesson-id="operations" data-lesson-label="Serverless, instances, cost, and troubleshooting" data-total-lessons="11">
+    <div class="container">
+        <nav class="nav" aria-label="Course">
+            <a href="hub.html">Course hub</a>
+            <a href="../index.html">Home</a>
+            <a href="#check">Knowledge check</a>
+        </nav>
+        <header class="lesson-hero" id="top">
+            <p class="track-kicker">Pro · Lesson 10 of 11</p>
+            <h1>Serverless, instances, cost, and troubleshooting</h1>
+            <p>Pick compute on purpose. Size it for the log, not for the sales diagram. When a task fails, read the log and the network before you change the mapping.</p>
+        </header>
+        <div class="dfd-lesson-progress" data-dfd-progress>
+            <p class="dfd-lesson-progress-label" data-dfd-progress-label>Sign in to save your place.</p>
+            <div class="dfd-lesson-progress-track" data-dfd-progress-bar role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-label="Course progress">
+                <div class="dfd-lesson-progress-fill" data-dfd-progress-fill>
+</div>
+            </div>
+        </div>
+        <section class="section" data-dfd-reveal>
+            <div class="eli5-box">
+                <h4>Picture it this way</h4>
+                <p>A rented truck costs money while it sits in the yard. A yard that hands you trucks still has a minimum and a maximum. Neither truck fixes a locked gate.</p>
+            </div>
+        </section>
+        <section class="section" data-dfd-reveal id="compute">
+<h2>Instance or serverless</h2>
+<p>A replication instance has a class and a disk. It is billed while it exists, including evenings when the task is idle, until you stop or delete it. Storage that fills will stall the task. Multi-AZ keeps a standby and costs more. Read the current DMS pricing page for the class. Do not reuse a price from this course.</p>
+<p>A serverless replication config asks for a minimum and maximum capacity in DMS capacity units. AWS has changed how idle capacity is billed. The current serverless pricing and user-guide pages win over any sentence that says it always scales to zero or never does. Schema conversion projects are also called serverless and they are not this capacity range. Do not mix the two bills.</p>
+<table class="comparison-table dfd-scroll">
+<thead>
+<tr>
+<th>Compute</th>
+<th>You manage</th>
+<th>You look up</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Replication instance</td>
+<td>Class, storage, Multi-AZ, and when to delete it</td>
+<td>The hourly price of that class</td>
+</tr>
+<tr>
+<td>Serverless replication</td>
+<td>Minimum and maximum capacity</td>
+<td>How idle capacity is billed this month</td>
+</tr>
+<tr>
+<td>Schema conversion project</td>
+<td>The migration project, not an instance class</td>
+<td>S3 and related charges the guide lists</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section class="section" data-dfd-reveal id="fail">
+<h2>A short troubleshooting order</h2>
+<p>Test the endpoint again. Read the task log in CloudWatch. Check source log retention and disk. Check target disk and connections. Look at CDC latency and instance free memory or serverless capacity. Only then change table mappings.</p>
+<p>Swap files on a replication instance are a sign the class is too small for the LOB or the parallelism you chose. A bigger instance is a test, not a personality.</p>
+</section>
+<section class="section" data-dfd-reveal id="secure">
+<h2>Security habits</h2>
+<p>Private subnets, security groups that name the DMS client, secrets instead of pasted passwords, and IAM roles that can read those secrets and write logs. Encryption in transit is the endpoint SSL mode the database requires. Encryption at rest is the storage setting on the databases and on DMS storage, documented per feature. Turn on what those pages describe. Do not assume a new account already did.</p>
+</section>
+        <section class="section dfd-diagram" data-dfd-diagram data-dfd-reveal>
+            <h2>Cost, then the failure</h2>
+            <div data-dfd-diagram-panel="idle">
+<svg class="dfd-responsive" viewBox="0 0 640 148" role="img" aria-label="Idle instance highlighted">
+<rect class="track-drift" x="16" y="36" width="188" height="72" rx="12" fill="#fb923c">
+</rect>
+<text x="110" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#ffffff">Instance</text>
+<path d="M204 72 H224" stroke="#64748b" stroke-width="2" fill="none">
+</path>
+<rect x="224" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
+</rect>
+<text x="318" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">Idle hours</text>
+<path d="M412 72 H432" stroke="#64748b" stroke-width="2" fill="none">
+</path>
+<rect x="432" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
+</rect>
+<text x="526" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">Bill</text>
+</svg>
+<p>An instance you forgot to delete keeps billing.</p>
+</div>
+<div data-dfd-diagram-panel="range" hidden>
+<svg class="dfd-responsive" viewBox="0 0 640 148" role="img" aria-label="Serverless range highlighted">
+<rect x="16" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
+</rect>
+<text x="110" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">Minimum</text>
+<path d="M204 72 H224" stroke="#64748b" stroke-width="2" fill="none">
+</path>
+<rect class="track-drift" x="224" y="36" width="188" height="72" rx="12" fill="#fb923c">
+</rect>
+<text x="318" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#ffffff">Used</text>
+<path d="M412 72 H432" stroke="#64748b" stroke-width="2" fill="none">
+</path>
+<rect x="432" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
+</rect>
+<text x="526" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">Maximum</text>
+</svg>
+<p>Serverless stays inside the range. Confirm the idle rule on the current price page.</p>
+</div>
+<div data-dfd-diagram-panel="log" hidden>
+<svg class="dfd-responsive" viewBox="0 0 640 148" role="img" aria-label="Troubleshooting order highlighted">
+<rect x="16" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
+</rect>
+<text x="110" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">Endpoint</text>
+<path d="M204 72 H224" stroke="#64748b" stroke-width="2" fill="none">
+</path>
+<rect x="224" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
+</rect>
+<text x="318" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">Task log</text>
+<path d="M412 72 H432" stroke="#64748b" stroke-width="2" fill="none">
+</path>
+<rect class="track-drift" x="432" y="36" width="188" height="72" rx="12" fill="#fb923c">
+</rect>
+<text x="526" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#ffffff">Source disk</text>
+</svg>
+<p>Connection, task log, then the source disk that holds the change log.</p>
+</div>
+            <div class="dfd-diagram-controls">
+                <button type="button" data-dfd-diagram-step="idle" aria-pressed="true">Idle</button>
+<button type="button" data-dfd-diagram-step="range" aria-pressed="false">Range</button>
+<button type="button" data-dfd-diagram-step="log" aria-pressed="false">Log</button>
+            </div>
+        </section>
+        <section class="section" id="lab" data-dfd-reveal>
+            <h2>Lab: a failure note that names evidence</h2>
+            <p>Use this the next time a task is not green. Guessing a bigger instance is not step one.</p>
+            <div class="code-block">
+<pre>
+<code>Endpoint test: pass/fail
+Task log line:
+CDC latency:
+Source log disk free:
+Target connections:
+Compute: instance class or serverless min/max
+Change I will NOT make until the log is read:</code>
+</pre>
+</div>
+            <p>
+<button type="button" data-dfd-complete>Mark lesson complete</button>
+</p>
+            <p data-dfd-complete-status>
+</p>
+        </section>
+        <section class="section" id="summary" data-dfd-reveal>
+            <h2>Concept summary</h2>
+            <ul class="summary-list">
+<li>Instances bill while they exist. Serverless bills by the capacity rules on the current price page.</li>
+<li>Schema conversion serverless is not replication serverless.</li>
+<li>Logs, endpoints, and source disk come before a bigger instance.</li>
+</ul>
+        </section>
+        <section class="section" id="check" data-dfd-reveal>
+            <h2>Knowledge check</h2>
+            <section class="dfd-quiz" data-dfd-quiz data-explanation="Whether it is still billed. Check the current pricing page and the instance state.">
+<h3 data-dfd-prompt>A replication instance is stopped in the console but not deleted. What should you verify?</h3>
+<div data-dfd-choices>
+<button type="button" data-correct="false">Stopped always means the bill is zero, on every AWS service</button>
+<button type="button" data-correct="true">The current DMS pricing page and the instance state</button>
+<button type="button" data-correct="false">Nothing. Instances are free</button>
+</div>
+<p class="dfd-quiz-feedback" data-dfd-feedback hidden>
+</p>
+<p class="dfd-quiz-explain" data-dfd-explain hidden>
+</p>
+</section>
+<section class="dfd-quiz" data-dfd-quiz data-explanation="They are different features.">
+<h3 data-dfd-prompt>A serverless schema conversion project and a serverless replication are the same bill. True or false?</h3>
+<div data-dfd-choices>
+<button type="button" data-correct="false">True</button>
+<button type="button" data-correct="true">False</button>
+<button type="button" data-correct="false">True when the source is PostgreSQL</button>
+</div>
+<p class="dfd-quiz-feedback" data-dfd-feedback hidden>
+</p>
+<p class="dfd-quiz-explain" data-dfd-explain hidden>
+</p>
+</section>
+<section class="dfd-quiz" data-dfd-quiz data-explanation="The connection, not a new mapping.">
+<h3 data-dfd-prompt>A task fails and the log says it cannot read the source. What is step one?</h3>
+<div data-dfd-choices>
+<button type="button" data-correct="false">Rewrite the table mappings</button>
+<button type="button" data-correct="true">Re-test the endpoint and the security group</button>
+<button type="button" data-correct="false">Turn off supplemental logging</button>
+</div>
+<p class="dfd-quiz-feedback" data-dfd-feedback hidden>
+</p>
+<p class="dfd-quiz-explain" data-dfd-explain hidden>
+</p>
+</section>
+        </section>
+        <section class="section" data-dfd-reveal>
+            <h2>Official sources</h2>
+            <p>Checked against the linked documentation in October 2026. A later release can move a flag, a price, or a supported pair. Use the page for the version you installed.</p>
+            <ul class="source-list">
+<li>
+<a href="https://aws.amazon.com/dms/pricing/" target="_blank" rel="noopener noreferrer">DMS pricing</a>
+</li>
+<li>
+<a href="https://docs.aws.amazon.com/dms/latest/userguide/CHAP_Serverless.html" target="_blank" rel="noopener noreferrer">DMS Serverless</a>
+</li>
+<li>
+<a href="https://docs.aws.amazon.com/dms/latest/userguide/CHAP_Troubleshooting.html" target="_blank" rel="noopener noreferrer">Troubleshooting</a>
+</li>
+</ul>
+        </section>
+        <nav class="lesson-nav" aria-label="Lesson order">
+            <a class="secondary" href="examples.html">Previous: Homogeneous and heterogeneous examples</a>
+            <a href="capstone.html">Next: Capstone</a>
+        </nav>
+    </div>
+
+    <script src="../js/code-copy.js">
+</script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2">
+</script>
+    <script src="../js/supabase-config.js">
+</script>
+    <script src="../js/supabase-auth.js">
+</script>
+    <script src="../js/paywall.js">
+</script>
+    <script src="../js/progress.js">
+</script>
+    <script src="../js/lesson-common.js">
+</script>
+    <script src="../js/quiz.js">
+</script>
+    <script src="../js/analytics-tracker.js">
+</script>
+
+</body>
+</html>
