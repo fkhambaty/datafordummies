@@ -9,9 +9,19 @@
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="../css/dfd-system.css">
 </head>
-<body data-access="pro">
+<body class="dfd-safe" data-course-id="postgres" data-lesson-id="aggregations" data-lesson-label="Aggregations" data-total-lessons="14" data-access="pro">
     <div class="page-bg-particles" aria-hidden="true"><div class="orb"></div><div class="orb"></div><div class="orb"></div></div>
     <div class="container">
+
+<div class="dfd-lesson-progress" data-dfd-progress>
+  <p class="dfd-lesson-progress-label" data-dfd-progress-label>Sign in to save your place.</p>
+  <div class="dfd-lesson-progress-track" data-dfd-progress-bar role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-label="Course progress">
+    <div class="dfd-lesson-progress-fill" data-dfd-progress-fill></div>
+  </div>
+  <p><button type="button" data-dfd-complete>Mark lesson complete</button></p>
+  <p data-dfd-complete-status></p>
+</div>
+
         <nav class="nav">
             <a href="querying.html"><i class="fas fa-arrow-left"></i> Querying Data</a>
             <a href="joins.html">JOINs <i class="fas fa-arrow-right"></i></a>
@@ -1009,7 +1019,27 @@
             </div>
         </div>
 
-        <div class="lesson-nav">
+        <section class="section dfd-current" id="october-2026" data-dfd-current="2026-10">
+  <h2>October 2026: what an aggregate counts</h2>
+  <p><code>COUNT(*)</code> counts rows. <code>COUNT(email)</code> skips rows where email is NULL. That difference is easy to miss on a dashboard and it has not changed in PostgreSQL 16, 17, or 18.</p>
+  <p><code>WHERE</code> drops rows before the groups are built. <code>HAVING</code> drops groups after the aggregate. Filtering a sum in <code>WHERE</code> is a syntax error.</p>
+  <div class="code-block"><pre><code>SELECT COUNT(*) AS rows, COUNT(email) AS emails FROM customers;</code></pre></div>
+  <p><strong>Try this.</strong> On a table with one NULL email, compare <code>COUNT(*)</code> and <code>COUNT(email)</code>. The first number should be larger by one.</p>
+  <ul class="source-list"><li><a href="https://www.postgresql.org/docs/current/functions-aggregate.html" target="_blank" rel="noopener noreferrer">Aggregate functions</a></li></ul>
+</section>
+<section class="section dfd-quiz" id="check" data-dfd-quiz data-explanation="COUNT of a column skips nulls. COUNT(*) counts every row in the group.">
+  <h2 data-dfd-prompt>Knowledge check</h2>
+  <p>Why can COUNT(email) be smaller than COUNT(*)?</p>
+  <div data-dfd-choices>
+    <button type="button" data-correct="false">COUNT(*) is only allowed on PostgreSQL 18</button>
+    <button type="button" data-correct="true">COUNT(email) ignores rows where email is NULL</button>
+  </div>
+  <p class="dfd-quiz-feedback" data-dfd-feedback hidden></p>
+  <p class="dfd-quiz-explain" data-dfd-explain hidden></p>
+</section>
+
+
+<div class="lesson-nav">
             <a href="querying.html" class="secondary"><i class="fas fa-arrow-left"></i> Querying Data</a>
             <a href="joins.html">JOINs <i class="fas fa-arrow-right"></i></a>
         </div>
@@ -1043,5 +1073,9 @@
     <script src="../js/supabase-config.js"></script>
     <script src="../js/supabase-auth.js"></script>
     <script src="../js/paywall.js"></script>
+<script src="../js/progress.js"></script>
+<script src="../js/lesson-common.js"></script>
+<script src="../js/quiz.js"></script>
+<script src="../js/analytics-tracker.js"></script>
 </body>
 </html>

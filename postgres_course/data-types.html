@@ -9,9 +9,19 @@
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="../css/dfd-system.css">
 </head>
-<body data-access="pro">
+<body class="dfd-safe" data-course-id="postgres" data-lesson-id="data-types" data-lesson-label="Data types" data-total-lessons="14" data-access="pro">
     <div class="page-bg-particles" aria-hidden="true"><div class="orb"></div><div class="orb"></div><div class="orb"></div></div>
     <div class="container">
+
+<div class="dfd-lesson-progress" data-dfd-progress>
+  <p class="dfd-lesson-progress-label" data-dfd-progress-label>Sign in to save your place.</p>
+  <div class="dfd-lesson-progress-track" data-dfd-progress-bar role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-label="Course progress">
+    <div class="dfd-lesson-progress-fill" data-dfd-progress-fill></div>
+  </div>
+  <p><button type="button" data-dfd-complete>Mark lesson complete</button></p>
+  <p data-dfd-complete-status></p>
+</div>
+
         <nav class="nav">
             <a href="index.html"><i class="fas fa-arrow-left"></i> Course Home</a>
             <a href="querying.html">Querying Data <i class="fas fa-arrow-right"></i></a>
@@ -1136,7 +1146,30 @@
             </div>
         </div>
 
-        <div class="lesson-nav">
+        <section class="section dfd-current" id="october-2026" data-dfd-current="2026-10">
+  <h2>October 2026: types that still hold</h2>
+  <p><code>GENERATED ALWAYS AS IDENTITY</code> is still the right default instead of <code>SERIAL</code> on PostgreSQL 16, 17, and 18. Identity follows the SQL standard and is harder to bypass with a manual insert.</p>
+  <p>Pick <code>numeric</code> for money, <code>timestamptz</code> for an instant, and <code>text</code> when you do not have a real length limit. Check the server major before you use a type or function that a release note marks as new. PostgreSQL 19 features are not available on a stable server yet.</p>
+  <div class="code-block"><pre><code>CREATE TABLE readings (
+    id bigint GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    seen_at timestamptz NOT NULL DEFAULT now()
+);</code></pre></div>
+  <p><strong>Try this.</strong> Create a two-column table with an identity primary key and a <code>timestamptz</code> column that defaults to <code>now()</code>. Insert one row without naming the id.</p>
+  <ul class="source-list"><li><a href="https://www.postgresql.org/docs/current/sql-createtable.html" target="_blank" rel="noopener noreferrer">Identity columns</a></li></ul>
+</section>
+<section class="section dfd-quiz" id="check" data-dfd-quiz data-explanation="SERIAL still works. IDENTITY is the one to choose for new tables.">
+  <h2 data-dfd-prompt>Knowledge check</h2>
+  <p>Why prefer IDENTITY over SERIAL on a current PostgreSQL?</p>
+  <div data-dfd-choices>
+    <button type="button" data-correct="false">SERIAL was removed in PostgreSQL 16</button>
+    <button type="button" data-correct="true">It is the SQL-standard key and is harder to bypass by accident</button>
+  </div>
+  <p class="dfd-quiz-feedback" data-dfd-feedback hidden></p>
+  <p class="dfd-quiz-explain" data-dfd-explain hidden></p>
+</section>
+
+
+<div class="lesson-nav">
             <a href="sql-basics.html" class="secondary"><i class="fas fa-arrow-left"></i> SQL Basics</a>
             <a href="querying.html">Querying Data <i class="fas fa-arrow-right"></i></a>
         </div>
@@ -1170,5 +1203,9 @@
     <script src="../js/supabase-config.js"></script>
     <script src="../js/supabase-auth.js"></script>
     <script src="../js/paywall.js"></script>
+<script src="../js/progress.js"></script>
+<script src="../js/lesson-common.js"></script>
+<script src="../js/quiz.js"></script>
+<script src="../js/analytics-tracker.js"></script>
 </body>
 </html>

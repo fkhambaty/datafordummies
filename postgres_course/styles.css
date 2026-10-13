@@ -21,3 +21,36 @@
     font-weight: 800;
     letter-spacing: 0.04em;
 }
+
+body .nav a,
+body .lesson-nav a,
+body button {
+    min-height: 48px;
+}
+
+body svg,
+body img {
+    max-width: 100%;
+    height: auto;
+}
+
+body table,
+.comparison-table {
+    display: block;
+    max-width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+body pre,
+body .code-block {
+    max-width: 100%;
+    overflow-x: auto;
+}
+
+body p code,
+body li code,
+body td code,
+body h1, body h2, body h3 {
+    overflow-wrap: anywhere;
+}

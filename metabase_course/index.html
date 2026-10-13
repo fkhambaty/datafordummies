@@ -6,6 +6,15 @@
     <title>Metabase Business Intelligence | Data For Dummies</title>
     <link rel="stylesheet" href="../css/fkti-light-theme.css">
     <link rel="stylesheet" href="styles.css">
+    <style>
+        #navbar .container {
+            height: auto;
+            flex-wrap: wrap;
+            justify-content: center;
+            padding-top: 8px;
+            padding-bottom: 8px;
+        }
+    </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/atom-one-light.min.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <link rel="stylesheet" href="../css/dfd-system.css">
@@ -486,7 +495,7 @@ java -jar metabase.jar -Dserver.port=8080
                                 <h5>⏱️ Startup Process:</h5>
                                 <div class="timeline-step">
                                     <span class="time">0-30s:</span>
-                                    <span class="status">Initializing database (H2 by default)</span>
+                                    <span class="status">Initializing the application database (H2 only for a local trial)</span>
                                 </div>
                                 <div class="timeline-step">
                                     <span class="time">30-60s:</span>
@@ -673,7 +682,7 @@ java -jar metabase.jar -Dserver.port=8080
                         <div class="step-content">
                             <h4>Run Metabase with Docker</h4>
                             <div class="code-block">
-                                <pre><code># Simple Docker run
+                                <pre><code># Simple Docker run — H2, local trial only. Do not keep data this way.
 docker run -d -p 3000:3000 --name metabase metabase/metabase
 
 # With volume for data persistence
@@ -702,17 +711,17 @@ services:
       MB_DB_DBNAME: metabase
       MB_DB_PORT: 5432
       MB_DB_USER: metabase
-      MB_DB_PASS: secure_password
+      MB_DB_PASS: ${MB_DB_PASS}
       MB_DB_HOST: postgres
     depends_on:
       - postgres
     
   postgres:
-    image: postgres:13
+    image: postgres:17
     environment:
       POSTGRES_DB: metabase
       POSTGRES_USER: metabase
-      POSTGRES_PASSWORD: secure_password
+      POSTGRES_PASSWORD: ${MB_DB_PASS}
     volumes:
       - postgres_data:/var/lib/postgresql/data
 
@@ -2197,23 +2206,14 @@ ORDER BY date;</code></pre>
                         <div class="embed-example">
                             <h5>📊 IFrame Embedding</h5>
                             <div class="code-block">
-                                <pre><code class="language-html"><!-- Embed a public dashboard -->
-<iframe 
-    src="https://metabase.company.com/public/dashboard/abc123def456"
-    frameborder="0" 
-    width="800" 
-    height="600"
-    allowtransparency>
-</iframe>
-
-<!-- Embed with parameters -->
-<iframe 
-    src="https://metabase.company.com/public/dashboard/abc123def456?region=north&date_filter=last-30-days"
-    frameborder="0" 
-    width="100%" 
-    height="400">
-</iframe></code></pre>
+                                <pre><code class="language-html">&lt;!-- Public embed. Anyone with the URL can see it. --&gt;
+&lt;iframe
+    src="https://metabase.example/public/dashboard/abc123"
+    width="800"
+    height="600"&gt;
+&lt;/iframe&gt;</code></pre>
                             </div>
+                            <p>A public embed does not ask for a Metabase login. Use it only for data you would put on a poster. The <a href="sharing.html">sharing lesson</a> covers signed embedding, where the secret stays on your server.</p>
                         </div>
                         
                         <div class="embed-styling">
@@ -2282,6 +2282,7 @@ app.get('/dashboard/:userId', (req, res) => {
                             <h5>📊 Question Results API</h5>
                             <div class="code-block">
                                 <pre><code class="language-python"># Python example using Metabase API
+import os
 import requests
 import json
 
@@ -2313,7 +2314,7 @@ class MetabaseAPI:
         return response.json()['data']
 
 # Usage example
-mb = MetabaseAPI('https://metabase.company.com', 'user@company.com', 'password')
+mb = MetabaseAPI('https://metabase.company.com', 'user@company.com', os.environ['METABASE_PASSWORD'])
 results = mb.run_question(42, [{"type": "date/range", "target": ["dimension", ["field-id", 123]], "value": "2024-01-01~2024-12-31"}])
 print(json.dumps(results['rows'], indent=2))</code></pre>
                             </div>

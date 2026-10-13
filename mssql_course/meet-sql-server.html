@@ -6,6 +6,7 @@
     <title>Module 1: Meet SQL Server | Data For Dummies</title>
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
@@ -283,8 +284,18 @@
     </style>
     <link rel="stylesheet" href="../css/dfd-system.css">
 </head>
-<body>
+<body class="dfd-safe" data-course-id="mssql" data-lesson-id="meet-sql-server" data-lesson-label="Meet SQL Server" data-total-lessons="14">
     <div class="container">
+
+<div class="dfd-lesson-progress" data-dfd-progress>
+  <p class="dfd-lesson-progress-label" data-dfd-progress-label>Sign in to save your place.</p>
+  <div class="dfd-lesson-progress-track" data-dfd-progress-bar role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-label="Course progress">
+    <div class="dfd-lesson-progress-fill" data-dfd-progress-fill></div>
+  </div>
+  <p><button type="button" data-dfd-complete>Mark lesson complete</button></p>
+  <p data-dfd-complete-status></p>
+</div>
+
         <nav class="nav">
             <a href="index.html"><i class="fas fa-th-large"></i> Course Hub</a>
             <a href="installation-ssms.html">Module 2 <i class="fas fa-arrow-right"></i></a>
@@ -531,7 +542,27 @@
             </div>
         </div>
 
-        <div class="nav-buttons">
+        <section class="section dfd-current" id="october-2026" data-dfd-current="2026-10">
+  <h2>October 2026: supported SQL Server, and what Fabric is not</h2>
+  <p>Checked against Microsoft's lifecycle pages on 13 October 2026. SQL Server 2025 became supported on 18 November 2025 (mainstream through 7 January 2031). SQL Server 2022 is in mainstream support through 12 January 2028. SQL Server 2019 is in extended support through 9 January 2030. SQL Server 2017 is in extended support through 13 October 2027. SQL Server 2016 extended support ended on 15 July 2026. Paid Extended Security Updates are not a reason to start a new lab there.</p>
+  <p>Microsoft Fabric is a different analytics product. This course teaches SQL Server, T-SQL, and SSMS, and it says how Azure SQL differs. It does not teach Fabric, and finishing a lesson does not mean you have Fabric tools or should claim them.</p>
+  <div class="code-block"><pre><code>SELECT @@VERSION;</code></pre></div>
+  <p><strong>Try this.</strong> Write the major version of the instance you can actually open. If you cannot open one, say which supported major you would install, and why it is not SQL Server 2016.</p>
+  <ul class="source-list"><li><a href="https://learn.microsoft.com/lifecycle/products/sql-server-2025" target="_blank" rel="noopener noreferrer">SQL Server 2025 lifecycle</a></li><li><a href="https://learn.microsoft.com/lifecycle/products/sql-server-2016" target="_blank" rel="noopener noreferrer">SQL Server 2016 lifecycle</a></li></ul>
+</section>
+<section class="section dfd-quiz" id="check" data-dfd-quiz data-explanation="SQL Server 2025 is a database engine release. Fabric is a separate analytics service.">
+  <h2 data-dfd-prompt>Knowledge check</h2>
+  <p>Is Microsoft Fabric the SQL Server installer?</p>
+  <div data-dfd-choices>
+    <button type="button" data-correct="false">Yes. Fabric is the new name for SQL Server 2025.</button>
+    <button type="button" data-correct="true">No. Fabric is a different product, and this course does not teach it.</button>
+  </div>
+  <p class="dfd-quiz-feedback" data-dfd-feedback hidden></p>
+  <p class="dfd-quiz-explain" data-dfd-explain hidden></p>
+</section>
+
+
+<div class="nav-buttons">
             <a href="index.html" class="nav-btn prev"><i class="fas fa-th-large"></i> Course Hub</a>
             <a href="installation-ssms.html" class="nav-btn next">Module 2: Installation &amp; SSMS <i class="fas fa-arrow-right"></i></a>
         </div>
@@ -566,5 +597,14 @@
             });
         });
     </script>
+<script src="../js/code-copy.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="../js/supabase-config.js"></script>
+<script src="../js/supabase-auth.js"></script>
+<script src="../js/paywall.js"></script>
+<script src="../js/progress.js"></script>
+<script src="../js/lesson-common.js"></script>
+<script src="../js/quiz.js"></script>
+<script src="../js/analytics-tracker.js"></script>
 </body>
 </html>

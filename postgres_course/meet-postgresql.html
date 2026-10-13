@@ -9,10 +9,20 @@
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="../css/dfd-system.css">
 </head>
-<body>
+<body class="dfd-safe" data-course-id="postgres" data-lesson-id="meet-postgresql" data-lesson-label="Meet PostgreSQL" data-total-lessons="14">
     <div class="page-bg-particles" aria-hidden="true"><div class="orb"></div><div class="orb"></div><div class="orb"></div></div>
 
     <div class="container">
+
+<div class="dfd-lesson-progress" data-dfd-progress>
+  <p class="dfd-lesson-progress-label" data-dfd-progress-label>Sign in to save your place.</p>
+  <div class="dfd-lesson-progress-track" data-dfd-progress-bar role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-label="Course progress">
+    <div class="dfd-lesson-progress-fill" data-dfd-progress-fill></div>
+  </div>
+  <p><button type="button" data-dfd-complete>Mark lesson complete</button></p>
+  <p data-dfd-complete-status></p>
+</div>
+
         <nav class="nav">
             <a href="index.html"><i class="fas fa-arrow-left"></i> Course Home</a>
             <a href="installation.html">Installation &amp; Setup <i class="fas fa-arrow-right"></i></a>
@@ -567,7 +577,28 @@
         </div>
 
         <!-- Lesson Navigation -->
-        <div class="lesson-nav">
+        <section class="section dfd-current" id="october-2026" data-dfd-current="2026-10">
+  <h2>October 2026: which PostgreSQL to install</h2>
+  <p>Checked against the PostgreSQL versioning policy on 13 October 2026. The current stable release is PostgreSQL 18 (minor 18.6, 13 August 2026). PostgreSQL 17, 16, and 15 are still supported. PostgreSQL 14 is supported until 12 November 2026, then it stops receiving fixes. PostgreSQL 13 and older are already unsupported.</p>
+  <p>PostgreSQL 19 is not a version you can install for this course. Beta 3 shipped on 13 August 2026. The release team planned a first release candidate for 15 October 2026 and the final release for 19 November 2026. A beta can change. Do not write labs or production steps against it.</p>
+  <p>psql is the terminal client that ships with the server. DBeaver Community Edition is a separate window onto the same server. The engine is PostgreSQL. The window is not.</p>
+  <div class="code-block"><pre><code>SELECT version();</code></pre></div>
+  <p><strong>Try this.</strong> After you install, run <code>SELECT version();</code> and write down the major number. If it says 14, plan an upgrade before 12 November 2026. If it says 19, you are on a beta.</p>
+  <ul class="source-list"><li><a href="https://www.postgresql.org/support/versioning/" target="_blank" rel="noopener noreferrer">Versioning policy</a></li></ul>
+</section>
+<section class="section dfd-quiz" id="check" data-dfd-quiz data-explanation="PostgreSQL 19 was still a beta on 13 October 2026, with a final release planned for 19 November 2026.">
+  <h2 data-dfd-prompt>Knowledge check</h2>
+  <p>Which release should a new lab use in October 2026?</p>
+  <div data-dfd-choices>
+    <button type="button" data-correct="false">PostgreSQL 19, because a beta is the newest</button>
+    <button type="button" data-correct="true">PostgreSQL 18, the current stable major. 16 and 17 are still fine.</button>
+  </div>
+  <p class="dfd-quiz-feedback" data-dfd-feedback hidden></p>
+  <p class="dfd-quiz-explain" data-dfd-explain hidden></p>
+</section>
+
+
+<div class="lesson-nav">
             <a href="index.html" class="secondary"><i class="fas fa-arrow-left"></i> Course Home</a>
             <a href="installation.html">Installation &amp; Setup <i class="fas fa-arrow-right"></i></a>
         </div>
@@ -616,5 +647,13 @@
     });
     </script>
     <script src="../js/code-copy.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="../js/supabase-config.js"></script>
+<script src="../js/supabase-auth.js"></script>
+<script src="../js/paywall.js"></script>
+<script src="../js/progress.js"></script>
+<script src="../js/lesson-common.js"></script>
+<script src="../js/quiz.js"></script>
+<script src="../js/analytics-tracker.js"></script>
 </body>
 </html>

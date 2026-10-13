@@ -6,6 +6,7 @@
     <title>Module 7: Joins | Data For Dummies</title>
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: 'Nunito', sans-serif; background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 50%, #bfdbfe 100%); min-height: 100vh; padding: 20px; color: #1e293b; line-height: 1.8; font-size: 18px; }
@@ -63,8 +64,18 @@
     </style>
     <link rel="stylesheet" href="../css/dfd-system.css">
 </head>
-<body data-access="pro">
+<body class="dfd-safe" data-course-id="mssql" data-lesson-id="joins" data-lesson-label="Joins" data-total-lessons="14" data-access="pro">
     <div class="container">
+
+<div class="dfd-lesson-progress" data-dfd-progress>
+  <p class="dfd-lesson-progress-label" data-dfd-progress-label>Sign in to save your place.</p>
+  <div class="dfd-lesson-progress-track" data-dfd-progress-bar role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-label="Course progress">
+    <div class="dfd-lesson-progress-fill" data-dfd-progress-fill></div>
+  </div>
+  <p><button type="button" data-dfd-complete>Mark lesson complete</button></p>
+  <p data-dfd-complete-status></p>
+</div>
+
         <nav class="nav">
             <a href="select-where-order.html"><i class="fas fa-arrow-left"></i> Module 6</a>
             <a href="index.html"><i class="fas fa-th-large"></i> Course Hub</a>
@@ -163,7 +174,30 @@
             </div>
         </div>
 
-        <div class="nav-buttons">
+        <section class="section dfd-current" id="october-2026" data-dfd-current="2026-10">
+  <h2>October 2026: which rows a join keeps</h2>
+  <p><code>INNER JOIN</code> keeps matches. <code>LEFT JOIN</code> keeps every left row. A NULL join key does not match, so an inner join hides those rows. Check that before you change the join type.</p>
+  <p>Alias every table when more than one is involved. SQL Server will not invent a safe guess when two tables have a column of the same name.</p>
+  <div class="code-block"><pre><code>SELECT c.customer_id
+FROM customers AS c
+LEFT JOIN orders AS o ON o.customer_id = c.customer_id
+WHERE o.order_id IS NULL;</code></pre></div>
+  <p><strong>Try this.</strong> Left-join the practice customers to orders and count customers with no order id on the right.</p>
+  <ul class="source-list"><li><a href="https://learn.microsoft.com/sql/relational-databases/performance/joins" target="_blank" rel="noopener noreferrer">Joins</a></li></ul>
+</section>
+<section class="section dfd-quiz" id="check" data-dfd-quiz data-explanation="Join equality does not treat two unknowns as a match.">
+  <h2 data-dfd-prompt>Knowledge check</h2>
+  <p>What happens to a NULL join key in an INNER JOIN?</p>
+  <div data-dfd-choices>
+    <button type="button" data-correct="false">SQL Server 2025 treats NULL as equal to NULL</button>
+    <button type="button" data-correct="true">The row does not match, so it is left out</button>
+  </div>
+  <p class="dfd-quiz-feedback" data-dfd-feedback hidden></p>
+  <p class="dfd-quiz-explain" data-dfd-explain hidden></p>
+</section>
+
+
+<div class="nav-buttons">
             <a href="select-where-order.html" class="nav-btn prev"><i class="fas fa-arrow-left"></i> Module 6</a>
             <a href="aggregations.html" class="nav-btn next">Module 8: Aggregations & GROUP BY <i class="fas fa-arrow-right"></i></a>
         </div>
@@ -198,5 +232,10 @@
 <script src="../js/supabase-config.js"></script>
 <script src="../js/supabase-auth.js"></script>
 <script src="../js/paywall.js"></script>
+<script src="../js/code-copy.js"></script>
+<script src="../js/progress.js"></script>
+<script src="../js/lesson-common.js"></script>
+<script src="../js/quiz.js"></script>
+<script src="../js/analytics-tracker.js"></script>
 </body>
 </html>

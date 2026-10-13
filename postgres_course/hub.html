@@ -13,7 +13,7 @@
         .lesson-link-pro { background: rgba(99,102,241,0.04); color: #64748b; }
         .lesson-link-pro:hover { background: rgba(99,102,241,0.08); }
         .lesson-link-pro i.fa-lock { color: #f59e0b; }
-        .lesson-link-pro .pro-badge { font-size: 0.65em; margin-left: 6px; padding: 2px 7px; background: linear-gradient(135deg, #f59e0b, #d97706); color: white; border-radius: 5px; font-weight: 700; }
+        .lesson-link-pro .pro-badge, .lesson-link .pro-badge { font-size: 0.65em; margin-left: 6px; padding: 2px 7px; background: linear-gradient(135deg, #f59e0b, #d97706); color: white; border-radius: 5px; font-weight: 700; }
     </style>
     <link rel="stylesheet" href="../css/dfd-system.css">
 </head>
@@ -25,7 +25,7 @@
         </nav>
 
         <div class="header">
-            <span class="header-badge">🐘 13 MODULES · 40+ LESSONS · 100+ SQL EXAMPLES</span>
+            <span class="header-badge">14 LESSONS · 2 FREE · 12 PRO</span>
             <h1>PostgreSQL Mastery Hub</h1>
             <p>Every module at a glance. Click any lesson to jump right in!</p>
         </div>
@@ -38,7 +38,7 @@
                 <h3>1. Meet PostgreSQL</h3>
                 <p>What is a database? Why PostgreSQL? History, comparisons, and who uses it.</p>
                 <div class="module-lessons">
-                    <a href="meet-postgresql.html" class="lesson-link"><i class="fas fa-play-circle"></i> Start Here</a>
+                    <a href="meet-postgresql.html" class="lesson-link"><i class="fas fa-play-circle"></i> Start Here<span class="pro-badge" style="background:#059669">Free</span></a>
                 </div>
             </div>
 
@@ -48,7 +48,7 @@
                 <h3>2. Installation &amp; Setup</h3>
                 <p>Install PostgreSQL + DBeaver, connect, and run your first query.</p>
                 <div class="module-lessons">
-                    <a href="installation.html" class="lesson-link"><i class="fas fa-play-circle"></i> Install Guide</a>
+                    <a href="installation.html" class="lesson-link"><i class="fas fa-play-circle"></i> Install Guide<span class="pro-badge" style="background:#059669">Free</span></a>
                 </div>
             </div>
 
@@ -149,6 +149,16 @@
                 <p>JSONB, JSON operators, arrays — PostgreSQL as a document DB.</p>
                 <div class="module-lessons">
                     <a href="json-arrays.html" class="lesson-link lesson-link-pro"><i class="fas fa-lock"></i> JSON Power<span class="pro-badge">Pro</span></a>
+                </div>
+            </div>
+
+            <div class="module-card" style="--mc:#0f766e;--mc2:#14b8a6;">
+                <span class="module-status status-ready">✅ READY</span>
+                <div class="module-icon">🔁</div>
+                <h3>Replication</h3>
+                <p>Physical streaming and logical publications, including slots and version limits.</p>
+                <div class="module-lessons">
+                    <a href="replication.html" class="lesson-link lesson-link-pro"><i class="fas fa-lock"></i> Replication and HA<span class="pro-badge">Pro</span></a>
                 </div>
             </div>
 

@@ -3,45 +3,131 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>SQL Server Certification | Data For Dummies</title>
-    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <title>SQL Server course practice | Data For Dummies</title>
+    <link rel="stylesheet" href="styles.css">
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Nunito', sans-serif; background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 50%, #bfdbfe 100%); min-height: 100vh; padding: 20px; color: #1e293b; line-height: 1.8; font-size: 18px; }
-        .container { max-width: 1000px; margin: 0 auto; }
-        .nav { background: rgba(255,255,255,0.95); padding: 15px 30px; border-radius: 15px; margin-bottom: 30px; box-shadow: 0 4px 20px rgba(0,0,0,0.08); display: flex; justify-content: space-between; align-items: center; }
-        .nav a { color: #2563eb; text-decoration: none; font-weight: 600; display: flex; align-items: center; gap: 8px; }
-        .header { text-align: center; padding: 50px 40px; background: linear-gradient(135deg, #1e40af 0%, #2563eb 50%, #3b82f6 100%); border-radius: 25px; color: white; margin-bottom: 40px; box-shadow: 0 10px 40px rgba(37,99,235,0.3); }
-        .header h1 { font-size: 2.5em; margin-bottom: 15px; font-weight: 800; }
-        .header p { font-size: 1.2em; opacity: 0.95; max-width: 700px; margin: 0 auto; }
-        .section { background: white; border-radius: 25px; padding: 45px; margin-bottom: 35px; box-shadow: 0 4px 25px rgba(0,0,0,0.08); border: 3px solid #bfdbfe; }
-        .section h2 { color: #1e40af; font-size: 1.8em; margin-bottom: 25px; }
-        .section p { font-size: 1.1em; color: #334155; margin-bottom: 20px; }
-        .nav-btn { display: inline-flex; align-items: center; gap: 10px; padding: 18px 35px; border-radius: 15px; text-decoration: none; font-weight: 700; transition: all 0.3s; background: linear-gradient(135deg, #2563eb 0%, #3b82f6 100%); color: white; margin-top: 20px; }
-        .nav-btn:hover { transform: translateY(-3px); box-shadow: 0 8px 25px rgba(0,0,0,0.15); }
-        @media (max-width: 768px) { .header h1 { font-size: 1.8em; } .section { padding: 25px 20px; } }
+        :root { --course-primary: #a4262c; --course-accent: #d83b01; }
     </style>
     <link rel="stylesheet" href="../css/dfd-system.css">
 </head>
-<body>
+<body class="dfd-safe" data-course-id="mssql" data-lesson-id="certification" data-lesson-label="Course practice" data-total-lessons="14">
     <div class="container">
-        <nav class="nav">
-            <a href="security-basics.html"><i class="fas fa-arrow-left"></i> Module 12</a>
-            <a href="index.html"><i class="fas fa-th-large"></i> Course Hub</a>
+        <div class="dfd-lesson-progress" data-dfd-progress>
+            <p class="dfd-lesson-progress-label" data-dfd-progress-label>Sign in to save your place.</p>
+            <div class="dfd-lesson-progress-track" data-dfd-progress-bar role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-label="Course progress">
+                <div class="dfd-lesson-progress-fill" data-dfd-progress-fill></div>
+            </div>
+            <p><button type="button" data-dfd-complete>Mark lesson complete</button></p>
+            <p data-dfd-complete-status></p>
+        </div>
+        <nav class="nav" aria-label="Course">
+            <a href="security-basics.html"><i class="fas fa-arrow-left"></i> Security</a>
+            <a href="hub.html">Course hub</a>
+            <a href="datasets.html">Practice files <i class="fas fa-arrow-right"></i></a>
         </nav>
-
-        <div class="header">
-            <h1><i class="fas fa-certificate"></i> SQL Server Certification</h1>
-            <p>Test your knowledge across all 12 modules.</p>
-        </div>
-
-        <div class="section">
-            <h2>Certification exam</h2>
-            <p>Test your knowledge across all 12 modules. You need <strong>70%</strong> to pass.</p>
-            <p>This page is a placeholder. The full certification exam will be available here soon.</p>
-            <a href="index.html" class="nav-btn"><i class="fas fa-th-large"></i> Back to Course Hub</a>
-        </div>
+        <header class="lesson-hero">
+            <p class="course-kicker">Free · Course practice</p>
+            <h1>SQL Server course practice</h1>
+            <p>Questions from this course. This is not a Microsoft certification and not exam DP-300, DP-900, or any other vendor test.</p>
+        </header>
+        <section class="section">
+            <h2>How to use this page</h2>
+            <p>Answer from the lessons, then open the explanation. A pass mark on this page is not a credential. Microsoft publishes its own exams, objectives, and prices, and those change. If you want a vendor credential, read the current exam page on Microsoft Learn. Do not tell an employer this course practice is that exam.</p>
+            <p>Microsoft Fabric is not one of the answers you should treat as a tool this course taught you. The questions that mention it only ask you to tell it apart from SQL Server.</p>
+        </section>
+        <section class="section dfd-quiz" data-dfd-quiz data-explanation="Extended support for SQL Server 2016 ended on 15 July 2026. A new lab uses a supported major.">
+            <h2 data-dfd-prompt>Which instance is the wrong place to start a new lab in October 2026?</h2>
+            <div data-dfd-choices>
+                <button type="button" data-correct="true">SQL Server 2016, whose extended support has ended</button>
+                <button type="button" data-correct="false">SQL Server 2022, which is still in mainstream support</button>
+            </div>
+            <p class="dfd-quiz-feedback" data-dfd-feedback hidden></p>
+            <p class="dfd-quiz-explain" data-dfd-explain hidden></p>
+        </section>
+        <section class="section dfd-quiz" data-dfd-quiz data-explanation="SSMS 21 and SSMS 22 support SQL Server 2025. SSMS 19 and 20 stop at SQL Server 2022.">
+            <h2 data-dfd-prompt>Which SSMS majors does Microsoft list for SQL Server 2025?</h2>
+            <div data-dfd-choices>
+                <button type="button" data-correct="false">SSMS 19 only</button>
+                <button type="button" data-correct="true">SSMS 21 and SSMS 22</button>
+            </div>
+            <p class="dfd-quiz-feedback" data-dfd-feedback hidden></p>
+            <p class="dfd-quiz-explain" data-dfd-explain hidden></p>
+        </section>
+        <section class="section dfd-quiz" data-dfd-quiz data-explanation="Microsoft warns that filtering the target inside ON can return incorrect results.">
+            <h2 data-dfd-prompt>What is the careful way to write MERGE?</h2>
+            <div data-dfd-choices>
+                <button type="button" data-correct="true">Match target columns to the source only, or use update-then-insert</button>
+                <button type="button" data-correct="false">Filter the target in the ON clause so the statement touches fewer rows</button>
+            </div>
+            <p class="dfd-quiz-feedback" data-dfd-feedback hidden></p>
+            <p class="dfd-quiz-explain" data-dfd-explain hidden></p>
+        </section>
+        <section class="section dfd-quiz" data-dfd-quiz data-explanation="The native json type is preview on SQL Server 2025. It is generally available on Azure SQL under the SQL Server 2025 or Always-up-to-date policy. SQL Server 2022 uses nvarchar.">
+            <h2 data-dfd-prompt>Where is the native json type generally available, as of October 2026?</h2>
+            <div data-dfd-choices>
+                <button type="button" data-correct="false">Every SQL Server 2022 database, with no preview label</button>
+                <button type="button" data-correct="true">Azure SQL Database and Managed Instance on the SQL Server 2025 or Always-up-to-date policy</button>
+            </div>
+            <p class="dfd-quiz-feedback" data-dfd-feedback hidden></p>
+            <p class="dfd-quiz-explain" data-dfd-explain hidden></p>
+        </section>
+        <section class="section dfd-quiz" data-dfd-quiz data-explanation="Columnstore favors large scans and aggregates. A single-row lookup is a rowstore index.">
+            <h2 data-dfd-prompt>When is a columnstore index the wrong primary design?</h2>
+            <div data-dfd-choices>
+                <button type="button" data-correct="true">The workload fetches one row by key all day</button>
+                <button type="button" data-correct="false">The workload scans many rows and aggregates them</button>
+            </div>
+            <p class="dfd-quiz-feedback" data-dfd-feedback hidden></p>
+            <p class="dfd-quiz-explain" data-dfd-explain hidden></p>
+        </section>
+        <section class="section dfd-quiz" data-dfd-quiz data-explanation="Query Store records plans and runtime. It is not a backup.">
+            <h2 data-dfd-prompt>What does Query Store store?</h2>
+            <div data-dfd-choices>
+                <button type="button" data-correct="false">A restorable copy of the database</button>
+                <button type="button" data-correct="true">Plan and runtime history so you can see a regression</button>
+            </div>
+            <p class="dfd-quiz-feedback" data-dfd-feedback hidden></p>
+            <p class="dfd-quiz-explain" data-dfd-explain hidden></p>
+        </section>
+        <section class="section dfd-quiz" data-dfd-quiz data-explanation="A backup is proven by restoring it and reading the data.">
+            <h2 data-dfd-prompt>When do you know a backup worked?</h2>
+            <div data-dfd-choices>
+                <button type="button" data-correct="true">After a restore, when the rows you expect are readable</button>
+                <button type="button" data-correct="false">When BACKUP DATABASE returns without an error</button>
+            </div>
+            <p class="dfd-quiz-feedback" data-dfd-feedback hidden></p>
+            <p class="dfd-quiz-explain" data-dfd-explain hidden></p>
+        </section>
+        <section class="section dfd-quiz" data-dfd-quiz data-explanation="Entra ID is the cloud identity used by Azure SQL. It does not silently replace an on-premises Windows login.">
+            <h2 data-dfd-prompt>What is Microsoft Entra authentication in this course?</h2>
+            <div data-dfd-choices>
+                <button type="button" data-correct="false">A switch that turns every Windows login into Fabric access</button>
+                <button type="button" data-correct="true">The cloud identity option for Azure SQL</button>
+            </div>
+            <p class="dfd-quiz-feedback" data-dfd-feedback hidden></p>
+            <p class="dfd-quiz-explain" data-dfd-explain hidden></p>
+        </section>
+        <section class="section">
+            <h2>Official sources</h2>
+            <ul class="source-list">
+                <li><a href="https://learn.microsoft.com/lifecycle/products/sql-server-2025" target="_blank" rel="noopener noreferrer">SQL Server 2025 lifecycle</a></li>
+                <li><a href="https://learn.microsoft.com/sql/t-sql/statements/merge-transact-sql" target="_blank" rel="noopener noreferrer">MERGE</a></li>
+                <li><a href="https://learn.microsoft.com/sql/t-sql/data-types/json-data-type" target="_blank" rel="noopener noreferrer">json data type</a></li>
+            </ul>
+        </section>
+        <nav class="lesson-nav" aria-label="Lesson order">
+            <a class="secondary" href="security-basics.html">Previous: Security basics</a>
+            <a href="datasets.html">Next: Practice datasets</a>
+        </nav>
     </div>
+    <script src="../js/code-copy.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="../js/supabase-config.js"></script>
+    <script src="../js/supabase-auth.js"></script>
+    <script src="../js/paywall.js"></script>
+    <script src="../js/progress.js"></script>
+    <script src="../js/lesson-common.js"></script>
+    <script src="../js/quiz.js"></script>
+    <script src="../js/analytics-tracker.js"></script>
 </body>
 </html>

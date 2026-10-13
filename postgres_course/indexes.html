@@ -9,9 +9,19 @@
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="../css/dfd-system.css">
 </head>
-<body data-access="pro">
+<body class="dfd-safe" data-course-id="postgres" data-lesson-id="indexes" data-lesson-label="Indexes" data-total-lessons="14" data-access="pro">
     <div class="page-bg-particles" aria-hidden="true"><div class="orb"></div><div class="orb"></div><div class="orb"></div></div>
     <div class="container">
+
+<div class="dfd-lesson-progress" data-dfd-progress>
+  <p class="dfd-lesson-progress-label" data-dfd-progress-label>Sign in to save your place.</p>
+  <div class="dfd-lesson-progress-track" data-dfd-progress-bar role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-label="Course progress">
+    <div class="dfd-lesson-progress-fill" data-dfd-progress-fill></div>
+  </div>
+  <p><button type="button" data-dfd-complete>Mark lesson complete</button></p>
+  <p data-dfd-complete-status></p>
+</div>
+
         <nav class="nav">
             <a href="subqueries-ctes.html"><i class="fas fa-arrow-left"></i> Subqueries &amp; CTEs</a>
             <a href="functions.html">Functions <i class="fas fa-arrow-right"></i></a>
@@ -752,7 +762,27 @@
             </div>
         </div>
 
-        <div class="lesson-nav">
+        <section class="section dfd-current" id="october-2026" data-dfd-current="2026-10">
+  <h2>October 2026: BRIN, and partitioning is not an index</h2>
+  <p>B-tree is still the default. Use BRIN when a huge table is physically ordered by the column you filter, such as an append-only log on <code>created_at</code>. BRIN stores a min and max per block range. It is the wrong index when the values are scattered. A random customer id wants a B-tree.</p>
+  <p>Declarative partitioning splits one logical table into child tables. It is not an index. A <code>WHERE</code> clause on the partition key lets the planner skip children. You still index the columns the queries filter inside those children. Check the plan with <code>EXPLAIN</code>. A partition that the query still scans is not being skipped.</p>
+  <div class="code-block"><pre><code>CREATE INDEX ON server_logs USING BRIN (created_at);</code></pre></div>
+  <p><strong>Try this.</strong> On a timestamp-ordered log, create a BRIN index and an equivalent B-tree in a scratch database. Compare <code>pg_relation_size</code> for the two indexes.</p>
+  <ul class="source-list"><li><a href="https://www.postgresql.org/docs/current/brin.html" target="_blank" rel="noopener noreferrer">BRIN indexes</a></li><li><a href="https://www.postgresql.org/docs/current/ddl-partitioning.html" target="_blank" rel="noopener noreferrer">Partitioning</a></li></ul>
+</section>
+<section class="section dfd-quiz" id="check" data-dfd-quiz data-explanation="BRIN helps when values in a block range are close together. A random key is a B-tree.">
+  <h2 data-dfd-prompt>Knowledge check</h2>
+  <p>When is BRIN a sensible first index?</p>
+  <div data-dfd-choices>
+    <button type="button" data-correct="false">Any primary key, because BRIN is smaller</button>
+    <button type="button" data-correct="true">A huge table whose rows are stored in the order you filter</button>
+  </div>
+  <p class="dfd-quiz-feedback" data-dfd-feedback hidden></p>
+  <p class="dfd-quiz-explain" data-dfd-explain hidden></p>
+</section>
+
+
+<div class="lesson-nav">
             <a href="subqueries-ctes.html" class="secondary"><i class="fas fa-arrow-left"></i> Subqueries &amp; CTEs</a>
             <a href="functions.html">Functions <i class="fas fa-arrow-right"></i></a>
         </div>
@@ -786,5 +816,9 @@
     <script src="../js/supabase-config.js"></script>
     <script src="../js/supabase-auth.js"></script>
     <script src="../js/paywall.js"></script>
+<script src="../js/progress.js"></script>
+<script src="../js/lesson-common.js"></script>
+<script src="../js/quiz.js"></script>
+<script src="../js/analytics-tracker.js"></script>
 </body>
 </html>

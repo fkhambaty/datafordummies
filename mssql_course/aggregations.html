@@ -6,6 +6,7 @@
     <title>Module 8: Aggregations & GROUP BY | Data For Dummies</title>
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: 'Nunito', sans-serif; background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 50%, #bfdbfe 100%); min-height: 100vh; padding: 20px; color: #1e293b; line-height: 1.8; font-size: 18px; }
@@ -63,8 +64,18 @@
     </style>
     <link rel="stylesheet" href="../css/dfd-system.css">
 </head>
-<body data-access="pro">
+<body class="dfd-safe" data-course-id="mssql" data-lesson-id="aggregations" data-lesson-label="Aggregations" data-total-lessons="14" data-access="pro">
     <div class="container">
+
+<div class="dfd-lesson-progress" data-dfd-progress>
+  <p class="dfd-lesson-progress-label" data-dfd-progress-label>Sign in to save your place.</p>
+  <div class="dfd-lesson-progress-track" data-dfd-progress-bar role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-label="Course progress">
+    <div class="dfd-lesson-progress-fill" data-dfd-progress-fill></div>
+  </div>
+  <p><button type="button" data-dfd-complete>Mark lesson complete</button></p>
+  <p data-dfd-complete-status></p>
+</div>
+
         <nav class="nav">
             <a href="joins.html"><i class="fas fa-arrow-left"></i> Module 7</a>
             <a href="index.html"><i class="fas fa-th-large"></i> Course Hub</a>
@@ -165,7 +176,27 @@
             </div>
         </div>
 
-        <div class="nav-buttons">
+        <section class="section dfd-current" id="october-2026" data-dfd-current="2026-10">
+  <h2>October 2026: WHERE before HAVING</h2>
+  <p><code>WHERE</code> filters rows. <code>GROUP BY</code> builds the buckets. Aggregates run on the buckets. <code>HAVING</code> filters the buckets. Putting <code>SUM(amount) &gt; 100</code> in <code>WHERE</code> is invalid.</p>
+  <p><code>COUNT(*)</code> counts rows in the group. <code>COUNT(column)</code> skips nulls in that column. A dashboard that uses the wrong one will not match a hand count.</p>
+  <div class="code-block"><pre><code>SELECT customer_id, SUM(amount) AS total FROM sales GROUP BY customer_id HAVING SUM(amount) &gt; 100;</code></pre></div>
+  <p><strong>Try this.</strong> Group the practice sales by month. Use <code>HAVING</code> to keep months above a total you choose. Confirm a row with a NULL amount changes <code>COUNT(amount)</code> and not <code>COUNT(*)</code>.</p>
+  <ul class="source-list"><li><a href="https://learn.microsoft.com/sql/t-sql/queries/select-transact-sql" target="_blank" rel="noopener noreferrer">GROUP BY</a></li></ul>
+</section>
+<section class="section dfd-quiz" id="check" data-dfd-quiz data-explanation="WHERE runs before GROUP BY. HAVING runs after the aggregate.">
+  <h2 data-dfd-prompt>Knowledge check</h2>
+  <p>Which clause filters rows before they are grouped?</p>
+  <div data-dfd-choices>
+    <button type="button" data-correct="false">HAVING</button>
+    <button type="button" data-correct="true">WHERE</button>
+  </div>
+  <p class="dfd-quiz-feedback" data-dfd-feedback hidden></p>
+  <p class="dfd-quiz-explain" data-dfd-explain hidden></p>
+</section>
+
+
+<div class="nav-buttons">
             <a href="joins.html" class="nav-btn prev"><i class="fas fa-arrow-left"></i> Module 7</a>
             <a href="subqueries-ctes.html" class="nav-btn next">Module 9: Subqueries & CTEs <i class="fas fa-arrow-right"></i></a>
         </div>
@@ -200,5 +231,10 @@
 <script src="../js/supabase-config.js"></script>
 <script src="../js/supabase-auth.js"></script>
 <script src="../js/paywall.js"></script>
+<script src="../js/code-copy.js"></script>
+<script src="../js/progress.js"></script>
+<script src="../js/lesson-common.js"></script>
+<script src="../js/quiz.js"></script>
+<script src="../js/analytics-tracker.js"></script>
 </body>
 </html>

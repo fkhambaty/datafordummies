@@ -9,9 +9,19 @@
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="../css/dfd-system.css">
 </head>
-<body data-access="pro">
+<body class="dfd-safe" data-course-id="postgres" data-lesson-id="functions" data-lesson-label="Functions" data-total-lessons="14" data-access="pro">
     <div class="page-bg-particles" aria-hidden="true"><div class="orb"></div><div class="orb"></div><div class="orb"></div></div>
     <div class="container">
+
+<div class="dfd-lesson-progress" data-dfd-progress>
+  <p class="dfd-lesson-progress-label" data-dfd-progress-label>Sign in to save your place.</p>
+  <div class="dfd-lesson-progress-track" data-dfd-progress-bar role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-label="Course progress">
+    <div class="dfd-lesson-progress-fill" data-dfd-progress-fill></div>
+  </div>
+  <p><button type="button" data-dfd-complete>Mark lesson complete</button></p>
+  <p data-dfd-complete-status></p>
+</div>
+
         <nav class="nav">
             <a href="indexes.html"><i class="fas fa-arrow-left"></i> Indexes &amp; Performance</a>
             <a href="transactions.html">Transactions &amp; Concurrency <i class="fas fa-arrow-right"></i></a>
@@ -846,7 +856,27 @@ $$;
             </div>
         </div>
 
-        <div class="lesson-nav">
+        <section class="section dfd-current" id="october-2026" data-dfd-current="2026-10">
+  <h2>October 2026: functions and procedures</h2>
+  <p>A function returns a value and is called from <code>SELECT</code>. A procedure is called with <code>CALL</code>. Procedures have been able to commit and roll back their own transactions since PostgreSQL 11, and that split is the same on 16, 17, and 18.</p>
+  <p>Do not put a <code>COMMIT</code> inside a function and expect it to work. If the statement must control transactions, it is a procedure.</p>
+  <div class="code-block"><pre><code>CALL refresh_totals();</code></pre></div>
+  <p><strong>Try this.</strong> Write a function that returns <code>numeric</code> and call it from <code>SELECT</code>. If you also write a procedure, run it with <code>CALL</code>.</p>
+  <ul class="source-list"><li><a href="https://www.postgresql.org/docs/current/sql-createprocedure.html" target="_blank" rel="noopener noreferrer">CREATE PROCEDURE</a></li></ul>
+</section>
+<section class="section dfd-quiz" id="check" data-dfd-quiz data-explanation="Procedures are invoked with CALL. Functions are invoked from expressions.">
+  <h2 data-dfd-prompt>Knowledge check</h2>
+  <p>How do you run a procedure?</p>
+  <div data-dfd-choices>
+    <button type="button" data-correct="false">SELECT procedure_name(); on every supported major</button>
+    <button type="button" data-correct="true">CALL procedure_name();</button>
+  </div>
+  <p class="dfd-quiz-feedback" data-dfd-feedback hidden></p>
+  <p class="dfd-quiz-explain" data-dfd-explain hidden></p>
+</section>
+
+
+<div class="lesson-nav">
             <a href="indexes.html" class="secondary"><i class="fas fa-arrow-left"></i> Indexes &amp; Performance</a>
             <a href="transactions.html">Transactions &amp; Concurrency <i class="fas fa-arrow-right"></i></a>
         </div>
@@ -880,5 +910,9 @@ $$;
     <script src="../js/supabase-config.js"></script>
     <script src="../js/supabase-auth.js"></script>
     <script src="../js/paywall.js"></script>
+<script src="../js/progress.js"></script>
+<script src="../js/lesson-common.js"></script>
+<script src="../js/quiz.js"></script>
+<script src="../js/analytics-tracker.js"></script>
 </body>
 </html>

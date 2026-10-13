@@ -1,2 +1,56 @@
-/* MSSQL Course - Minimal overrides only */
-/* Main styling comes from fkti-light-theme.css */
+/* SQL Server course — shared light theme, then the page accent */
+@import url('../css/course-light-theme.css');
+
+:root {
+    --course-primary: #a4262c;
+    --course-accent:  #d83b01;
+    --bg-page: linear-gradient(160deg, #fff5f5 0%, #f8fafc 55%, #fff 100%);
+}
+
+.source-list { margin: 12px 0 0 1.2rem; color: var(--text-secondary); }
+.source-list a { color: var(--course-primary); font-weight: 700; }
+
+.course-kicker {
+    display: inline-block;
+    margin-bottom: 12px;
+    padding: 4px 12px;
+    border-radius: 999px;
+    background: rgba(164, 38, 44, 0.12);
+    color: var(--course-primary);
+    font-size: 0.78rem;
+    font-weight: 800;
+    letter-spacing: 0.04em;
+}
+
+body .nav a,
+body .nav-btn,
+body .lesson-nav a,
+body button {
+    min-height: 48px;
+}
+
+body svg,
+body img {
+    max-width: 100%;
+    height: auto;
+}
+
+body table {
+    display: block;
+    max-width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+body pre,
+body .code-block {
+    max-width: 100%;
+    overflow-x: auto;
+}
+
+body p code,
+body li code,
+body td code,
+body h1, body h2, body h3 {
+    overflow-wrap: anywhere;
+}

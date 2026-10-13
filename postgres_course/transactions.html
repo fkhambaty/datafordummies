@@ -9,9 +9,19 @@
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="../css/dfd-system.css">
 </head>
-<body data-access="pro">
+<body class="dfd-safe" data-course-id="postgres" data-lesson-id="transactions" data-lesson-label="Transactions" data-total-lessons="14" data-access="pro">
     <div class="page-bg-particles" aria-hidden="true"><div class="orb"></div><div class="orb"></div><div class="orb"></div></div>
     <div class="container">
+
+<div class="dfd-lesson-progress" data-dfd-progress>
+  <p class="dfd-lesson-progress-label" data-dfd-progress-label>Sign in to save your place.</p>
+  <div class="dfd-lesson-progress-track" data-dfd-progress-bar role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-label="Course progress">
+    <div class="dfd-lesson-progress-fill" data-dfd-progress-fill></div>
+  </div>
+  <p><button type="button" data-dfd-complete>Mark lesson complete</button></p>
+  <p data-dfd-complete-status></p>
+</div>
+
         <nav class="nav">
             <a href="functions.html"><i class="fas fa-arrow-left"></i> Functions &amp; Procedures</a>
             <a href="json-arrays.html">JSON &amp; Arrays <i class="fas fa-arrow-right"></i></a>
@@ -756,7 +766,28 @@ $$;</pre></div>
             </div>
         </div>
 
-        <div class="lesson-nav">
+        <section class="section dfd-current" id="october-2026" data-dfd-current="2026-10">
+  <h2>October 2026: isolation and deadlocks</h2>
+  <p>The default isolation level is Read Committed. A statement sees rows committed before that statement started. Repeatable Read keeps one snapshot for the whole transaction. Serializable asks for a result that could have happened with one transaction at a time, and it can abort you with a serialization failure. Raising the level does not fix a missing index.</p>
+  <p>A deadlock is a cycle of locks. Session A holds a row session B wants, and session B holds a row session A wants. PostgreSQL detects the cycle and aborts one transaction. The application retries the aborted one. Taking locks in the same order in every transaction prevents the cycle. A table lock is the last resort, not the first.</p>
+  <div class="code-block"><pre><code>BEGIN;
+SET TRANSACTION ISOLATION LEVEL REPEATABLE READ;</code></pre></div>
+  <p><strong>Try this.</strong> Open two psql sessions. Have each update a different row, then update the other session's row. Read the error on the session that loses. Roll back and retry that statement.</p>
+  <ul class="source-list"><li><a href="https://www.postgresql.org/docs/current/transaction-iso.html" target="_blank" rel="noopener noreferrer">Isolation</a></li><li><a href="https://www.postgresql.org/docs/current/explicit-locking.html#LOCKING-DEADLOCKS" target="_blank" rel="noopener noreferrer">Deadlocks</a></li></ul>
+</section>
+<section class="section dfd-quiz" id="check" data-dfd-quiz data-explanation="The deadlock detector cancels one session. That session must retry.">
+  <h2 data-dfd-prompt>Knowledge check</h2>
+  <p>What does PostgreSQL do when two transactions deadlock?</p>
+  <div data-dfd-choices>
+    <button type="button" data-correct="false">It waits forever until an administrator restarts the server</button>
+    <button type="button" data-correct="true">It aborts one transaction so the other can continue</button>
+  </div>
+  <p class="dfd-quiz-feedback" data-dfd-feedback hidden></p>
+  <p class="dfd-quiz-explain" data-dfd-explain hidden></p>
+</section>
+
+
+<div class="lesson-nav">
             <a href="functions.html" class="secondary"><i class="fas fa-arrow-left"></i> Functions &amp; Procedures</a>
             <a href="json-arrays.html">JSON &amp; Arrays <i class="fas fa-arrow-right"></i></a>
         </div>
@@ -790,5 +821,9 @@ $$;</pre></div>
     <script src="../js/supabase-config.js"></script>
     <script src="../js/supabase-auth.js"></script>
     <script src="../js/paywall.js"></script>
+<script src="../js/progress.js"></script>
+<script src="../js/lesson-common.js"></script>
+<script src="../js/quiz.js"></script>
+<script src="../js/analytics-tracker.js"></script>
 </body>
 </html>

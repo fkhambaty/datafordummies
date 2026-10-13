@@ -6,6 +6,7 @@
     <title>Module 10: Indexes & Performance | Data For Dummies</title>
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: 'Nunito', sans-serif; background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 50%, #bfdbfe 100%); min-height: 100vh; padding: 20px; color: #1e293b; line-height: 1.8; font-size: 18px; }
@@ -63,8 +64,18 @@
     </style>
     <link rel="stylesheet" href="../css/dfd-system.css">
 </head>
-<body data-access="pro">
+<body class="dfd-safe" data-course-id="mssql" data-lesson-id="indexes-performance" data-lesson-label="Indexes and performance" data-total-lessons="14" data-access="pro">
     <div class="container">
+
+<div class="dfd-lesson-progress" data-dfd-progress>
+  <p class="dfd-lesson-progress-label" data-dfd-progress-label>Sign in to save your place.</p>
+  <div class="dfd-lesson-progress-track" data-dfd-progress-bar role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-label="Course progress">
+    <div class="dfd-lesson-progress-fill" data-dfd-progress-fill></div>
+  </div>
+  <p><button type="button" data-dfd-complete>Mark lesson complete</button></p>
+  <p data-dfd-complete-status></p>
+</div>
+
         <nav class="nav">
             <a href="subqueries-ctes.html"><i class="fas fa-arrow-left"></i> Module 9</a>
             <a href="index.html"><i class="fas fa-th-large"></i> Course Hub</a>
@@ -157,7 +168,27 @@
             </div>
         </div>
 
-        <div class="nav-buttons">
+        <section class="section dfd-current" id="october-2026" data-dfd-current="2026-10">
+  <h2>October 2026: columnstore and Query Store</h2>
+  <p>A clustered index is the row order of the table. A nonclustered index is a second structure for lookups. A columnstore index stores columns in a form that favors big scans and aggregates. It is a poor match for "fetch this one order by id" as the only access path. Columnstore exists on SQL Server 2022 and 2025. Confirm the edition before you promise an online rebuild.</p>
+  <p>Query Store records plans and runtime statistics so you can see a regression after an update. It is not a backup of the table. Turn it on for a database whose plan changes you will actually look at.</p>
+  <div class="code-block"><pre><code>ALTER DATABASE Practice SET QUERY_STORE = ON;</code></pre></div>
+  <p><strong>Try this.</strong> In a practice database, enable Query Store if your edition allows it, run one query twice, and find that query in the Query Store reports. If the option is missing, write down the edition from <code>SERVERPROPERTY('Edition')</code>.</p>
+  <ul class="source-list"><li><a href="https://learn.microsoft.com/sql/relational-databases/performance/monitoring-performance-by-using-the-query-store" target="_blank" rel="noopener noreferrer">Query Store</a></li><li><a href="https://learn.microsoft.com/sql/relational-databases/indexes/columnstore-indexes-overview" target="_blank" rel="noopener noreferrer">Columnstore</a></li></ul>
+</section>
+<section class="section dfd-quiz" id="check" data-dfd-quiz data-explanation="Query Store keeps plan history. RESTORE brings data back.">
+  <h2 data-dfd-prompt>Knowledge check</h2>
+  <p>What is Query Store for?</p>
+  <div data-dfd-choices>
+    <button type="button" data-correct="false">Replacing full and log backups</button>
+    <button type="button" data-correct="true">Seeing plan and runtime changes for queries</button>
+  </div>
+  <p class="dfd-quiz-feedback" data-dfd-feedback hidden></p>
+  <p class="dfd-quiz-explain" data-dfd-explain hidden></p>
+</section>
+
+
+<div class="nav-buttons">
             <a href="subqueries-ctes.html" class="nav-btn prev"><i class="fas fa-arrow-left"></i> Module 9</a>
             <a href="backups-restore.html" class="nav-btn next">Module 11: Backups & Restore <i class="fas fa-arrow-right"></i></a>
         </div>
@@ -192,5 +223,10 @@
 <script src="../js/supabase-config.js"></script>
 <script src="../js/supabase-auth.js"></script>
 <script src="../js/paywall.js"></script>
+<script src="../js/code-copy.js"></script>
+<script src="../js/progress.js"></script>
+<script src="../js/lesson-common.js"></script>
+<script src="../js/quiz.js"></script>
+<script src="../js/analytics-tracker.js"></script>
 </body>
 </html>

@@ -6,6 +6,7 @@
     <title>Module 2: Installation &amp; SSMS | Data For Dummies</title>
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: 'Nunito', sans-serif; background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 50%, #bfdbfe 100%); min-height: 100vh; padding: 20px; color: #1e293b; line-height: 1.8; font-size: 18px; }
@@ -70,8 +71,18 @@
     </style>
     <link rel="stylesheet" href="../css/dfd-system.css">
 </head>
-<body data-access="pro">
+<body class="dfd-safe" data-course-id="mssql" data-lesson-id="installation-ssms" data-lesson-label="Installation and SSMS" data-total-lessons="14" data-access="pro">
     <div class="container">
+
+<div class="dfd-lesson-progress" data-dfd-progress>
+  <p class="dfd-lesson-progress-label" data-dfd-progress-label>Sign in to save your place.</p>
+  <div class="dfd-lesson-progress-track" data-dfd-progress-bar role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-label="Course progress">
+    <div class="dfd-lesson-progress-fill" data-dfd-progress-fill></div>
+  </div>
+  <p><button type="button" data-dfd-complete>Mark lesson complete</button></p>
+  <p data-dfd-complete-status></p>
+</div>
+
         <nav class="nav">
             <a href="meet-sql-server.html"><i class="fas fa-arrow-left"></i> Module 1</a>
             <a href="index.html"><i class="fas fa-th-large"></i> Course Hub</a>
@@ -240,7 +251,28 @@
             </div>
         </div>
 
-        <div class="nav-buttons">
+        <section class="section dfd-current" id="october-2026" data-dfd-current="2026-10">
+  <h2>October 2026: SQL Server and SSMS versions</h2>
+  <p>SSMS 22 is the current SQL Server Management Studio. The 22.10.2 release is dated 28 September 2026. SSMS 22 and SSMS 21 can connect to SQL Server 2025. SSMS 19 and SSMS 20 stop at SQL Server 2022. You can install SSMS 22 beside an older SSMS.</p>
+  <p>Use Developer edition for a lab. Azure SQL Database and Azure SQL Managed Instance are managed services. You do not run the Windows SQL Server setup wizard to create them, and you still use a current SSMS or the Azure portal query editor to talk to them.</p>
+  <div class="code-block"><pre><code>-- After you connect
+SELECT SERVERPROPERTY('ProductVersion'), SERVERPROPERTY('Edition');</code></pre></div>
+  <p><strong>Try this.</strong> In SSMS, open Help, About, and write down the SSMS major version. If it is 19 or 20, do not expect it to be the right tool for a SQL Server 2025 instance.</p>
+  <ul class="source-list"><li><a href="https://learn.microsoft.com/ssms/system-requirements" target="_blank" rel="noopener noreferrer">SSMS requirements</a></li></ul>
+</section>
+<section class="section dfd-quiz" id="check" data-dfd-quiz data-explanation="Microsoft's SSMS requirements list 21.x and 22.x for SQL Server 2025.">
+  <h2 data-dfd-prompt>Knowledge check</h2>
+  <p>Which SSMS majors support SQL Server 2025?</p>
+  <div data-dfd-choices>
+    <button type="button" data-correct="false">Only SSMS 18, because it matches the year 2018</button>
+    <button type="button" data-correct="true">SSMS 21 and SSMS 22</button>
+  </div>
+  <p class="dfd-quiz-feedback" data-dfd-feedback hidden></p>
+  <p class="dfd-quiz-explain" data-dfd-explain hidden></p>
+</section>
+
+
+<div class="nav-buttons">
             <a href="meet-sql-server.html" class="nav-btn prev"><i class="fas fa-arrow-left"></i> Module 1</a>
             <a href="ssms-tour.html" class="nav-btn next">Module 3: SSMS Tour <i class="fas fa-arrow-right"></i></a>
         </div>
@@ -275,5 +307,10 @@
 <script src="../js/supabase-config.js"></script>
 <script src="../js/supabase-auth.js"></script>
 <script src="../js/paywall.js"></script>
+<script src="../js/code-copy.js"></script>
+<script src="../js/progress.js"></script>
+<script src="../js/lesson-common.js"></script>
+<script src="../js/quiz.js"></script>
+<script src="../js/analytics-tracker.js"></script>
 </body>
 </html>

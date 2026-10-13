@@ -9,12 +9,22 @@
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="../css/dfd-system.css">
 </head>
-<body data-access="pro">
+<body class="dfd-safe" data-course-id="postgres" data-lesson-id="json-arrays" data-lesson-label="JSON and arrays" data-total-lessons="14" data-access="pro">
     <div class="page-bg-particles" aria-hidden="true"><div class="orb"></div><div class="orb"></div><div class="orb"></div></div>
     <div class="container">
+
+<div class="dfd-lesson-progress" data-dfd-progress>
+  <p class="dfd-lesson-progress-label" data-dfd-progress-label>Sign in to save your place.</p>
+  <div class="dfd-lesson-progress-track" data-dfd-progress-bar role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-label="Course progress">
+    <div class="dfd-lesson-progress-fill" data-dfd-progress-fill></div>
+  </div>
+  <p><button type="button" data-dfd-complete>Mark lesson complete</button></p>
+  <p data-dfd-complete-status></p>
+</div>
+
         <nav class="nav">
             <a href="transactions.html"><i class="fas fa-arrow-left"></i> Transactions &amp; Concurrency</a>
-            <a href="production.html">Production PostgreSQL <i class="fas fa-arrow-right"></i></a>
+            <a href="replication.html">Replication <i class="fas fa-arrow-right"></i></a>
         </nav>
 
         <div class="lesson-hero">
@@ -822,14 +832,37 @@
             </table>
 
             <div class="real-life">
-                <h4>&#128302; Coming Up Next: Production PostgreSQL (The Capstone!)</h4>
-                <p>You&rsquo;ve learned how to <strong>build</strong> databases. Now it&rsquo;s time to learn how to <strong>run</strong> them in the real world. The next module covers VACUUM (cleaning dead rows), WAL (crash recovery), backup &amp; restore, replication (database clones), security (roles &amp; permissions), and performance tuning. This is the module that turns you from a SQL developer into a <strong>database administrator</strong>.</p>
+                <h4>&#128302; Coming Up Next: Replication, then Production</h4>
+                <p>The next lesson is physical streaming and logical publications. After that, production covers VACUUM, WAL, backup and restore, security, and tuning.</p>
             </div>
         </div>
 
-        <div class="lesson-nav">
+        <section class="section dfd-current" id="october-2026" data-dfd-current="2026-10">
+  <h2>October 2026: jsonb, JSON_TABLE, and arrays</h2>
+  <p>Use <code>jsonb</code> when you will filter or index the document. <code>json</code> stores the text. The operators you already learned, including <code>-&gt;</code>, <code>-&gt;&gt;</code>, and <code>@&gt;</code>, are the everyday tools on every supported major.</p>
+  <p><code>JSON_TABLE</code> arrived in PostgreSQL 17. It turns a document into relational rows. On PostgreSQL 16, keep using <code>jsonb_array_elements</code>. An array column is for a short list of one type, such as tags. It is a poor stand-in for a document or for a child table you need to join.</p>
+  <div class="code-block"><pre><code>-- PostgreSQL 17 or newer
+SELECT item
+FROM products p,
+JSON_TABLE(p.attrs, '$.tags[*]' COLUMNS (item text PATH '$')) AS tags;</code></pre></div>
+  <p><strong>Try this.</strong> If <code>SELECT version();</code> shows 17 or 18, run the <code>JSON_TABLE</code> example. If it shows 16, expand the same document with <code>jsonb_array_elements</code>.</p>
+  <ul class="source-list"><li><a href="https://www.postgresql.org/docs/current/functions-json.html" target="_blank" rel="noopener noreferrer">JSON functions</a></li></ul>
+</section>
+<section class="section dfd-quiz" id="check" data-dfd-quiz data-explanation="Containment and GIN indexes are a jsonb feature. json is stored text.">
+  <h2 data-dfd-prompt>Knowledge check</h2>
+  <p>Which type do you index when queries use containment (@&gt;)?</p>
+  <div data-dfd-choices>
+    <button type="button" data-correct="false">json, because it keeps the original spaces</button>
+    <button type="button" data-correct="true">jsonb</button>
+  </div>
+  <p class="dfd-quiz-feedback" data-dfd-feedback hidden></p>
+  <p class="dfd-quiz-explain" data-dfd-explain hidden></p>
+</section>
+
+
+<div class="lesson-nav">
             <a href="transactions.html" class="secondary"><i class="fas fa-arrow-left"></i> Transactions &amp; Concurrency</a>
-            <a href="production.html">Production PostgreSQL <i class="fas fa-arrow-right"></i></a>
+            <a href="replication.html">Replication <i class="fas fa-arrow-right"></i></a>
         </div>
     </div>
 
@@ -861,5 +894,9 @@
     <script src="../js/supabase-config.js"></script>
     <script src="../js/supabase-auth.js"></script>
     <script src="../js/paywall.js"></script>
+<script src="../js/progress.js"></script>
+<script src="../js/lesson-common.js"></script>
+<script src="../js/quiz.js"></script>
+<script src="../js/analytics-tracker.js"></script>
 </body>
 </html>

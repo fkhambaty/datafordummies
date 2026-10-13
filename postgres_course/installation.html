@@ -9,10 +9,20 @@
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="../css/dfd-system.css">
 </head>
-<body>
+<body class="dfd-safe" data-course-id="postgres" data-lesson-id="installation" data-lesson-label="Installation and setup" data-total-lessons="14">
     <div class="page-bg-particles" aria-hidden="true"><div class="orb"></div><div class="orb"></div><div class="orb"></div></div>
 
     <div class="container">
+
+<div class="dfd-lesson-progress" data-dfd-progress>
+  <p class="dfd-lesson-progress-label" data-dfd-progress-label>Sign in to save your place.</p>
+  <div class="dfd-lesson-progress-track" data-dfd-progress-bar role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-label="Course progress">
+    <div class="dfd-lesson-progress-fill" data-dfd-progress-fill></div>
+  </div>
+  <p><button type="button" data-dfd-complete>Mark lesson complete</button></p>
+  <p data-dfd-complete-status></p>
+</div>
+
         <nav class="nav">
             <a href="index.html"><i class="fas fa-arrow-left"></i> Course Home</a>
             <a href="sql-basics.html">SQL Basics <i class="fas fa-arrow-right"></i></a>
@@ -40,7 +50,7 @@
             <div class="stats-grid">
                 <div class="stat-card">
                     <div class="stat-number">🐘</div>
-                    <div class="stat-label"><strong>PostgreSQL 16</strong><br>The database engine<br>Free & open-source</div>
+                    <div class="stat-label"><strong>PostgreSQL 18</strong><br>Current stable engine<br>16 and 17 still supported</div>
                 </div>
                 <div class="stat-card">
                     <div class="stat-number">🦫</div>
@@ -167,7 +177,7 @@ sudo systemctl status postgresql
 <span style="color:#94a3b8;"># Switch to the postgres user and test</span>
 sudo -u postgres psql
 <span style="color:#4ade80;">postgres=# SELECT version();</span>
-<span style="color:#4ade80;">-- Shows: PostgreSQL 16.x on x86_64-pc-linux-gnu</span>
+<span style="color:#4ade80;">-- Shows: PostgreSQL 18.x, or 16/17 if that is what you installed</span>
 <span style="color:#4ade80;">postgres=# \q</span></pre>
             </div>
 
@@ -538,7 +548,27 @@ psql -U postgres -d my_first_db
         </div>
 
         <!-- Lesson Navigation -->
-        <div class="lesson-nav">
+        <section class="section dfd-current" id="october-2026" data-dfd-current="2026-10">
+  <h2>October 2026: psql, DBeaver, and a supported major</h2>
+  <p>Install PostgreSQL 18 for a new machine. PostgreSQL 16 and 17 are still supported if a class image or a managed service has not moved yet. The installer gives you the server and psql. DBeaver Community Edition is the optional visual client. Connect DBeaver to localhost, port 5432, and the database you created. Do not point it at a production server while you are learning.</p>
+  <p>On Linux, the distro package may still be an older major. <code>SELECT version();</code> is the check, not the download page you remember. A line that says 16.x is a supported server. It is not the only server this course accepts.</p>
+  <div class="code-block"><pre><code>psql -c "SELECT current_setting('server_version');"</code></pre></div>
+  <p><strong>Try this.</strong> Open psql and DBeaver against the same database. Run <code>SELECT current_user, current_database();</code> in both. The two answers should match.</p>
+  <ul class="source-list"><li><a href="https://www.postgresql.org/download/linux/" target="_blank" rel="noopener noreferrer">Linux downloads</a></li></ul>
+</section>
+<section class="section dfd-quiz" id="check" data-dfd-quiz data-explanation="psql and DBeaver are clients. PostgreSQL is the server both of them use.">
+  <h2 data-dfd-prompt>Knowledge check</h2>
+  <p>What is psql?</p>
+  <div data-dfd-choices>
+    <button type="button" data-correct="false">A different database engine from the one DBeaver uses</button>
+    <button type="button" data-correct="true">The command-line client that talks to the PostgreSQL server</button>
+  </div>
+  <p class="dfd-quiz-feedback" data-dfd-feedback hidden></p>
+  <p class="dfd-quiz-explain" data-dfd-explain hidden></p>
+</section>
+
+
+<div class="lesson-nav">
             <a href="meet-postgresql.html" class="secondary"><i class="fas fa-arrow-left"></i> Meet PostgreSQL</a>
             <a href="sql-basics.html">SQL Basics — CRUD <i class="fas fa-arrow-right"></i></a>
         </div>
@@ -568,5 +598,13 @@ psql -U postgres -d my_first_db
     });
     </script>
     <script src="../js/code-copy.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="../js/supabase-config.js"></script>
+<script src="../js/supabase-auth.js"></script>
+<script src="../js/paywall.js"></script>
+<script src="../js/progress.js"></script>
+<script src="../js/lesson-common.js"></script>
+<script src="../js/quiz.js"></script>
+<script src="../js/analytics-tracker.js"></script>
 </body>
 </html>

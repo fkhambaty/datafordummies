@@ -6,6 +6,7 @@
     <title>Module 9: Subqueries & CTEs | Data For Dummies</title>
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: 'Nunito', sans-serif; background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 50%, #bfdbfe 100%); min-height: 100vh; padding: 20px; color: #1e293b; line-height: 1.8; font-size: 18px; }
@@ -63,8 +64,18 @@
     </style>
     <link rel="stylesheet" href="../css/dfd-system.css">
 </head>
-<body data-access="pro">
+<body class="dfd-safe" data-course-id="mssql" data-lesson-id="subqueries-ctes" data-lesson-label="Subqueries and CTEs" data-total-lessons="14" data-access="pro">
     <div class="container">
+
+<div class="dfd-lesson-progress" data-dfd-progress>
+  <p class="dfd-lesson-progress-label" data-dfd-progress-label>Sign in to save your place.</p>
+  <div class="dfd-lesson-progress-track" data-dfd-progress-bar role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-label="Course progress">
+    <div class="dfd-lesson-progress-fill" data-dfd-progress-fill></div>
+  </div>
+  <p><button type="button" data-dfd-complete>Mark lesson complete</button></p>
+  <p data-dfd-complete-status></p>
+</div>
+
         <nav class="nav">
             <a href="aggregations.html"><i class="fas fa-arrow-left"></i> Module 8</a>
             <a href="index.html"><i class="fas fa-th-large"></i> Course Hub</a>
@@ -161,7 +172,32 @@
             </div>
         </div>
 
-        <div class="nav-buttons">
+        <section class="section dfd-current" id="october-2026" data-dfd-current="2026-10">
+  <h2>October 2026: a CTE is a name, not a permission</h2>
+  <p><code>WITH</code> names a query so the statement can read it. A CTE can be recursive for a tree. It does not hide rows from someone who can query the base tables. Permissions do that, and they are the security lesson.</p>
+  <p>If the inner query is used once, a CTE and a subquery are the same idea. Pick the spelling that the next reader can follow.</p>
+  <div class="code-block"><pre><code>WITH totals AS (
+    SELECT customer_id, SUM(amount) AS total
+    FROM sales
+    GROUP BY customer_id
+)
+SELECT * FROM totals WHERE total &gt; 100;</code></pre></div>
+  <p><strong>Try this.</strong> Rewrite one subquery from this lesson as a CTE. The result set should stay the same.</p>
+  <ul class="source-list"><li><a href="https://learn.microsoft.com/sql/t-sql/queries/with-common-table-expression-transact-sql" target="_blank" rel="noopener noreferrer">WITH</a></li></ul>
+</section>
+<section class="section dfd-quiz" id="check" data-dfd-quiz data-explanation="A CTE is a query name. GRANT and DENY decide access.">
+  <h2 data-dfd-prompt>Knowledge check</h2>
+  <p>What does a CTE change about who may read the base table?</p>
+  <div data-dfd-choices>
+    <button type="button" data-correct="false">It grants the reader access to every table named inside it</button>
+    <button type="button" data-correct="true">Nothing. Permissions are separate.</button>
+  </div>
+  <p class="dfd-quiz-feedback" data-dfd-feedback hidden></p>
+  <p class="dfd-quiz-explain" data-dfd-explain hidden></p>
+</section>
+
+
+<div class="nav-buttons">
             <a href="aggregations.html" class="nav-btn prev"><i class="fas fa-arrow-left"></i> Module 8</a>
             <a href="indexes-performance.html" class="nav-btn next">Module 10: Indexes & Performance <i class="fas fa-arrow-right"></i></a>
         </div>
@@ -196,5 +232,10 @@
 <script src="../js/supabase-config.js"></script>
 <script src="../js/supabase-auth.js"></script>
 <script src="../js/paywall.js"></script>
+<script src="../js/code-copy.js"></script>
+<script src="../js/progress.js"></script>
+<script src="../js/lesson-common.js"></script>
+<script src="../js/quiz.js"></script>
+<script src="../js/analytics-tracker.js"></script>
 </body>
 </html>

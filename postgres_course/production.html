@@ -9,11 +9,21 @@
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="../css/dfd-system.css">
 </head>
-<body data-access="pro">
+<body class="dfd-safe" data-course-id="postgres" data-lesson-id="production" data-lesson-label="Production" data-total-lessons="14" data-access="pro">
     <div class="page-bg-particles" aria-hidden="true"><div class="orb"></div><div class="orb"></div><div class="orb"></div></div>
     <div class="container">
+
+<div class="dfd-lesson-progress" data-dfd-progress>
+  <p class="dfd-lesson-progress-label" data-dfd-progress-label>Sign in to save your place.</p>
+  <div class="dfd-lesson-progress-track" data-dfd-progress-bar role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-label="Course progress">
+    <div class="dfd-lesson-progress-fill" data-dfd-progress-fill></div>
+  </div>
+  <p><button type="button" data-dfd-complete>Mark lesson complete</button></p>
+  <p data-dfd-complete-status></p>
+</div>
+
         <nav class="nav">
-            <a href="json-arrays.html"><i class="fas fa-arrow-left"></i> JSON &amp; Arrays</a>
+            <a href="replication.html"><i class="fas fa-arrow-left"></i> Replication</a>
             <a href="index.html">Course Home <i class="fas fa-arrow-right"></i></a>
         </nav>
 
@@ -933,8 +943,29 @@ pg_restore -U postgres -d shopdb_restored /backups/shopdb.dump</pre></div>
             </div>
         </div>
 
-        <div class="lesson-nav">
-            <a href="json-arrays.html" class="secondary"><i class="fas fa-arrow-left"></i> JSON &amp; Arrays</a>
+        <section class="section dfd-current" id="october-2026" data-dfd-current="2026-10">
+  <h2>October 2026: monitoring, backups, security, and managed limits</h2>
+  <p><code>pg_stat_activity</code> shows who is connected. <code>pg_stat_statements</code> is an extension that shows which statements cost time. Turn the extension on before you need it. A chart of CPU does not name the query.</p>
+  <p>Test a restore. <code>pg_dump</code> is a logical backup. <code>pg_basebackup</code> is a physical copy. PostgreSQL 17 added incremental <code>pg_basebackup</code>. A backup you have never restored is a file, not a plan. Keep authentication on <code>scram-sha-256</code>. Do not leave <code>trust</code> in <code>pg_hba.conf</code> on a shared machine.</p>
+  <p>Managed PostgreSQL (Amazon RDS, Cloud SQL, Azure Database for PostgreSQL) often withholds superuser and allow-lists extensions. <a href="../llm_course/text-to-numbers.html">Embeddings</a> in the LLM course are vectors of numbers. <code>pgvector</code> stores those vectors, and it is an extension, not a core type. Confirm the provider offers it before you design a table around it. The replication lesson covers physical standby and logical publications.</p>
+  <div class="code-block"><pre><code>CREATE EXTENSION IF NOT EXISTS pg_stat_statements;</code></pre></div>
+  <p><strong>Try this.</strong> List installed extensions with <code>SELECT * FROM pg_extension;</code>. If <code>vector</code> is absent, say so. Do not invent a <code>CREATE EXTENSION</code> success on a server that refuses it.</p>
+  <ul class="source-list"><li><a href="https://www.postgresql.org/docs/current/backup.html" target="_blank" rel="noopener noreferrer">Backup</a></li><li><a href="https://github.com/pgvector/pgvector" target="_blank" rel="noopener noreferrer">pgvector</a></li></ul>
+</section>
+<section class="section dfd-quiz" id="check" data-dfd-quiz data-explanation="pgvector is a separate extension. Managed services allow-list extensions.">
+  <h2 data-dfd-prompt>Knowledge check</h2>
+  <p>Is pgvector part of core PostgreSQL?</p>
+  <div data-dfd-choices>
+    <button type="button" data-correct="false">Yes. PostgreSQL 18 creates vector columns with no extension.</button>
+    <button type="button" data-correct="true">No. It is an extension the server or the managed service must allow.</button>
+  </div>
+  <p class="dfd-quiz-feedback" data-dfd-feedback hidden></p>
+  <p class="dfd-quiz-explain" data-dfd-explain hidden></p>
+</section>
+
+
+<div class="lesson-nav">
+            <a href="replication.html" class="secondary"><i class="fas fa-arrow-left"></i> Replication</a>
             <a href="index.html">Course Home <i class="fas fa-arrow-right"></i></a>
         </div>
     </div>
@@ -967,5 +998,9 @@ pg_restore -U postgres -d shopdb_restored /backups/shopdb.dump</pre></div>
     <script src="../js/supabase-config.js"></script>
     <script src="../js/supabase-auth.js"></script>
     <script src="../js/paywall.js"></script>
+<script src="../js/progress.js"></script>
+<script src="../js/lesson-common.js"></script>
+<script src="../js/quiz.js"></script>
+<script src="../js/analytics-tracker.js"></script>
 </body>
 </html>

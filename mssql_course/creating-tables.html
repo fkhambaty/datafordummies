@@ -6,6 +6,7 @@
     <title>Module 5: Creating Tables & Data Types | Data For Dummies</title>
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: 'Nunito', sans-serif; background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 50%, #bfdbfe 100%); min-height: 100vh; padding: 20px; color: #1e293b; line-height: 1.8; font-size: 18px; }
@@ -63,8 +64,18 @@
     </style>
     <link rel="stylesheet" href="../css/dfd-system.css">
 </head>
-<body data-access="pro">
+<body class="dfd-safe" data-course-id="mssql" data-lesson-id="creating-tables" data-lesson-label="Creating tables" data-total-lessons="14" data-access="pro">
     <div class="container">
+
+<div class="dfd-lesson-progress" data-dfd-progress>
+  <p class="dfd-lesson-progress-label" data-dfd-progress-label>Sign in to save your place.</p>
+  <div class="dfd-lesson-progress-track" data-dfd-progress-bar role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-label="Course progress">
+    <div class="dfd-lesson-progress-fill" data-dfd-progress-fill></div>
+  </div>
+  <p><button type="button" data-dfd-complete>Mark lesson complete</button></p>
+  <p data-dfd-complete-status></p>
+</div>
+
         <nav class="nav">
             <a href="tsql-basics.html"><i class="fas fa-arrow-left"></i> Module 4</a>
             <a href="index.html"><i class="fas fa-th-large"></i> Course Hub</a>
@@ -162,7 +173,31 @@
             </div>
         </div>
 
-        <div class="nav-buttons">
+        <section class="section dfd-current" id="october-2026" data-dfd-current="2026-10">
+  <h2>October 2026: temporal tables are history, not a backup</h2>
+  <p>A system-versioned temporal table keeps the current row and older versions of that row. Temporal tables are available on supported SQL Server editions, including 2022 and 2025. They answer "what did this row look like last Tuesday?" They do not replace a backup. A dropped database does not come back from a history table that lived in that database.</p>
+  <p>Choose types on purpose: <code>int</code> or <code>bigint</code> for counts, <code>decimal</code> for money, <code>datetime2</code> for an instant, <code>nvarchar</code> for text. On SQL Server 2022, store a JSON document in <code>nvarchar(max)</code>. Do not start a 2022 script with a native <code>json</code> column.</p>
+  <div class="code-block"><pre><code>CREATE TABLE payments (
+    id int IDENTITY(1, 1) PRIMARY KEY,
+    amount decimal(10, 2) NOT NULL,
+    paid_at datetime2 NOT NULL
+);</code></pre></div>
+  <p><strong>Try this.</strong> Create a practice table with an identity key, a <code>decimal(10, 2)</code> amount, and a <code>datetime2</code> column. Insert one row and read it back.</p>
+  <ul class="source-list"><li><a href="https://learn.microsoft.com/sql/relational-databases/tables/temporal-tables" target="_blank" rel="noopener noreferrer">Temporal tables</a></li></ul>
+</section>
+<section class="section dfd-quiz" id="check" data-dfd-quiz data-explanation="History tables record changes. RESTORE is how you get a database back.">
+  <h2 data-dfd-prompt>Knowledge check</h2>
+  <p>What does a temporal table replace?</p>
+  <div data-dfd-choices>
+    <button type="button" data-correct="false">Full, differential, and log backups</button>
+    <button type="button" data-correct="true">Nothing about backups. It keeps row history inside the database.</button>
+  </div>
+  <p class="dfd-quiz-feedback" data-dfd-feedback hidden></p>
+  <p class="dfd-quiz-explain" data-dfd-explain hidden></p>
+</section>
+
+
+<div class="nav-buttons">
             <a href="tsql-basics.html" class="nav-btn prev"><i class="fas fa-arrow-left"></i> Module 4</a>
             <a href="select-where-order.html" class="nav-btn next">Module 6: SELECT, WHERE & ORDER BY <i class="fas fa-arrow-right"></i></a>
         </div>
@@ -197,5 +232,10 @@
 <script src="../js/supabase-config.js"></script>
 <script src="../js/supabase-auth.js"></script>
 <script src="../js/paywall.js"></script>
+<script src="../js/code-copy.js"></script>
+<script src="../js/progress.js"></script>
+<script src="../js/lesson-common.js"></script>
+<script src="../js/quiz.js"></script>
+<script src="../js/analytics-tracker.js"></script>
 </body>
 </html>

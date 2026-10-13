@@ -6,6 +6,7 @@
     <title>Module 11: Backups & Restore | Data For Dummies</title>
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: 'Nunito', sans-serif; background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 50%, #bfdbfe 100%); min-height: 100vh; padding: 20px; color: #1e293b; line-height: 1.8; font-size: 18px; }
@@ -63,8 +64,18 @@
     </style>
     <link rel="stylesheet" href="../css/dfd-system.css">
 </head>
-<body data-access="pro">
+<body class="dfd-safe" data-course-id="mssql" data-lesson-id="backups-restore" data-lesson-label="Backups and restore" data-total-lessons="14" data-access="pro">
     <div class="container">
+
+<div class="dfd-lesson-progress" data-dfd-progress>
+  <p class="dfd-lesson-progress-label" data-dfd-progress-label>Sign in to save your place.</p>
+  <div class="dfd-lesson-progress-track" data-dfd-progress-bar role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-label="Course progress">
+    <div class="dfd-lesson-progress-fill" data-dfd-progress-fill></div>
+  </div>
+  <p><button type="button" data-dfd-complete>Mark lesson complete</button></p>
+  <p data-dfd-complete-status></p>
+</div>
+
         <nav class="nav">
             <a href="indexes-performance.html"><i class="fas fa-arrow-left"></i> Module 10</a>
             <a href="index.html"><i class="fas fa-th-large"></i> Course Hub</a>
@@ -160,7 +171,29 @@
             </div>
         </div>
 
-        <div class="nav-buttons">
+        <section class="section dfd-current" id="october-2026" data-dfd-current="2026-10">
+  <h2>October 2026: a backup is proven by a restore</h2>
+  <p>A full backup is the whole database. A differential backup is the pages changed since the full. A log backup is the log records since the last log backup, and it requires the full or bulk-logged recovery model. SIMPLE recovery does not give you a chain of log backups, so it does not give you a point in time between full backups.</p>
+  <p>Azure SQL Database takes automated backups for you. You still need to know how to restore, including a restore to a different name so you can check the data without overwriting the live database. Microsoft Fabric is not this backup design. This lesson does not configure Fabric.</p>
+  <div class="code-block"><pre><code>BACKUP DATABASE Practice
+TO DISK = 'C:\SQLBackups\Practice.bak'
+WITH INIT, CHECKSUM;</code></pre></div>
+  <p><strong>Try this.</strong> Back up a practice database to a path you can delete, drop a table you can recreate, and restore the backup over a copy. Read the table from the copy.</p>
+  <ul class="source-list"><li><a href="https://learn.microsoft.com/sql/relational-databases/backup-restore/back-up-and-restore-of-sql-server-databases" target="_blank" rel="noopener noreferrer">Backup overview</a></li></ul>
+</section>
+<section class="section dfd-quiz" id="check" data-dfd-quiz data-explanation="A backup command can succeed and the file can still be unusable. Restore is the test.">
+  <h2 data-dfd-prompt>Knowledge check</h2>
+  <p>When do you know a backup is good?</p>
+  <div data-dfd-choices>
+    <button type="button" data-correct="false">When the backup statement returns without an error</button>
+    <button type="button" data-correct="true">After you restore it and read the data</button>
+  </div>
+  <p class="dfd-quiz-feedback" data-dfd-feedback hidden></p>
+  <p class="dfd-quiz-explain" data-dfd-explain hidden></p>
+</section>
+
+
+<div class="nav-buttons">
             <a href="indexes-performance.html" class="nav-btn prev"><i class="fas fa-arrow-left"></i> Module 10</a>
             <a href="security-basics.html" class="nav-btn next">Module 12: Security Basics <i class="fas fa-arrow-right"></i></a>
         </div>
@@ -195,5 +228,10 @@
 <script src="../js/supabase-config.js"></script>
 <script src="../js/supabase-auth.js"></script>
 <script src="../js/paywall.js"></script>
+<script src="../js/code-copy.js"></script>
+<script src="../js/progress.js"></script>
+<script src="../js/lesson-common.js"></script>
+<script src="../js/quiz.js"></script>
+<script src="../js/analytics-tracker.js"></script>
 </body>
 </html>

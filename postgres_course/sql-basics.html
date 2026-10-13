@@ -9,9 +9,19 @@
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="../css/dfd-system.css">
 </head>
-<body data-access="pro">
+<body class="dfd-safe" data-course-id="postgres" data-lesson-id="sql-basics" data-lesson-label="SQL basics" data-total-lessons="14" data-access="pro">
     <div class="page-bg-particles" aria-hidden="true"><div class="orb"></div><div class="orb"></div><div class="orb"></div></div>
     <div class="container">
+
+<div class="dfd-lesson-progress" data-dfd-progress>
+  <p class="dfd-lesson-progress-label" data-dfd-progress-label>Sign in to save your place.</p>
+  <div class="dfd-lesson-progress-track" data-dfd-progress-bar role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-label="Course progress">
+    <div class="dfd-lesson-progress-fill" data-dfd-progress-fill></div>
+  </div>
+  <p><button type="button" data-dfd-complete>Mark lesson complete</button></p>
+  <p data-dfd-complete-status></p>
+</div>
+
         <nav class="nav">
             <a href="index.html"><i class="fas fa-arrow-left"></i> Course Home</a>
             <a href="data-types.html">Data Types &amp; Constraints <i class="fas fa-arrow-right"></i></a>
@@ -1007,7 +1017,30 @@
         <!-- ============================================================ -->
         <!-- Bottom Navigation                                             -->
         <!-- ============================================================ -->
-        <div class="lesson-nav">
+        <section class="section dfd-current" id="october-2026" data-dfd-current="2026-10">
+  <h2>October 2026: NULL, and MERGE versus ON CONFLICT</h2>
+  <p>SQL uses three-valued logic. <code>NULL</code> means unknown. <code>WHERE email = NULL</code> never matches, because unknown is not equal to unknown. Write <code>WHERE email IS NULL</code>. The same rule is in PostgreSQL 16, 17, and 18.</p>
+  <p><code>MERGE</code> arrived in PostgreSQL 15. One statement can insert, update, and delete by matching a source to a target. For a single unique key, <code>INSERT ... ON CONFLICT</code> is still the clearer upsert and it works on older supported majors too. Deduplicate the source first. Two source rows with the same key make <code>MERGE</code> fail.</p>
+  <div class="code-block"><pre><code>INSERT INTO customers (email, name)
+VALUES ('a@example.com', 'Asha')
+ON CONFLICT (email) DO UPDATE
+SET name = EXCLUDED.name;</code></pre></div>
+  <p><strong>Try this.</strong> Insert the same email twice with <code>ON CONFLICT</code>. Then try <code>WHERE notes = NULL</code> and rewrite it with <code>IS NULL</code>.</p>
+  <ul class="source-list"><li><a href="https://www.postgresql.org/docs/current/sql-merge.html" target="_blank" rel="noopener noreferrer">MERGE</a></li></ul>
+</section>
+<section class="section dfd-quiz" id="check" data-dfd-quiz data-explanation="NULL is unknown. The test for a missing value is IS NULL.">
+  <h2 data-dfd-prompt>Knowledge check</h2>
+  <p>What does WHERE email = NULL return?</p>
+  <div data-dfd-choices>
+    <button type="button" data-correct="false">Every row whose email is missing</button>
+    <button type="button" data-correct="true">No rows. Unknown is not equal to unknown.</button>
+  </div>
+  <p class="dfd-quiz-feedback" data-dfd-feedback hidden></p>
+  <p class="dfd-quiz-explain" data-dfd-explain hidden></p>
+</section>
+
+
+<div class="lesson-nav">
             <a href="installation.html" class="secondary"><i class="fas fa-arrow-left"></i> Installation &amp; Setup</a>
             <a href="data-types.html">Data Types &amp; Constraints <i class="fas fa-arrow-right"></i></a>
         </div>
@@ -1041,5 +1074,9 @@
     <script src="../js/supabase-config.js"></script>
     <script src="../js/supabase-auth.js"></script>
     <script src="../js/paywall.js"></script>
+<script src="../js/progress.js"></script>
+<script src="../js/lesson-common.js"></script>
+<script src="../js/quiz.js"></script>
+<script src="../js/analytics-tracker.js"></script>
 </body>
 </html>

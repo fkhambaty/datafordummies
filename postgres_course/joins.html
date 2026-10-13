@@ -9,9 +9,19 @@
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="../css/dfd-system.css">
 </head>
-<body data-access="pro">
+<body class="dfd-safe" data-course-id="postgres" data-lesson-id="joins" data-lesson-label="Joins" data-total-lessons="14" data-access="pro">
     <div class="page-bg-particles" aria-hidden="true"><div class="orb"></div><div class="orb"></div><div class="orb"></div></div>
     <div class="container">
+
+<div class="dfd-lesson-progress" data-dfd-progress>
+  <p class="dfd-lesson-progress-label" data-dfd-progress-label>Sign in to save your place.</p>
+  <div class="dfd-lesson-progress-track" data-dfd-progress-bar role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-label="Course progress">
+    <div class="dfd-lesson-progress-fill" data-dfd-progress-fill></div>
+  </div>
+  <p><button type="button" data-dfd-complete>Mark lesson complete</button></p>
+  <p data-dfd-complete-status></p>
+</div>
+
         <nav class="nav">
             <a href="aggregations.html"><i class="fas fa-arrow-left"></i> Aggregations &amp; Grouping</a>
             <a href="subqueries-ctes.html">Subqueries &amp; CTEs <i class="fas fa-arrow-right"></i></a>
@@ -948,7 +958,30 @@
             </div>
         </div>
 
-        <div class="lesson-nav">
+        <section class="section dfd-current" id="october-2026" data-dfd-current="2026-10">
+  <h2>October 2026: joins do not match unknown keys</h2>
+  <p>An <code>INNER JOIN</code> keeps only rows that match. A NULL key does not match another NULL, so those rows disappear. A <code>LEFT JOIN</code> keeps the left row and fills the right side with nulls.</p>
+  <p>That matching rule is SQL, not a PostgreSQL 18 change. If a report loses customers, check the join key for nulls before you blame the planner.</p>
+  <div class="code-block"><pre><code>SELECT c.id
+FROM customers c
+LEFT JOIN orders o ON o.customer_id = c.id
+WHERE o.id IS NULL;</code></pre></div>
+  <p><strong>Try this.</strong> Left-join customers to orders and count how many customers have no order. Those are the rows an inner join would hide.</p>
+  <ul class="source-list"><li><a href="https://www.postgresql.org/docs/current/queries-table-expressions.html#QUERIES-FROM" target="_blank" rel="noopener noreferrer">Joins</a></li></ul>
+</section>
+<section class="section dfd-quiz" id="check" data-dfd-quiz data-explanation="Join equality still uses SQL's rule that unknown is not equal to unknown.">
+  <h2 data-dfd-prompt>Knowledge check</h2>
+  <p>Does NULL equal NULL inside an INNER JOIN?</p>
+  <div data-dfd-choices>
+    <button type="button" data-correct="false">Yes. PostgreSQL 18 treats NULL as equal in joins.</button>
+    <button type="button" data-correct="true">No. Those rows do not match.</button>
+  </div>
+  <p class="dfd-quiz-feedback" data-dfd-feedback hidden></p>
+  <p class="dfd-quiz-explain" data-dfd-explain hidden></p>
+</section>
+
+
+<div class="lesson-nav">
             <a href="aggregations.html" class="secondary"><i class="fas fa-arrow-left"></i> Aggregations &amp; Grouping</a>
             <a href="subqueries-ctes.html">Subqueries &amp; CTEs <i class="fas fa-arrow-right"></i></a>
         </div>
@@ -982,5 +1015,9 @@
     <script src="../js/supabase-config.js"></script>
     <script src="../js/supabase-auth.js"></script>
     <script src="../js/paywall.js"></script>
+<script src="../js/progress.js"></script>
+<script src="../js/lesson-common.js"></script>
+<script src="../js/quiz.js"></script>
+<script src="../js/analytics-tracker.js"></script>
 </body>
 </html>
