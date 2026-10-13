@@ -88,42 +88,21 @@
 <li class="dfd-flow-node"><span class="dfd-flow-label">Task</span></li>
 <li class="dfd-flow-node"><span class="dfd-flow-label">Target</span></li>
 </ol>
-<div class="dfd-flow-explain"><p class="dfd-flow-caption"><span class="dfd-flow-count">Step 1 of 3</span>Task
-
-
-
-
-Target
-
-Full load reads the rows that exist when it reaches that table.</p></div></div>
+<div class="dfd-flow-explain"><p class="dfd-flow-caption"><span class="dfd-flow-count">Step 1 of 3</span>Full load reads the rows that exist when it reaches that table.</p></div></div>
 <div class="dfd-flow-panel" data-dfd-diagram-panel="step2" hidden>
 <ol class="dfd-flow-track" aria-label="Step 2: Map">
 <li class="dfd-flow-node"><span class="dfd-flow-label">Mappings</span></li>
 <li class="dfd-flow-node is-active" aria-current="step"><span class="dfd-flow-label">Task</span></li>
 <li class="dfd-flow-node"><span class="dfd-flow-label">LOBs</span></li>
 </ol>
-<div class="dfd-flow-explain"><p class="dfd-flow-caption"><span class="dfd-flow-count">Step 2 of 3</span>Task
-
-
-
-
-LOBs
-
-Mappings choose tables. LOB mode chooses how large values move.</p></div></div>
+<div class="dfd-flow-explain"><p class="dfd-flow-caption"><span class="dfd-flow-count">Step 2 of 3</span>Mappings choose tables. LOB mode chooses how large values move.</p></div></div>
 <div class="dfd-flow-panel" data-dfd-diagram-panel="step3" hidden>
 <ol class="dfd-flow-track" aria-label="Step 3: Write">
 <li class="dfd-flow-node"><span class="dfd-flow-label">Source rows</span></li>
 <li class="dfd-flow-node"><span class="dfd-flow-label">Task</span></li>
 <li class="dfd-flow-node is-active" aria-current="step"><span class="dfd-flow-label">Target</span></li>
 </ol>
-<div class="dfd-flow-explain"><p class="dfd-flow-caption"><span class="dfd-flow-count">Step 3 of 3</span>Task
-
-
-
-
-Target
-
-The target holds a point-in-time copy, already aging if the source is busy.</p></div></div>
+<div class="dfd-flow-explain"><p class="dfd-flow-caption"><span class="dfd-flow-count">Step 3 of 3</span>The target holds a point-in-time copy, already aging if the source is busy.</p></div></div>
 </section>
         <section class="section" id="lab" data-dfd-reveal>
             <h2>Lab: say what full load will miss</h2>

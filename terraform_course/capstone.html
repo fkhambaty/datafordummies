@@ -91,42 +91,21 @@
 <li class="dfd-flow-node"><span class="dfd-flow-label">Resource</span></li>
 <li class="dfd-flow-node"><span class="dfd-flow-label">Test</span></li>
 </ol>
-<div class="dfd-flow-explain"><p class="dfd-flow-caption"><span class="dfd-flow-count">Step 1 of 3</span>Resource
-
-
-
-
-Test
-
-The lab stays on local state and terraform_data.</p></div></div>
+<div class="dfd-flow-explain"><p class="dfd-flow-caption"><span class="dfd-flow-count">Step 1 of 3</span>The lab stays on local state and terraform_data.</p></div></div>
 <div class="dfd-flow-panel" data-dfd-diagram-panel="step2" hidden>
 <ol class="dfd-flow-track" aria-label="Step 2: Review">
 <li class="dfd-flow-node"><span class="dfd-flow-label">fmt</span></li>
 <li class="dfd-flow-node is-active" aria-current="step"><span class="dfd-flow-label">validate</span></li>
 <li class="dfd-flow-node"><span class="dfd-flow-label">plan</span></li>
 </ol>
-<div class="dfd-flow-explain"><p class="dfd-flow-caption"><span class="dfd-flow-count">Step 2 of 3</span>validate
-
-
-
-
-plan
-
-fmt, validate, and a plan are still required when a cloud provider appears.</p></div></div>
+<div class="dfd-flow-explain"><p class="dfd-flow-caption"><span class="dfd-flow-count">Step 2 of 3</span>fmt, validate, and a plan are still required when a cloud provider appears.</p></div></div>
 <div class="dfd-flow-panel" data-dfd-diagram-panel="step3" hidden>
 <ol class="dfd-flow-track" aria-label="Step 3: Production">
 <li class="dfd-flow-node"><span class="dfd-flow-label">Backend</span></li>
 <li class="dfd-flow-node"><span class="dfd-flow-label">Lock</span></li>
 <li class="dfd-flow-node is-active" aria-current="step"><span class="dfd-flow-label">Apply</span></li>
 </ol>
-<div class="dfd-flow-explain"><p class="dfd-flow-caption"><span class="dfd-flow-count">Step 3 of 3</span>Lock
-
-
-
-
-Apply
-
-Production adds a backend, a lock, and an apply that a human approved.</p></div></div>
+<div class="dfd-flow-explain"><p class="dfd-flow-caption"><span class="dfd-flow-count">Step 3 of 3</span>Production adds a backend, a lock, and an apply that a human approved.</p></div></div>
 </section>
         <section class="section" id="lab" data-dfd-reveal>
             <h2>Lab: init, validate, and test</h2>

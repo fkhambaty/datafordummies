@@ -95,42 +95,21 @@
 <li class="dfd-flow-node"><span class="dfd-flow-label">Service</span></li>
 <li class="dfd-flow-node"><span class="dfd-flow-label">ConfigMap</span></li>
 </ol>
-<div class="dfd-flow-explain"><p class="dfd-flow-caption"><span class="dfd-flow-count">Step 1 of 3</span>Service
-
-
-
-
-ConfigMap
-
-These three are enough for the local lab.</p></div></div>
+<div class="dfd-flow-explain"><p class="dfd-flow-caption"><span class="dfd-flow-count">Step 1 of 3</span>These three are enough for the local lab.</p></div></div>
 <div class="dfd-flow-panel" data-dfd-diagram-panel="step2" hidden>
 <ol class="dfd-flow-track" aria-label="Step 2: Edge">
 <li class="dfd-flow-node"><span class="dfd-flow-label">Gateway</span></li>
 <li class="dfd-flow-node is-active" aria-current="step"><span class="dfd-flow-label">Controller</span></li>
 <li class="dfd-flow-node"><span class="dfd-flow-label">DNS</span></li>
 </ol>
-<div class="dfd-flow-explain"><p class="dfd-flow-caption"><span class="dfd-flow-count">Step 2 of 3</span>Controller
-
-
-
-
-DNS
-
-The public edge needs a controller and a name. The lab skips it on purpose.</p></div></div>
+<div class="dfd-flow-explain"><p class="dfd-flow-caption"><span class="dfd-flow-count">Step 2 of 3</span>The public edge needs a controller and a name. The lab skips it on purpose.</p></div></div>
 <div class="dfd-flow-panel" data-dfd-diagram-panel="step3" hidden>
 <ol class="dfd-flow-track" aria-label="Step 3: Guards">
 <li class="dfd-flow-node"><span class="dfd-flow-label">RBAC</span></li>
 <li class="dfd-flow-node"><span class="dfd-flow-label">Policy</span></li>
 <li class="dfd-flow-node is-active" aria-current="step"><span class="dfd-flow-label">Backup</span></li>
 </ol>
-<div class="dfd-flow-explain"><p class="dfd-flow-caption"><span class="dfd-flow-count">Step 3 of 3</span>Policy
-
-
-
-
-Backup
-
-RBAC, an enforced network policy, and a backup plan are production work.</p></div></div>
+<div class="dfd-flow-explain"><p class="dfd-flow-caption"><span class="dfd-flow-count">Step 3 of 3</span>RBAC, an enforced network policy, and a backup plan are production work.</p></div></div>
 </section>
         <section class="section" id="lab" data-dfd-reveal>
             <h2>Lab: apply the app, then write the gap list</h2>

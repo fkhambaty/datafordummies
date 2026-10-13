@@ -80,54 +80,43 @@
 </table>
 </section>
         <section class="section dfd-diagram dfd-flow" data-dfd-diagram data-dfd-flow data-dfd-reveal>
-<h2>Watch the gap</h2>
-<div class="dfd-diagram-controls dfd-flow-controls" role="group" aria-label="Watch the gap: steps">
+<h2>Is the copy right, and how far behind?</h2>
+<p class="dfd-flow-intro">During a migration the source keeps changing, so you check two things: lag and row equality.</p>
+<div class="dfd-diagram-controls dfd-flow-controls" role="group" aria-label="Is the copy right, and how far behind?: steps">
 <button type="button" data-dfd-diagram-step="step1" aria-pressed="true"><span class="dfd-flow-num" aria-hidden="true">1</span>Source</button>
 <button type="button" data-dfd-diagram-step="step2" aria-pressed="false"><span class="dfd-flow-num" aria-hidden="true">2</span>Latency</button>
-<button type="button" data-dfd-diagram-step="step3" aria-pressed="false"><span class="dfd-flow-num" aria-hidden="true">3</span>Compare</button>
+<button type="button" data-dfd-diagram-step="step3" aria-pressed="false"><span class="dfd-flow-num" aria-hidden="true">3</span>Target</button>
 </div>
 <div class="dfd-flow-panel" data-dfd-diagram-panel="step1">
 <ol class="dfd-flow-track" aria-label="Step 1: Source">
-<li class="dfd-flow-node is-active" aria-current="step"><span class="dfd-flow-label">Source</span></li>
-<li class="dfd-flow-node"><span class="dfd-flow-label">Latency</span></li>
-<li class="dfd-flow-node"><span class="dfd-flow-label">Target</span></li>
+<li class="dfd-flow-node is-active" aria-current="step"><span class="dfd-flow-label">Source database</span><span class="dfd-flow-role">Still taking writes</span></li>
+<li class="dfd-flow-node"><span class="dfd-flow-label">CDC stream</span><span class="dfd-flow-role">Changes on their way</span></li>
+<li class="dfd-flow-node"><span class="dfd-flow-label">Target database</span><span class="dfd-flow-role">The copy being built</span></li>
 </ol>
-<div class="dfd-flow-explain"><p class="dfd-flow-caption"><span class="dfd-flow-count">Step 1 of 3</span>Latency
-
-
-
-
-Target
-
-The source keeps changing.</p></div></div>
+<div class="dfd-flow-explain">
+<p class="dfd-flow-caption"><span class="dfd-flow-count">Step 1 of 3</span>The application is still writing to the source while DMS copies it, so the target is always catching up.</p>
+<p class="dfd-flow-example dfd-flow-example-ui">Source: 1,250 new orders in the last hour</p>
+</div></div>
 <div class="dfd-flow-panel" data-dfd-diagram-panel="step2" hidden>
 <ol class="dfd-flow-track" aria-label="Step 2: Latency">
-<li class="dfd-flow-node"><span class="dfd-flow-label">Source</span></li>
-<li class="dfd-flow-node is-active" aria-current="step"><span class="dfd-flow-label">Latency</span></li>
-<li class="dfd-flow-node"><span class="dfd-flow-label">Target</span></li>
+<li class="dfd-flow-node is-active" aria-current="step"><span class="dfd-flow-label">Source database</span><span class="dfd-flow-role">Still taking writes</span></li>
+<li class="dfd-flow-node is-active is-fed" aria-current="step"><span class="dfd-flow-label">CDC stream</span><span class="dfd-flow-role">Changes on their way</span></li>
+<li class="dfd-flow-node"><span class="dfd-flow-label">Target database</span><span class="dfd-flow-role">The copy being built</span></li>
 </ol>
-<div class="dfd-flow-explain"><p class="dfd-flow-caption"><span class="dfd-flow-count">Step 2 of 3</span>Latency
-
-
-
-
-Target
-
-CDC latency is how far behind the copy is.</p></div></div>
+<div class="dfd-flow-explain">
+<p class="dfd-flow-caption"><span class="dfd-flow-count">Step 2 of 3</span>CDC latency is how many seconds the target is behind the source. Watch it fall close to zero before you plan a cutover.</p>
+<p class="dfd-flow-example dfd-flow-example-ui">CloudWatch → CDCLatencySource / CDCLatencyTarget</p>
+</div></div>
 <div class="dfd-flow-panel" data-dfd-diagram-panel="step3" hidden>
-<ol class="dfd-flow-track" aria-label="Step 3: Compare">
-<li class="dfd-flow-node"><span class="dfd-flow-label">Source rows</span></li>
-<li class="dfd-flow-node"><span class="dfd-flow-label">Compare</span></li>
-<li class="dfd-flow-node is-active" aria-current="step"><span class="dfd-flow-label">Target rows</span></li>
+<ol class="dfd-flow-track" aria-label="Step 3: Target">
+<li class="dfd-flow-node"><span class="dfd-flow-label">Source database</span><span class="dfd-flow-role">Still taking writes</span></li>
+<li class="dfd-flow-node is-active" aria-current="step"><span class="dfd-flow-label">CDC stream</span><span class="dfd-flow-role">Changes on their way</span></li>
+<li class="dfd-flow-node is-active is-fed" aria-current="step"><span class="dfd-flow-label">Target database</span><span class="dfd-flow-role">The copy being built</span></li>
 </ol>
-<div class="dfd-flow-explain"><p class="dfd-flow-caption"><span class="dfd-flow-count">Step 3 of 3</span>Compare
-
-
-
-
-Target rows
-
-Validation compares rows. It does not compare application behavior.</p></div></div>
+<div class="dfd-flow-explain">
+<p class="dfd-flow-caption"><span class="dfd-flow-count">Step 3 of 3</span>Data validation compares rows between source and target and reports mismatches. It checks data, not whether the application behaves the same.</p>
+<p class="dfd-flow-example dfd-flow-example-ui">Task → Table statistics → Validation state: Validated</p>
+</div></div>
 </section>
         <section class="section" id="lab" data-dfd-reveal>
             <h2>Lab: three numbers you will read before cutover</h2>

@@ -93,42 +93,21 @@
 <li class="dfd-flow-node"><span class="dfd-flow-label">emptyDir</span></li>
 <li class="dfd-flow-node"><span class="dfd-flow-label">Gone</span></li>
 </ol>
-<div class="dfd-flow-explain"><p class="dfd-flow-caption"><span class="dfd-flow-count">Step 1 of 3</span>emptyDir
-
-
-
-
-Gone
-
-The scratch disk is deleted with the Pod.</p></div></div>
+<div class="dfd-flow-explain"><p class="dfd-flow-caption"><span class="dfd-flow-count">Step 1 of 3</span>The scratch disk is deleted with the Pod.</p></div></div>
 <div class="dfd-flow-panel" data-dfd-diagram-panel="step2" hidden>
 <ol class="dfd-flow-track" aria-label="Step 2: PVC">
 <li class="dfd-flow-node"><span class="dfd-flow-label">Pod</span></li>
 <li class="dfd-flow-node is-active" aria-current="step"><span class="dfd-flow-label">PVC</span></li>
 <li class="dfd-flow-node"><span class="dfd-flow-label">Disk</span></li>
 </ol>
-<div class="dfd-flow-explain"><p class="dfd-flow-caption"><span class="dfd-flow-count">Step 2 of 3</span>PVC
-
-
-
-
-Disk
-
-The claim can be mounted again by the next Pod, if the access mode and node allow it.</p></div></div>
+<div class="dfd-flow-explain"><p class="dfd-flow-caption"><span class="dfd-flow-count">Step 2 of 3</span>The claim can be mounted again by the next Pod, if the access mode and node allow it.</p></div></div>
 <div class="dfd-flow-panel" data-dfd-diagram-panel="step3" hidden>
 <ol class="dfd-flow-track" aria-label="Step 3: StatefulSet">
 <li class="dfd-flow-node"><span class="dfd-flow-label">db-0</span></li>
 <li class="dfd-flow-node"><span class="dfd-flow-label">claim-0</span></li>
 <li class="dfd-flow-node is-active" aria-current="step"><span class="dfd-flow-label">Disk</span></li>
 </ol>
-<div class="dfd-flow-explain"><p class="dfd-flow-caption"><span class="dfd-flow-count">Step 3 of 3</span>claim-0
-
-
-
-
-Disk
-
-Ordinal 0 comes back as db-0 and can see the same claim.</p></div></div>
+<div class="dfd-flow-explain"><p class="dfd-flow-caption"><span class="dfd-flow-count">Step 3 of 3</span>Ordinal 0 comes back as db-0 and can see the same claim.</p></div></div>
 </section>
         <section class="section" id="lab" data-dfd-reveal>
             <h2>Lab: watch emptyDir disappear</h2>
