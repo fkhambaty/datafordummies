@@ -23,7 +23,7 @@ It is not FunBerry Kids and it is not Okavo.
 
 Hosting is **GitHub Pages**, not Vercel. The DNS `A` records are GitHub Pages (`185.199.108.153` through `185.199.111.153`). The file `CNAME` contains `datafordummies.in`. Pushing `main` publishes the site. There is no Vercel project to configure for this domain unless the owner deliberately moves it.
 
-The domain itself is registered at GoDaddy. API keys for DNS changes are created at https://developer.godaddy.com/keys.
+The domain itself is registered at GoDaddy. Since 13 October 2026 its DNS is also at GoDaddy (`ns33`/`ns34.domaincontrol.com`); the earlier Cloudflare nameservers belonged to a login nobody uses. Keep four `A` records for `@` (`185.199.108.153` to `185.199.111.153`), `CNAME www` to `fkhambaty.github.io`, and the four Resend records (`TXT resend._domainkey`, `MX send` priority 10, `TXT send`, `CNAME rsend`). Switching nameservers to GoDaddy restores a parked `A` record that takes the site down, so set the website records first. API keys are created at https://developer.godaddy.com/keys; the production key is stored locally as `GODADDY_KEY` and `GODADDY_SECRET` in `~/.config/fk-products/godaddy.env` and never committed.
 
 ## How a page works
 
@@ -46,7 +46,7 @@ The pages in this repository are the site. Accounts, progress, and Pro state go 
 
 New accounts do not use Supabase. Signup emails a 6-digit code. The account cannot log in until `auth/verify.html` accepts that code. `auth/reset-password.html` emails a reset code and sets a new password. Codes expire after 15 minutes and allow 5 tries. Email goes through Resend: the worker secret is `RESEND_API_KEY` and the sender is `MAIL_FROM` in `wrangler.toml`. Without the secret, signup and reset return 503 on purpose.
 
-`datafordummies.in` is not verified in Resend yet; its DNS zone is in a Cloudflare account the deploy token cannot edit. Until the four Resend records exist, Resend refuses `MAIL_FROM`, so the Worker resends the same code from `MAIL_FROM_FALLBACK` (`Data For Dummies <no-reply@funberrykids.in>`, a verified FKTech education domain) with reply-to `fktiindia@gmail.com`. When the domain verifies, `MAIL_FROM` succeeds first and the fallback stops being used. `GET /v1/health` reports `email_sender` as `primary`, `fallback`, or `none`. The weekly smoke check fails on `none`.
+The four Resend records for `datafordummies.in` were added at GoDaddy on 13 October 2026. While Resend has not verified the domain, it refuses `MAIL_FROM`, so the Worker resends the same code from `MAIL_FROM_FALLBACK` (`Data For Dummies <no-reply@funberrykids.in>`, a verified FKTech education domain) with reply-to `fktiindia@gmail.com`. When the domain verifies, `MAIL_FROM` succeeds first and the fallback stops being used. `GET /v1/health` reports `email_sender` as `primary`, `fallback`, or `none`. The weekly smoke check fails on `none`.
 
 Test login: username `dummy`, password `dummy`. It is an already-confirmed student account, never an admin. Delete it with `DELETE FROM profiles WHERE id = 'dummy-test-account'` if the site should not have it. The public config is `window.DFD_API` in `js/supabase-config.js`. Do not put the Cloudflare API token in that file.
 
