@@ -532,7 +532,6 @@ body {
     color: var(--text-dark);
     background: linear-gradient(135deg, #f8faff 0%, #fdf2f8 35%, #ecfeff 65%, #faf5ff 100%);
     background-attachment: fixed;
-    overflow-x: hidden;
     font-size: var(--font-size-base);
     font-weight: var(--font-weight-normal);
     letter-spacing: -0.01em;
@@ -4197,7 +4196,12 @@ li {
     }
     
     .mobile-menu-toggle {
-        display: block;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-width: 48px;
+        min-height: 48px;
+        padding: 0;
     }
     
     .hero-container {
@@ -4703,7 +4707,7 @@ li {
     max-width: 100%;
 }
 
-@media (max-width: 720px) {
+@media (max-width: 768px) {
     .hero-logo-frame {
         width: 100%;
     }

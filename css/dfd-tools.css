@@ -12,7 +12,7 @@
 
     .nav-c {
         height: auto;
-        min-height: 44px;
+        min-height: 48px;
         flex-wrap: wrap;
         padding: 8px 10px;
     }
@@ -46,4 +46,25 @@
 .nav-dropdown-trigger:focus-visible {
     outline: 2px solid #4f46e5;
     outline-offset: 2px;
+}
+
+/* Touch size for tool controls. The site nav breakpoint is 768px.
+   This file's 860px rule only wraps the tool workspace; it includes 768. */
+@media (max-width: 768px) {
+    .opt-btn,
+    .medal-btn,
+    .tab-btn,
+    .btn-add,
+    .btn-quick,
+    .btn-export,
+    .quiz-option,
+    .top-nav .nav-link,
+    .top-nav button {
+        min-height: 48px;
+    }
+
+    .nav-c,
+    .top-nav .nav-c {
+        min-height: 48px;
+    }
 }

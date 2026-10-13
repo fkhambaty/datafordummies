@@ -6,6 +6,13 @@
 // Global variables
 let mobileMenuOpen = false;
 
+/* Keep equal to CSS @media (max-width: 768px). Widths 721–768 stay on the mobile menu. */
+const DFD_NAV_QUERY = '(max-width: 768px)';
+
+function navIsMobile() {
+    return window.matchMedia(DFD_NAV_QUERY).matches;
+}
+
 // Reset Learn dropdown when page is shown (fixes bfcache / back-forward cache layout bug)
 function resetNavDropdown() {
     var nav = document.querySelector('.main-nav, .top-nav');
@@ -54,6 +61,12 @@ function initializeHub() {
     
     // Initialize theme system
     initializeThemes();
+
+    const toggleBtn = document.querySelector('.mobile-menu-toggle');
+    if (toggleBtn) {
+        if (!toggleBtn.getAttribute('aria-label')) toggleBtn.setAttribute('aria-label', 'Menu');
+        toggleBtn.setAttribute('aria-expanded', 'false');
+    }
 
     console.log('FKTI Learning Hub initialized');
 }
@@ -298,29 +311,36 @@ function scrollToCourses() {
 function toggleMobileMenu() {
     const navLinks = document.querySelector('.nav-links');
     const toggleBtn = document.querySelector('.mobile-menu-toggle');
-    
+    if (!navLinks || !toggleBtn) return;
+
     mobileMenuOpen = !mobileMenuOpen;
-    
+
     if (mobileMenuOpen) {
         navLinks.style.display = 'flex';
         navLinks.style.flexDirection = 'column';
         navLinks.style.position = 'absolute';
-        navLinks.style.top = '48px';
+        navLinks.style.top = 'calc(100% + 6px)';
         navLinks.style.left = '0';
         navLinks.style.right = '0';
-        navLinks.style.background = 'rgba(255, 255, 255, 0.92)';
+        navLinks.style.maxHeight = 'min(70vh, calc(100dvh - 96px))';
+        navLinks.style.overflowY = 'auto';
+        navLinks.style.background = 'rgba(255, 255, 255, 0.96)';
         navLinks.style.backdropFilter = 'blur(20px)';
         navLinks.style.webkitBackdropFilter = 'blur(20px)';
         navLinks.style.boxShadow = '0 12px 40px rgba(0, 0, 0, 0.1)';
-        navLinks.style.padding = '12px';
+        navLinks.style.padding = '8px';
         navLinks.style.borderRadius = '16px';
         navLinks.style.border = '1px solid rgba(255, 255, 255, 0.6)';
         navLinks.style.gap = '2px';
-        navLinks.style.marginTop = '4px';
+        navLinks.style.zIndex = '1001';
         toggleBtn.innerHTML = '<i class="fas fa-times"></i>';
+        toggleBtn.setAttribute('aria-expanded', 'true');
+        toggleBtn.setAttribute('aria-label', 'Close menu');
     } else {
         navLinks.style.display = 'none';
         toggleBtn.innerHTML = '<i class="fas fa-bars"></i>';
+        toggleBtn.setAttribute('aria-expanded', 'false');
+        toggleBtn.setAttribute('aria-label', 'Menu');
     }
 }
 
@@ -328,12 +348,11 @@ function toggleMobileMenu() {
  * Handle window resize
  */
 function handleResize() {
-    if (window.innerWidth > 768 && mobileMenuOpen) {
+    if (!navIsMobile() && mobileMenuOpen) {
         toggleMobileMenu();
     }
-    
-    // Reset nav links display on desktop
-    if (window.innerWidth > 768) {
+
+    if (!navIsMobile()) {
         const navLinks = document.querySelector('.nav-links');
         if (navLinks) {
             navLinks.style.cssText = '';

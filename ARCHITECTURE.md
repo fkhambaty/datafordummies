@@ -121,14 +121,18 @@ Data science, LLM, Airflow, and dbt lessons link a family `styles.css` and still
 - Do not set `display` on `[data-access]`, `.paywall`, `.pro-lock-overlay`, `.pro-locked-wrapper`, `.dashboard`, `.auth-gate`, or `.admin-signin-overlay`. Signup verification, progress, code copy, the paywall, and Razorpay stay wired as they are.
 - Do not put `overflow` on `html` or `body` in the shared file. That forces the other axis off `visible` and breaks fixed menus and modals.
 
-### Mobile width rule (720px and below)
+### Responsive matrix
 
-The page itself never scrolls sideways. Only intrinsically wide content scrolls, inside its own box. Checked 13 October 2026: the Kubernetes, Terraform, and AWS DMS pages, the home page, the learning path, the curriculum, and the profile were opened at 390, 768, 820, 1024, and 1440. Document scroll width matched the viewport on each of them. The home page also logs a CORS refusal for the production page-view beacon when the origin is a local server. That request was already on the page.
+The nav breakpoint is **768px**. `css/dfd-system.css`, `css/hub-styles.css`, and `js/hub-script.js` all use `@media (max-width: 768px)` / `matchMedia('(max-width: 768px)')`. Widths 721–768 are the mobile menu. Do not bring back a 720px cutoff, and do not branch the menu on `innerWidth > 768` (a scrollbar makes that disagree with CSS). Tool workspaces in `css/dfd-tools.css` wrap from 860px down, which already includes the 768px menu.
 
-- Every `table` becomes `display: block` with `overflow-x: auto`, so the table is its own scroll container. Rows and cells keep table layout inside it. Do not set `display` on `thead`, `tbody`, `tr`, or cells; that breaks the column grid. A lesson that needs a wide table needs no wrapper markup.
-- `pre` and `.code-block` keep `white-space: pre` and scroll horizontally. Code lines are never wrapped.
-- Headings and quiz `.opt` options use `overflow-wrap: anywhere`, because many are flex rows and only `anywhere` lowers a flex item's min-content. Inline `code`, `kbd`, `samp`, and links in prose do the same. Body text uses `break-word`.
-- Do not fix overflow by clipping a lesson container with `overflow: hidden`. Find the widest element and make it wrap or scroll.
+Target viewports: 390×667, 390×844, 768×1024, 820×1180, 1024×768, and 1440×900.
+
+The page itself never scrolls sideways. Wide tables, code, and media scroll inside their own box. `table` at 768px and below is `display: block` with `overflow-x: auto`. Rows and cells keep table layout inside it. Do not set `display` on `thead`, `tbody`, `tr`, or cells. `pre` and `.code-block` keep `white-space: pre` and scroll horizontally. Do not clip a lesson with `overflow: hidden` on `html` or `body`.
+
+Fixed nav, footer, and the paywall, contact, and admin modals use `env(safe-area-inset-*)`. Key actions (menu, primary buttons, quiz choices, copy, tool controls) are at least 48px on the short side at 768px and below. Text inputs, selects, and textareas are 16px at 1024px and below so iOS does not zoom the page. `prefers-reduced-motion: reduce` shortens animation and transitions.
+
+`viewport-fit=cover` stays on the viewport meta together with `width=device-width, initial-scale=1.0`.
+
 - The filename `css/fkti-light-theme.css` stays. Renaming it would break every existing link.
 
 ## Lesson foundation
@@ -142,7 +146,7 @@ Added 13 October 2026. These files are the shared shell for new lessons. Existin
 | `templates/lesson-shell.html` | Copy-from page. Not a hub lesson. |
 | `docs/LESSON_SHELL.md` | CSS and script order. |
 | `scripts/verify_site.py` | Crawls HTML. Baseline stubs and known missing anchors are warnings. A `hub.html` course map is not treated as a lesson stub. New breaks exit 1. |
-| `scripts/viewport_audit.mjs` | Playwright pass for HTTP errors, console errors, page errors, and document overflow. |
+| `scripts/viewport_audit.mjs` | Playwright pass for HTTP errors, console errors, page errors, document overflow, the 768px menu, and 16px inputs. `--mode sweep` covers every page at 390, 768, and 1440. `--mode full` covers representative routes at all six viewports. `--mode clicks` walks the menu, video, hubs, lessons, dummy login, and tools. `--mode all` runs those three. Local `/v1/page-view` and `/v1/event` calls return 204 so CORS noise is not a failure. |
 
 Head order for a new lesson: the family stylesheet, then the page accent, then `dfd-system.css` last. Script order: `code-copy.js`, Supabase CDN, `supabase-config.js`, `supabase-auth.js`, `paywall.js`, `progress.js`, `lesson-common.js`, `quiz.js`, `analytics-tracker.js`. Do not load `hub-script.js` on a lesson. It already owns the home-page nav and scroll handlers.
 
@@ -179,13 +183,14 @@ Home tools, the footer, the learning path, the curriculum, `enterCourse` in `js/
 Open `index.html` in a browser, or serve the folder:
 
 ```bash
-python3 -m http.server 8080
+python3 -m http.server 8877
 python3 scripts/verify_site.py --self-test
 python3 scripts/verify_site.py
-node scripts/viewport_audit.mjs --base http://127.0.0.1:8080
+node scripts/viewport_audit.mjs --base http://127.0.0.1:8877 --mode all
+# or: scripts/check_viewports.sh all
 ```
 
-The audit reads Playwright from `PLAYWRIGHT_MODULE` or `/Users/fakhruddinkhambaty/product-reviews/okavo/node_modules/playwright/index.js`. No package install is part of this site. A change is live only after it is pushed to `main` and GitHub Pages finishes.
+`scripts/check_viewports.sh` accepts `sweep`, `full`, `clicks`, or `all`. The audit reads Playwright from `PLAYWRIGHT_MODULE` or `/Users/fakhruddinkhambaty/product-reviews/okavo/node_modules/playwright/index.js`. No package install is part of this site. It answers `/v1/page-view` and `/v1/event` with 204. On a loopback base it turns web security off so the dummy account (`dummy` / `dummy`, lifetime Pro, no charge) can sign in before the worker is deployed. `cloudflare/worker/src/index.js` allows any `http://127.0.0.1` or `http://localhost` origin; that list reaches production only after `wrangler deploy`. A change to the pages is live only after it is pushed to `main` and GitHub Pages finishes.
 
 ## What not to get wrong
 

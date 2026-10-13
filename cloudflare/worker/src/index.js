@@ -5,6 +5,18 @@ const ALLOWED_ORIGINS = new Set([
   "http://localhost:8080",
 ]);
 
+function isAllowedOrigin(origin) {
+  if (!origin) return false;
+  if (ALLOWED_ORIGINS.has(origin)) return true;
+  try {
+    const url = new URL(origin);
+    if (url.protocol !== "http:") return false;
+    return url.hostname === "127.0.0.1" || url.hostname === "localhost";
+  } catch {
+    return false;
+  }
+}
+
 const OWNER_EMAILS = new Set([
   "fakhruddinkhambaty@gmail.com",
   "fktiindia@gmail.com",
@@ -353,7 +365,7 @@ async function syncProfileSubscription(db, env, profile) {
 export default {
   async fetch(request, env) {
     const origin = request.headers.get("origin");
-    const allowedOrigin = ALLOWED_ORIGINS.has(origin) ? origin : "";
+    const allowedOrigin = isAllowedOrigin(origin) ? origin : "";
     if (request.method === "OPTIONS") {
       return json({ ok: true }, 204, allowedOrigin);
     }

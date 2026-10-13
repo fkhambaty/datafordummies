@@ -72,7 +72,7 @@
       if (pre.closest('.code-block, .terminal-mock')) return;
       var wrap = pre.parentElement;
       if (wrap && (wrap.classList.contains('code-block') || wrap.classList.contains('terminal-mock'))) return;
-      if (!pre.classList.contains('fkti-copy-wrapped') && pre.offsetParent) {
+      if (!pre.classList.contains('fkti-copy-wrapped')) {
         var wrapper = document.createElement('div');
         wrapper.className = 'fkti-pre-wrap';
         pre.parentNode.insertBefore(wrapper, pre);

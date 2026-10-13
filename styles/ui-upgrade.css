@@ -630,12 +630,13 @@ body.page-home .ux-section { padding-top: 36px; padding-bottom: 12px; }
 body.page-home .ux-path-card .ux-btn,
 body.page-home .ux-project,
 body.page-home .ux-tool { min-width: 0; }
-@media (max-width: 720px) {
+@media (max-width: 768px) {
     body.page-home .home-stage { padding: 76px 16px 8px; }
     .home-video { border-radius: 16px; }
     .home-stage h1 { max-width: none; }
     .home-btn { width: 100%; justify-content: center; }
     .home-actions { width: 100%; }
+    .home-tools button { min-height: 48px; padding-top: 12px; padding-bottom: 12px; }
 }
 
 /* ── Founder video ── */
@@ -671,7 +672,7 @@ body.page-home .ux-tool { min-width: 0; }
     text-decoration: underline;
 }
 
-@media (max-width: 720px) {
+@media (max-width: 768px) {
     .ux-logos-track,
     .ux-hero-btns,
     .ux-project-tags {

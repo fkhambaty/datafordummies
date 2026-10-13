@@ -74,7 +74,7 @@ html {
     -webkit-overflow-scrolling: touch;
 }
 
-:where(img, video) {
+:where(img, video, iframe, canvas) {
     max-width: 100%;
 }
 
@@ -82,7 +82,9 @@ html {
     min-width: 0;
 }
 
-@media (max-width: 720px) {
+/* Site nav breakpoint. JS uses the same query: matchMedia('(max-width: 768px)').
+   Widths 721–768 are mobile. Do not reintroduce a 720px cutoff. */
+@media (max-width: 768px) {
     *,
     *::before,
     *::after {
@@ -297,5 +299,117 @@ html {
         opacity: 1;
         transform: none;
         transition: opacity 420ms var(--dfd-ease), transform 420ms var(--dfd-ease);
+    }
+}
+
+
+/* Responsive chrome. Layout only: safe areas, touch size, and iOS input zoom.
+   Colors stay in the family stylesheets. 768px matches the nav query above. */
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+.main-nav {
+    top: max(8px, env(safe-area-inset-top, 0px));
+    width: min(1100px, calc(100% - 32px - env(safe-area-inset-left, 0px) - env(safe-area-inset-right, 0px)));
+}
+
+.top-nav {
+    top: max(8px, env(safe-area-inset-top, 0px));
+    max-width: min(1100px, calc(100% - 16px - env(safe-area-inset-left, 0px) - env(safe-area-inset-right, 0px)));
+}
+
+.footer {
+    padding-bottom: max(24px, env(safe-area-inset-bottom, 0px));
+}
+
+.section-subtitle {
+    white-space: normal;
+    overflow-wrap: anywhere;
+}
+
+.top-offset-for-nav,
+body.page-home .home-stage {
+    padding-top: max(76px, calc(64px + env(safe-area-inset-top, 0px))) !important;
+}
+
+.back-to-top {
+    right: max(16px, env(safe-area-inset-right, 0px));
+    bottom: max(16px, env(safe-area-inset-bottom, 0px));
+}
+
+#contactModal,
+#paywall-overlay,
+.admin-signin-modal,
+.auth-modal {
+    box-sizing: border-box;
+    padding-top: max(20px, env(safe-area-inset-top, 0px)) !important;
+    padding-right: max(20px, env(safe-area-inset-right, 0px)) !important;
+    padding-bottom: max(20px, env(safe-area-inset-bottom, 0px)) !important;
+    padding-left: max(20px, env(safe-area-inset-left, 0px)) !important;
+}
+
+@media (max-width: 1024px) {
+    input:not([type="checkbox"]):not([type="radio"]):not([type="range"]):not([type="button"]):not([type="submit"]):not([type="reset"]):not([type="hidden"]):not([type="image"]):not([type="file"]),
+    select,
+    textarea {
+        font-size: 16px !important;
+    }
+}
+
+@media (max-width: 768px) {
+    .mobile-menu-toggle,
+    .back-to-top,
+    #contactModal button,
+    #paywall-cta,
+    .home-btn,
+    .home-tools button,
+    .ds-btn,
+    .auth-submit,
+    .lesson-nav a,
+    .quiz-option,
+    .quiz-opt,
+    .dfd-quiz-choice,
+    .opt-btn,
+    .medal-btn,
+    .tab-btn,
+    .btn-add,
+    .btn-quick,
+    .btn-export {
+        min-height: 48px;
+    }
+
+    .mobile-menu-toggle,
+    .back-to-top,
+    #contactModal button {
+        min-width: 48px;
+    }
+
+    .nav-links .nav-link,
+    .nav-links .nav-dropdown-trigger,
+    .nav-links .nav-dropdown-link {
+        min-height: 48px;
+        display: flex;
+        align-items: center;
+    }
+
+    .nav-links .nav-dropdown-panel {
+        position: static;
+        opacity: 1;
+        visibility: visible;
+        pointer-events: auto;
+        transform: none;
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        min-width: 0;
+        margin: 0;
+        padding: 0;
+        border: 0;
+        box-shadow: none;
+        background: transparent;
     }
 }

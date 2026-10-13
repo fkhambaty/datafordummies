@@ -38,17 +38,19 @@ A static HTML learning site. GitHub Pages serves the files in this repository. A
 ## Local check
 
 ```bash
-python3 -m http.server 8080
+python3 -m http.server 8877
 ```
 
-Open http://127.0.0.1:8080 and click through the page you edited, including one course link from the footer.
+Open http://127.0.0.1:8877 and click through the page you edited, including one course link from the footer. Port 8080 is often already taken on this machine.
 
-Before a foundation or lesson-shell change, also run:
+The nav breakpoint is 768px in CSS and in `js/hub-script.js`. Check a phone width (390), the menu boundary (768 and 820), and desktop (1440).
+
+Before a layout or lesson-shell change, also run:
 
 ```bash
 python3 scripts/verify_site.py --self-test
 python3 scripts/verify_site.py
-node scripts/viewport_audit.mjs --base http://127.0.0.1:8080
+scripts/check_viewports.sh sweep
 ```
 
-`verify_site.py` is allowed to print baseline warnings for unfinished hub lessons. It must exit 0 for those. A broken internal link, a bad `dfd-system.css` link, or a new Pro page missing `paywall.js` is a failure. The audit script uses Playwright from `PLAYWRIGHT_MODULE` or the Okavo `node_modules` checkout. There is no site package install.
+`verify_site.py` must exit 0 with no warnings. A broken internal link, a bad `dfd-system.css` link, or a new Pro page missing `paywall.js` is a failure. `scripts/check_viewports.sh all` is the full matrix: every page at 390, 768, and 1440, representative routes at the other three target viewports, then the click path. The audit uses Playwright from `PLAYWRIGHT_MODULE` or the Okavo `node_modules` checkout. There is no site package install. It stubs local `/v1/page-view` and `/v1/event` so a CORS line is not treated as a page failure.
