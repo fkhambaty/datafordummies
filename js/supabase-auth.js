@@ -45,7 +45,8 @@
                         error: {
                             message: body.error || 'Request failed.',
                             needs_verification: Boolean(body.needs_verification),
-                            email: body.email || ''
+                            email: body.email || '',
+                            missing: body.missing || null
                         },
                         status: response.status
                     };
@@ -190,6 +191,24 @@
         });
     }
 
+    function completeLesson(courseId, lessonId) {
+        return request('/v1/progress/complete', {
+            method: 'POST',
+            body: { course_id: courseId, lesson_id: lessonId }
+        });
+    }
+
+    function getCertificates() {
+        return request('/v1/certificates');
+    }
+
+    function requestCertificate(courseId) {
+        return request('/v1/certificates', {
+            method: 'POST',
+            body: { course_id: courseId }
+        });
+    }
+
     function track(path, body) {
         return request(path, { method: 'POST', body: body });
     }
@@ -214,6 +233,9 @@
         getAdminAnalytics: getAdminAnalytics,
         saveProgress: saveProgress,
         getProgress: getProgress,
+        completeLesson: completeLesson,
+        getCertificates: getCertificates,
+        requestCertificate: requestCertificate,
         track: track,
         upsertProfile: function () { return Promise.resolve({ data: null, error: null }); },
         ensureProfile: function () { return Promise.resolve(); },

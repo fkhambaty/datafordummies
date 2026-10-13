@@ -3,6 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <!-- dfd-seo:start -->
+    <meta name="description" content="Assessments, SCT, and schema conversion | AWS DMS. DMS has a premigration assessment on a task, a schema conversion assessment inside DMS Schema Conversion, and the older AWS.">
+    <link rel="canonical" href="https://datafordummies.in/dms_course/assessment.html">
+    <meta property="og:title" content="Assessments, SCT, and schema conversion | AWS DMS | Data For Dummies">
+    <meta property="og:description" content="Assessments, SCT, and schema conversion | AWS DMS. DMS has a premigration assessment on a task, a schema conversion assessment inside DMS Schema Conversion, and the older AWS.">
+    <meta property="og:url" content="https://datafordummies.in/dms_course/assessment.html">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="https://datafordummies.in/logo.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <!-- dfd-seo:end -->
     <title>Assessments, SCT, and schema conversion | AWS DMS | Data For Dummies</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
@@ -74,68 +84,62 @@
 <h2>Do not memorize the engine matrix</h2>
 <p>Supported pairs for data movement and supported pairs for schema conversion overlap and are not identical. AWS has added generative AI help for some conversion paths and not others. The console and the current user guide are the list. This course will not freeze a matrix that the next service update would make wrong.</p>
 </section>
-        <section class="section dfd-diagram" data-dfd-diagram data-dfd-reveal>
-            <h2>Three reports</h2>
-            <div data-dfd-diagram-panel="task">
-<svg class="dfd-responsive" viewBox="0 0 640 148" role="img" aria-label="Premigration assessment highlighted">
-<rect class="track-drift" x="16" y="36" width="188" height="72" rx="12" fill="#fb923c">
-</rect>
-<text x="110" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#ffffff">Task check</text>
-<path d="M204 72 H224" stroke="#64748b" stroke-width="2" fill="none">
-</path>
-<rect x="224" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
-</rect>
-<text x="318" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">Schema report</text>
-<path d="M412 72 H432" stroke="#64748b" stroke-width="2" fill="none">
-</path>
-<rect x="432" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
-</rect>
-<text x="526" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">Desktop SCT</text>
-</svg>
-<p>The premigration assessment belongs to the replication task.</p>
+        <section class="section dfd-diagram dfd-flow" data-dfd-diagram data-dfd-flow data-dfd-reveal>
+<h2>Three reports</h2>
+<div class="dfd-diagram-controls dfd-flow-controls" role="group" aria-label="Three reports: steps">
+<button type="button" data-dfd-diagram-step="step1" aria-pressed="true"><span class="dfd-flow-num" aria-hidden="true">1</span>Task</button>
+<button type="button" data-dfd-diagram-step="step2" aria-pressed="false"><span class="dfd-flow-num" aria-hidden="true">2</span>Schema</button>
+<button type="button" data-dfd-diagram-step="step3" aria-pressed="false"><span class="dfd-flow-num" aria-hidden="true">3</span>SCT</button>
 </div>
-<div data-dfd-diagram-panel="sc" hidden>
-<svg class="dfd-responsive" viewBox="0 0 640 148" role="img" aria-label="DMS Schema Conversion highlighted">
-<rect x="16" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
-</rect>
-<text x="110" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">Task check</text>
-<path d="M204 72 H224" stroke="#64748b" stroke-width="2" fill="none">
-</path>
-<rect class="track-drift" x="224" y="36" width="188" height="72" rx="12" fill="#fb923c">
-</rect>
-<text x="318" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#ffffff">Schema report</text>
-<path d="M412 72 H432" stroke="#64748b" stroke-width="2" fill="none">
-</path>
-<rect x="432" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
-</rect>
-<text x="526" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">Desktop SCT</text>
-</svg>
-<p>DMS Schema Conversion reports what it can translate.</p>
-</div>
-<div data-dfd-diagram-panel="sct" hidden>
-<svg class="dfd-responsive" viewBox="0 0 640 148" role="img" aria-label="AWS SCT highlighted">
-<rect x="16" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
-</rect>
-<text x="110" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">Task check</text>
-<path d="M204 72 H224" stroke="#64748b" stroke-width="2" fill="none">
-</path>
-<rect x="224" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
-</rect>
-<text x="318" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">Schema report</text>
-<path d="M412 72 H432" stroke="#64748b" stroke-width="2" fill="none">
-</path>
-<rect class="track-drift" x="432" y="36" width="188" height="72" rx="12" fill="#fb923c">
-</rect>
-<text x="526" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#ffffff">Desktop SCT</text>
-</svg>
-<p>AWS SCT is the installable application. Related engine, different product.</p>
-</div>
-            <div class="dfd-diagram-controls">
-                <button type="button" data-dfd-diagram-step="task" aria-pressed="true">Task</button>
-<button type="button" data-dfd-diagram-step="sc" aria-pressed="false">Schema</button>
-<button type="button" data-dfd-diagram-step="sct" aria-pressed="false">SCT</button>
-            </div>
-        </section>
+<div class="dfd-flow-panel" data-dfd-diagram-panel="step1">
+<ol class="dfd-flow-track" aria-label="Step 1: Task">
+<li class="dfd-flow-node is-active" aria-current="step"><span class="dfd-flow-label">Task check</span></li>
+<li class="dfd-flow-node"><span class="dfd-flow-label">Schema report</span></li>
+<li class="dfd-flow-node"><span class="dfd-flow-label">Desktop SCT</span></li>
+</ol>
+<div class="dfd-flow-explain">
+<p class="dfd-flow-caption"><span class="dfd-flow-count">Step 1 of 3</span>Schema report
+
+
+
+
+Desktop SCT
+
+The premigration assessment belongs to the replication task.</p>
+</div></div>
+<div class="dfd-flow-panel" data-dfd-diagram-panel="step2" hidden>
+<ol class="dfd-flow-track" aria-label="Step 2: Schema">
+<li class="dfd-flow-node"><span class="dfd-flow-label">Task check</span></li>
+<li class="dfd-flow-node is-active" aria-current="step"><span class="dfd-flow-label">Schema report</span></li>
+<li class="dfd-flow-node"><span class="dfd-flow-label">Desktop SCT</span></li>
+</ol>
+<div class="dfd-flow-explain">
+<p class="dfd-flow-caption"><span class="dfd-flow-count">Step 2 of 3</span>Schema report
+
+
+
+
+Desktop SCT
+
+DMS Schema Conversion reports what it can translate.</p>
+</div></div>
+<div class="dfd-flow-panel" data-dfd-diagram-panel="step3" hidden>
+<ol class="dfd-flow-track" aria-label="Step 3: SCT">
+<li class="dfd-flow-node"><span class="dfd-flow-label">Task check</span></li>
+<li class="dfd-flow-node"><span class="dfd-flow-label">Schema report</span></li>
+<li class="dfd-flow-node is-active" aria-current="step"><span class="dfd-flow-label">Desktop SCT</span></li>
+</ol>
+<div class="dfd-flow-explain">
+<p class="dfd-flow-caption"><span class="dfd-flow-count">Step 3 of 3</span>Schema report
+
+
+
+
+Desktop SCT
+
+AWS SCT is the installable application. Related engine, different product.</p>
+</div></div>
+</section>
         <section class="section" id="lab" data-dfd-reveal>
             <h2>Lab: label a finding</h2>
             <p>For each line, write task, schema, or neither. The answers are in the comments.</p>
@@ -222,8 +226,6 @@ Fifty tables have no primary key.                # task, and it also hurts CDC</
     </div>
 
     <script src="../js/code-copy.js">
-</script>
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2">
 </script>
     <script src="../js/supabase-config.js">
 </script>

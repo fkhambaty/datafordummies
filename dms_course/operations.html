@@ -3,6 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <!-- dfd-seo:start -->
+    <meta name="description" content="Serverless, instances, cost, and troubleshooting | AWS DMS. Pick compute on purpose.">
+    <link rel="canonical" href="https://datafordummies.in/dms_course/operations.html">
+    <meta property="og:title" content="Serverless, instances, cost, and troubleshooting | AWS DMS | Data For Dummies">
+    <meta property="og:description" content="Serverless, instances, cost, and troubleshooting | AWS DMS. Pick compute on purpose.">
+    <meta property="og:url" content="https://datafordummies.in/dms_course/operations.html">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="https://datafordummies.in/logo.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <!-- dfd-seo:end -->
     <title>Serverless, instances, cost, and troubleshooting | AWS DMS | Data For Dummies</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
@@ -73,68 +83,56 @@
 <h2>Security habits</h2>
 <p>Private subnets, security groups that name the DMS client, secrets instead of pasted passwords, and IAM roles that can read those secrets and write logs. Encryption in transit is the endpoint SSL mode the database requires. Encryption at rest is the storage setting on the databases and on DMS storage, documented per feature. Turn on what those pages describe. Do not assume a new account already did.</p>
 </section>
-        <section class="section dfd-diagram" data-dfd-diagram data-dfd-reveal>
-            <h2>Cost, then the failure</h2>
-            <div data-dfd-diagram-panel="idle">
-<svg class="dfd-responsive" viewBox="0 0 640 148" role="img" aria-label="Idle instance highlighted">
-<rect class="track-drift" x="16" y="36" width="188" height="72" rx="12" fill="#fb923c">
-</rect>
-<text x="110" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#ffffff">Instance</text>
-<path d="M204 72 H224" stroke="#64748b" stroke-width="2" fill="none">
-</path>
-<rect x="224" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
-</rect>
-<text x="318" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">Idle hours</text>
-<path d="M412 72 H432" stroke="#64748b" stroke-width="2" fill="none">
-</path>
-<rect x="432" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
-</rect>
-<text x="526" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">Bill</text>
-</svg>
-<p>An instance you forgot to delete keeps billing.</p>
+        <section class="section dfd-diagram dfd-flow" data-dfd-diagram data-dfd-flow data-dfd-reveal>
+<h2>Cost, then the failure</h2>
+<div class="dfd-diagram-controls dfd-flow-controls" role="group" aria-label="Cost, then the failure: steps">
+<button type="button" data-dfd-diagram-step="step1" aria-pressed="true"><span class="dfd-flow-num" aria-hidden="true">1</span>Idle</button>
+<button type="button" data-dfd-diagram-step="step2" aria-pressed="false"><span class="dfd-flow-num" aria-hidden="true">2</span>Range</button>
+<button type="button" data-dfd-diagram-step="step3" aria-pressed="false"><span class="dfd-flow-num" aria-hidden="true">3</span>Log</button>
 </div>
-<div data-dfd-diagram-panel="range" hidden>
-<svg class="dfd-responsive" viewBox="0 0 640 148" role="img" aria-label="Serverless range highlighted">
-<rect x="16" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
-</rect>
-<text x="110" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">Minimum</text>
-<path d="M204 72 H224" stroke="#64748b" stroke-width="2" fill="none">
-</path>
-<rect class="track-drift" x="224" y="36" width="188" height="72" rx="12" fill="#fb923c">
-</rect>
-<text x="318" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#ffffff">Used</text>
-<path d="M412 72 H432" stroke="#64748b" stroke-width="2" fill="none">
-</path>
-<rect x="432" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
-</rect>
-<text x="526" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">Maximum</text>
-</svg>
-<p>Serverless stays inside the range. Confirm the idle rule on the current price page.</p>
-</div>
-<div data-dfd-diagram-panel="log" hidden>
-<svg class="dfd-responsive" viewBox="0 0 640 148" role="img" aria-label="Troubleshooting order highlighted">
-<rect x="16" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
-</rect>
-<text x="110" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">Endpoint</text>
-<path d="M204 72 H224" stroke="#64748b" stroke-width="2" fill="none">
-</path>
-<rect x="224" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
-</rect>
-<text x="318" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">Task log</text>
-<path d="M412 72 H432" stroke="#64748b" stroke-width="2" fill="none">
-</path>
-<rect class="track-drift" x="432" y="36" width="188" height="72" rx="12" fill="#fb923c">
-</rect>
-<text x="526" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#ffffff">Source disk</text>
-</svg>
-<p>Connection, task log, then the source disk that holds the change log.</p>
-</div>
-            <div class="dfd-diagram-controls">
-                <button type="button" data-dfd-diagram-step="idle" aria-pressed="true">Idle</button>
-<button type="button" data-dfd-diagram-step="range" aria-pressed="false">Range</button>
-<button type="button" data-dfd-diagram-step="log" aria-pressed="false">Log</button>
-            </div>
-        </section>
+<div class="dfd-flow-panel" data-dfd-diagram-panel="step1">
+<ol class="dfd-flow-track" aria-label="Step 1: Idle">
+<li class="dfd-flow-node is-active" aria-current="step"><span class="dfd-flow-label">Instance</span></li>
+<li class="dfd-flow-node"><span class="dfd-flow-label">Idle hours</span></li>
+<li class="dfd-flow-node"><span class="dfd-flow-label">Bill</span></li>
+</ol>
+<div class="dfd-flow-explain"><p class="dfd-flow-caption"><span class="dfd-flow-count">Step 1 of 3</span>Idle hours
+
+
+
+
+Bill
+
+An instance you forgot to delete keeps billing.</p></div></div>
+<div class="dfd-flow-panel" data-dfd-diagram-panel="step2" hidden>
+<ol class="dfd-flow-track" aria-label="Step 2: Range">
+<li class="dfd-flow-node"><span class="dfd-flow-label">Minimum</span></li>
+<li class="dfd-flow-node is-active" aria-current="step"><span class="dfd-flow-label">Used</span></li>
+<li class="dfd-flow-node"><span class="dfd-flow-label">Maximum</span></li>
+</ol>
+<div class="dfd-flow-explain"><p class="dfd-flow-caption"><span class="dfd-flow-count">Step 2 of 3</span>Used
+
+
+
+
+Maximum
+
+Serverless stays inside the range. Confirm the idle rule on the current price page.</p></div></div>
+<div class="dfd-flow-panel" data-dfd-diagram-panel="step3" hidden>
+<ol class="dfd-flow-track" aria-label="Step 3: Log">
+<li class="dfd-flow-node"><span class="dfd-flow-label">Endpoint</span></li>
+<li class="dfd-flow-node"><span class="dfd-flow-label">Task log</span></li>
+<li class="dfd-flow-node is-active" aria-current="step"><span class="dfd-flow-label">Source disk</span></li>
+</ol>
+<div class="dfd-flow-explain"><p class="dfd-flow-caption"><span class="dfd-flow-count">Step 3 of 3</span>Task log
+
+
+
+
+Source disk
+
+Connection, task log, then the source disk that holds the change log.</p></div></div>
+</section>
         <section class="section" id="lab" data-dfd-reveal>
             <h2>Lab: a failure note that names evidence</h2>
             <p>Use this the next time a task is not green. Guessing a bigger instance is not step one.</p>
@@ -224,8 +222,6 @@ Change I will NOT make until the log is read:</code>
     </div>
 
     <script src="../js/code-copy.js">
-</script>
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2">
 </script>
     <script src="../js/supabase-config.js">
 </script>

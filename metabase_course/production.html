@@ -3,6 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <!-- dfd-seo:start -->
+    <meta name="description" content="Production deployment. Back up Metabase's own database, upgrade on purpose, and treat slow charts as warehouse queries.">
+    <link rel="canonical" href="https://datafordummies.in/metabase_course/production.html">
+    <meta property="og:title" content="Production deployment | Data For Dummies">
+    <meta property="og:description" content="Production deployment. Back up Metabase's own database, upgrade on purpose, and treat slow charts as warehouse queries.">
+    <meta property="og:url" content="https://datafordummies.in/metabase_course/production.html">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="https://datafordummies.in/logo.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <!-- dfd-seo:end -->
     <title>Production deployment | Data For Dummies</title>
     <link rel="stylesheet" href="styles.css">
     
@@ -51,34 +61,45 @@ docker pull metabase/metabase:LATEST_YOU_CHOSE</code></pre></div>
 </tbody>
 </table>
 </section>
-<section class="section dfd-diagram" data-dfd-diagram data-dfd-reveal><h2>The production order</h2><div data-dfd-diagram-panel="one">
-<svg class="dfd-responsive" viewBox="0 0 360 100" role="img" aria-label="Backup highlighted">
-<rect x="12" y="26" width="104" height="48" rx="8" fill="#0f172a"></rect>
-<text x="64" y="54" text-anchor="middle" font-size="13" fill="#ffffff" font-family="Nunito,sans-serif">Backup</text>
-<rect x="128" y="26" width="104" height="48" rx="8" fill="#e2e8f0"></rect>
-<text x="180" y="54" text-anchor="middle" font-size="13" fill="#0f172a" font-family="Nunito,sans-serif">Upgrade</text>
-<rect x="244" y="26" width="104" height="48" rx="8" fill="#e2e8f0"></rect>
-<text x="296" y="54" text-anchor="middle" font-size="13" fill="#0f172a" font-family="Nunito,sans-serif">Health</text>
-</svg>
-</div><div data-dfd-diagram-panel="two" hidden>
-<svg class="dfd-responsive" viewBox="0 0 360 100" role="img" aria-label="Upgrade highlighted">
-<rect x="12" y="26" width="104" height="48" rx="8" fill="#e2e8f0"></rect>
-<text x="64" y="54" text-anchor="middle" font-size="13" fill="#0f172a" font-family="Nunito,sans-serif">Backup</text>
-<rect x="128" y="26" width="104" height="48" rx="8" fill="#0f172a"></rect>
-<text x="180" y="54" text-anchor="middle" font-size="13" fill="#ffffff" font-family="Nunito,sans-serif">Upgrade</text>
-<rect x="244" y="26" width="104" height="48" rx="8" fill="#e2e8f0"></rect>
-<text x="296" y="54" text-anchor="middle" font-size="13" fill="#0f172a" font-family="Nunito,sans-serif">Health</text>
-</svg>
-</div><div data-dfd-diagram-panel="three" hidden>
-<svg class="dfd-responsive" viewBox="0 0 360 100" role="img" aria-label="Health highlighted">
-<rect x="12" y="26" width="104" height="48" rx="8" fill="#e2e8f0"></rect>
-<text x="64" y="54" text-anchor="middle" font-size="13" fill="#0f172a" font-family="Nunito,sans-serif">Backup</text>
-<rect x="128" y="26" width="104" height="48" rx="8" fill="#e2e8f0"></rect>
-<text x="180" y="54" text-anchor="middle" font-size="13" fill="#0f172a" font-family="Nunito,sans-serif">Upgrade</text>
-<rect x="244" y="26" width="104" height="48" rx="8" fill="#0f172a"></rect>
-<text x="296" y="54" text-anchor="middle" font-size="13" fill="#ffffff" font-family="Nunito,sans-serif">Health</text>
-</svg>
-</div><div class="dfd-diagram-controls"><button type="button" data-dfd-diagram-step="one" aria-pressed="true">Backup</button><button type="button" data-dfd-diagram-step="two" aria-pressed="false">Upgrade</button><button type="button" data-dfd-diagram-step="three" aria-pressed="false">Health</button></div></section>
+<section class="section dfd-diagram dfd-flow" data-dfd-diagram data-dfd-flow data-dfd-reveal>
+<h2>The production order</h2>
+<p class="dfd-flow-intro">Upgrade in this order every time and you can always go back.</p>
+<div class="dfd-diagram-controls dfd-flow-controls" role="group" aria-label="The production order: steps">
+<button type="button" data-dfd-diagram-step="step1" aria-pressed="true"><span class="dfd-flow-num" aria-hidden="true">1</span>Backup</button>
+<button type="button" data-dfd-diagram-step="step2" aria-pressed="false"><span class="dfd-flow-num" aria-hidden="true">2</span>Upgrade</button>
+<button type="button" data-dfd-diagram-step="step3" aria-pressed="false"><span class="dfd-flow-num" aria-hidden="true">3</span>Health</button>
+</div>
+<div class="dfd-flow-panel" data-dfd-diagram-panel="step1">
+<ol class="dfd-flow-track" aria-label="Step 1: Backup">
+<li class="dfd-flow-node is-active" aria-current="step"><span class="dfd-flow-label">Backup</span><span class="dfd-flow-role">Copy the application database</span></li>
+<li class="dfd-flow-node"><span class="dfd-flow-label">Upgrade</span><span class="dfd-flow-role">Start the new version</span></li>
+<li class="dfd-flow-node"><span class="dfd-flow-label">Health check</span><span class="dfd-flow-role">Confirm before users return</span></li>
+</ol>
+<div class="dfd-flow-explain">
+<p class="dfd-flow-caption"><span class="dfd-flow-count">Step 1 of 3</span>Back up the application database first. Upgrades change its structure, and the only reliable way back is restoring that backup.</p>
+<pre class="dfd-flow-example"><code>pg_dump -Fc metabase &gt; metabase-before-upgrade.dump</code></pre>
+</div></div>
+<div class="dfd-flow-panel" data-dfd-diagram-panel="step2" hidden>
+<ol class="dfd-flow-track" aria-label="Step 2: Upgrade">
+<li class="dfd-flow-node is-active" aria-current="step"><span class="dfd-flow-label">Backup</span><span class="dfd-flow-role">Copy the application database</span></li>
+<li class="dfd-flow-node is-active is-fed" aria-current="step"><span class="dfd-flow-label">Upgrade</span><span class="dfd-flow-role">Start the new version</span></li>
+<li class="dfd-flow-node"><span class="dfd-flow-label">Health check</span><span class="dfd-flow-role">Confirm before users return</span></li>
+</ol>
+<div class="dfd-flow-explain">
+<p class="dfd-flow-caption"><span class="dfd-flow-count">Step 2 of 3</span>Replace the container with the new version. On start-up Metabase migrates the application database.</p>
+<pre class="dfd-flow-example"><code>docker pull metabase/metabase:latest &amp;&amp; docker compose up -d</code></pre>
+</div></div>
+<div class="dfd-flow-panel" data-dfd-diagram-panel="step3" hidden>
+<ol class="dfd-flow-track" aria-label="Step 3: Health">
+<li class="dfd-flow-node"><span class="dfd-flow-label">Backup</span><span class="dfd-flow-role">Copy the application database</span></li>
+<li class="dfd-flow-node is-active" aria-current="step"><span class="dfd-flow-label">Upgrade</span><span class="dfd-flow-role">Start the new version</span></li>
+<li class="dfd-flow-node is-active is-fed" aria-current="step"><span class="dfd-flow-label">Health check</span><span class="dfd-flow-role">Confirm before users return</span></li>
+</ol>
+<div class="dfd-flow-explain">
+<p class="dfd-flow-caption"><span class="dfd-flow-count">Step 3 of 3</span>Wait until the health endpoint reports ok, then open a few key dashboards before telling users.</p>
+<pre class="dfd-flow-example"><code>curl https://metabase.example.com/api/health   # {&quot;status&quot;:&quot;ok&quot;}</code></pre>
+</div></div>
+</section>
 <section class="section" data-dfd-reveal><h2>Leave it runnable</h2>
 <p>Write down the image tag, the app database host, who holds the encryption key, and when the last dump was restored in a drill. A backup you have never restored is a hope. The next lesson is not another Metabase page. Go use a model and a dashboard on data you are allowed to read.</p>
 <p><button type="button" data-dfd-complete>Mark lesson complete</button></p><p data-dfd-complete-status></p>
@@ -130,7 +151,6 @@ docker pull metabase/metabase:LATEST_YOU_CHOSE</code></pre></div>
     </div>
 
     <script src="../js/code-copy.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="../js/supabase-config.js"></script>
     <script src="../js/supabase-auth.js"></script>
     <script src="../js/paywall.js"></script>

@@ -1,0 +1,1618 @@
+{
+  "generated_on": "2026-10-13",
+  "estimate": "Reading time is the lesson word count divided by 180, with a floor of 4 minutes and a ceiling of 40. It is not a classroom hour.",
+  "courses": {
+    "airflow": {
+      "id": "airflow",
+      "title": "Apache Airflow Course Hub",
+      "hub": "airflow_course/hub.html",
+      "prerequisites": "Read the lessons in the order listed. Each one assumes you read the previous lesson in this course. No other course on this site is required first.",
+      "outcomes": "From \"What is Airflow?\" to production-grade orchestration. Every concept explained like you're 5 years old!",
+      "capstone": null,
+      "capstone_note": "This course has no separate capstone page. Finishing means every lesson in this list is saved on the account. That save is not an issued certificate and not a vendor exam.",
+      "vendor_checked_on": "2026-10-13",
+      "vendor_note": "Lessons were framed on 13 October 2026 for Apache Airflow 3.3.2.",
+      "estimate": "Reading time is the lesson word count divided by 180, with a floor of 4 minutes and a ceiling of 40. It is not a classroom hour.",
+      "minutes": 210,
+      "lessons": [
+        {
+          "id": "best-practices",
+          "href": "airflow_course/best-practices.html",
+          "label": "Module 13: Best Practices",
+          "words": 2452,
+          "minutes": 14
+        },
+        {
+          "id": "certification-admin",
+          "href": "airflow_course/certification-admin.html",
+          "label": "Airflow Certification Answers",
+          "words": 144,
+          "minutes": 4
+        },
+        {
+          "id": "certification-hub",
+          "href": "airflow_course/certification-hub.html",
+          "label": "Airflow Certification",
+          "words": 197,
+          "minutes": 4
+        },
+        {
+          "id": "certification-student",
+          "href": "airflow_course/certification-student.html",
+          "label": "Airflow Certification Practice",
+          "words": 164,
+          "minutes": 4
+        },
+        {
+          "id": "certification",
+          "href": "airflow_course/certification.html",
+          "label": "Airflow Certification",
+          "words": 207,
+          "minutes": 4
+        },
+        {
+          "id": "containers",
+          "href": "airflow_course/containers.html",
+          "label": "Module 12: Containers & Airflow",
+          "words": 2024,
+          "minutes": 11
+        },
+        {
+          "id": "custom-components",
+          "href": "airflow_course/custom-components.html",
+          "label": "Module 10: Custom Components",
+          "words": 2241,
+          "minutes": 12
+        },
+        {
+          "id": "dependencies",
+          "href": "airflow_course/dependencies.html",
+          "label": "Module 5: Task Dependencies",
+          "words": 2535,
+          "minutes": 14
+        },
+        {
+          "id": "first-dag",
+          "href": "airflow_course/first-dag.html",
+          "label": "Module 2: Your First DAG",
+          "words": 2765,
+          "minutes": 15
+        },
+        {
+          "id": "meet-airflow",
+          "href": "airflow_course/meet-airflow.html",
+          "label": "Module 1: Meet Apache Airflow",
+          "words": 3226,
+          "minutes": 18
+        },
+        {
+          "id": "operators",
+          "href": "airflow_course/operators.html",
+          "label": "Module 4: Operators Deep Dive",
+          "words": 2445,
+          "minutes": 14
+        },
+        {
+          "id": "production",
+          "href": "airflow_course/production.html",
+          "label": "Module 14: Production Operations",
+          "words": 2502,
+          "minutes": 14
+        },
+        {
+          "id": "scheduling",
+          "href": "airflow_course/scheduling.html",
+          "label": "Module 3: Scheduling Mastery",
+          "words": 2460,
+          "minutes": 14
+        },
+        {
+          "id": "security-cloud",
+          "href": "airflow_course/security-cloud.html",
+          "label": "Module 15: Security & Cloud",
+          "words": 2012,
+          "minutes": 11
+        },
+        {
+          "id": "sensors",
+          "href": "airflow_course/sensors.html",
+          "label": "Module 7: Sensors & Triggers",
+          "words": 2436,
+          "minutes": 14
+        },
+        {
+          "id": "templating",
+          "href": "airflow_course/templating.html",
+          "label": "Module 6: Templating & Context",
+          "words": 1966,
+          "minutes": 11
+        },
+        {
+          "id": "testing",
+          "href": "airflow_course/testing.html",
+          "label": "Module 11: Testing Airflow",
+          "words": 1829,
+          "minutes": 10
+        },
+        {
+          "id": "variables-connections",
+          "href": "airflow_course/variables-connections.html",
+          "label": "Module 9: Variables & Connections",
+          "words": 1752,
+          "minutes": 10
+        },
+        {
+          "id": "xcom",
+          "href": "airflow_course/xcom.html",
+          "label": "Module 8: XCom & TaskFlow API",
+          "words": 2158,
+          "minutes": 12
+        }
+      ]
+    },
+    "clickhouse": {
+      "id": "clickhouse",
+      "title": "ClickHouse Course Hub",
+      "hub": "clickhouse_course/hub.html",
+      "prerequisites": "Read the lessons in the order listed. Each one assumes you read the previous lesson in this course. No other course on this site is required first.",
+      "outcomes": "From \"What is ClickHouse?\" to building blazing-fast analytics at petabyte scale. Every concept explained like you're 5!",
+      "capstone": null,
+      "capstone_note": "This course has no separate capstone page. Finishing means every lesson in this list is saved on the account. That save is not an issued certificate and not a vendor exam.",
+      "vendor_checked_on": "2026-10-13",
+      "vendor_note": "Lessons were framed on 13 October 2026 for MergeTree, the JSON type since 25.3, and ClickHouse Cloud SharedMergeTree.",
+      "estimate": "Reading time is the lesson word count divided by 180, with a floor of 4 minutes and a ceiling of 40. It is not a classroom hour.",
+      "minutes": 49,
+      "lessons": [
+        {
+          "id": "advanced-sql",
+          "href": "clickhouse_course/advanced-sql.html",
+          "label": "Advanced SQL & Functions | ClickHouse Course",
+          "words": 725,
+          "minutes": 4
+        },
+        {
+          "id": "architecture",
+          "href": "clickhouse_course/architecture.html",
+          "label": "Architecture Deep Dive | ClickHouse Course",
+          "words": 861,
+          "minutes": 5
+        },
+        {
+          "id": "data-types",
+          "href": "clickhouse_course/data-types.html",
+          "label": "Data Types & Schema Design | ClickHouse Course",
+          "words": 676,
+          "minutes": 4
+        },
+        {
+          "id": "installation",
+          "href": "clickhouse_course/installation.html",
+          "label": "Installation & Setup | ClickHouse Course",
+          "words": 784,
+          "minutes": 4
+        },
+        {
+          "id": "materialized-views",
+          "href": "clickhouse_course/materialized-views.html",
+          "label": "Materialized Views | ClickHouse Course",
+          "words": 547,
+          "minutes": 4
+        },
+        {
+          "id": "meet-clickhouse",
+          "href": "clickhouse_course/meet-clickhouse.html",
+          "label": "Meet ClickHouse",
+          "words": 1247,
+          "minutes": 7
+        },
+        {
+          "id": "performance",
+          "href": "clickhouse_course/performance.html",
+          "label": "Performance & Optimization | ClickHouse Course",
+          "words": 662,
+          "minutes": 4
+        },
+        {
+          "id": "production",
+          "href": "clickhouse_course/production.html",
+          "label": "Production & Use Cases | ClickHouse Course",
+          "words": 735,
+          "minutes": 4
+        },
+        {
+          "id": "querying",
+          "href": "clickhouse_course/querying.html",
+          "label": "SQL Queries & Aggregations | ClickHouse Course",
+          "words": 815,
+          "minutes": 5
+        },
+        {
+          "id": "replication-sharding",
+          "href": "clickhouse_course/replication-sharding.html",
+          "label": "Replication & Sharding | ClickHouse Course",
+          "words": 504,
+          "minutes": 4
+        },
+        {
+          "id": "table-engines",
+          "href": "clickhouse_course/table-engines.html",
+          "label": "Table Engines & MergeTree | ClickHouse Course",
+          "words": 725,
+          "minutes": 4
+        }
+      ]
+    },
+    "data-science": {
+      "id": "data-science",
+      "title": "📊 Data Science Course Hub",
+      "hub": "data_science_course/index.html",
+      "prerequisites": "Read the lessons in the order listed. Each one assumes you read the previous lesson in this course. No other course on this site is required first.",
+      "outcomes": "From zero programming knowledge to building real machine learning models. Every concept explained like you're 5 years old!",
+      "capstone": null,
+      "capstone_note": "This course has no separate capstone page. Finishing means every lesson in this list is saved on the account. That save is not an issued certificate and not a vendor exam.",
+      "vendor_checked_on": "2026-10-13",
+      "vendor_note": "The course hub is data_science_course/index.html. data-science-basics.html remains a separate overview page.",
+      "estimate": "Reading time is the lesson word count divided by 180, with a floor of 4 minutes and a ceiling of 40. It is not a classroom hour.",
+      "minutes": 425,
+      "lessons": [
+        {
+          "id": "data-science-basics",
+          "href": "data-science-basics.html",
+          "label": "Data Science Fundamentals | Fakhruddin Khambaty's Learning Hub",
+          "words": 23237,
+          "minutes": 40
+        },
+        {
+          "id": "data-science",
+          "href": "data-science.html",
+          "label": "Data Science Fundamentals | Fakhruddin Khambaty's Learning Hub",
+          "words": 502,
+          "minutes": 4
+        },
+        {
+          "id": "ab-testing",
+          "href": "data_science_course/ab-testing.html",
+          "label": "A/B Testing (Split Testing) | Fakhruddin Khambaty's Learning Hub",
+          "words": 1612,
+          "minutes": 9
+        },
+        {
+          "id": "bias-variance",
+          "href": "data_science_course/bias-variance.html",
+          "label": "Bias, Variance & Gradient Descent | Fakhruddin Khambaty's Learning Hub",
+          "words": 2991,
+          "minutes": 17
+        },
+        {
+          "id": "boosting",
+          "href": "data_science_course/boosting.html",
+          "label": "Bagging & Boosting | Fakhruddin Khambaty's Learning Hub",
+          "words": 1484,
+          "minutes": 8
+        },
+        {
+          "id": "classification",
+          "href": "data_science_course/classification.html",
+          "label": "Classification Algorithms | Fakhruddin Khambaty's Learning Hub",
+          "words": 1496,
+          "minutes": 8
+        },
+        {
+          "id": "clustering",
+          "href": "data_science_course/clustering.html",
+          "label": "Clustering | Fakhruddin Khambaty's Learning Hub",
+          "words": 5830,
+          "minutes": 32
+        },
+        {
+          "id": "datasets",
+          "href": "data_science_course/datasets.html",
+          "label": "Download Datasets | Data Science Course",
+          "words": 371,
+          "minutes": 4
+        },
+        {
+          "id": "decision-trees",
+          "href": "data_science_course/decision-trees.html",
+          "label": "Decision Trees & Random Forest | Fakhruddin Khambaty's Learning Hub",
+          "words": 1413,
+          "minutes": 8
+        },
+        {
+          "id": "deep-learning-cnn-time-series",
+          "href": "data_science_course/deep-learning-cnn-time-series.html",
+          "label": "CNNs & Time Series | Fakhruddin Khambaty's Learning Hub",
+          "words": 544,
+          "minutes": 4
+        },
+        {
+          "id": "deep-learning",
+          "href": "data_science_course/deep-learning.html",
+          "label": "Deep Learning & Neural Networks | Fakhruddin Khambaty's Learning Hub",
+          "words": 1433,
+          "minutes": 8
+        },
+        {
+          "id": "explainable-ai",
+          "href": "data_science_course/explainable-ai.html",
+          "label": "Explainable AI (XAI) | Fakhruddin Khambaty's Learning Hub",
+          "words": 491,
+          "minutes": 4
+        },
+        {
+          "id": "gen-ai-intro",
+          "href": "data_science_course/gen-ai-intro.html",
+          "label": "Introduction to Gen AI | Fakhruddin Khambaty's Learning Hub",
+          "words": 448,
+          "minutes": 4
+        },
+        {
+          "id": "hypothesis-testing",
+          "href": "data_science_course/hypothesis-testing.html",
+          "label": "Hypothesis Testing | Fakhruddin Khambaty's Learning Hub",
+          "words": 2867,
+          "minutes": 16
+        },
+        {
+          "id": "k-nearest-neighbors",
+          "href": "data_science_course/k-nearest-neighbors.html",
+          "label": "k-Nearest Neighbors (kNN) | Fakhruddin Khambaty's Learning Hub",
+          "words": 2721,
+          "minutes": 15
+        },
+        {
+          "id": "kmeans-code-walkthrough",
+          "href": "data_science_course/kmeans-code-walkthrough.html",
+          "label": "K-Means Clustering Code – Line by Line | Data Science Course",
+          "words": 4269,
+          "minutes": 24
+        },
+        {
+          "id": "linear-regression-code-walkthrough",
+          "href": "data_science_course/linear-regression-code-walkthrough.html",
+          "label": "Linear Regression Code – Line by Line | Data Science Course",
+          "words": 1944,
+          "minutes": 11
+        },
+        {
+          "id": "linear-regression",
+          "href": "data_science_course/linear-regression.html",
+          "label": "Linear Regression (Super Detailed) | Fakhruddin Khambaty's Learning Hub",
+          "words": 3471,
+          "minutes": 19
+        },
+        {
+          "id": "logistic-regression-code-walkthrough",
+          "href": "data_science_course/logistic-regression-code-walkthrough.html",
+          "label": "Logistic Regression Code – Line by Line | Data Science Course",
+          "words": 725,
+          "minutes": 4
+        },
+        {
+          "id": "logistic-regression",
+          "href": "data_science_course/logistic-regression.html",
+          "label": "Logistic Regression - Complete Guide | Fakhruddin Khambaty's Learning Hub",
+          "words": 4761,
+          "minutes": 26
+        },
+        {
+          "id": "market-basket-analysis",
+          "href": "data_science_course/market-basket-analysis.html",
+          "label": "Market Basket Analysis | Fakhruddin Khambaty's Learning Hub",
+          "words": 1627,
+          "minutes": 9
+        },
+        {
+          "id": "math-foundations",
+          "href": "data_science_course/math-foundations.html",
+          "label": "Math for Data Science (For Complete Beginners) | Fakhruddin Khambaty's Learning Hub",
+          "words": 2450,
+          "minutes": 14
+        },
+        {
+          "id": "missing-values-outliers",
+          "href": "data_science_course/missing-values-outliers.html",
+          "label": "Missing Values & Outliers | Fakhruddin Khambaty's Learning Hub",
+          "words": 1167,
+          "minutes": 6
+        },
+        {
+          "id": "ml-introduction",
+          "href": "data_science_course/ml-introduction.html",
+          "label": "Introduction to Machine Learning | Fakhruddin Khambaty's Learning Hub",
+          "words": 1763,
+          "minutes": 10
+        },
+        {
+          "id": "nlp-basics",
+          "href": "data_science_course/nlp-basics.html",
+          "label": "Natural Language Processing (NLP) | Fakhruddin Khambaty's Learning Hub",
+          "words": 1528,
+          "minutes": 8
+        },
+        {
+          "id": "nlp-cleansing-applications",
+          "href": "data_science_course/nlp-cleansing-applications.html",
+          "label": "NLP: Data Cleansing & Applications | Fakhruddin Khambaty's Learning Hub",
+          "words": 588,
+          "minutes": 4
+        },
+        {
+          "id": "nlp",
+          "href": "data_science_course/nlp.html",
+          "label": "NLP - Natural Language Processing | Fakhruddin Khambaty's Learning Hub",
+          "words": 1444,
+          "minutes": 8
+        },
+        {
+          "id": "python-basics",
+          "href": "data_science_course/python-basics.html",
+          "label": "Python Basics (From Zero) | Fakhruddin Khambaty's Learning Hub",
+          "words": 1816,
+          "minutes": 10
+        },
+        {
+          "id": "python-data-structures",
+          "href": "data_science_course/python-data-structures.html",
+          "label": "Python Data Structures (Lists, Tuples, Sets, Dicts) | Fakhruddin Khambaty's Learning Hub",
+          "words": 1305,
+          "minutes": 7
+        },
+        {
+          "id": "random-forest-code-walkthrough",
+          "href": "data_science_course/random-forest-code-walkthrough.html",
+          "label": "Random Forest – Ultra-Detailed Guide & Car Evaluation | Data Science Course",
+          "words": 3190,
+          "minutes": 18
+        },
+        {
+          "id": "regularization-code-walkthrough",
+          "href": "data_science_course/regularization-code-walkthrough.html",
+          "label": "Regularization Code – Line by Line | Data Science Course",
+          "words": 1057,
+          "minutes": 6
+        },
+        {
+          "id": "statistics-foundations",
+          "href": "data_science_course/statistics-foundations.html",
+          "label": "Statistics for Data Science (Super Simple) | Fakhruddin Khambaty's Learning Hub",
+          "words": 2888,
+          "minutes": 16
+        },
+        {
+          "id": "support-vector-machines",
+          "href": "data_science_course/support-vector-machines.html",
+          "label": "Support Vector Machines (SVM) | Fakhruddin Khambaty's Learning Hub",
+          "words": 5620,
+          "minutes": 31
+        },
+        {
+          "id": "svm-code-walkthrough",
+          "href": "data_science_course/svm-code-walkthrough.html",
+          "label": "SVM Code Walkthrough – Bank Churn | Data Science Course",
+          "words": 2359,
+          "minutes": 13
+        }
+      ]
+    },
+    "dbt": {
+      "id": "dbt",
+      "title": "🏗️ dbt Course Hub",
+      "hub": "dbt_course/hub.html",
+      "prerequisites": "Read the lessons in the order listed. Each one assumes you read the previous lesson in this course. No other course on this site is required first.",
+      "outcomes": "From \"What is dbt?\" to building production data pipelines. Every concept explained like you're 5 years old, with animations and real-world examples!",
+      "capstone": null,
+      "capstone_note": "This course has no separate capstone page. Finishing means every lesson in this list is saved on the account. That save is not an issued certificate and not a vendor exam.",
+      "vendor_checked_on": "2026-10-13",
+      "vendor_note": "Lessons were framed on 13 October 2026 for the dbt Developer Hub, Fusion v2.0.8, and dbt-core as the Apache-licensed runtime.",
+      "estimate": "Reading time is the lesson word count divided by 180, with a floor of 4 minutes and a ceiling of 40. It is not a classroom hour.",
+      "minutes": 200,
+      "lessons": [
+        {
+          "id": "advanced",
+          "href": "dbt_course/advanced.html",
+          "label": "Advanced dbt & Best Practices | dbt Course",
+          "words": 3931,
+          "minutes": 22
+        },
+        {
+          "id": "deployment",
+          "href": "dbt_course/deployment.html",
+          "label": "Deployment & CI/CD | dbt Course",
+          "words": 3172,
+          "minutes": 18
+        },
+        {
+          "id": "documentation",
+          "href": "dbt_course/documentation.html",
+          "label": "Documentation & Lineage | dbt Course",
+          "words": 2576,
+          "minutes": 14
+        },
+        {
+          "id": "history",
+          "href": "dbt_course/history.html",
+          "label": "Lesson 2: History & Evolution of dbt",
+          "words": 3063,
+          "minutes": 17
+        },
+        {
+          "id": "installation",
+          "href": "dbt_course/installation.html",
+          "label": "Installation & Setup | dbt Course",
+          "words": 3068,
+          "minutes": 17
+        },
+        {
+          "id": "jinja-macros",
+          "href": "dbt_course/jinja-macros.html",
+          "label": "Jinja & Macros | dbt Course",
+          "words": 3106,
+          "minutes": 17
+        },
+        {
+          "id": "meet-dbt",
+          "href": "dbt_course/meet-dbt.html",
+          "label": "Meet dbt — Your Data's Best Friend",
+          "words": 2254,
+          "minutes": 13
+        },
+        {
+          "id": "models",
+          "href": "dbt_course/models.html",
+          "label": "Models & Materializations | dbt Course",
+          "words": 3406,
+          "minutes": 19
+        },
+        {
+          "id": "packages-seeds",
+          "href": "dbt_course/packages-seeds.html",
+          "label": "Packages & Seeds | dbt Course",
+          "words": 3014,
+          "minutes": 17
+        },
+        {
+          "id": "project-structure",
+          "href": "dbt_course/project-structure.html",
+          "label": "Project Structure | dbt Course",
+          "words": 2724,
+          "minutes": 15
+        },
+        {
+          "id": "sources-refs",
+          "href": "dbt_course/sources-refs.html",
+          "label": "Sources, Refs & Lineage | dbt Course",
+          "words": 2400,
+          "minutes": 13
+        },
+        {
+          "id": "testing",
+          "href": "dbt_course/testing.html",
+          "label": "Testing & Data Quality | dbt Course",
+          "words": 3217,
+          "minutes": 18
+        }
+      ]
+    },
+    "dms": {
+      "id": "dms",
+      "title": "AWS Database Migration Service, from the first assessment to cutover",
+      "hub": "dms_course/hub.html",
+      "prerequisites": "Read the lessons in the order listed. Each one assumes you read the previous lesson in this course. No other course on this site is required first.",
+      "outcomes": "Replication, endpoints, full load, CDC, schema conversion, and the difference between a task assessment and SCT. 2 lessons are free. The other 9 open with Pro.",
+      "capstone": {
+        "lesson_id": "capstone",
+        "href": "dms_course/capstone.html",
+        "label": "Capstone"
+      },
+      "capstone_note": "The capstone page is one of the lessons. Saving it does not issue a certificate.",
+      "vendor_checked_on": "2026-10-13",
+      "vendor_note": "Premigration assessment, DMS Schema Conversion, and the desktop AWS SCT are described as three different reports.",
+      "estimate": "Reading time is the lesson word count divided by 180, with a floor of 4 minutes and a ceiling of 40. It is not a classroom hour.",
+      "minutes": 44,
+      "lessons": [
+        {
+          "id": "architecture",
+          "href": "dms_course/architecture.html",
+          "label": "How DMS is built",
+          "words": 679,
+          "minutes": 4
+        },
+        {
+          "id": "assessment",
+          "href": "dms_course/assessment.html",
+          "label": "Assessments, SCT, and schema conversion",
+          "words": 702,
+          "minutes": 4
+        },
+        {
+          "id": "capstone",
+          "href": "dms_course/capstone.html",
+          "label": "Capstone",
+          "words": 521,
+          "minutes": 4
+        },
+        {
+          "id": "cdc",
+          "href": "dms_course/cdc.html",
+          "label": "CDC and log positions",
+          "words": 636,
+          "minutes": 4
+        },
+        {
+          "id": "endpoints",
+          "href": "dms_course/endpoints.html",
+          "label": "Endpoints, connectivity, and VPC",
+          "words": 571,
+          "minutes": 4
+        },
+        {
+          "id": "examples",
+          "href": "dms_course/examples.html",
+          "label": "Homogeneous and heterogeneous examples",
+          "words": 614,
+          "minutes": 4
+        },
+        {
+          "id": "full-load",
+          "href": "dms_course/full-load.html",
+          "label": "Full load",
+          "words": 597,
+          "minutes": 4
+        },
+        {
+          "id": "operations",
+          "href": "dms_course/operations.html",
+          "label": "Serverless, instances, cost, and troubleshooting",
+          "words": 704,
+          "minutes": 4
+        },
+        {
+          "id": "schema-conversion",
+          "href": "dms_course/schema-conversion.html",
+          "label": "Schema conversion paths",
+          "words": 600,
+          "minutes": 4
+        },
+        {
+          "id": "task-settings",
+          "href": "dms_course/task-settings.html",
+          "label": "Task settings, mappings, and transforms",
+          "words": 612,
+          "minutes": 4
+        },
+        {
+          "id": "validation",
+          "href": "dms_course/validation.html",
+          "label": "Validation and CloudWatch",
+          "words": 540,
+          "minutes": 4
+        }
+      ]
+    },
+    "kubernetes": {
+      "id": "kubernetes",
+      "title": "Kubernetes, from a laptop cluster to a production upgrade",
+      "hub": "kubernetes_course/hub.html",
+      "prerequisites": "Read the lessons in the order listed. Each one assumes you read the previous lesson in this course. No other course on this site is required first.",
+      "outcomes": "Pods, networking, storage, security, Helm, and the managed clouds. 2 lessons are free. The other 10 open with Pro.",
+      "capstone": {
+        "lesson_id": "capstone",
+        "href": "kubernetes_course/capstone.html",
+        "label": "Capstone"
+      },
+      "capstone_note": "The capstone page is one of the lessons. Saving it does not issue a certificate.",
+      "vendor_checked_on": "2026-10-13",
+      "vendor_note": "Lessons do not pin one patch release. The Gateway API 1.5 notes cited Kubernetes 1.30 or later for that release.",
+      "estimate": "Reading time is the lesson word count divided by 180, with a floor of 4 minutes and a ceiling of 40. It is not a classroom hour.",
+      "minutes": 48,
+      "lessons": [
+        {
+          "id": "capstone",
+          "href": "kubernetes_course/capstone.html",
+          "label": "Capstone",
+          "words": 623,
+          "minutes": 4
+        },
+        {
+          "id": "config-secrets",
+          "href": "kubernetes_course/config-secrets.html",
+          "label": "ConfigMaps and Secrets",
+          "words": 641,
+          "minutes": 4
+        },
+        {
+          "id": "helm-kustomize",
+          "href": "kubernetes_course/helm-kustomize.html",
+          "label": "Helm and Kustomize",
+          "words": 627,
+          "minutes": 4
+        },
+        {
+          "id": "jobs-cronjobs",
+          "href": "kubernetes_course/jobs-cronjobs.html",
+          "label": "Jobs and CronJobs",
+          "words": 562,
+          "minutes": 4
+        },
+        {
+          "id": "local-setup",
+          "href": "kubernetes_course/local-setup.html",
+          "label": "Local clusters",
+          "words": 681,
+          "minutes": 4
+        },
+        {
+          "id": "meet-kubernetes",
+          "href": "kubernetes_course/meet-kubernetes.html",
+          "label": "Meet Kubernetes",
+          "words": 697,
+          "minutes": 4
+        },
+        {
+          "id": "observability",
+          "href": "kubernetes_course/observability.html",
+          "label": "Observability and debugging",
+          "words": 575,
+          "minutes": 4
+        },
+        {
+          "id": "pods-deployments",
+          "href": "kubernetes_course/pods-deployments.html",
+          "label": "Pods and Deployments",
+          "words": 646,
+          "minutes": 4
+        },
+        {
+          "id": "production-clouds",
+          "href": "kubernetes_course/production-clouds.html",
+          "label": "Production on EKS, GKE, and AKS",
+          "words": 770,
+          "minutes": 4
+        },
+        {
+          "id": "security",
+          "href": "kubernetes_course/security.html",
+          "label": "Security: RBAC, NetworkPolicy, Pod Security",
+          "words": 659,
+          "minutes": 4
+        },
+        {
+          "id": "services-networking",
+          "href": "kubernetes_course/services-networking.html",
+          "label": "Services, Ingress, and Gateway API",
+          "words": 691,
+          "minutes": 4
+        },
+        {
+          "id": "storage-statefulsets",
+          "href": "kubernetes_course/storage-statefulsets.html",
+          "label": "Storage and StatefulSets",
+          "words": 597,
+          "minutes": 4
+        }
+      ]
+    },
+    "llm": {
+      "id": "llm",
+      "title": "Large Language Models",
+      "hub": "llm_course/index.html",
+      "prerequisites": "Read the lessons in the order listed. Each one assumes you read the previous lesson in this course. No other course on this site is required first.",
+      "outcomes": "From \"What is a language model?\" all the way to building a working GPT-like text generator. Every concept explained like you're 5, then we code it for real.",
+      "capstone": {
+        "lesson_id": "capstone",
+        "href": "llm_course/capstone.html",
+        "label": "Capstone: Build Your Own Mini-ChatGPT | LLM Course"
+      },
+      "capstone_note": "The capstone page is one of the lessons. Saving it does not issue a certificate.",
+      "vendor_checked_on": "2026-10-13",
+      "vendor_note": "Lessons distinguish the 2019 GPT-2 decoder from ChatGPT.",
+      "estimate": "Reading time is the lesson word count divided by 180, with a floor of 4 minutes and a ceiling of 40. It is not a classroom hour.",
+      "minutes": 131,
+      "lessons": [
+        {
+          "id": "attention",
+          "href": "llm_course/attention.html",
+          "label": "Attention Mechanism | LLM Course | Fakhruddin Khambaty's Learning Hub",
+          "words": 2268,
+          "minutes": 13
+        },
+        {
+          "id": "capstone",
+          "href": "llm_course/capstone.html",
+          "label": "Capstone: Build Your Own Mini-ChatGPT | LLM Course",
+          "words": 2388,
+          "minutes": 13
+        },
+        {
+          "id": "deployment",
+          "href": "llm_course/deployment.html",
+          "label": "Deployment & Production | LLM Course | Fakhruddin Khambaty's Learning Hub",
+          "words": 2397,
+          "minutes": 13
+        },
+        {
+          "id": "finetuning",
+          "href": "llm_course/finetuning.html",
+          "label": "Fine-Tuning LLMs | LLM Course | Fakhruddin Khambaty's Learning Hub",
+          "words": 2036,
+          "minutes": 11
+        },
+        {
+          "id": "nn-refresher",
+          "href": "llm_course/nn-refresher.html",
+          "label": "Neural Network Refresher | LLM Course | Fakhruddin Khambaty's Learning Hub",
+          "words": 2888,
+          "minutes": 16
+        },
+        {
+          "id": "text-to-numbers",
+          "href": "llm_course/text-to-numbers.html",
+          "label": "Text to Numbers | LLM Course | Fakhruddin Khambaty's Learning Hub",
+          "words": 3153,
+          "minutes": 18
+        },
+        {
+          "id": "training",
+          "href": "llm_course/training.html",
+          "label": "Training LLMs | LLM Course | Fakhruddin Khambaty's Learning Hub",
+          "words": 2834,
+          "minutes": 16
+        },
+        {
+          "id": "transformer",
+          "href": "llm_course/transformer.html",
+          "label": "The Transformer Architecture | LLM Course | Fakhruddin Khambaty's Learning Hub",
+          "words": 2993,
+          "minutes": 17
+        },
+        {
+          "id": "what-are-llms",
+          "href": "llm_course/what-are-llms.html",
+          "label": "What Are LLMs? | LLM Course | Fakhruddin Khambaty's Learning Hub",
+          "words": 2609,
+          "minutes": 14
+        }
+      ]
+    },
+    "metabase": {
+      "id": "metabase",
+      "title": "Metabase Course Hub",
+      "hub": "metabase_course/hub.html",
+      "prerequisites": "Read the lessons in the order listed. Each one assumes you read the previous lesson in this course. No other course on this site is required first.",
+      "outcomes": "Every concept explained like you're 5 years old with animations, real-world examples, and hands-on exercises.",
+      "capstone": null,
+      "capstone_note": "This course has no separate capstone page. Finishing means every lesson in this list is saved on the account. That save is not an issued certificate and not a vendor exam.",
+      "vendor_checked_on": "2026-10-13",
+      "vendor_note": "Lessons keep Cloud, self-host, embedding, models, and permissions. They do not publish an application-database password.",
+      "estimate": "Reading time is the lesson word count divided by 180, with a floor of 4 minutes and a ceiling of 40. It is not a classroom hour.",
+      "minutes": 36,
+      "lessons": [
+        {
+          "id": "admin",
+          "href": "metabase_course/admin.html",
+          "label": "Administration",
+          "words": 558,
+          "minutes": 4
+        },
+        {
+          "id": "dashboards",
+          "href": "metabase_course/dashboards.html",
+          "label": "Building dashboards",
+          "words": 580,
+          "minutes": 4
+        },
+        {
+          "id": "installation",
+          "href": "metabase_course/installation.html",
+          "label": "Installation and setup",
+          "words": 643,
+          "minutes": 4
+        },
+        {
+          "id": "meet-metabase",
+          "href": "metabase_course/meet-metabase.html",
+          "label": "Meet Metabase",
+          "words": 631,
+          "minutes": 4
+        },
+        {
+          "id": "models",
+          "href": "metabase_course/models.html",
+          "label": "Models and metrics",
+          "words": 585,
+          "minutes": 4
+        },
+        {
+          "id": "production",
+          "href": "metabase_course/production.html",
+          "label": "Production deployment",
+          "words": 599,
+          "minutes": 4
+        },
+        {
+          "id": "questions",
+          "href": "metabase_course/questions.html",
+          "label": "Asking questions",
+          "words": 515,
+          "minutes": 4
+        },
+        {
+          "id": "sharing",
+          "href": "metabase_course/sharing.html",
+          "label": "Sharing and embedding",
+          "words": 592,
+          "minutes": 4
+        },
+        {
+          "id": "sql-queries",
+          "href": "metabase_course/sql-queries.html",
+          "label": "SQL queries",
+          "words": 568,
+          "minutes": 4
+        }
+      ]
+    },
+    "mssql": {
+      "id": "mssql",
+      "title": "MS SQL Server Course Hub",
+      "hub": "mssql_course/hub.html",
+      "prerequisites": "Read the lessons in the order listed. Each one assumes you read the previous lesson in this course. No other course on this site is required first.",
+      "outcomes": "From installation to advanced T-SQL, indexes, and security. Master Microsoft's enterprise database!",
+      "capstone": null,
+      "capstone_note": "This course has no separate capstone page. Finishing means every lesson in this list is saved on the account. That save is not an issued certificate and not a vendor exam.",
+      "vendor_checked_on": "2026-10-13",
+      "vendor_note": "Lessons were framed on 13 October 2026 for SQL Server 2017, 2019, 2022, and 2025. SQL Server 2016 extended support had ended on 15 July 2026.",
+      "estimate": "Reading time is the lesson word count divided by 180, with a floor of 4 minutes and a ceiling of 40. It is not a classroom hour.",
+      "minutes": 60,
+      "lessons": [
+        {
+          "id": "aggregations",
+          "href": "mssql_course/aggregations.html",
+          "label": "Aggregations",
+          "words": 484,
+          "minutes": 4
+        },
+        {
+          "id": "backups-restore",
+          "href": "mssql_course/backups-restore.html",
+          "label": "Backups and restore",
+          "words": 546,
+          "minutes": 4
+        },
+        {
+          "id": "certification",
+          "href": "mssql_course/certification-hub.html",
+          "label": "Course practice",
+          "words": 374,
+          "minutes": 4
+        },
+        {
+          "id": "creating-tables",
+          "href": "mssql_course/creating-tables.html",
+          "label": "Creating tables",
+          "words": 543,
+          "minutes": 4
+        },
+        {
+          "id": "datasets",
+          "href": "mssql_course/datasets.html",
+          "label": "Practice datasets",
+          "words": 699,
+          "minutes": 4
+        },
+        {
+          "id": "indexes-performance",
+          "href": "mssql_course/indexes-performance.html",
+          "label": "Indexes and performance",
+          "words": 611,
+          "minutes": 4
+        },
+        {
+          "id": "installation-ssms",
+          "href": "mssql_course/installation-ssms.html",
+          "label": "Installation and SSMS",
+          "words": 929,
+          "minutes": 5
+        },
+        {
+          "id": "joins",
+          "href": "mssql_course/joins.html",
+          "label": "Joins",
+          "words": 521,
+          "minutes": 4
+        },
+        {
+          "id": "meet-sql-server",
+          "href": "mssql_course/meet-sql-server.html",
+          "label": "Meet SQL Server",
+          "words": 1300,
+          "minutes": 7
+        },
+        {
+          "id": "security-basics",
+          "href": "mssql_course/security-basics.html",
+          "label": "Security basics",
+          "words": 606,
+          "minutes": 4
+        },
+        {
+          "id": "select-where-order",
+          "href": "mssql_course/select-where-order.html",
+          "label": "SELECT WHERE ORDER BY",
+          "words": 442,
+          "minutes": 4
+        },
+        {
+          "id": "ssms-tour",
+          "href": "mssql_course/ssms-tour.html",
+          "label": "SSMS tour",
+          "words": 780,
+          "minutes": 4
+        },
+        {
+          "id": "subqueries-ctes",
+          "href": "mssql_course/subqueries-ctes.html",
+          "label": "Subqueries and CTEs",
+          "words": 578,
+          "minutes": 4
+        },
+        {
+          "id": "tsql-basics",
+          "href": "mssql_course/tsql-basics.html",
+          "label": "T-SQL basics",
+          "words": 736,
+          "minutes": 4
+        }
+      ]
+    },
+    "postgres": {
+      "id": "postgres",
+      "title": "PostgreSQL Mastery Hub",
+      "hub": "postgres_course/hub.html",
+      "prerequisites": "Read the lessons in the order listed. Each one assumes you read the previous lesson in this course. No other course on this site is required first.",
+      "outcomes": "Every module at a glance. Click any lesson to jump right in!",
+      "capstone": null,
+      "capstone_note": "This course has no separate capstone page. Finishing means every lesson in this list is saved on the account. That save is not an issued certificate and not a vendor exam.",
+      "vendor_checked_on": "2026-10-13",
+      "vendor_note": "Lessons were framed on 13 October 2026 for PostgreSQL 18.6 as the current major, with 17, 16, and 15 still supported. PostgreSQL 14 support was dated through 12 November 2026.",
+      "estimate": "Reading time is the lesson word count divided by 180, with a floor of 4 minutes and a ceiling of 40. It is not a classroom hour.",
+      "minutes": 322,
+      "lessons": [
+        {
+          "id": "aggregations",
+          "href": "postgres_course/aggregations.html",
+          "label": "Aggregations",
+          "words": 4486,
+          "minutes": 25
+        },
+        {
+          "id": "data-types",
+          "href": "postgres_course/data-types.html",
+          "label": "Data types",
+          "words": 5368,
+          "minutes": 30
+        },
+        {
+          "id": "functions",
+          "href": "postgres_course/functions.html",
+          "label": "Functions",
+          "words": 4134,
+          "minutes": 23
+        },
+        {
+          "id": "indexes",
+          "href": "postgres_course/indexes.html",
+          "label": "Indexes",
+          "words": 4360,
+          "minutes": 24
+        },
+        {
+          "id": "installation",
+          "href": "postgres_course/installation.html",
+          "label": "Installation and setup",
+          "words": 2173,
+          "minutes": 12
+        },
+        {
+          "id": "joins",
+          "href": "postgres_course/joins.html",
+          "label": "Joins",
+          "words": 5467,
+          "minutes": 30
+        },
+        {
+          "id": "json-arrays",
+          "href": "postgres_course/json-arrays.html",
+          "label": "JSON and arrays",
+          "words": 4112,
+          "minutes": 23
+        },
+        {
+          "id": "meet-postgresql",
+          "href": "postgres_course/meet-postgresql.html",
+          "label": "Meet PostgreSQL",
+          "words": 2329,
+          "minutes": 13
+        },
+        {
+          "id": "production",
+          "href": "postgres_course/production.html",
+          "label": "Production",
+          "words": 5652,
+          "minutes": 31
+        },
+        {
+          "id": "querying",
+          "href": "postgres_course/querying.html",
+          "label": "Querying",
+          "words": 5343,
+          "minutes": 30
+        },
+        {
+          "id": "replication",
+          "href": "postgres_course/replication.html",
+          "label": "Replication and HA",
+          "words": 1172,
+          "minutes": 7
+        },
+        {
+          "id": "sql-basics",
+          "href": "postgres_course/sql-basics.html",
+          "label": "SQL basics",
+          "words": 4408,
+          "minutes": 24
+        },
+        {
+          "id": "subqueries-ctes",
+          "href": "postgres_course/subqueries-ctes.html",
+          "label": "Subqueries and CTEs",
+          "words": 4460,
+          "minutes": 25
+        },
+        {
+          "id": "transactions",
+          "href": "postgres_course/transactions.html",
+          "label": "Transactions",
+          "words": 4447,
+          "minutes": 25
+        }
+      ]
+    },
+    "python": {
+      "id": "python",
+      "title": "Python Course Hub",
+      "hub": "python_course/index.html",
+      "prerequisites": "Read the lessons in the order listed. Each one assumes you read the previous lesson in this course. No other course on this site is required first.",
+      "outcomes": "Learn Python from zero to data science hero. Every concept explained simply with hands-on practice!",
+      "capstone": null,
+      "capstone_note": "This course has no separate capstone page. Finishing means every lesson in this list is saved on the account. That save is not an issued certificate and not a vendor exam.",
+      "vendor_checked_on": "2026-10-13",
+      "vendor_note": "Sessions 13 and 14 teach matplotlib and seaborn.",
+      "estimate": "Reading time is the lesson word count divided by 180, with a floor of 4 minutes and a ceiling of 40. It is not a classroom hour.",
+      "minutes": 257,
+      "lessons": [
+        {
+          "id": "admin-assignments",
+          "href": "python_course/admin-assignments.html",
+          "label": "🔐 Instructor Solutions | Python Mastery",
+          "words": 216,
+          "minutes": 4
+        },
+        {
+          "id": "assignments",
+          "href": "python_course/assignments.html",
+          "label": "Assignments | 🐍 Python Mastery",
+          "words": 1902,
+          "minutes": 11
+        },
+        {
+          "id": "complete-course",
+          "href": "python_course/complete-course.html",
+          "label": "🐍 Python Mastery - Complete Interactive Course",
+          "words": 522,
+          "minutes": 4
+        },
+        {
+          "id": "s1-intro",
+          "href": "python_course/s1-intro.html",
+          "label": "Session 1: Introduction to Python | 🐍 Python Mastery",
+          "words": 2863,
+          "minutes": 16
+        },
+        {
+          "id": "s10-pandas1",
+          "href": "python_course/s10-pandas1.html",
+          "label": "Session 10: Pandas Part I | 🐍 Python Mastery",
+          "words": 2751,
+          "minutes": 15
+        },
+        {
+          "id": "s11-pandas2",
+          "href": "python_course/s11-pandas2.html",
+          "label": "Session 11: Pandas Part II | 🐍 Python Mastery",
+          "words": 2609,
+          "minutes": 14
+        },
+        {
+          "id": "s12-api-sql",
+          "href": "python_course/s12-api-sql.html",
+          "label": "Session 12: APIs & SQL | 🐍 Python Mastery",
+          "words": 2073,
+          "minutes": 12
+        },
+        {
+          "id": "s13-dataviz",
+          "href": "python_course/s13-dataviz.html",
+          "label": "Session 13: Data Visualization",
+          "words": 483,
+          "minutes": 4
+        },
+        {
+          "id": "s14-enhanced-viz",
+          "href": "python_course/s14-enhanced-viz.html",
+          "label": "Session 14: Enhanced Visualization",
+          "words": 478,
+          "minutes": 4
+        },
+        {
+          "id": "s15-web-scraping",
+          "href": "python_course/s15-web-scraping.html",
+          "label": "Session 15: Web Scraping with Python | 🐍 Python Mastery",
+          "words": 1585,
+          "minutes": 9
+        },
+        {
+          "id": "s2-datatypes",
+          "href": "python_course/s2-datatypes.html",
+          "label": "Session 2: Data Types | 🐍 Python Mastery",
+          "words": 3290,
+          "minutes": 18
+        },
+        {
+          "id": "s3-loops",
+          "href": "python_course/s3-loops.html",
+          "label": "Session 3: Loops & Conditions | 🐍 Python Mastery",
+          "words": 3420,
+          "minutes": 19
+        },
+        {
+          "id": "s4-lists",
+          "href": "python_course/s4-lists.html",
+          "label": "Session 4: Lists & Tuples | 🐍 Python Mastery",
+          "words": 5078,
+          "minutes": 28
+        },
+        {
+          "id": "s5-datastructures",
+          "href": "python_course/s5-datastructures.html",
+          "label": "Session 5: Sets & Dictionaries | 🐍 Python Mastery",
+          "words": 4786,
+          "minutes": 27
+        },
+        {
+          "id": "s6-functions1",
+          "href": "python_course/s6-functions1.html",
+          "label": "Session 6: Functions Part I",
+          "words": 2345,
+          "minutes": 13
+        },
+        {
+          "id": "s7-functions2",
+          "href": "python_course/s7-functions2.html",
+          "label": "Session 7: Functions Part II | 🐍 Python Mastery",
+          "words": 3388,
+          "minutes": 19
+        },
+        {
+          "id": "s8-oop",
+          "href": "python_course/s8-oop.html",
+          "label": "Session 8: Object-Oriented Programming | 🐍 Python Mastery",
+          "words": 2385,
+          "minutes": 13
+        },
+        {
+          "id": "s9-numpy",
+          "href": "python_course/s9-numpy.html",
+          "label": "Session 9: NumPy & Comprehensions | 🐍 Python Mastery",
+          "words": 2842,
+          "minutes": 16
+        },
+        {
+          "id": "student-assignments",
+          "href": "python_course/student-assignments.html",
+          "label": "Student Practice | 🐍 Python Mastery",
+          "words": 1988,
+          "minutes": 11
+        }
+      ]
+    },
+    "redshift": {
+      "id": "redshift",
+      "title": "Amazon Redshift Course Hub",
+      "hub": "redshift_course/hub.html",
+      "prerequisites": "Read the lessons in the order listed. Each one assumes you read the previous lesson in this course. No other course on this site is required first.",
+      "outcomes": "Master AWS's cloud data warehouse. From basics to petabyte-scale analytics with Spectrum, Serverless, and ML.",
+      "capstone": null,
+      "capstone_note": "This course has no separate capstone page. Finishing means every lesson in this list is saved on the account. That save is not an issued certificate and not a vendor exam.",
+      "vendor_checked_on": "2026-10-13",
+      "vendor_note": "Lessons keep the October 2026 caveats on zero-ETL, data sharing, RA3, Serverless, and Spectrum. They do not tell a new warehouse to start on DC2.",
+      "estimate": "Reading time is the lesson word count divided by 180, with a floor of 4 minutes and a ceiling of 40. It is not a classroom hour.",
+      "minutes": 36,
+      "lessons": [
+        {
+          "id": "architecture",
+          "href": "redshift_course/architecture.html",
+          "label": "Architecture",
+          "words": 557,
+          "minutes": 4
+        },
+        {
+          "id": "data-loading",
+          "href": "redshift_course/data-loading.html",
+          "label": "Data loading",
+          "words": 549,
+          "minutes": 4
+        },
+        {
+          "id": "meet-redshift",
+          "href": "redshift_course/meet-redshift.html",
+          "label": "Meet Redshift",
+          "words": 511,
+          "minutes": 4
+        },
+        {
+          "id": "performance",
+          "href": "redshift_course/performance.html",
+          "label": "Performance",
+          "words": 513,
+          "minutes": 4
+        },
+        {
+          "id": "production",
+          "href": "redshift_course/production.html",
+          "label": "Production",
+          "words": 598,
+          "minutes": 4
+        },
+        {
+          "id": "setup",
+          "href": "redshift_course/setup.html",
+          "label": "Cluster setup",
+          "words": 622,
+          "minutes": 4
+        },
+        {
+          "id": "spectrum-serverless",
+          "href": "redshift_course/spectrum-serverless.html",
+          "label": "Spectrum and Serverless",
+          "words": 575,
+          "minutes": 4
+        },
+        {
+          "id": "sql-queries",
+          "href": "redshift_course/sql-queries.html",
+          "label": "SQL queries",
+          "words": 533,
+          "minutes": 4
+        },
+        {
+          "id": "table-design",
+          "href": "redshift_course/table-design.html",
+          "label": "Table design",
+          "words": 581,
+          "minutes": 4
+        }
+      ]
+    },
+    "snowflake": {
+      "id": "snowflake",
+      "title": "Snowflake, explained plainly",
+      "hub": "snowflake_course/hub.html",
+      "prerequisites": "Read the lessons in the order listed. Each one assumes you read the previous lesson in this course. No other course on this site is required first.",
+      "outcomes": "Storage, warehouses, and cloud services stay separate. Two lessons are free. The other eleven open with Pro.",
+      "capstone": null,
+      "capstone_note": "This course has no separate capstone page. Finishing means every lesson in this list is saved on the account. That save is not an issued certificate and not a vendor exam.",
+      "vendor_checked_on": "2026-10-13",
+      "vendor_note": "Thirteen lessons are on the hub. Two are free. No separate vendor patch version is stamped.",
+      "estimate": "Reading time is the lesson word count divided by 180, with a floor of 4 minutes and a ceiling of 40. It is not a classroom hour.",
+      "minutes": 63,
+      "lessons": [
+        {
+          "id": "architecture",
+          "href": "snowflake_course/architecture.html",
+          "label": "Architecture",
+          "words": 812,
+          "minutes": 5
+        },
+        {
+          "id": "cortex-ai",
+          "href": "snowflake_course/cortex-ai.html",
+          "label": "Cortex AI",
+          "words": 935,
+          "minutes": 5
+        },
+        {
+          "id": "dbt-airflow-production",
+          "href": "snowflake_course/dbt-airflow-production.html",
+          "label": "dbt, Airflow, and production",
+          "words": 1006,
+          "minutes": 6
+        },
+        {
+          "id": "governance-horizon",
+          "href": "snowflake_course/governance-horizon.html",
+          "label": "Governance and Horizon",
+          "words": 930,
+          "minutes": 5
+        },
+        {
+          "id": "iceberg-unstructured",
+          "href": "snowflake_course/iceberg-unstructured.html",
+          "label": "Iceberg and unstructured files",
+          "words": 891,
+          "minutes": 5
+        },
+        {
+          "id": "meet-snowflake",
+          "href": "snowflake_course/meet-snowflake.html",
+          "label": "Meet Snowflake",
+          "words": 744,
+          "minutes": 4
+        },
+        {
+          "id": "snowpark-python",
+          "href": "snowflake_course/snowpark-python.html",
+          "label": "Snowpark Python",
+          "words": 839,
+          "minutes": 5
+        },
+        {
+          "id": "sql-analytics",
+          "href": "snowflake_course/sql-analytics.html",
+          "label": "SQL for analytics",
+          "words": 776,
+          "minutes": 4
+        },
+        {
+          "id": "stages-loading",
+          "href": "snowflake_course/stages-loading.html",
+          "label": "Stages, COPY, and Snowpipe",
+          "words": 908,
+          "minutes": 5
+        },
+        {
+          "id": "streams-tasks",
+          "href": "snowflake_course/streams-tasks.html",
+          "label": "Streams, tasks, and dynamic tables",
+          "words": 910,
+          "minutes": 5
+        },
+        {
+          "id": "table-design",
+          "href": "snowflake_course/table-design.html",
+          "label": "Tables, pruning, and history",
+          "words": 980,
+          "minutes": 5
+        },
+        {
+          "id": "trial-account",
+          "href": "snowflake_course/trial-account.html",
+          "label": "Trial account and Snowsight",
+          "words": 804,
+          "minutes": 4
+        },
+        {
+          "id": "warehouses-cost",
+          "href": "snowflake_course/warehouses-cost.html",
+          "label": "Warehouses and cost",
+          "words": 986,
+          "minutes": 5
+        }
+      ]
+    },
+    "terraform": {
+      "id": "terraform",
+      "title": "Terraform and OpenTofu, without pretending they are the same product",
+      "hub": "terraform_course/hub.html",
+      "prerequisites": "Read the lessons in the order listed. Each one assumes you read the previous lesson in this course. No other course on this site is required first.",
+      "outcomes": "HCL, state, modules, workspaces, tests, HCP Terraform, and a separate OpenTofu comparison. 2 lessons are free. The other 10 open with Pro.",
+      "capstone": {
+        "lesson_id": "capstone",
+        "href": "terraform_course/capstone.html",
+        "label": "Capstone"
+      },
+      "capstone_note": "The capstone page is one of the lessons. Saving it does not issue a certificate.",
+      "vendor_checked_on": "2026-10-13",
+      "vendor_note": "S3 locking is described as version-dependent. OpenTofu is a separate project.",
+      "estimate": "Reading time is the lesson word count divided by 180, with a floor of 4 minutes and a ceiling of 40. It is not a classroom hour.",
+      "minutes": 49,
+      "lessons": [
+        {
+          "id": "capstone",
+          "href": "terraform_course/capstone.html",
+          "label": "Capstone",
+          "words": 618,
+          "minutes": 4
+        },
+        {
+          "id": "ci-hcp",
+          "href": "terraform_course/ci-hcp.html",
+          "label": "CI and HCP Terraform",
+          "words": 644,
+          "minutes": 4
+        },
+        {
+          "id": "hcl-resources",
+          "href": "terraform_course/hcl-resources.html",
+          "label": "HCL, providers, resources, and data",
+          "words": 587,
+          "minutes": 4
+        },
+        {
+          "id": "lifecycle-blocks",
+          "href": "terraform_course/lifecycle-blocks.html",
+          "label": "Lifecycle, import, moved, and removed",
+          "words": 645,
+          "minutes": 4
+        },
+        {
+          "id": "meet-terraform",
+          "href": "terraform_course/meet-terraform.html",
+          "label": "Meet Terraform and OpenTofu",
+          "words": 587,
+          "minutes": 4
+        },
+        {
+          "id": "modules",
+          "href": "terraform_course/modules.html",
+          "label": "Modules",
+          "words": 574,
+          "minutes": 4
+        },
+        {
+          "id": "security-opentofu",
+          "href": "terraform_course/security-opentofu.html",
+          "label": "Security, policy, and OpenTofu",
+          "words": 816,
+          "minutes": 5
+        },
+        {
+          "id": "setup",
+          "href": "terraform_course/setup.html",
+          "label": "Install and version managers",
+          "words": 559,
+          "minutes": 4
+        },
+        {
+          "id": "state-backends",
+          "href": "terraform_course/state-backends.html",
+          "label": "State, backends, and locking",
+          "words": 698,
+          "minutes": 4
+        },
+        {
+          "id": "testing",
+          "href": "terraform_course/testing.html",
+          "label": "Testing and validation",
+          "words": 585,
+          "minutes": 4
+        },
+        {
+          "id": "variables-outputs",
+          "href": "terraform_course/variables-outputs.html",
+          "label": "Variables, outputs, and locals",
+          "words": 553,
+          "minutes": 4
+        },
+        {
+          "id": "workspaces",
+          "href": "terraform_course/workspaces.html",
+          "label": "Workspaces and environments",
+          "words": 616,
+          "minutes": 4
+        }
+      ]
+    }
+  }
+}

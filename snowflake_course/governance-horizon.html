@@ -3,6 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <!-- dfd-seo:start -->
+    <meta name="description" content="Governance and Horizon | Snowflake course. Roles, database roles, masking, row access, tags, access history, and Horizon Catalog.">
+    <link rel="canonical" href="https://datafordummies.in/snowflake_course/governance-horizon.html">
+    <meta property="og:title" content="Governance and Horizon | Snowflake course | Data For Dummies">
+    <meta property="og:description" content="Governance and Horizon | Snowflake course. Roles, database roles, masking, row access, tags, access history, and Horizon Catalog.">
+    <meta property="og:url" content="https://datafordummies.in/snowflake_course/governance-horizon.html">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="https://datafordummies.in/logo.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <!-- dfd-seo:end -->
     <title>Governance and Horizon | Snowflake course | Data For Dummies</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
@@ -69,43 +79,49 @@ GRANT DATABASE ROLE LEARN_DB.READER_DB TO ROLE SYSADMIN;</code>
 <p>Snowflake Horizon Catalog is the governance surface over those controls. The Horizon docs describe policy enforcement, tags, access history, and Trust Center checks for risky grants. Horizon can also enforce masking and row access when an external engine such as Spark, Trino, or PyIceberg reads an Iceberg table through the Horizon Iceberg REST catalog. The external engine receives a scan plan that already applied the policy. Writes from those engines are limited to policy shapes the Scan Plan API documents, and other shapes can return HTTP 403.</p>
 <p>Business Critical adds private connectivity, Tri-Secret Secure, and customer-managed keys. Do not claim those on a Standard trial. Differential privacy, aggregation policies, and projection policies are also Enterprise-and-above features and are separate from a basic mask.</p>
 </section>
-        <section class="section dfd-diagram" data-dfd-diagram data-dfd-reveal>
-<h2>See it move</h2>
-<div data-dfd-diagram-panel="one">
-<svg class="dfd-responsive" viewBox="0 0 360 120" role="img" aria-label="A role receiving a grant">
-<rect class="sf-drift" x="16" y="36" width="70" height="48" rx="8" fill="#bae6fd">
-</rect>
-<rect x="110" y="28" width="140" height="64" rx="8" fill="#0284c7">
-</rect>
-<rect x="274" y="36" width="70" height="48" rx="8" fill="#e0f2fe" stroke="#0369a1">
-</rect>
-</svg>
+        <section class="section dfd-diagram dfd-flow" data-dfd-diagram data-dfd-flow data-dfd-reveal>
+<h2>Who sees the email column</h2>
+<p class="dfd-flow-intro">Access flows from user to role to table, and a policy on the column decides what each role sees.</p>
+<div class="dfd-diagram-controls dfd-flow-controls" role="group" aria-label="Who sees the email column: steps">
+<button type="button" data-dfd-diagram-step="step1" aria-pressed="true"><span class="dfd-flow-num" aria-hidden="true">1</span>Grant a role</button>
+<button type="button" data-dfd-diagram-step="step2" aria-pressed="false"><span class="dfd-flow-num" aria-hidden="true">2</span>Mask a column</button>
+<button type="button" data-dfd-diagram-step="step3" aria-pressed="false"><span class="dfd-flow-num" aria-hidden="true">3</span>Horizon keeps the rule</button>
 </div>
-<div data-dfd-diagram-panel="two" hidden>
-<svg class="dfd-responsive" viewBox="0 0 360 120" role="img" aria-label="A masking policy on a column">
-<rect x="16" y="36" width="70" height="48" rx="8" fill="#e0f2fe">
-</rect>
-<rect class="sf-drift" x="110" y="28" width="140" height="64" rx="8" fill="#0369a1">
-</rect>
-<rect x="274" y="36" width="70" height="48" rx="8" fill="#e0f2fe" stroke="#0369a1">
-</rect>
-</svg>
-</div>
-<div data-dfd-diagram-panel="three" hidden>
-<svg class="dfd-responsive" viewBox="0 0 360 120" role="img" aria-label="Horizon applying the policy">
-<rect x="16" y="36" width="70" height="48" rx="8" fill="#e0f2fe">
-</rect>
-<rect x="110" y="28" width="140" height="64" rx="8" fill="#bae6fd">
-</rect>
-<rect class="sf-drift" x="274" y="36" width="70" height="48" rx="8" fill="#0ea5e9">
-</rect>
-</svg>
-</div>
-<div class="dfd-diagram-controls">
-<button type="button" data-dfd-diagram-step="one" aria-pressed="true">Grant a role</button>
-<button type="button" data-dfd-diagram-step="two" aria-pressed="false">Mask a column</button>
-<button type="button" data-dfd-diagram-step="three" aria-pressed="false">Horizon keeps the rule</button>
-</div>
+<div class="dfd-flow-panel" data-dfd-diagram-panel="step1">
+<ol class="dfd-flow-track" aria-label="Step 1: Grant a role">
+<li class="dfd-flow-node is-active" aria-current="step"><span class="dfd-flow-label">Asha (user)</span><span class="dfd-flow-role">A person who logs in</span></li>
+<li class="dfd-flow-node is-active is-fed" aria-current="step"><span class="dfd-flow-label">ANALYST role</span><span class="dfd-flow-role">Holds the privileges</span></li>
+<li class="dfd-flow-node"><span class="dfd-flow-label">customers.email</span><span class="dfd-flow-role">Column with a masking policy</span></li>
+<li class="dfd-flow-node"><span class="dfd-flow-label">Horizon</span><span class="dfd-flow-role">Policies, tags and access history</span></li>
+</ol>
+<div class="dfd-flow-explain">
+<p class="dfd-flow-caption"><span class="dfd-flow-count">Step 1 of 3</span>Privileges are granted to roles, never straight to people. Asha gets access by being granted the role.</p>
+<pre class="dfd-flow-example"><code>GRANT SELECT ON TABLE customers TO ROLE analyst;
+GRANT ROLE analyst TO USER asha;</code></pre>
+</div></div>
+<div class="dfd-flow-panel" data-dfd-diagram-panel="step2" hidden>
+<ol class="dfd-flow-track" aria-label="Step 2: Mask a column">
+<li class="dfd-flow-node"><span class="dfd-flow-label">Asha (user)</span><span class="dfd-flow-role">A person who logs in</span></li>
+<li class="dfd-flow-node is-active" aria-current="step"><span class="dfd-flow-label">ANALYST role</span><span class="dfd-flow-role">Holds the privileges</span></li>
+<li class="dfd-flow-node is-active is-fed" aria-current="step"><span class="dfd-flow-label">customers.email</span><span class="dfd-flow-role">Column with a masking policy</span></li>
+<li class="dfd-flow-node"><span class="dfd-flow-label">Horizon</span><span class="dfd-flow-role">Policies, tags and access history</span></li>
+</ol>
+<div class="dfd-flow-explain">
+<p class="dfd-flow-caption"><span class="dfd-flow-count">Step 2 of 3</span>A masking policy is a rule attached to the column. At query time it decides whether this role sees the real email or a masked value.</p>
+<pre class="dfd-flow-example"><code>CREATE MASKING POLICY email_mask AS (v STRING) RETURNS STRING -&gt;
+  CASE WHEN CURRENT_ROLE() = &#x27;PII_READER&#x27; THEN v ELSE &#x27;***&#x27; END;</code></pre>
+</div></div>
+<div class="dfd-flow-panel" data-dfd-diagram-panel="step3" hidden>
+<ol class="dfd-flow-track" aria-label="Step 3: Horizon keeps the rule">
+<li class="dfd-flow-node"><span class="dfd-flow-label">Asha (user)</span><span class="dfd-flow-role">A person who logs in</span></li>
+<li class="dfd-flow-node"><span class="dfd-flow-label">ANALYST role</span><span class="dfd-flow-role">Holds the privileges</span></li>
+<li class="dfd-flow-node is-active" aria-current="step"><span class="dfd-flow-label">customers.email</span><span class="dfd-flow-role">Column with a masking policy</span></li>
+<li class="dfd-flow-node is-active is-fed" aria-current="step"><span class="dfd-flow-label">Horizon</span><span class="dfd-flow-role">Policies, tags and access history</span></li>
+</ol>
+<div class="dfd-flow-explain">
+<p class="dfd-flow-caption"><span class="dfd-flow-count">Step 3 of 3</span>Horizon is the name for Snowflake&#x27;s governance features together. The policy follows the column into every query, share and dashboard, and access history records who read it.</p>
+<pre class="dfd-flow-example"><code>ALTER TABLE customers MODIFY COLUMN email SET MASKING POLICY email_mask;</code></pre>
+</div></div>
 </section>
         <section class="section" id="lab" data-dfd-reveal>
             <h2>Lab: a database role, then a mask if your edition allows it</h2>
@@ -203,8 +219,6 @@ CREATE OR REPLACE MASKING POLICY mask_email AS (val STRING) RETURNS STRING -&gt;
         </nav>
     </div>
     <script src="../js/code-copy.js">
-</script>
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2">
 </script>
     <script src="../js/supabase-config.js">
 </script>

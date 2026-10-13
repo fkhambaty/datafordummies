@@ -3,6 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <!-- dfd-seo:start -->
+    <meta name="description" content="Testing and validation | Terraform and OpenTofu. validate checks the configuration.">
+    <link rel="canonical" href="https://datafordummies.in/terraform_course/testing.html">
+    <meta property="og:title" content="Testing and validation | Terraform and OpenTofu | Data For Dummies">
+    <meta property="og:description" content="Testing and validation | Terraform and OpenTofu. validate checks the configuration.">
+    <meta property="og:url" content="https://datafordummies.in/terraform_course/testing.html">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="https://datafordummies.in/logo.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <!-- dfd-seo:end -->
     <title>Testing and validation | Terraform and OpenTofu | Data For Dummies</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
@@ -71,68 +81,62 @@
 </tbody>
 </table>
 </section>
-        <section class="section dfd-diagram" data-dfd-diagram data-dfd-reveal>
-            <h2>What each check sees</h2>
-            <div data-dfd-diagram-panel="val">
-<svg class="dfd-responsive" viewBox="0 0 640 148" role="img" aria-label="validate highlighted">
-<rect class="track-drift" x="16" y="36" width="188" height="72" rx="12" fill="#a78bfa">
-</rect>
-<text x="110" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#ffffff">validate</text>
-<path d="M204 72 H224" stroke="#64748b" stroke-width="2" fill="none">
-</path>
-<rect x="224" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
-</rect>
-<text x="318" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">test</text>
-<path d="M412 72 H432" stroke="#64748b" stroke-width="2" fill="none">
-</path>
-<rect x="432" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
-</rect>
-<text x="526" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">plan</text>
-</svg>
-<p>validate never talks to your production account.</p>
+        <section class="section dfd-diagram dfd-flow" data-dfd-diagram data-dfd-flow data-dfd-reveal>
+<h2>What each check sees</h2>
+<div class="dfd-diagram-controls dfd-flow-controls" role="group" aria-label="What each check sees: steps">
+<button type="button" data-dfd-diagram-step="step1" aria-pressed="true"><span class="dfd-flow-num" aria-hidden="true">1</span>validate</button>
+<button type="button" data-dfd-diagram-step="step2" aria-pressed="false"><span class="dfd-flow-num" aria-hidden="true">2</span>test</button>
+<button type="button" data-dfd-diagram-step="step3" aria-pressed="false"><span class="dfd-flow-num" aria-hidden="true">3</span>plan</button>
 </div>
-<div data-dfd-diagram-panel="test" hidden>
-<svg class="dfd-responsive" viewBox="0 0 640 148" role="img" aria-label="terraform test highlighted">
-<rect x="16" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
-</rect>
-<text x="110" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">validate</text>
-<path d="M204 72 H224" stroke="#64748b" stroke-width="2" fill="none">
-</path>
-<rect class="track-drift" x="224" y="36" width="188" height="72" rx="12" fill="#a78bfa">
-</rect>
-<text x="318" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#ffffff">test</text>
-<path d="M412 72 H432" stroke="#64748b" stroke-width="2" fill="none">
-</path>
-<rect x="432" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
-</rect>
-<text x="526" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">plan</text>
-</svg>
-<p>A test runs the assertions you wrote. A mock avoids real resources only if that syntax exists.</p>
-</div>
-<div data-dfd-diagram-panel="plan" hidden>
-<svg class="dfd-responsive" viewBox="0 0 640 148" role="img" aria-label="plan highlighted">
-<rect x="16" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
-</rect>
-<text x="110" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">validate</text>
-<path d="M204 72 H224" stroke="#64748b" stroke-width="2" fill="none">
-</path>
-<rect x="224" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
-</rect>
-<text x="318" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">test</text>
-<path d="M412 72 H432" stroke="#64748b" stroke-width="2" fill="none">
-</path>
-<rect class="track-drift" x="432" y="36" width="188" height="72" rx="12" fill="#a78bfa">
-</rect>
-<text x="526" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#ffffff">plan</text>
-</svg>
-<p>The production plan is still the diff a human should read.</p>
-</div>
-            <div class="dfd-diagram-controls">
-                <button type="button" data-dfd-diagram-step="val" aria-pressed="true">validate</button>
-<button type="button" data-dfd-diagram-step="test" aria-pressed="false">test</button>
-<button type="button" data-dfd-diagram-step="plan" aria-pressed="false">plan</button>
-            </div>
-        </section>
+<div class="dfd-flow-panel" data-dfd-diagram-panel="step1">
+<ol class="dfd-flow-track" aria-label="Step 1: validate">
+<li class="dfd-flow-node is-active" aria-current="step"><span class="dfd-flow-label">validate</span></li>
+<li class="dfd-flow-node"><span class="dfd-flow-label">test</span></li>
+<li class="dfd-flow-node"><span class="dfd-flow-label">plan</span></li>
+</ol>
+<div class="dfd-flow-explain">
+<p class="dfd-flow-caption"><span class="dfd-flow-count">Step 1 of 3</span>test
+
+
+
+
+plan
+
+validate never talks to your production account.</p>
+</div></div>
+<div class="dfd-flow-panel" data-dfd-diagram-panel="step2" hidden>
+<ol class="dfd-flow-track" aria-label="Step 2: test">
+<li class="dfd-flow-node"><span class="dfd-flow-label">validate</span></li>
+<li class="dfd-flow-node is-active" aria-current="step"><span class="dfd-flow-label">test</span></li>
+<li class="dfd-flow-node"><span class="dfd-flow-label">plan</span></li>
+</ol>
+<div class="dfd-flow-explain">
+<p class="dfd-flow-caption"><span class="dfd-flow-count">Step 2 of 3</span>test
+
+
+
+
+plan
+
+A test runs the assertions you wrote. A mock avoids real resources only if that syntax exists.</p>
+</div></div>
+<div class="dfd-flow-panel" data-dfd-diagram-panel="step3" hidden>
+<ol class="dfd-flow-track" aria-label="Step 3: plan">
+<li class="dfd-flow-node"><span class="dfd-flow-label">validate</span></li>
+<li class="dfd-flow-node"><span class="dfd-flow-label">test</span></li>
+<li class="dfd-flow-node is-active" aria-current="step"><span class="dfd-flow-label">plan</span></li>
+</ol>
+<div class="dfd-flow-explain">
+<p class="dfd-flow-caption"><span class="dfd-flow-count">Step 3 of 3</span>test
+
+
+
+
+plan
+
+The production plan is still the diff a human should read.</p>
+</div></div>
+</section>
         <section class="section" id="lab" data-dfd-reveal>
             <h2>Lab: one assertion against the name module</h2>
             <p>Save this next to the module lab if you still have it. Run terraform test. If the command is unknown, your binary is older than the test framework. Say so in your notes instead of inventing a pass.</p>
@@ -226,8 +230,6 @@ run &quot;dev_prefix&quot; {
     </div>
 
     <script src="../js/code-copy.js">
-</script>
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2">
 </script>
     <script src="../js/supabase-config.js">
 </script>

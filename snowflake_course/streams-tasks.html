@@ -3,6 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <!-- dfd-seo:start -->
+    <meta name="description" content="Streams, tasks, and dynamic tables | Snowflake course. Streams remember changes.">
+    <link rel="canonical" href="https://datafordummies.in/snowflake_course/streams-tasks.html">
+    <meta property="og:title" content="Streams, tasks, and dynamic tables | Snowflake course | Data For Dummies">
+    <meta property="og:description" content="Streams, tasks, and dynamic tables | Snowflake course. Streams remember changes.">
+    <meta property="og:url" content="https://datafordummies.in/snowflake_course/streams-tasks.html">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="https://datafordummies.in/logo.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <!-- dfd-seo:end -->
     <title>Streams, tasks, and dynamic tables | Snowflake course | Data For Dummies</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
@@ -68,43 +78,50 @@ GROUP BY region;</code>
 </pre>
 </div>
 </section>
-        <section class="section dfd-diagram" data-dfd-diagram data-dfd-reveal>
-<h2>See it move</h2>
-<div data-dfd-diagram-panel="one">
-<svg class="dfd-responsive" viewBox="0 0 360 120" role="img" aria-label="A stream bookmark on new rows">
-<rect class="sf-drift" x="16" y="36" width="70" height="48" rx="8" fill="#bae6fd">
-</rect>
-<rect x="110" y="28" width="140" height="64" rx="8" fill="#0284c7">
-</rect>
-<rect x="274" y="36" width="70" height="48" rx="8" fill="#e0f2fe" stroke="#0369a1">
-</rect>
-</svg>
+        <section class="section dfd-diagram dfd-flow" data-dfd-diagram data-dfd-flow data-dfd-reveal>
+<h2>Process only what changed</h2>
+<p class="dfd-flow-intro">A stream remembers where you stopped, a task acts on it, and a dynamic table can replace both.</p>
+<div class="dfd-diagram-controls dfd-flow-controls" role="group" aria-label="Process only what changed: steps">
+<button type="button" data-dfd-diagram-step="step1" aria-pressed="true"><span class="dfd-flow-num" aria-hidden="true">1</span>Bookmark the change</button>
+<button type="button" data-dfd-diagram-step="step2" aria-pressed="false"><span class="dfd-flow-num" aria-hidden="true">2</span>Task reads it</button>
+<button type="button" data-dfd-diagram-step="step3" aria-pressed="false"><span class="dfd-flow-num" aria-hidden="true">3</span>Dynamic table refreshes</button>
 </div>
-<div data-dfd-diagram-panel="two" hidden>
-<svg class="dfd-responsive" viewBox="0 0 360 120" role="img" aria-label="A task consuming the stream">
-<rect x="16" y="36" width="70" height="48" rx="8" fill="#e0f2fe">
-</rect>
-<rect class="sf-drift" x="110" y="28" width="140" height="64" rx="8" fill="#0369a1">
-</rect>
-<rect x="274" y="36" width="70" height="48" rx="8" fill="#e0f2fe" stroke="#0369a1">
-</rect>
-</svg>
-</div>
-<div data-dfd-diagram-panel="three" hidden>
-<svg class="dfd-responsive" viewBox="0 0 360 120" role="img" aria-label="A dynamic table refresh">
-<rect x="16" y="36" width="70" height="48" rx="8" fill="#e0f2fe">
-</rect>
-<rect x="110" y="28" width="140" height="64" rx="8" fill="#bae6fd">
-</rect>
-<rect class="sf-drift" x="274" y="36" width="70" height="48" rx="8" fill="#0ea5e9">
-</rect>
-</svg>
-</div>
-<div class="dfd-diagram-controls">
-<button type="button" data-dfd-diagram-step="one" aria-pressed="true">Bookmark the change</button>
-<button type="button" data-dfd-diagram-step="two" aria-pressed="false">Task reads it</button>
-<button type="button" data-dfd-diagram-step="three" aria-pressed="false">Dynamic table refreshes</button>
-</div>
+<div class="dfd-flow-panel" data-dfd-diagram-panel="step1">
+<ol class="dfd-flow-track" aria-label="Step 1: Bookmark the change">
+<li class="dfd-flow-node is-active" aria-current="step"><span class="dfd-flow-label">orders</span><span class="dfd-flow-role">Source table</span></li>
+<li class="dfd-flow-node is-active is-fed" aria-current="step"><span class="dfd-flow-label">orders_stream</span><span class="dfd-flow-role">Bookmark of new changes</span></li>
+<li class="dfd-flow-node"><span class="dfd-flow-label">merge_orders task</span><span class="dfd-flow-role">SQL on a schedule</span></li>
+<li class="dfd-flow-node"><span class="dfd-flow-label">Reporting table</span><span class="dfd-flow-role">Always up to date</span></li>
+</ol>
+<div class="dfd-flow-explain">
+<p class="dfd-flow-caption"><span class="dfd-flow-count">Step 1 of 3</span>A stream keeps an offset on a table and shows the rows inserted, updated or deleted since it was last read. It does not copy the table.</p>
+<pre class="dfd-flow-example"><code>CREATE STREAM orders_stream ON TABLE orders;</code></pre>
+</div></div>
+<div class="dfd-flow-panel" data-dfd-diagram-panel="step2" hidden>
+<ol class="dfd-flow-track" aria-label="Step 2: Task reads it">
+<li class="dfd-flow-node"><span class="dfd-flow-label">orders</span><span class="dfd-flow-role">Source table</span></li>
+<li class="dfd-flow-node is-active" aria-current="step"><span class="dfd-flow-label">orders_stream</span><span class="dfd-flow-role">Bookmark of new changes</span></li>
+<li class="dfd-flow-node is-active is-fed" aria-current="step"><span class="dfd-flow-label">merge_orders task</span><span class="dfd-flow-role">SQL on a schedule</span></li>
+<li class="dfd-flow-node is-active is-fed" aria-current="step"><span class="dfd-flow-label">Reporting table</span><span class="dfd-flow-role">Always up to date</span></li>
+</ol>
+<div class="dfd-flow-explain">
+<p class="dfd-flow-caption"><span class="dfd-flow-count">Step 2 of 3</span>A task runs SQL on a schedule. With SYSTEM$STREAM_HAS_DATA it skips runs when nothing changed. Using the stream in a MERGE moves the bookmark forward.</p>
+<pre class="dfd-flow-example"><code>CREATE TASK merge_orders WAREHOUSE = wh SCHEDULE = &#x27;5 MINUTE&#x27;
+  WHEN SYSTEM$STREAM_HAS_DATA(&#x27;orders_stream&#x27;)
+  AS MERGE INTO daily_sales ...;</code></pre>
+</div></div>
+<div class="dfd-flow-panel" data-dfd-diagram-panel="step3" hidden>
+<ol class="dfd-flow-track" aria-label="Step 3: Dynamic table refreshes">
+<li class="dfd-flow-node is-active" aria-current="step"><span class="dfd-flow-label">orders</span><span class="dfd-flow-role">Source table</span></li>
+<li class="dfd-flow-node"><span class="dfd-flow-label">orders_stream</span><span class="dfd-flow-role">Bookmark of new changes</span></li>
+<li class="dfd-flow-node"><span class="dfd-flow-label">merge_orders task</span><span class="dfd-flow-role">SQL on a schedule</span></li>
+<li class="dfd-flow-node is-active" aria-current="step"><span class="dfd-flow-label">Reporting table</span><span class="dfd-flow-role">Always up to date</span></li>
+</ol>
+<div class="dfd-flow-explain">
+<p class="dfd-flow-caption"><span class="dfd-flow-count">Step 3 of 3</span>A dynamic table is just a query plus a target lag. Snowflake keeps it refreshed, incrementally when it can, without you writing the stream and task.</p>
+<pre class="dfd-flow-example"><code>CREATE DYNAMIC TABLE daily_sales TARGET_LAG = &#x27;15 minutes&#x27; WAREHOUSE = wh
+  AS SELECT order_date, SUM(amount) FROM orders GROUP BY 1;</code></pre>
+</div></div>
 </section>
         <section class="section" id="lab" data-dfd-reveal>
             <h2>Lab: a stream and a dynamic table</h2>
@@ -210,8 +227,6 @@ SELECT * FROM orders_by_region;</code>
         </nav>
     </div>
     <script src="../js/code-copy.js">
-</script>
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2">
 </script>
     <script src="../js/supabase-config.js">
 </script>

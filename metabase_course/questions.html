@@ -3,6 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <!-- dfd-seo:start -->
+    <meta name="description" content="Asking questions. The query builder is a notebook: filter rows, summarize them, and draw the result.">
+    <link rel="canonical" href="https://datafordummies.in/metabase_course/questions.html">
+    <meta property="og:title" content="Asking questions | Data For Dummies">
+    <meta property="og:description" content="Asking questions. The query builder is a notebook: filter rows, summarize them, and draw the result.">
+    <meta property="og:url" content="https://datafordummies.in/metabase_course/questions.html">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="https://datafordummies.in/logo.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <!-- dfd-seo:end -->
     <title>Asking questions | Data For Dummies</title>
     <link rel="stylesheet" href="styles.css">
     
@@ -48,34 +58,45 @@
 <p>If the number looks wrong, check the filter and the grain before you restyle the chart. Summing an amount that is already a monthly total will double-count. Counting orders when the table is order lines will over-count orders.</p>
 <div class="pro-tip"><h4>Name the question as the answer</h4><p>"Paid revenue by month" is a question a person can find. "Query 3" is a question they will rebuild.</p></div>
 </section>
-<section class="section dfd-diagram" data-dfd-diagram data-dfd-reveal><h2>Three steps, in order</h2><div data-dfd-diagram-panel="one">
-<svg class="dfd-responsive" viewBox="0 0 360 100" role="img" aria-label="Filter step highlighted">
-<rect x="12" y="26" width="104" height="48" rx="8" fill="#0f172a"></rect>
-<text x="64" y="54" text-anchor="middle" font-size="13" fill="#ffffff" font-family="Nunito,sans-serif">Filter</text>
-<rect x="128" y="26" width="104" height="48" rx="8" fill="#e2e8f0"></rect>
-<text x="180" y="54" text-anchor="middle" font-size="13" fill="#0f172a" font-family="Nunito,sans-serif">Summarize</text>
-<rect x="244" y="26" width="104" height="48" rx="8" fill="#e2e8f0"></rect>
-<text x="296" y="54" text-anchor="middle" font-size="13" fill="#0f172a" font-family="Nunito,sans-serif">Chart</text>
-</svg>
-</div><div data-dfd-diagram-panel="two" hidden>
-<svg class="dfd-responsive" viewBox="0 0 360 100" role="img" aria-label="Summarize step highlighted">
-<rect x="12" y="26" width="104" height="48" rx="8" fill="#e2e8f0"></rect>
-<text x="64" y="54" text-anchor="middle" font-size="13" fill="#0f172a" font-family="Nunito,sans-serif">Filter</text>
-<rect x="128" y="26" width="104" height="48" rx="8" fill="#0f172a"></rect>
-<text x="180" y="54" text-anchor="middle" font-size="13" fill="#ffffff" font-family="Nunito,sans-serif">Summarize</text>
-<rect x="244" y="26" width="104" height="48" rx="8" fill="#e2e8f0"></rect>
-<text x="296" y="54" text-anchor="middle" font-size="13" fill="#0f172a" font-family="Nunito,sans-serif">Chart</text>
-</svg>
-</div><div data-dfd-diagram-panel="three" hidden>
-<svg class="dfd-responsive" viewBox="0 0 360 100" role="img" aria-label="Chart step highlighted">
-<rect x="12" y="26" width="104" height="48" rx="8" fill="#e2e8f0"></rect>
-<text x="64" y="54" text-anchor="middle" font-size="13" fill="#0f172a" font-family="Nunito,sans-serif">Filter</text>
-<rect x="128" y="26" width="104" height="48" rx="8" fill="#e2e8f0"></rect>
-<text x="180" y="54" text-anchor="middle" font-size="13" fill="#0f172a" font-family="Nunito,sans-serif">Summarize</text>
-<rect x="244" y="26" width="104" height="48" rx="8" fill="#0f172a"></rect>
-<text x="296" y="54" text-anchor="middle" font-size="13" fill="#ffffff" font-family="Nunito,sans-serif">Chart</text>
-</svg>
-</div><div class="dfd-diagram-controls"><button type="button" data-dfd-diagram-step="one" aria-pressed="true">Filter</button><button type="button" data-dfd-diagram-step="two" aria-pressed="false">Summarize</button><button type="button" data-dfd-diagram-step="three" aria-pressed="false">Chart</button></div></section>
+<section class="section dfd-diagram dfd-flow" data-dfd-diagram data-dfd-flow data-dfd-reveal>
+<h2>Three steps, in order</h2>
+<p class="dfd-flow-intro">Every query-builder question is filter, then summarise, then chart.</p>
+<div class="dfd-diagram-controls dfd-flow-controls" role="group" aria-label="Three steps, in order: steps">
+<button type="button" data-dfd-diagram-step="step1" aria-pressed="true"><span class="dfd-flow-num" aria-hidden="true">1</span>Filter</button>
+<button type="button" data-dfd-diagram-step="step2" aria-pressed="false"><span class="dfd-flow-num" aria-hidden="true">2</span>Summarize</button>
+<button type="button" data-dfd-diagram-step="step3" aria-pressed="false"><span class="dfd-flow-num" aria-hidden="true">3</span>Chart</button>
+</div>
+<div class="dfd-flow-panel" data-dfd-diagram-panel="step1">
+<ol class="dfd-flow-track" aria-label="Step 1: Filter">
+<li class="dfd-flow-node is-active" aria-current="step"><span class="dfd-flow-label">Filter</span><span class="dfd-flow-role">Keep only the rows you need</span></li>
+<li class="dfd-flow-node"><span class="dfd-flow-label">Summarize</span><span class="dfd-flow-role">Group and calculate</span></li>
+<li class="dfd-flow-node"><span class="dfd-flow-label">Visualize</span><span class="dfd-flow-role">Pick the chart</span></li>
+</ol>
+<div class="dfd-flow-explain">
+<p class="dfd-flow-caption"><span class="dfd-flow-count">Step 1 of 3</span>Choose the table, then narrow the rows. Here: only orders created in the last 30 days.</p>
+<p class="dfd-flow-example dfd-flow-example-ui">Orders → Filter → Created At → Previous 30 days</p>
+</div></div>
+<div class="dfd-flow-panel" data-dfd-diagram-panel="step2" hidden>
+<ol class="dfd-flow-track" aria-label="Step 2: Summarize">
+<li class="dfd-flow-node is-active" aria-current="step"><span class="dfd-flow-label">Filter</span><span class="dfd-flow-role">Keep only the rows you need</span></li>
+<li class="dfd-flow-node is-active is-fed" aria-current="step"><span class="dfd-flow-label">Summarize</span><span class="dfd-flow-role">Group and calculate</span></li>
+<li class="dfd-flow-node"><span class="dfd-flow-label">Visualize</span><span class="dfd-flow-role">Pick the chart</span></li>
+</ol>
+<div class="dfd-flow-explain">
+<p class="dfd-flow-caption"><span class="dfd-flow-count">Step 2 of 3</span>Group the remaining rows and calculate a number for each group: total sales per week.</p>
+<p class="dfd-flow-example dfd-flow-example-ui">Summarize → Sum of Total → by Created At: Week</p>
+</div></div>
+<div class="dfd-flow-panel" data-dfd-diagram-panel="step3" hidden>
+<ol class="dfd-flow-track" aria-label="Step 3: Chart">
+<li class="dfd-flow-node"><span class="dfd-flow-label">Filter</span><span class="dfd-flow-role">Keep only the rows you need</span></li>
+<li class="dfd-flow-node is-active" aria-current="step"><span class="dfd-flow-label">Summarize</span><span class="dfd-flow-role">Group and calculate</span></li>
+<li class="dfd-flow-node is-active is-fed" aria-current="step"><span class="dfd-flow-label">Visualize</span><span class="dfd-flow-role">Pick the chart</span></li>
+</ol>
+<div class="dfd-flow-explain">
+<p class="dfd-flow-caption"><span class="dfd-flow-count">Step 3 of 3</span>Metabase suggests a chart for the shape of the answer. A value over time becomes a line.</p>
+<p class="dfd-flow-example dfd-flow-example-ui">Visualization → Line</p>
+</div></div>
+</section>
 <section class="section" data-dfd-reveal><h2>Practice</h2>
 <p>On a table you are allowed to read, build one question that filters to a single status, groups by a date or a category, and saves a bar or a line. Open it again from the collection. If you cannot find it, it was not saved.</p>
 <p><button type="button" data-dfd-complete>Mark lesson complete</button></p><p data-dfd-complete-status></p>
@@ -127,7 +148,6 @@
     </div>
 
     <script src="../js/code-copy.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="../js/supabase-config.js"></script>
     <script src="../js/supabase-auth.js"></script>
     <script src="../js/paywall.js"></script>

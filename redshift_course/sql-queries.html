@@ -3,6 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <!-- dfd-seo:start -->
+    <meta name="description" content="SQL queries in Redshift. Redshift speaks a PostgreSQL-like SQL, with unenforced keys, SUPER values, and SYS catalog views.">
+    <link rel="canonical" href="https://datafordummies.in/redshift_course/sql-queries.html">
+    <meta property="og:title" content="SQL queries in Redshift | Data For Dummies">
+    <meta property="og:description" content="SQL queries in Redshift. Redshift speaks a PostgreSQL-like SQL, with unenforced keys, SUPER values, and SYS catalog views.">
+    <meta property="og:url" content="https://datafordummies.in/redshift_course/sql-queries.html">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="https://datafordummies.in/logo.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <!-- dfd-seo:end -->
     <title>SQL queries in Redshift | Data For Dummies</title>
     <link rel="stylesheet" href="styles.css">
     
@@ -55,34 +65,47 @@ ORDER BY start_time DESC
 LIMIT 20;</code></pre></div>
 <p>Functions differ at the edges. <code>GETDATE()</code> is the usual clock. Some PostgreSQL-only extensions are absent. When a query from a PostgreSQL course fails, check the Redshift SQL reference before you assume the cluster is broken.</p>
 </section>
-<section class="section dfd-diagram" data-dfd-diagram data-dfd-reveal><h2>From a table to the catalog</h2><div data-dfd-diagram-panel="one">
-<svg class="dfd-responsive" viewBox="0 0 360 100" role="img" aria-label="Tables highlighted">
-<rect x="12" y="26" width="104" height="48" rx="8" fill="#0f172a"></rect>
-<text x="64" y="54" text-anchor="middle" font-size="13" fill="#ffffff" font-family="Nunito,sans-serif">Tables</text>
-<rect x="128" y="26" width="104" height="48" rx="8" fill="#e2e8f0"></rect>
-<text x="180" y="54" text-anchor="middle" font-size="13" fill="#0f172a" font-family="Nunito,sans-serif">SQL</text>
-<rect x="244" y="26" width="104" height="48" rx="8" fill="#e2e8f0"></rect>
-<text x="296" y="54" text-anchor="middle" font-size="13" fill="#0f172a" font-family="Nunito,sans-serif">Catalog</text>
-</svg>
-</div><div data-dfd-diagram-panel="two" hidden>
-<svg class="dfd-responsive" viewBox="0 0 360 100" role="img" aria-label="SQL highlighted">
-<rect x="12" y="26" width="104" height="48" rx="8" fill="#e2e8f0"></rect>
-<text x="64" y="54" text-anchor="middle" font-size="13" fill="#0f172a" font-family="Nunito,sans-serif">Tables</text>
-<rect x="128" y="26" width="104" height="48" rx="8" fill="#0f172a"></rect>
-<text x="180" y="54" text-anchor="middle" font-size="13" fill="#ffffff" font-family="Nunito,sans-serif">SQL</text>
-<rect x="244" y="26" width="104" height="48" rx="8" fill="#e2e8f0"></rect>
-<text x="296" y="54" text-anchor="middle" font-size="13" fill="#0f172a" font-family="Nunito,sans-serif">Catalog</text>
-</svg>
-</div><div data-dfd-diagram-panel="three" hidden>
-<svg class="dfd-responsive" viewBox="0 0 360 100" role="img" aria-label="Catalog highlighted">
-<rect x="12" y="26" width="104" height="48" rx="8" fill="#e2e8f0"></rect>
-<text x="64" y="54" text-anchor="middle" font-size="13" fill="#0f172a" font-family="Nunito,sans-serif">Tables</text>
-<rect x="128" y="26" width="104" height="48" rx="8" fill="#e2e8f0"></rect>
-<text x="180" y="54" text-anchor="middle" font-size="13" fill="#0f172a" font-family="Nunito,sans-serif">SQL</text>
-<rect x="244" y="26" width="104" height="48" rx="8" fill="#0f172a"></rect>
-<text x="296" y="54" text-anchor="middle" font-size="13" fill="#ffffff" font-family="Nunito,sans-serif">Catalog</text>
-</svg>
-</div><div class="dfd-diagram-controls"><button type="button" data-dfd-diagram-step="one" aria-pressed="true">Tables</button><button type="button" data-dfd-diagram-step="two" aria-pressed="false">SQL</button><button type="button" data-dfd-diagram-step="three" aria-pressed="false">Catalog</button></div></section>
+<section class="section dfd-diagram dfd-flow" data-dfd-diagram data-dfd-flow data-dfd-reveal>
+<h2>From a table to the catalog</h2>
+<p class="dfd-flow-intro">Write familiar SQL, then use system views to learn about your own tables.</p>
+<div class="dfd-diagram-controls dfd-flow-controls" role="group" aria-label="From a table to the catalog: steps">
+<button type="button" data-dfd-diagram-step="step1" aria-pressed="true"><span class="dfd-flow-num" aria-hidden="true">1</span>Tables</button>
+<button type="button" data-dfd-diagram-step="step2" aria-pressed="false"><span class="dfd-flow-num" aria-hidden="true">2</span>SQL</button>
+<button type="button" data-dfd-diagram-step="step3" aria-pressed="false"><span class="dfd-flow-num" aria-hidden="true">3</span>Catalog</button>
+</div>
+<div class="dfd-flow-panel" data-dfd-diagram-panel="step1">
+<ol class="dfd-flow-track" aria-label="Step 1: Tables">
+<li class="dfd-flow-node is-active" aria-current="step"><span class="dfd-flow-label">Tables</span><span class="dfd-flow-role">Rows in a schema</span></li>
+<li class="dfd-flow-node"><span class="dfd-flow-label">SQL</span><span class="dfd-flow-role">PostgreSQL-style, plus analytics</span></li>
+<li class="dfd-flow-node"><span class="dfd-flow-label">System catalog</span><span class="dfd-flow-role">Size, skew and sort state</span></li>
+</ol>
+<div class="dfd-flow-explain">
+<p class="dfd-flow-caption"><span class="dfd-flow-count">Step 1 of 3</span>Your data sits in tables inside schemas, just as in PostgreSQL.</p>
+<pre class="dfd-flow-example"><code>SELECT * FROM public.sales LIMIT 10;</code></pre>
+</div></div>
+<div class="dfd-flow-panel" data-dfd-diagram-panel="step2" hidden>
+<ol class="dfd-flow-track" aria-label="Step 2: SQL">
+<li class="dfd-flow-node is-active" aria-current="step"><span class="dfd-flow-label">Tables</span><span class="dfd-flow-role">Rows in a schema</span></li>
+<li class="dfd-flow-node is-active is-fed" aria-current="step"><span class="dfd-flow-label">SQL</span><span class="dfd-flow-role">PostgreSQL-style, plus analytics</span></li>
+<li class="dfd-flow-node"><span class="dfd-flow-label">System catalog</span><span class="dfd-flow-role">Size, skew and sort state</span></li>
+</ol>
+<div class="dfd-flow-explain">
+<p class="dfd-flow-caption"><span class="dfd-flow-count">Step 2 of 3</span>Redshift SQL looks like PostgreSQL and adds analytic features such as window functions.</p>
+<pre class="dfd-flow-example"><code>SELECT region, amount,
+  RANK() OVER (PARTITION BY region ORDER BY amount DESC) AS rnk
+FROM sales;</code></pre>
+</div></div>
+<div class="dfd-flow-panel" data-dfd-diagram-panel="step3" hidden>
+<ol class="dfd-flow-track" aria-label="Step 3: Catalog">
+<li class="dfd-flow-node"><span class="dfd-flow-label">Tables</span><span class="dfd-flow-role">Rows in a schema</span></li>
+<li class="dfd-flow-node"><span class="dfd-flow-label">SQL</span><span class="dfd-flow-role">PostgreSQL-style, plus analytics</span></li>
+<li class="dfd-flow-node is-active" aria-current="step"><span class="dfd-flow-label">System catalog</span><span class="dfd-flow-role">Size, skew and sort state</span></li>
+</ol>
+<div class="dfd-flow-explain">
+<p class="dfd-flow-caption"><span class="dfd-flow-count">Step 3 of 3</span>System views describe the tables themselves: how big they are, how unevenly they are spread, and how much is unsorted.</p>
+<pre class="dfd-flow-example"><code>SELECT &quot;table&quot;, size, skew_rows, unsorted FROM svv_table_info;</code></pre>
+</div></div>
+</section>
 <section class="section" data-dfd-reveal><h2>Practice</h2>
 <p>Create a schema, a two-column table, and one grouped query. Then find that query in <code>SYS_QUERY_HISTORY</code>. If the view is empty, widen the time filter. You are looking at the warehouse's own log, not at a file on your laptop.</p>
 <p><button type="button" data-dfd-complete>Mark lesson complete</button></p><p data-dfd-complete-status></p>
@@ -134,7 +157,6 @@ LIMIT 20;</code></pre></div>
     </div>
 
     <script src="../js/code-copy.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="../js/supabase-config.js"></script>
     <script src="../js/supabase-auth.js"></script>
     <script src="../js/paywall.js"></script>

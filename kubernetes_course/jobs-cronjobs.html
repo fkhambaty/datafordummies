@@ -3,6 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <!-- dfd-seo:start -->
+    <meta name="description" content="Jobs and CronJobs | Kubernetes. A Job runs until it succeeds or hits its limit.">
+    <link rel="canonical" href="https://datafordummies.in/kubernetes_course/jobs-cronjobs.html">
+    <meta property="og:title" content="Jobs and CronJobs | Kubernetes | Data For Dummies">
+    <meta property="og:description" content="Jobs and CronJobs | Kubernetes. A Job runs until it succeeds or hits its limit.">
+    <meta property="og:url" content="https://datafordummies.in/kubernetes_course/jobs-cronjobs.html">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="https://datafordummies.in/logo.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <!-- dfd-seo:end -->
     <title>Jobs and CronJobs | Kubernetes | Data For Dummies</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
@@ -68,68 +78,62 @@
 <p>
 <code>startingDeadlineSeconds</code> decides how late a missed start can still run. Leave it unset only if you understand that a paused controller can later fire a burst of missed jobs.</p>
 </section>
-        <section class="section dfd-diagram" data-dfd-diagram data-dfd-reveal>
-            <h2>Nightly work</h2>
-            <div data-dfd-diagram-panel="clock">
-<svg class="dfd-responsive" viewBox="0 0 640 148" role="img" aria-label="CronJob highlighted">
-<rect class="track-drift" x="16" y="36" width="188" height="72" rx="12" fill="#5b8def">
-</rect>
-<text x="110" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#ffffff">CronJob</text>
-<path d="M204 72 H224" stroke="#64748b" stroke-width="2" fill="none">
-</path>
-<rect x="224" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
-</rect>
-<text x="318" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">Job</text>
-<path d="M412 72 H432" stroke="#64748b" stroke-width="2" fill="none">
-</path>
-<rect x="432" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
-</rect>
-<text x="526" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">Pod</text>
-</svg>
-<p>The CronJob does not do the work. It creates a Job.</p>
+        <section class="section dfd-diagram dfd-flow" data-dfd-diagram data-dfd-flow data-dfd-reveal>
+<h2>Nightly work</h2>
+<div class="dfd-diagram-controls dfd-flow-controls" role="group" aria-label="Nightly work: steps">
+<button type="button" data-dfd-diagram-step="step1" aria-pressed="true"><span class="dfd-flow-num" aria-hidden="true">1</span>Schedule</button>
+<button type="button" data-dfd-diagram-step="step2" aria-pressed="false"><span class="dfd-flow-num" aria-hidden="true">2</span>Job</button>
+<button type="button" data-dfd-diagram-step="step3" aria-pressed="false"><span class="dfd-flow-num" aria-hidden="true">3</span>Pod</button>
 </div>
-<div data-dfd-diagram-panel="job" hidden>
-<svg class="dfd-responsive" viewBox="0 0 640 148" role="img" aria-label="Job highlighted">
-<rect x="16" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
-</rect>
-<text x="110" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">CronJob</text>
-<path d="M204 72 H224" stroke="#64748b" stroke-width="2" fill="none">
-</path>
-<rect class="track-drift" x="224" y="36" width="188" height="72" rx="12" fill="#5b8def">
-</rect>
-<text x="318" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#ffffff">Job</text>
-<path d="M412 72 H432" stroke="#64748b" stroke-width="2" fill="none">
-</path>
-<rect x="432" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
-</rect>
-<text x="526" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">Pod</text>
-</svg>
-<p>The Job counts successes and failures.</p>
-</div>
-<div data-dfd-diagram-panel="pod" hidden>
-<svg class="dfd-responsive" viewBox="0 0 640 148" role="img" aria-label="Pod highlighted">
-<rect x="16" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
-</rect>
-<text x="110" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">CronJob</text>
-<path d="M204 72 H224" stroke="#64748b" stroke-width="2" fill="none">
-</path>
-<rect x="224" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
-</rect>
-<text x="318" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">Job</text>
-<path d="M412 72 H432" stroke="#64748b" stroke-width="2" fill="none">
-</path>
-<rect class="track-drift" x="432" y="36" width="188" height="72" rx="12" fill="#5b8def">
-</rect>
-<text x="526" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#ffffff">Pod</text>
-</svg>
-<p>The Pod exits. A restart policy of Always does not belong here.</p>
-</div>
-            <div class="dfd-diagram-controls">
-                <button type="button" data-dfd-diagram-step="clock" aria-pressed="true">Schedule</button>
-<button type="button" data-dfd-diagram-step="job" aria-pressed="false">Job</button>
-<button type="button" data-dfd-diagram-step="pod" aria-pressed="false">Pod</button>
-            </div>
-        </section>
+<div class="dfd-flow-panel" data-dfd-diagram-panel="step1">
+<ol class="dfd-flow-track" aria-label="Step 1: Schedule">
+<li class="dfd-flow-node is-active" aria-current="step"><span class="dfd-flow-label">CronJob</span></li>
+<li class="dfd-flow-node"><span class="dfd-flow-label">Job</span></li>
+<li class="dfd-flow-node"><span class="dfd-flow-label">Pod</span></li>
+</ol>
+<div class="dfd-flow-explain">
+<p class="dfd-flow-caption"><span class="dfd-flow-count">Step 1 of 3</span>Job
+
+
+
+
+Pod
+
+The CronJob does not do the work. It creates a Job.</p>
+</div></div>
+<div class="dfd-flow-panel" data-dfd-diagram-panel="step2" hidden>
+<ol class="dfd-flow-track" aria-label="Step 2: Job">
+<li class="dfd-flow-node"><span class="dfd-flow-label">CronJob</span></li>
+<li class="dfd-flow-node is-active" aria-current="step"><span class="dfd-flow-label">Job</span></li>
+<li class="dfd-flow-node"><span class="dfd-flow-label">Pod</span></li>
+</ol>
+<div class="dfd-flow-explain">
+<p class="dfd-flow-caption"><span class="dfd-flow-count">Step 2 of 3</span>Job
+
+
+
+
+Pod
+
+The Job counts successes and failures.</p>
+</div></div>
+<div class="dfd-flow-panel" data-dfd-diagram-panel="step3" hidden>
+<ol class="dfd-flow-track" aria-label="Step 3: Pod">
+<li class="dfd-flow-node"><span class="dfd-flow-label">CronJob</span></li>
+<li class="dfd-flow-node"><span class="dfd-flow-label">Job</span></li>
+<li class="dfd-flow-node is-active" aria-current="step"><span class="dfd-flow-label">Pod</span></li>
+</ol>
+<div class="dfd-flow-explain">
+<p class="dfd-flow-caption"><span class="dfd-flow-count">Step 3 of 3</span>Job
+
+
+
+
+Pod
+
+The Pod exits. A restart policy of Always does not belong here.</p>
+</div></div>
+</section>
         <section class="section" id="lab" data-dfd-reveal>
             <h2>Lab: one Job that prints and exits</h2>
             <p>Apply it, wait, and read the logs. Then look at the Job status. Delete the Job when you are done so it does not sit in the namespace.</p>
@@ -226,8 +230,6 @@ kubectl logs job/once</code>
     </div>
 
     <script src="../js/code-copy.js">
-</script>
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2">
 </script>
     <script src="../js/supabase-config.js">
 </script>

@@ -3,6 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <!-- dfd-seo:start -->
+    <meta name="description" content="Practice datasets. Load the sample scripts in SSMS, then practice filters, joins, and aggregates on tables this course actually ships.">
+    <link rel="canonical" href="https://datafordummies.in/mssql_course/datasets.html">
+    <meta property="og:title" content="Practice datasets | Data For Dummies">
+    <meta property="og:description" content="Practice datasets. Load the sample scripts in SSMS, then practice filters, joins, and aggregates on tables this course actually ships.">
+    <meta property="og:url" content="https://datafordummies.in/mssql_course/datasets.html">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="https://datafordummies.in/logo.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <!-- dfd-seo:end -->
     <title>Practice datasets | Data For Dummies</title>
     <link rel="stylesheet" href="styles.css">
     <style>
@@ -74,34 +84,49 @@ GROUP BY p.Category;</code></pre></div>
 <p>The CSV repeats the customer on each order line. That is a flat extract, not the three tables. Right-click the database, choose Tasks, then Import Data, and land it in a new table such as <code>dbo.OrdersFlat</code>. Compare a count of distinct customer names in the flat table with <code>dbo.Customers</code>. They should agree for this sample. If they do not, the import guessed a type and dropped a row, or you imported the header as data.</p>
 <div class="important-box"><h4>These scripts are practice data</h4><p>Do not run the DROP statements against a database that holds work you meant to keep. Create SampleDB and stay inside it.</p></div>
 </section>
-<section class="section dfd-diagram" data-dfd-diagram data-dfd-reveal><h2>Load, then ask</h2><div data-dfd-diagram-panel="one">
-<svg class="dfd-responsive" viewBox="0 0 360 100" role="img" aria-label="Script highlighted">
-<rect x="12" y="26" width="104" height="48" rx="8" fill="#0f172a"></rect>
-<text x="64" y="54" text-anchor="middle" font-size="13" fill="#ffffff" font-family="Nunito,sans-serif">Script</text>
-<rect x="128" y="26" width="104" height="48" rx="8" fill="#e2e8f0"></rect>
-<text x="180" y="54" text-anchor="middle" font-size="13" fill="#0f172a" font-family="Nunito,sans-serif">SSMS</text>
-<rect x="244" y="26" width="104" height="48" rx="8" fill="#e2e8f0"></rect>
-<text x="296" y="54" text-anchor="middle" font-size="13" fill="#0f172a" font-family="Nunito,sans-serif">Check</text>
-</svg>
-</div><div data-dfd-diagram-panel="two" hidden>
-<svg class="dfd-responsive" viewBox="0 0 360 100" role="img" aria-label="SSMS highlighted">
-<rect x="12" y="26" width="104" height="48" rx="8" fill="#e2e8f0"></rect>
-<text x="64" y="54" text-anchor="middle" font-size="13" fill="#0f172a" font-family="Nunito,sans-serif">Script</text>
-<rect x="128" y="26" width="104" height="48" rx="8" fill="#0f172a"></rect>
-<text x="180" y="54" text-anchor="middle" font-size="13" fill="#ffffff" font-family="Nunito,sans-serif">SSMS</text>
-<rect x="244" y="26" width="104" height="48" rx="8" fill="#e2e8f0"></rect>
-<text x="296" y="54" text-anchor="middle" font-size="13" fill="#0f172a" font-family="Nunito,sans-serif">Check</text>
-</svg>
-</div><div data-dfd-diagram-panel="three" hidden>
-<svg class="dfd-responsive" viewBox="0 0 360 100" role="img" aria-label="Check highlighted">
-<rect x="12" y="26" width="104" height="48" rx="8" fill="#e2e8f0"></rect>
-<text x="64" y="54" text-anchor="middle" font-size="13" fill="#0f172a" font-family="Nunito,sans-serif">Script</text>
-<rect x="128" y="26" width="104" height="48" rx="8" fill="#e2e8f0"></rect>
-<text x="180" y="54" text-anchor="middle" font-size="13" fill="#0f172a" font-family="Nunito,sans-serif">SSMS</text>
-<rect x="244" y="26" width="104" height="48" rx="8" fill="#0f172a"></rect>
-<text x="296" y="54" text-anchor="middle" font-size="13" fill="#ffffff" font-family="Nunito,sans-serif">Check</text>
-</svg>
-</div><div class="dfd-diagram-controls"><button type="button" data-dfd-diagram-step="one" aria-pressed="true">Script</button><button type="button" data-dfd-diagram-step="two" aria-pressed="false">SSMS</button><button type="button" data-dfd-diagram-step="three" aria-pressed="false">Check</button></div></section>
+<section class="section dfd-diagram dfd-flow" data-dfd-diagram data-dfd-flow data-dfd-reveal>
+<h2>Load, then ask</h2>
+<p class="dfd-flow-intro">One script builds the practice tables; a quick count proves it worked.</p>
+<div class="dfd-diagram-controls dfd-flow-controls" role="group" aria-label="Load, then ask: steps">
+<button type="button" data-dfd-diagram-step="step1" aria-pressed="true"><span class="dfd-flow-num" aria-hidden="true">1</span>Script</button>
+<button type="button" data-dfd-diagram-step="step2" aria-pressed="false"><span class="dfd-flow-num" aria-hidden="true">2</span>SSMS</button>
+<button type="button" data-dfd-diagram-step="step3" aria-pressed="false"><span class="dfd-flow-num" aria-hidden="true">3</span>Check</button>
+</div>
+<div class="dfd-flow-panel" data-dfd-diagram-panel="step1">
+<ol class="dfd-flow-track" aria-label="Step 1: Script">
+<li class="dfd-flow-node is-active" aria-current="step"><span class="dfd-flow-label">SampleDB_CreateAndLoad.sql</span><span class="dfd-flow-role">Creates Products, Customers, Orders</span></li>
+<li class="dfd-flow-node"><span class="dfd-flow-label">SSMS</span><span class="dfd-flow-role">Runs the script in SampleDB</span></li>
+<li class="dfd-flow-node"><span class="dfd-flow-label">Check</span><span class="dfd-flow-role">Counts and a first join</span></li>
+</ol>
+<div class="dfd-flow-explain">
+<p class="dfd-flow-caption"><span class="dfd-flow-count">Step 1 of 3</span>The script drops and recreates three tables. It is safe to run again, but not in a database whose tables of those names you need.</p>
+<pre class="dfd-flow-example"><code>USE SampleDB;
+-- DROP / CREATE Products, Customers, Orders</code></pre>
+</div></div>
+<div class="dfd-flow-panel" data-dfd-diagram-panel="step2" hidden>
+<ol class="dfd-flow-track" aria-label="Step 2: SSMS">
+<li class="dfd-flow-node is-active" aria-current="step"><span class="dfd-flow-label">SampleDB_CreateAndLoad.sql</span><span class="dfd-flow-role">Creates Products, Customers, Orders</span></li>
+<li class="dfd-flow-node is-active is-fed" aria-current="step"><span class="dfd-flow-label">SSMS</span><span class="dfd-flow-role">Runs the script in SampleDB</span></li>
+<li class="dfd-flow-node"><span class="dfd-flow-label">Check</span><span class="dfd-flow-role">Counts and a first join</span></li>
+</ol>
+<div class="dfd-flow-explain">
+<p class="dfd-flow-caption"><span class="dfd-flow-count">Step 2 of 3</span>Open the file in SQL Server Management Studio, make sure SampleDB is selected, and press F5.</p>
+<p class="dfd-flow-example dfd-flow-example-ui">File → Open → SampleDB_CreateAndLoad.sql → Execute (F5)</p>
+</div></div>
+<div class="dfd-flow-panel" data-dfd-diagram-panel="step3" hidden>
+<ol class="dfd-flow-track" aria-label="Step 3: Check">
+<li class="dfd-flow-node"><span class="dfd-flow-label">SampleDB_CreateAndLoad.sql</span><span class="dfd-flow-role">Creates Products, Customers, Orders</span></li>
+<li class="dfd-flow-node is-active" aria-current="step"><span class="dfd-flow-label">SSMS</span><span class="dfd-flow-role">Runs the script in SampleDB</span></li>
+<li class="dfd-flow-node is-active is-fed" aria-current="step"><span class="dfd-flow-label">Check</span><span class="dfd-flow-role">Counts and a first join</span></li>
+</ol>
+<div class="dfd-flow-explain">
+<p class="dfd-flow-caption"><span class="dfd-flow-count">Step 3 of 3</span>Count the rows, then try a first join. If a query errors, read which object name was wrong.</p>
+<pre class="dfd-flow-example"><code>SELECT COUNT(*) FROM dbo.Orders;
+SELECT p.Category, SUM(o.Quantity * p.UnitPrice) AS revenue
+FROM dbo.Orders o JOIN dbo.Products p ON p.ProductID = o.ProductID
+GROUP BY p.Category;</code></pre>
+</div></div>
+</section>
 <section class="section" data-dfd-reveal><h2>Done when</h2>
 <p>SampleDB has products, customers, and orders. One join returns a customer and a product name on the same row. One aggregate returns a total. The exercise file has your own statements under at least the first three comments.</p>
 <p><button type="button" data-dfd-complete>Mark lesson complete</button></p><p data-dfd-complete-status></p>
@@ -153,7 +178,6 @@ GROUP BY p.Category;</code></pre></div>
     </div>
 
     <script src="../js/code-copy.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="../js/supabase-config.js"></script>
     <script src="../js/supabase-auth.js"></script>
     <script src="../js/paywall.js"></script>

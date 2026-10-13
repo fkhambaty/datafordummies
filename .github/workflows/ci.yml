@@ -1,0 +1,25 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "24"
+      - name: Site self-test
+        run: python3 scripts/verify_site.py --self-test
+      - name: Site verification
+        run: python3 scripts/verify_site.py
+      - name: Vendor stamp age
+        run: python3 scripts/check_vendor_versions.py
+      - name: Worker tests
+        run: node --test cloudflare/worker/test/worker.test.mjs

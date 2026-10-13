@@ -1,3 +1,5 @@
+import { COURSE_CATALOG } from "./course-catalog.js";
+
 const ALLOWED_ORIGINS = new Set([
   "https://datafordummies.in",
   "https://www.datafordummies.in",
@@ -331,6 +333,7 @@ async function applySubscription(db, env, profile, subscription) {
         profile.id,
       )
       .run();
+    await recordActiveSubscription(db, profile, subscription);
     return true;
   }
   if (TERMINAL_SUBSCRIPTION_STATUSES.has(subscription.status)) {
@@ -362,6 +365,138 @@ async function syncProfileSubscription(db, env, profile) {
   }
 }
 
+const FUNNEL_EVENTS = new Set([
+  "course_view",
+  "signup",
+  "first_lesson",
+  "pro_page",
+  "checkout",
+  "active_subscription",
+]);
+
+function catalogCourse(courseId) {
+  return COURSE_CATALOG.courses?.[courseId] || null;
+}
+
+function catalogLessonIds(courseId) {
+  return (catalogCourse(courseId)?.lessons || []).map((lesson) => lesson.id);
+}
+
+function funnelEventForPath(pagePath) {
+  const path = String(pagePath || "");
+  if (path.includes("pricing")) return "pro_page";
+  if (/_course\/(?:hub|index)\.html$/.test(path) || /_course\/?$/.test(path)) return "course_view";
+  return null;
+}
+
+async function recordFunnel(db, eventType, details = {}) {
+  if (!FUNNEL_EVENTS.has(eventType)) return;
+  await db
+    .prepare(
+      `INSERT INTO analytics_events
+       (visitor_id, session_id, event_type, event_data, page_path, country, user_id)
+       VALUES (?, ?, ?, ?, ?, ?, ?)`,
+    )
+    .bind(
+      String(details.visitorId || "server").slice(0, 80),
+      null,
+      eventType,
+      JSON.stringify(details.eventData || {}).slice(0, 500),
+      details.pagePath ? String(details.pagePath).slice(0, 300) : null,
+      details.country || null,
+      details.userId || null,
+    )
+    .run();
+}
+
+async function recordActiveSubscription(db, profile, subscription) {
+  if (!subscription?.id) return;
+  const existing = await db
+    .prepare(
+      `SELECT id FROM analytics_events
+       WHERE event_type = 'active_subscription' AND user_id = ?
+       AND json_extract(event_data, '$.subscription_id') = ?`,
+    )
+    .bind(profile.id, subscription.id)
+    .first();
+  if (existing) return;
+  await recordFunnel(db, "active_subscription", {
+    visitorId: "server",
+    userId: profile.id,
+    eventData: { subscription_id: subscription.id },
+  });
+}
+
+async function storedCompletions(db, userId, courseId) {
+  const result = await db
+    .prepare(
+      "SELECT lesson_id, completed_at FROM lesson_completions WHERE user_id = ? AND course_id = ? ORDER BY completed_at",
+    )
+    .bind(userId, courseId)
+    .all();
+  const allowed = new Set(catalogLessonIds(courseId));
+  return (result.results || []).filter((row) => allowed.has(row.lesson_id));
+}
+
+function completionSummary(courseId, rows) {
+  const required = catalogLessonIds(courseId);
+  const done = new Set(rows.map((row) => row.lesson_id));
+  const completed = required.filter((lessonId) => done.has(lessonId));
+  const missing = required.filter((lessonId) => !done.has(lessonId));
+  const progressPct = required.length ? Math.round((completed.length / required.length) * 100) : 0;
+  return { required, completed, missing, progressPct };
+}
+
+async function writeProgress(db, profile, courseId, fields) {
+  const rows = await storedCompletions(db, profile.id, courseId);
+  const summary = completionSummary(courseId, rows);
+  const now = new Date().toISOString();
+  await db
+    .prepare(
+      `INSERT INTO user_progress
+       (user_id, course_id, last_lesson_id, last_lesson_label, completed_lesson_ids, progress_pct, last_visited_at, updated_at)
+       VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+       ON CONFLICT(user_id, course_id) DO UPDATE SET
+         last_lesson_id = COALESCE(excluded.last_lesson_id, user_progress.last_lesson_id),
+         last_lesson_label = COALESCE(excluded.last_lesson_label, user_progress.last_lesson_label),
+         completed_lesson_ids = excluded.completed_lesson_ids,
+         progress_pct = excluded.progress_pct,
+         last_visited_at = COALESCE(excluded.last_visited_at, user_progress.last_visited_at),
+         updated_at = excluded.updated_at`,
+    )
+    .bind(
+      profile.id,
+      courseId,
+      fields.lastLessonId || null,
+      fields.lastLessonLabel || null,
+      JSON.stringify(summary.completed),
+      summary.progressPct,
+      fields.lastVisitedAt || now,
+      now,
+    )
+    .run();
+  return summary;
+}
+
+function certificateView(row) {
+  let evidence = [];
+  try {
+    evidence = JSON.parse(row.evidence_json || "[]");
+  } catch {
+    evidence = [];
+  }
+  const issued = Boolean(row.issued_at);
+  return {
+    id: row.id,
+    course_id: row.course_id,
+    course_title: catalogCourse(row.course_id)?.title || row.course_id,
+    status: issued ? "issued" : "requested",
+    requested_at: row.requested_at,
+    issued_at: row.issued_at || null,
+    evidence,
+  };
+}
+
 export default {
   async fetch(request, env) {
     const origin = request.headers.get("origin");
@@ -375,6 +510,20 @@ export default {
     const db = env.DB;
 
     try {
+      if (request.method === "GET" && path === "/v1/health") {
+        return json(
+          {
+            ok: true,
+            service: "datafordummies-api",
+            email_ready: emailReady(env),
+            checkout_mode: env.CHECKOUT_MODE || "hosted",
+            payments_configured: Boolean(env.RAZORPAY_KEY_ID && env.RAZORPAY_KEY_SECRET),
+          },
+          200,
+          allowedOrigin,
+        );
+      }
+
       if (request.method === "POST" && path === "/v1/payments/razorpay/webhook") {
         const rawBody = await request.text();
         const signature = request.headers.get("x-razorpay-signature") || "";
@@ -475,6 +624,7 @@ export default {
         if (!sent) {
           return json({ error: "We could not send the confirmation email. Try again in a minute." }, 502, allowedOrigin);
         }
+        await recordFunnel(db, "signup", { visitorId: "server", eventData: {} });
         return json({ needs_verification: true, email }, 201, allowedOrigin);
       }
 
@@ -631,6 +781,11 @@ export default {
           );
           await saveSubscription(db, remote, profile.id, details.plan);
           if (remote.status === "created") {
+            await recordFunnel(db, "checkout", {
+              visitorId: "server",
+              userId: profile.id,
+              eventData: { plan: details.plan, subscription_id: remote.id },
+            });
             return json(
               {
                 subscription_id: remote.id,
@@ -663,6 +818,11 @@ export default {
           )
           .bind(subscription.id, details.plan, new Date().toISOString(), profile.id)
           .run();
+        await recordFunnel(db, "checkout", {
+          visitorId: "server",
+          userId: profile.id,
+          eventData: { plan: details.plan, subscription_id: subscription.id },
+        });
         return json(
           {
             subscription_id: subscription.id,
@@ -771,56 +931,116 @@ export default {
         );
       }
 
+      if (request.method === "POST" && path === "/v1/progress/complete") {
+        const profile = await userFromRequest(request, db);
+        if (!profile) return json({ error: "Log in again." }, 401, allowedOrigin);
+        const body = await readJson(request);
+        const courseId = String(body?.course_id || "").slice(0, 80);
+        const lessonId = String(body?.lesson_id || "").slice(0, 120);
+        const allowed = catalogLessonIds(courseId);
+        if (!courseId || !catalogCourse(courseId)) {
+          return json({ error: "That course is not in the catalog." }, 404, allowedOrigin);
+        }
+        if (!allowed.includes(lessonId)) {
+          return json({ error: "That lesson is not in the catalog." }, 400, allowedOrigin);
+        }
+        const prior = await db
+          .prepare("SELECT COUNT(*) AS n FROM lesson_completions WHERE user_id = ?")
+          .bind(profile.id)
+          .first();
+        const now = new Date().toISOString();
+        await db
+          .prepare(
+            `INSERT OR IGNORE INTO lesson_completions (user_id, course_id, lesson_id, completed_at)
+             VALUES (?, ?, ?, ?)`,
+          )
+          .bind(profile.id, courseId, lessonId, now)
+          .run();
+        const summary = await writeProgress(db, profile, courseId, {
+          lastLessonId: lessonId,
+          lastLessonLabel: body?.lesson_label ? String(body.lesson_label).slice(0, 200) : lessonId,
+          lastVisitedAt: now,
+        });
+        if (Number(prior?.n || 0) === 0) {
+          await recordFunnel(db, "first_lesson", {
+            visitorId: "server",
+            userId: profile.id,
+            eventData: { course_id: courseId, lesson_id: lessonId },
+          });
+        }
+        return json({ ok: true, ...summary }, 200, allowedOrigin);
+      }
+
+      if (request.method === "GET" && path === "/v1/certificates") {
+        const profile = await userFromRequest(request, db);
+        if (!profile) return json({ error: "Log in again." }, 401, allowedOrigin);
+        const result = await db
+          .prepare(
+            "SELECT id, course_id, status, evidence_json, requested_at, issued_at FROM certificate_requests WHERE user_id = ? ORDER BY requested_at",
+          )
+          .bind(profile.id)
+          .all();
+        return json(
+          { certificates: (result.results || []).map(certificateView) },
+          200,
+          allowedOrigin,
+        );
+      }
+
+      if (request.method === "POST" && path === "/v1/certificates") {
+        const profile = await userFromRequest(request, db);
+        if (!profile) return json({ error: "Log in again." }, 401, allowedOrigin);
+        const body = await readJson(request);
+        const courseId = String(body?.course_id || "").slice(0, 80);
+        if (!catalogCourse(courseId)) {
+          return json({ error: "That course is not in the catalog." }, 404, allowedOrigin);
+        }
+        const rows = await storedCompletions(db, profile.id, courseId);
+        const summary = completionSummary(courseId, rows);
+        if (summary.missing.length) {
+          return json(
+            {
+              error: "Every catalog lesson must be saved before a completion record can be requested.",
+              missing: summary.missing,
+            },
+            409,
+            allowedOrigin,
+          );
+        }
+        const existing = await db
+          .prepare("SELECT * FROM certificate_requests WHERE user_id = ? AND course_id = ?")
+          .bind(profile.id, courseId)
+          .first();
+        if (existing) {
+          return json({ certificate: certificateView(existing) }, 200, allowedOrigin);
+        }
+        const id = crypto.randomUUID();
+        const requestedAt = new Date().toISOString();
+        const evidence = rows.map((row) => ({ lesson_id: row.lesson_id, completed_at: row.completed_at }));
+        await db
+          .prepare(
+            `INSERT INTO certificate_requests
+             (id, user_id, course_id, status, evidence_json, requested_at, issued_at)
+             VALUES (?, ?, ?, 'requested', ?, ?, NULL)`,
+          )
+          .bind(id, profile.id, courseId, JSON.stringify(evidence), requestedAt)
+          .run();
+        const created = await db.prepare("SELECT * FROM certificate_requests WHERE id = ?").bind(id).first();
+        return json({ certificate: certificateView(created) }, 201, allowedOrigin);
+      }
+
       if (request.method === "PUT" && path === "/v1/progress") {
         const profile = await userFromRequest(request, db);
         if (!profile) return json({ error: "Log in again." }, 401, allowedOrigin);
         const body = await readJson(request);
         const courseId = String(body?.course_id || "").slice(0, 80);
         if (!courseId) return json({ error: "Missing course." }, 400, allowedOrigin);
-        const existing = await db
-          .prepare("SELECT completed_lesson_ids, progress_pct FROM user_progress WHERE user_id = ? AND course_id = ?")
-          .bind(profile.id, courseId)
-          .first();
-        let completed = [];
-        try {
-          completed = JSON.parse(existing?.completed_lesson_ids || "[]");
-        } catch {
-          completed = [];
-        }
-        if (Array.isArray(body?.completed_lesson_ids)) {
-          completed = body.completed_lesson_ids.map((item) => String(item)).slice(0, 500);
-        }
-        let progressPct = Number(existing?.progress_pct || 0);
-        if (body && body.progress_pct !== undefined && body.progress_pct !== null && body.progress_pct !== "") {
-          const parsed = Number(body.progress_pct);
-          if (!Number.isNaN(parsed)) progressPct = parsed;
-        }
-        const now = new Date().toISOString();
-        await db
-          .prepare(
-            `INSERT INTO user_progress
-             (user_id, course_id, last_lesson_id, last_lesson_label, completed_lesson_ids, progress_pct, last_visited_at, updated_at)
-             VALUES (?, ?, ?, ?, ?, ?, ?, ?)
-             ON CONFLICT(user_id, course_id) DO UPDATE SET
-               last_lesson_id = COALESCE(excluded.last_lesson_id, user_progress.last_lesson_id),
-               last_lesson_label = COALESCE(excluded.last_lesson_label, user_progress.last_lesson_label),
-               completed_lesson_ids = excluded.completed_lesson_ids,
-               progress_pct = excluded.progress_pct,
-               last_visited_at = COALESCE(excluded.last_visited_at, user_progress.last_visited_at),
-               updated_at = excluded.updated_at`,
-          )
-          .bind(
-            profile.id,
-            courseId,
-            body?.last_lesson_id ? String(body.last_lesson_id).slice(0, 120) : null,
-            body?.last_lesson_label ? String(body.last_lesson_label).slice(0, 200) : null,
-            JSON.stringify(completed),
-            progressPct,
-            body?.last_visited_at || now,
-            now,
-          )
-          .run();
-        return json({ ok: true }, 200, allowedOrigin);
+        const summary = await writeProgress(db, profile, courseId, {
+          lastLessonId: body?.last_lesson_id ? String(body.last_lesson_id).slice(0, 120) : null,
+          lastLessonLabel: body?.last_lesson_label ? String(body.last_lesson_label).slice(0, 200) : null,
+          lastVisitedAt: body?.last_visited_at || new Date().toISOString(),
+        });
+        return json({ ok: true, progress_pct: summary.progressPct, completed_lesson_ids: summary.completed }, 200, allowedOrigin);
       }
 
       if (request.method === "GET" && path === "/v1/progress") {
@@ -853,7 +1073,7 @@ export default {
           return json({ error: "Admin access required." }, 403, allowedOrigin);
         }
         const since = url.searchParams.get("since") || "2020-01-01T00:00:00Z";
-        const [pageViews, events, visitors, users, subscriptions, revenue] = await Promise.all([
+        const [pageViews, events, visitors, users, subscriptions, revenue, funnelRows, certificateRows] = await Promise.all([
           db.prepare("SELECT * FROM page_views WHERE created_at >= ? ORDER BY created_at DESC LIMIT 5000").bind(since).all(),
           db.prepare("SELECT * FROM analytics_events WHERE created_at >= ? ORDER BY created_at DESC LIMIT 3000").bind(since).all(),
           db.prepare("SELECT * FROM site_visitors ORDER BY last_seen DESC LIMIT 1000").all(),
@@ -869,6 +1089,19 @@ export default {
             `SELECT COALESCE(SUM(amount), 0) AS amount_paise, COUNT(*) AS payment_count
              FROM razorpay_payments WHERE status IN ('captured', 'authorized')`,
           ).first(),
+          db.prepare(
+            `SELECT event_type, COUNT(*) AS events,
+                    COUNT(DISTINCT COALESCE(user_id, visitor_id)) AS people
+             FROM analytics_events
+             WHERE created_at >= ? AND event_type IN (
+               'course_view', 'signup', 'first_lesson', 'pro_page', 'checkout', 'active_subscription'
+             )
+             GROUP BY event_type`,
+          ).bind(since).all(),
+          db.prepare(
+            `SELECT id, user_id, course_id, status, requested_at, issued_at
+             FROM certificate_requests ORDER BY requested_at DESC LIMIT 200`,
+          ).all(),
         ]);
         const parsedEvents = (events.results || []).map((event) => {
           try {
@@ -877,6 +1110,17 @@ export default {
             return { ...event, event_data: {} };
           }
         });
+        const funnel = {
+          course_view: { events: 0, people: 0 },
+          signup: { events: 0, people: 0 },
+          first_lesson: { events: 0, people: 0 },
+          pro_page: { events: 0, people: 0 },
+          checkout: { events: 0, people: 0 },
+          active_subscription: { events: 0, people: 0 },
+        };
+        for (const row of funnelRows.results || []) {
+          funnel[row.event_type] = { events: Number(row.events || 0), people: Number(row.people || 0) };
+        }
         return json(
           {
             page_views: pageViews.results || [],
@@ -890,6 +1134,8 @@ export default {
               payment_count: Number(revenue?.payment_count || 0),
               currency: "INR",
             },
+            funnel,
+            certificate_requests: certificateRows.results || [],
           },
           200,
           allowedOrigin,
@@ -923,6 +1169,16 @@ export default {
             profile?.id || null,
           )
           .run();
+        const funnelType = funnelEventForPath(pagePath);
+        if (funnelType) {
+          await recordFunnel(db, funnelType, {
+            visitorId,
+            userId: profile?.id || null,
+            pagePath,
+            country: request.cf?.country || null,
+            eventData: {},
+          });
+        }
         await db
           .prepare(
             `INSERT INTO site_visitors

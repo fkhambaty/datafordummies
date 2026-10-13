@@ -143,31 +143,26 @@
                 return;
             }
             var auth = window.FKTI_Auth;
-            if (auth && auth.getProgress && auth.saveProgress) {
-                return auth.getProgress(lesson.courseId).then(function (res) {
-                    if (!res || res.error) {
-                        sayStatus(button, 'Progress could not be saved.');
+            if (auth && auth.completeLesson) {
+                return auth.completeLesson(lesson.courseId, lesson.lessonId).then(function (saved) {
+                    if (!saved || saved.error) {
+                        sayStatus(button, (saved && saved.error && saved.error.message) || 'Lesson could not be saved.');
                         return;
                     }
-                    var row = (res.data && res.data[0]) || {};
-                    var existing = (row.completed_lesson_ids || []).slice();
-                    if (existing.indexOf(lesson.lessonId) === -1) existing.push(lesson.lessonId);
-                    var pct = lesson.total > 0
-                        ? Math.min(100, Math.round((existing.length / lesson.total) * 100))
-                        : Number(row.progress_pct || 0);
-                    return auth.saveProgress({
-                        course_id: lesson.courseId,
-                        last_lesson_id: lesson.lessonId || row.last_lesson_id || null,
-                        last_lesson_label: lesson.label || row.last_lesson_label || null,
-                        last_visited_at: new Date().toISOString(),
-                        completed_lesson_ids: existing,
-                        progress_pct: pct
-                    }).then(function (saved) {
-                        if (saved && saved.error) {
-                            sayStatus(button, 'Progress could not be saved.');
+                    var follow = auth.saveProgress
+                        ? auth.saveProgress({
+                            course_id: lesson.courseId,
+                            last_lesson_id: lesson.lessonId,
+                            last_lesson_label: lesson.label || null,
+                            last_visited_at: new Date().toISOString()
+                        })
+                        : Promise.resolve(null);
+                    return follow.then(function (place) {
+                        if (place && place.error) {
+                            sayStatus(button, 'The lesson was saved, but the continue link could not be updated.');
                             return;
                         }
-                        sayStatus(button, 'Lesson saved.');
+                        sayStatus(button, 'Lesson saved on your account.');
                         return refreshProgress(lesson);
                     });
                 });

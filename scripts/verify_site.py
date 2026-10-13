@@ -23,6 +23,7 @@ Usage:
 from __future__ import annotations
 
 import argparse
+import json
 import re
 import sys
 import tempfile
@@ -271,7 +272,9 @@ def check_site(root: Path) -> dict[str, list[str] | int]:
             # A hub is a course map. ClickHouse and Redshift link each other's
             # short hubs. That is not an unfinished lesson. Lesson pages stay
             # subject to the line and boilerplate checks.
-            if target.name == "hub.html":
+            if target.name == "hub.html" or target.name in {
+                "privacy.html", "terms.html", "cancellation.html", "refunds.html",
+            }:
                 continue
             target_text, _parser = parsed[target.resolve()]
             lines = len(target_text.splitlines())
@@ -296,6 +299,107 @@ def check_site(root: Path) -> dict[str, list[str] | int]:
         "pages": len(parsed),
         "external": external,
     }
+
+
+def check_discoverability(root: Path) -> list[str]:
+    failures: list[str] = []
+    robots = root / "robots.txt"
+    sitemap = root / "sitemap.xml"
+    if not robots.is_file() or "Sitemap: https://datafordummies.in/sitemap.xml" not in robots.read_text(encoding="utf-8"):
+        failures.append("FAIL robots.txt must allow crawling and point at the sitemap")
+    pages = html_files(root)
+    locs = []
+    if sitemap.is_file():
+        locs = re.findall(r"<loc>(.*?)</loc>", sitemap.read_text(encoding="utf-8"))
+    else:
+        failures.append("FAIL sitemap.xml is missing")
+
+    def file_url(rel: str) -> str:
+        if rel == "index.html":
+            return "https://datafordummies.in/"
+        if rel.endswith("/index.html"):
+            return "https://datafordummies.in/" + rel[: -len("index.html")]
+        return "https://datafordummies.in/" + rel
+
+    expected = [file_url(rel_posix(path, root)) for path in pages]
+    if sitemap.is_file() and sorted(locs) != sorted(expected):
+        missing = sorted(set(expected) - set(locs))[:5]
+        extra = sorted(set(locs) - set(expected))[:5]
+        failures.append(
+            f"FAIL sitemap has {len(locs)} urls for {len(expected)} pages"
+            + (f"; missing {missing}" if missing else "")
+            + (f"; extra {extra}" if extra else "")
+        )
+
+    descriptions: dict[str, str] = {}
+    for path in pages:
+        text = path.read_text(encoding="utf-8", errors="replace")
+        rel = rel_posix(path, root)
+        if "cdn.jsdelivr.net/npm/@supabase/supabase-js" in text:
+            failures.append(f"FAIL {rel} still loads the Supabase CDN")
+        if "firebase.initializeApp" in text:
+            failures.append(f"FAIL {rel} still initializes Firebase")
+        if "Community access" in text:
+            failures.append(f"FAIL {rel} still says Community access")
+        for label, pattern in (
+            ("description", r"<meta\b[^>]*name=[\"']description[\"'][^>]*>"),
+            ("canonical", r"<link\b[^>]*rel=[\"']canonical[\"'][^>]*>"),
+            ("og:title", r"<meta\b[^>]*property=[\"']og:title[\"'][^>]*>"),
+            ("og:description", r"<meta\b[^>]*property=[\"']og:description[\"'][^>]*>"),
+            ("og:url", r"<meta\b[^>]*property=[\"']og:url[\"'][^>]*>"),
+        ):
+            found = re.findall(pattern, text, flags=re.I)
+            if len(found) != 1:
+                failures.append(f"FAIL {rel} has {len(found)} {label} tags")
+        match = re.search(
+            r"<meta\b[^>]*name=([\"'])description\1[^>]*content=([\"'])(.*?)\2",
+            text,
+            flags=re.I,
+        )
+        if match:
+            descriptions[rel] = match.group(3)
+    seen: dict[str, str] = {}
+    for rel, text in descriptions.items():
+        if text in seen:
+            failures.append(f"FAIL duplicate description on {rel} and {seen[text]}")
+        else:
+            seen[text] = rel
+
+    if (root / "index.html").is_file():
+        home = (root / "index.html").read_text(encoding="utf-8", errors="replace")
+        if '"@type": "Organization"' not in home and '"@type":"Organization"' not in home:
+            failures.append("FAIL index.html is missing Organization structured data")
+        for href in ("privacy.html", "terms.html", "cancellation.html", "refunds.html"):
+            if href not in home:
+                failures.append(f"FAIL index.html does not link {href}")
+    for rel in ("pricing.html", "auth/signup.html"):
+        page = root / rel
+        if not page.is_file():
+            continue
+        text = page.read_text(encoding="utf-8", errors="replace")
+        for href in ("privacy.html", "terms.html", "cancellation.html", "refunds.html"):
+            if href not in text:
+                failures.append(f"FAIL {rel} does not link {href}")
+    profile = root / "auth" / "profile.html"
+    if profile.is_file() and 'id="certificates"' not in profile.read_text(encoding="utf-8", errors="replace"):
+        failures.append("FAIL auth/profile.html is missing the certificates section")
+    for apk in ("app-debug.apk", "apk/FK-Learning-Hub.apk"):
+        if (root / apk).exists():
+            failures.append(f"FAIL tracked app binary still present: {apk}")
+    catalog_path = root / "data" / "course-catalog.json"
+    if catalog_path.is_file():
+        catalog = json.loads(catalog_path.read_text(encoding="utf-8"))
+        for course in catalog.get("courses", {}).values():
+            hub = root / course["hub"]
+            if not hub.is_file():
+                failures.append(f"FAIL catalog hub missing {course['hub']}")
+                continue
+            hub_text = hub.read_text(encoding="utf-8", errors="replace")
+            if "hub-learning.js" not in hub_text:
+                failures.append(f"FAIL {course['hub']} is missing the hub guide")
+            if '"@type": "Course"' not in hub_text and '"@type":"Course"' not in hub_text:
+                failures.append(f"FAIL {course['hub']} is missing Course structured data")
+    return failures
 
 
 def print_report(result: dict[str, list[str] | int]) -> int:
@@ -422,6 +526,42 @@ def self_test() -> int:
             print("--- warnings ---")
             print(warnings)
             return 1
+        with tempfile.TemporaryDirectory() as seo_tmp:
+            seo_root = Path(seo_tmp)
+            (seo_root / "robots.txt").write_text(
+                "User-agent: *\nAllow: /\n\nSitemap: https://datafordummies.in/sitemap.xml\n",
+                encoding="utf-8",
+            )
+            page = """<!DOCTYPE html><html><head>
+                <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+                <meta name="description" content="Only page.">
+                <link rel="canonical" href="https://datafordummies.in/only.html">
+                <meta property="og:title" content="Only">
+                <meta property="og:description" content="Only page.">
+                <meta property="og:url" content="https://datafordummies.in/only.html">
+                <link rel="stylesheet" href="css/missing.css">
+                </head><body><p>Only page for the discoverability self-test with enough words.</p></body></html>"""
+            (seo_root / "only.html").write_text(page, encoding="utf-8")
+            (seo_root / "sitemap.xml").write_text(
+                "<urlset><loc>https://datafordummies.in/only.html</loc></urlset>",
+                encoding="utf-8",
+            )
+            seo_failures = check_discoverability(seo_root)
+            if seo_failures:
+                print("SELF-TEST fail")
+                print("\n".join(seo_failures))
+                return 1
+            (seo_root / "only.html").write_text(page.replace("Only page.", "Same.", 1), encoding="utf-8")
+            (seo_root / "other.html").write_text(page.replace("only.html", "other.html").replace("Only page.", "Same."), encoding="utf-8")
+            (seo_root / "sitemap.xml").write_text(
+                "<urlset><loc>https://datafordummies.in/only.html</loc><loc>https://datafordummies.in/other.html</loc></urlset>",
+                encoding="utf-8",
+            )
+            duplicate = "\n".join(check_discoverability(seo_root))
+            if "duplicate description" not in duplicate:
+                print("SELF-TEST fail")
+                print(duplicate)
+                return 1
     print("SELF-TEST ok")
     return 0
 
@@ -432,7 +572,9 @@ def main() -> int:
     args = parser.parse_args()
     if args.self_test:
         return self_test()
-    return print_report(check_site(ROOT))
+    result = check_site(ROOT)
+    result["failures"].extend(check_discoverability(ROOT))
+    return print_report(result)
 
 
 if __name__ == "__main__":

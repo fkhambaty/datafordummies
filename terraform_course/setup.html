@@ -3,6 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <!-- dfd-seo:start -->
+    <meta name="description" content="Install and version managers | Terraform and OpenTofu. Install one version on purpose.">
+    <link rel="canonical" href="https://datafordummies.in/terraform_course/setup.html">
+    <meta property="og:title" content="Install and version managers | Terraform and OpenTofu | Data For Dummies">
+    <meta property="og:description" content="Install and version managers | Terraform and OpenTofu. Install one version on purpose.">
+    <meta property="og:url" content="https://datafordummies.in/terraform_course/setup.html">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="https://datafordummies.in/logo.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <!-- dfd-seo:end -->
     <title>Install and version managers | Terraform and OpenTofu | Data For Dummies</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
@@ -66,68 +76,62 @@
 </tbody>
 </table>
 </section>
-        <section class="section dfd-diagram" data-dfd-diagram data-dfd-reveal>
-            <h2>Which binary</h2>
-            <div data-dfd-diagram-panel="path">
-<svg class="dfd-responsive" viewBox="0 0 640 148" role="img" aria-label="PATH highlighted">
-<rect class="track-drift" x="16" y="36" width="188" height="72" rx="12" fill="#a78bfa">
-</rect>
-<text x="110" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#ffffff">PATH</text>
-<path d="M204 72 H224" stroke="#64748b" stroke-width="2" fill="none">
-</path>
-<rect x="224" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
-</rect>
-<text x="318" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">Binary</text>
-<path d="M412 72 H432" stroke="#64748b" stroke-width="2" fill="none">
-</path>
-<rect x="432" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
-</rect>
-<text x="526" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">Version</text>
-</svg>
-<p>The shell runs the first matching name. A manager changes what that name points at.</p>
+        <section class="section dfd-diagram dfd-flow" data-dfd-diagram data-dfd-flow data-dfd-reveal>
+<h2>Which binary</h2>
+<div class="dfd-diagram-controls dfd-flow-controls" role="group" aria-label="Which binary: steps">
+<button type="button" data-dfd-diagram-step="step1" aria-pressed="true"><span class="dfd-flow-num" aria-hidden="true">1</span>PATH</button>
+<button type="button" data-dfd-diagram-step="step2" aria-pressed="false"><span class="dfd-flow-num" aria-hidden="true">2</span>Binary</button>
+<button type="button" data-dfd-diagram-step="step3" aria-pressed="false"><span class="dfd-flow-num" aria-hidden="true">3</span>Version</button>
 </div>
-<div data-dfd-diagram-panel="bin" hidden>
-<svg class="dfd-responsive" viewBox="0 0 640 148" role="img" aria-label="Binary highlighted">
-<rect x="16" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
-</rect>
-<text x="110" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">PATH</text>
-<path d="M204 72 H224" stroke="#64748b" stroke-width="2" fill="none">
-</path>
-<rect class="track-drift" x="224" y="36" width="188" height="72" rx="12" fill="#a78bfa">
-</rect>
-<text x="318" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#ffffff">Binary</text>
-<path d="M412 72 H432" stroke="#64748b" stroke-width="2" fill="none">
-</path>
-<rect x="432" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
-</rect>
-<text x="526" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">Version</text>
-</svg>
-<p>terraform and tofu are different files. Similar flags are not a shared identity.</p>
-</div>
-<div data-dfd-diagram-panel="ver" hidden>
-<svg class="dfd-responsive" viewBox="0 0 640 148" role="img" aria-label="Version highlighted">
-<rect x="16" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
-</rect>
-<text x="110" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">PATH</text>
-<path d="M204 72 H224" stroke="#64748b" stroke-width="2" fill="none">
-</path>
-<rect x="224" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
-</rect>
-<text x="318" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">Binary</text>
-<path d="M412 72 H432" stroke="#64748b" stroke-width="2" fill="none">
-</path>
-<rect class="track-drift" x="432" y="36" width="188" height="72" rx="12" fill="#a78bfa">
-</rect>
-<text x="526" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#ffffff">Version</text>
-</svg>
-<p>Print the version in the directory of the lab before you trust a blog command.</p>
-</div>
-            <div class="dfd-diagram-controls">
-                <button type="button" data-dfd-diagram-step="path" aria-pressed="true">PATH</button>
-<button type="button" data-dfd-diagram-step="bin" aria-pressed="false">Binary</button>
-<button type="button" data-dfd-diagram-step="ver" aria-pressed="false">Version</button>
-            </div>
-        </section>
+<div class="dfd-flow-panel" data-dfd-diagram-panel="step1">
+<ol class="dfd-flow-track" aria-label="Step 1: PATH">
+<li class="dfd-flow-node is-active" aria-current="step"><span class="dfd-flow-label">PATH</span></li>
+<li class="dfd-flow-node"><span class="dfd-flow-label">Binary</span></li>
+<li class="dfd-flow-node"><span class="dfd-flow-label">Version</span></li>
+</ol>
+<div class="dfd-flow-explain">
+<p class="dfd-flow-caption"><span class="dfd-flow-count">Step 1 of 3</span>Binary
+
+
+
+
+Version
+
+The shell runs the first matching name. A manager changes what that name points at.</p>
+</div></div>
+<div class="dfd-flow-panel" data-dfd-diagram-panel="step2" hidden>
+<ol class="dfd-flow-track" aria-label="Step 2: Binary">
+<li class="dfd-flow-node"><span class="dfd-flow-label">PATH</span></li>
+<li class="dfd-flow-node is-active" aria-current="step"><span class="dfd-flow-label">Binary</span></li>
+<li class="dfd-flow-node"><span class="dfd-flow-label">Version</span></li>
+</ol>
+<div class="dfd-flow-explain">
+<p class="dfd-flow-caption"><span class="dfd-flow-count">Step 2 of 3</span>Binary
+
+
+
+
+Version
+
+terraform and tofu are different files. Similar flags are not a shared identity.</p>
+</div></div>
+<div class="dfd-flow-panel" data-dfd-diagram-panel="step3" hidden>
+<ol class="dfd-flow-track" aria-label="Step 3: Version">
+<li class="dfd-flow-node"><span class="dfd-flow-label">PATH</span></li>
+<li class="dfd-flow-node"><span class="dfd-flow-label">Binary</span></li>
+<li class="dfd-flow-node is-active" aria-current="step"><span class="dfd-flow-label">Version</span></li>
+</ol>
+<div class="dfd-flow-explain">
+<p class="dfd-flow-caption"><span class="dfd-flow-count">Step 3 of 3</span>Binary
+
+
+
+
+Version
+
+Print the version in the directory of the lab before you trust a blog command.</p>
+</div></div>
+</section>
         <section class="section" id="lab" data-dfd-reveal>
             <h2>Lab: print the version and stop</h2>
             <p>Run the command for the tool you installed. If the command is not found, that is a successful reading of this lesson. Install from the official page, then print the version again.</p>
@@ -212,8 +216,6 @@ which tofu || true</code>
     </div>
 
     <script src="../js/code-copy.js">
-</script>
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2">
 </script>
     <script src="../js/supabase-config.js">
 </script>

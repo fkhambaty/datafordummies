@@ -3,6 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <!-- dfd-seo:start -->
+    <meta name="description" content="Endpoints, connectivity, and VPC | AWS DMS. A task can only move data the replication compute can reach.">
+    <link rel="canonical" href="https://datafordummies.in/dms_course/endpoints.html">
+    <meta property="og:title" content="Endpoints, connectivity, and VPC | AWS DMS | Data For Dummies">
+    <meta property="og:description" content="Endpoints, connectivity, and VPC | AWS DMS. A task can only move data the replication compute can reach.">
+    <meta property="og:url" content="https://datafordummies.in/dms_course/endpoints.html">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="https://datafordummies.in/logo.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <!-- dfd-seo:end -->
     <title>Endpoints, connectivity, and VPC | AWS DMS | Data For Dummies</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
@@ -65,68 +75,62 @@
 </tbody>
 </table>
 </section>
-        <section class="section dfd-diagram" data-dfd-diagram data-dfd-reveal>
-            <h2>Who must reach whom</h2>
-            <div data-dfd-diagram-panel="ri">
-<svg class="dfd-responsive" viewBox="0 0 640 148" role="img" aria-label="DMS compute highlighted">
-<rect class="track-drift" x="16" y="36" width="188" height="72" rx="12" fill="#fb923c">
-</rect>
-<text x="110" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#ffffff">DMS compute</text>
-<path d="M204 72 H224" stroke="#64748b" stroke-width="2" fill="none">
-</path>
-<rect x="224" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
-</rect>
-<text x="318" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">Security group</text>
-<path d="M412 72 H432" stroke="#64748b" stroke-width="2" fill="none">
-</path>
-<rect x="432" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
-</rect>
-<text x="526" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">Database</text>
-</svg>
-<p>The instance or the serverless ENI is the client.</p>
+        <section class="section dfd-diagram dfd-flow" data-dfd-diagram data-dfd-flow data-dfd-reveal>
+<h2>Who must reach whom</h2>
+<div class="dfd-diagram-controls dfd-flow-controls" role="group" aria-label="Who must reach whom: steps">
+<button type="button" data-dfd-diagram-step="step1" aria-pressed="true"><span class="dfd-flow-num" aria-hidden="true">1</span>Compute</button>
+<button type="button" data-dfd-diagram-step="step2" aria-pressed="false"><span class="dfd-flow-num" aria-hidden="true">2</span>Guard</button>
+<button type="button" data-dfd-diagram-step="step3" aria-pressed="false"><span class="dfd-flow-num" aria-hidden="true">3</span>Database</button>
 </div>
-<div data-dfd-diagram-panel="sg" hidden>
-<svg class="dfd-responsive" viewBox="0 0 640 148" role="img" aria-label="Security group highlighted">
-<rect x="16" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
-</rect>
-<text x="110" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">DMS compute</text>
-<path d="M204 72 H224" stroke="#64748b" stroke-width="2" fill="none">
-</path>
-<rect class="track-drift" x="224" y="36" width="188" height="72" rx="12" fill="#fb923c">
-</rect>
-<text x="318" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#ffffff">Security group</text>
-<path d="M412 72 H432" stroke="#64748b" stroke-width="2" fill="none">
-</path>
-<rect x="432" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
-</rect>
-<text x="526" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">Database</text>
-</svg>
-<p>The database security group must allow that client on the engine&#x27;s port.</p>
-</div>
-<div data-dfd-diagram-panel="db" hidden>
-<svg class="dfd-responsive" viewBox="0 0 640 148" role="img" aria-label="Database highlighted">
-<rect x="16" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
-</rect>
-<text x="110" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">DMS compute</text>
-<path d="M204 72 H224" stroke="#64748b" stroke-width="2" fill="none">
-</path>
-<rect x="224" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
-</rect>
-<text x="318" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">Security group</text>
-<path d="M412 72 H432" stroke="#64748b" stroke-width="2" fill="none">
-</path>
-<rect class="track-drift" x="432" y="36" width="188" height="72" rx="12" fill="#fb923c">
-</rect>
-<text x="526" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#ffffff">Database</text>
-</svg>
-<p>The database user needs the privileges the engine&#x27;s DMS page lists.</p>
-</div>
-            <div class="dfd-diagram-controls">
-                <button type="button" data-dfd-diagram-step="ri" aria-pressed="true">Compute</button>
-<button type="button" data-dfd-diagram-step="sg" aria-pressed="false">Guard</button>
-<button type="button" data-dfd-diagram-step="db" aria-pressed="false">Database</button>
-            </div>
-        </section>
+<div class="dfd-flow-panel" data-dfd-diagram-panel="step1">
+<ol class="dfd-flow-track" aria-label="Step 1: Compute">
+<li class="dfd-flow-node is-active" aria-current="step"><span class="dfd-flow-label">DMS compute</span></li>
+<li class="dfd-flow-node"><span class="dfd-flow-label">Security group</span></li>
+<li class="dfd-flow-node"><span class="dfd-flow-label">Database</span></li>
+</ol>
+<div class="dfd-flow-explain">
+<p class="dfd-flow-caption"><span class="dfd-flow-count">Step 1 of 3</span>Security group
+
+
+
+
+Database
+
+The instance or the serverless ENI is the client.</p>
+</div></div>
+<div class="dfd-flow-panel" data-dfd-diagram-panel="step2" hidden>
+<ol class="dfd-flow-track" aria-label="Step 2: Guard">
+<li class="dfd-flow-node"><span class="dfd-flow-label">DMS compute</span></li>
+<li class="dfd-flow-node is-active" aria-current="step"><span class="dfd-flow-label">Security group</span></li>
+<li class="dfd-flow-node"><span class="dfd-flow-label">Database</span></li>
+</ol>
+<div class="dfd-flow-explain">
+<p class="dfd-flow-caption"><span class="dfd-flow-count">Step 2 of 3</span>Security group
+
+
+
+
+Database
+
+The database security group must allow that client on the engine&#x27;s port.</p>
+</div></div>
+<div class="dfd-flow-panel" data-dfd-diagram-panel="step3" hidden>
+<ol class="dfd-flow-track" aria-label="Step 3: Database">
+<li class="dfd-flow-node"><span class="dfd-flow-label">DMS compute</span></li>
+<li class="dfd-flow-node"><span class="dfd-flow-label">Security group</span></li>
+<li class="dfd-flow-node is-active" aria-current="step"><span class="dfd-flow-label">Database</span></li>
+</ol>
+<div class="dfd-flow-explain">
+<p class="dfd-flow-caption"><span class="dfd-flow-count">Step 3 of 3</span>Security group
+
+
+
+
+Database
+
+The database user needs the privileges the engine&#x27;s DMS page lists.</p>
+</div></div>
+</section>
         <section class="section" id="lab" data-dfd-reveal>
             <h2>Lab: write the path in one sentence</h2>
             <p>Fill the blanks for a source you can actually describe. Do not invent CIDR blocks.</p>
@@ -211,8 +215,6 @@ Test connection result: not run yet.</code>
     </div>
 
     <script src="../js/code-copy.js">
-</script>
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2">
 </script>
     <script src="../js/supabase-config.js">
 </script>

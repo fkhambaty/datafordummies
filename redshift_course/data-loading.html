@@ -3,6 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <!-- dfd-seo:start -->
+    <meta name="description" content="Loading data into Redshift. COPY pulls files from S3 in parallel.">
+    <link rel="canonical" href="https://datafordummies.in/redshift_course/data-loading.html">
+    <meta property="og:title" content="Loading data into Redshift | Data For Dummies">
+    <meta property="og:description" content="Loading data into Redshift. COPY pulls files from S3 in parallel.">
+    <meta property="og:url" content="https://datafordummies.in/redshift_course/data-loading.html">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="https://datafordummies.in/logo.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <!-- dfd-seo:end -->
     <title>Loading data into Redshift | Data For Dummies</title>
     <link rel="stylesheet" href="styles.css">
     
@@ -40,34 +50,46 @@ FORMAT AS PARQUET;</code></pre></div>
 <p>Zero-ETL integrations replicate from supported sources, including Aurora, Amazon RDS, and DynamoDB, into Redshift. Use that when the source is already on AWS and you want near-real-time tables without a COPY job. You still design distribution and sort on the Redshift side, and you still decide who may query the replica. Zero-ETL does not replace a modeled mart. It replaces the plumbing that kept the replica full.</p>
 <p>If the source is a file drop from another company, COPY or a pipeline that writes Parquet remains the right door. Mixing both is normal: zero-ETL for operational tables, COPY for files.</p>
 </section>
-<section class="section dfd-diagram" data-dfd-diagram data-dfd-reveal><h2>Two ways in</h2><div data-dfd-diagram-panel="one">
-<svg class="dfd-responsive" viewBox="0 0 360 100" role="img" aria-label="S3 highlighted">
-<rect x="12" y="26" width="104" height="48" rx="8" fill="#0f172a"></rect>
-<text x="64" y="54" text-anchor="middle" font-size="13" fill="#ffffff" font-family="Nunito,sans-serif">S3</text>
-<rect x="128" y="26" width="104" height="48" rx="8" fill="#e2e8f0"></rect>
-<text x="180" y="54" text-anchor="middle" font-size="13" fill="#0f172a" font-family="Nunito,sans-serif">COPY</text>
-<rect x="244" y="26" width="104" height="48" rx="8" fill="#e2e8f0"></rect>
-<text x="296" y="54" text-anchor="middle" font-size="13" fill="#0f172a" font-family="Nunito,sans-serif">Zero-ETL</text>
-</svg>
-</div><div data-dfd-diagram-panel="two" hidden>
-<svg class="dfd-responsive" viewBox="0 0 360 100" role="img" aria-label="COPY highlighted">
-<rect x="12" y="26" width="104" height="48" rx="8" fill="#e2e8f0"></rect>
-<text x="64" y="54" text-anchor="middle" font-size="13" fill="#0f172a" font-family="Nunito,sans-serif">S3</text>
-<rect x="128" y="26" width="104" height="48" rx="8" fill="#0f172a"></rect>
-<text x="180" y="54" text-anchor="middle" font-size="13" fill="#ffffff" font-family="Nunito,sans-serif">COPY</text>
-<rect x="244" y="26" width="104" height="48" rx="8" fill="#e2e8f0"></rect>
-<text x="296" y="54" text-anchor="middle" font-size="13" fill="#0f172a" font-family="Nunito,sans-serif">Zero-ETL</text>
-</svg>
-</div><div data-dfd-diagram-panel="three" hidden>
-<svg class="dfd-responsive" viewBox="0 0 360 100" role="img" aria-label="Zero-ETL highlighted">
-<rect x="12" y="26" width="104" height="48" rx="8" fill="#e2e8f0"></rect>
-<text x="64" y="54" text-anchor="middle" font-size="13" fill="#0f172a" font-family="Nunito,sans-serif">S3</text>
-<rect x="128" y="26" width="104" height="48" rx="8" fill="#e2e8f0"></rect>
-<text x="180" y="54" text-anchor="middle" font-size="13" fill="#0f172a" font-family="Nunito,sans-serif">COPY</text>
-<rect x="244" y="26" width="104" height="48" rx="8" fill="#0f172a"></rect>
-<text x="296" y="54" text-anchor="middle" font-size="13" fill="#ffffff" font-family="Nunito,sans-serif">Zero-ETL</text>
-</svg>
-</div><div class="dfd-diagram-controls"><button type="button" data-dfd-diagram-step="one" aria-pressed="true">Files</button><button type="button" data-dfd-diagram-step="two" aria-pressed="false">COPY</button><button type="button" data-dfd-diagram-step="three" aria-pressed="false">Zero-ETL</button></div></section>
+<section class="section dfd-diagram dfd-flow" data-dfd-diagram data-dfd-flow data-dfd-reveal>
+<h2>Two ways in</h2>
+<p class="dfd-flow-intro">Bulk-load files with COPY, or let a zero-ETL integration replicate a database for you.</p>
+<div class="dfd-diagram-controls dfd-flow-controls" role="group" aria-label="Two ways in: steps">
+<button type="button" data-dfd-diagram-step="step1" aria-pressed="true"><span class="dfd-flow-num" aria-hidden="true">1</span>Files</button>
+<button type="button" data-dfd-diagram-step="step2" aria-pressed="false"><span class="dfd-flow-num" aria-hidden="true">2</span>COPY</button>
+<button type="button" data-dfd-diagram-step="step3" aria-pressed="false"><span class="dfd-flow-num" aria-hidden="true">3</span>Zero-ETL</button>
+</div>
+<div class="dfd-flow-panel" data-dfd-diagram-panel="step1">
+<ol class="dfd-flow-track" aria-label="Step 1: Files">
+<li class="dfd-flow-node is-active" aria-current="step"><span class="dfd-flow-label">Files in S3</span><span class="dfd-flow-role">Split and compressed</span></li>
+<li class="dfd-flow-node"><span class="dfd-flow-label">COPY</span><span class="dfd-flow-role">Parallel load into a table</span></li>
+<li class="dfd-flow-node"><span class="dfd-flow-label">Zero-ETL</span><span class="dfd-flow-role">Continuous copy from Aurora, RDS or DynamoDB</span></li>
+</ol>
+<div class="dfd-flow-explain">
+<p class="dfd-flow-caption"><span class="dfd-flow-count">Step 1 of 3</span>Split large exports into several compressed files so every slice can load at the same time.</p>
+<pre class="dfd-flow-example"><code>s3://bucket/sales/part-0001.parquet … part-0016.parquet</code></pre>
+</div></div>
+<div class="dfd-flow-panel" data-dfd-diagram-panel="step2" hidden>
+<ol class="dfd-flow-track" aria-label="Step 2: COPY">
+<li class="dfd-flow-node is-active" aria-current="step"><span class="dfd-flow-label">Files in S3</span><span class="dfd-flow-role">Split and compressed</span></li>
+<li class="dfd-flow-node is-active is-fed" aria-current="step"><span class="dfd-flow-label">COPY</span><span class="dfd-flow-role">Parallel load into a table</span></li>
+<li class="dfd-flow-node"><span class="dfd-flow-label">Zero-ETL</span><span class="dfd-flow-role">Continuous copy from Aurora, RDS or DynamoDB</span></li>
+</ol>
+<div class="dfd-flow-explain">
+<p class="dfd-flow-caption"><span class="dfd-flow-count">Step 2 of 3</span>COPY reads all the files in a prefix in parallel. It is far faster than inserting rows one at a time.</p>
+<pre class="dfd-flow-example"><code>COPY sales FROM &#x27;s3://bucket/sales/&#x27;
+IAM_ROLE default FORMAT AS PARQUET;</code></pre>
+</div></div>
+<div class="dfd-flow-panel" data-dfd-diagram-panel="step3" hidden>
+<ol class="dfd-flow-track" aria-label="Step 3: Zero-ETL">
+<li class="dfd-flow-node"><span class="dfd-flow-label">Files in S3</span><span class="dfd-flow-role">Split and compressed</span></li>
+<li class="dfd-flow-node"><span class="dfd-flow-label">COPY</span><span class="dfd-flow-role">Parallel load into a table</span></li>
+<li class="dfd-flow-node is-active" aria-current="step"><span class="dfd-flow-label">Zero-ETL</span><span class="dfd-flow-role">Continuous copy from Aurora, RDS or DynamoDB</span></li>
+</ol>
+<div class="dfd-flow-explain">
+<p class="dfd-flow-caption"><span class="dfd-flow-count">Step 3 of 3</span>A zero-ETL integration keeps Redshift updated from Aurora, RDS or DynamoDB continuously, without you building a pipeline.</p>
+<p class="dfd-flow-example dfd-flow-example-ui">Redshift → Zero-ETL integrations → Create → Aurora MySQL source</p>
+</div></div>
+</section>
 <section class="section" data-dfd-reveal><h2>Practice</h2>
 <p>If you can create a bucket, write ten rows of CSV and COPY them with an IAM role. If you cannot, read a failed COPY message and name which of these it is: role, path, or file format. Those three cover most first failures.</p>
 <p><button type="button" data-dfd-complete>Mark lesson complete</button></p><p data-dfd-complete-status></p>
@@ -119,7 +141,6 @@ FORMAT AS PARQUET;</code></pre></div>
     </div>
 
     <script src="../js/code-copy.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="../js/supabase-config.js"></script>
     <script src="../js/supabase-auth.js"></script>
     <script src="../js/paywall.js"></script>

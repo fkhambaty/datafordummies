@@ -3,6 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <!-- dfd-seo:start -->
+    <meta name="description" content="Security: RBAC, NetworkPolicy, Pod Security | Kubernetes. RBAC limits who can ask the API.">
+    <link rel="canonical" href="https://datafordummies.in/kubernetes_course/security.html">
+    <meta property="og:title" content="Security: RBAC, NetworkPolicy, Pod Security | Kubernetes | Data For Dummies">
+    <meta property="og:description" content="Security: RBAC, NetworkPolicy, Pod Security | Kubernetes. RBAC limits who can ask the API.">
+    <meta property="og:url" content="https://datafordummies.in/kubernetes_course/security.html">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="https://datafordummies.in/logo.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <!-- dfd-seo:end -->
     <title>Security: RBAC, NetworkPolicy, Pod Security | Kubernetes | Data For Dummies</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
@@ -71,68 +81,62 @@
 <p>Pod Security Admission is built in. Namespace labels choose a standard and a mode: privileged, baseline, or restricted, in enforce, audit, or warn. Privileged is the wide-open standard. Restricted is the tight one.</p>
 <p>PodSecurityPolicy was removed in Kubernetes 1.25. Do not follow a guide that tells you to install that admission controller.</p>
 </section>
-        <section class="section dfd-diagram" data-dfd-diagram data-dfd-reveal>
-            <h2>Three different gates</h2>
-            <div data-dfd-diagram-panel="rbac">
-<svg class="dfd-responsive" viewBox="0 0 640 148" role="img" aria-label="RBAC highlighted">
-<rect class="track-drift" x="16" y="36" width="188" height="72" rx="12" fill="#5b8def">
-</rect>
-<text x="110" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#ffffff">RBAC</text>
-<path d="M204 72 H224" stroke="#64748b" stroke-width="2" fill="none">
-</path>
-<rect x="224" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
-</rect>
-<text x="318" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">NetworkPolicy</text>
-<path d="M412 72 H432" stroke="#64748b" stroke-width="2" fill="none">
-</path>
-<rect x="432" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
-</rect>
-<text x="526" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">Pod security</text>
-</svg>
-<p>RBAC is about API verbs. It does not filter packet paths.</p>
+        <section class="section dfd-diagram dfd-flow" data-dfd-diagram data-dfd-flow data-dfd-reveal>
+<h2>Three different gates</h2>
+<div class="dfd-diagram-controls dfd-flow-controls" role="group" aria-label="Three different gates: steps">
+<button type="button" data-dfd-diagram-step="step1" aria-pressed="true"><span class="dfd-flow-num" aria-hidden="true">1</span>RBAC</button>
+<button type="button" data-dfd-diagram-step="step2" aria-pressed="false"><span class="dfd-flow-num" aria-hidden="true">2</span>Network</button>
+<button type="button" data-dfd-diagram-step="step3" aria-pressed="false"><span class="dfd-flow-num" aria-hidden="true">3</span>Pod security</button>
 </div>
-<div data-dfd-diagram-panel="np" hidden>
-<svg class="dfd-responsive" viewBox="0 0 640 148" role="img" aria-label="NetworkPolicy highlighted">
-<rect x="16" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
-</rect>
-<text x="110" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">RBAC</text>
-<path d="M204 72 H224" stroke="#64748b" stroke-width="2" fill="none">
-</path>
-<rect class="track-drift" x="224" y="36" width="188" height="72" rx="12" fill="#5b8def">
-</rect>
-<text x="318" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#ffffff">NetworkPolicy</text>
-<path d="M412 72 H432" stroke="#64748b" stroke-width="2" fill="none">
-</path>
-<rect x="432" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
-</rect>
-<text x="526" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">Pod security</text>
-</svg>
-<p>NetworkPolicy is about traffic, and only when the CNI enforces it.</p>
-</div>
-<div data-dfd-diagram-panel="psa" hidden>
-<svg class="dfd-responsive" viewBox="0 0 640 148" role="img" aria-label="Pod Security highlighted">
-<rect x="16" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
-</rect>
-<text x="110" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">RBAC</text>
-<path d="M204 72 H224" stroke="#64748b" stroke-width="2" fill="none">
-</path>
-<rect x="224" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
-</rect>
-<text x="318" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">NetworkPolicy</text>
-<path d="M412 72 H432" stroke="#64748b" stroke-width="2" fill="none">
-</path>
-<rect class="track-drift" x="432" y="36" width="188" height="72" rx="12" fill="#5b8def">
-</rect>
-<text x="526" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#ffffff">Pod security</text>
-</svg>
-<p>Pod Security Admission rejects or warns on Pod specs that break the standard.</p>
-</div>
-            <div class="dfd-diagram-controls">
-                <button type="button" data-dfd-diagram-step="rbac" aria-pressed="true">RBAC</button>
-<button type="button" data-dfd-diagram-step="np" aria-pressed="false">Network</button>
-<button type="button" data-dfd-diagram-step="psa" aria-pressed="false">Pod security</button>
-            </div>
-        </section>
+<div class="dfd-flow-panel" data-dfd-diagram-panel="step1">
+<ol class="dfd-flow-track" aria-label="Step 1: RBAC">
+<li class="dfd-flow-node is-active" aria-current="step"><span class="dfd-flow-label">RBAC</span></li>
+<li class="dfd-flow-node"><span class="dfd-flow-label">NetworkPolicy</span></li>
+<li class="dfd-flow-node"><span class="dfd-flow-label">Pod security</span></li>
+</ol>
+<div class="dfd-flow-explain">
+<p class="dfd-flow-caption"><span class="dfd-flow-count">Step 1 of 3</span>NetworkPolicy
+
+
+
+
+Pod security
+
+RBAC is about API verbs. It does not filter packet paths.</p>
+</div></div>
+<div class="dfd-flow-panel" data-dfd-diagram-panel="step2" hidden>
+<ol class="dfd-flow-track" aria-label="Step 2: Network">
+<li class="dfd-flow-node"><span class="dfd-flow-label">RBAC</span></li>
+<li class="dfd-flow-node is-active" aria-current="step"><span class="dfd-flow-label">NetworkPolicy</span></li>
+<li class="dfd-flow-node"><span class="dfd-flow-label">Pod security</span></li>
+</ol>
+<div class="dfd-flow-explain">
+<p class="dfd-flow-caption"><span class="dfd-flow-count">Step 2 of 3</span>NetworkPolicy
+
+
+
+
+Pod security
+
+NetworkPolicy is about traffic, and only when the CNI enforces it.</p>
+</div></div>
+<div class="dfd-flow-panel" data-dfd-diagram-panel="step3" hidden>
+<ol class="dfd-flow-track" aria-label="Step 3: Pod security">
+<li class="dfd-flow-node"><span class="dfd-flow-label">RBAC</span></li>
+<li class="dfd-flow-node"><span class="dfd-flow-label">NetworkPolicy</span></li>
+<li class="dfd-flow-node is-active" aria-current="step"><span class="dfd-flow-label">Pod security</span></li>
+</ol>
+<div class="dfd-flow-explain">
+<p class="dfd-flow-caption"><span class="dfd-flow-count">Step 3 of 3</span>NetworkPolicy
+
+
+
+
+Pod security
+
+Pod Security Admission rejects or warns on Pod specs that break the standard.</p>
+</div></div>
+</section>
         <section class="section" id="lab" data-dfd-reveal>
             <h2>Lab: ask what you are allowed to do</h2>
             <p>This does not pretend to enforce a NetworkPolicy on kind. It checks RBAC, which the API server does enforce.</p>
@@ -221,8 +225,6 @@ kubectl label namespace default pod-security.kubernetes.io/warn=restricted --ove
     </div>
 
     <script src="../js/code-copy.js">
-</script>
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2">
 </script>
     <script src="../js/supabase-config.js">
 </script>

@@ -3,6 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <!-- dfd-seo:start -->
+    <meta name="description" content="Redshift production. Lock the network, test a snapshot, and watch query history.">
+    <link rel="canonical" href="https://datafordummies.in/redshift_course/production.html">
+    <meta property="og:title" content="Redshift production | Data For Dummies">
+    <meta property="og:description" content="Redshift production. Lock the network, test a snapshot, and watch query history.">
+    <meta property="og:url" content="https://datafordummies.in/redshift_course/production.html">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="https://datafordummies.in/logo.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <!-- dfd-seo:end -->
     <title>Redshift production | Data For Dummies</title>
     <link rel="stylesheet" href="styles.css">
     
@@ -51,34 +61,46 @@ WHERE status = &#x27;failed&#x27;
   AND start_time &gt; DATEADD(hour, -24, GETDATE());</code></pre></div>
 <div class="pro-tip"><h4>Data sharing is not a backup</h4><p>A consumer can see current tables. It does not give you yesterday after someone deletes the producer. Snapshots do that.</p></div>
 </section>
-<section class="section dfd-diagram" data-dfd-diagram data-dfd-reveal><h2>Lock, spare key, window</h2><div data-dfd-diagram-panel="one">
-<svg class="dfd-responsive" viewBox="0 0 360 100" role="img" aria-label="Access highlighted">
-<rect x="12" y="26" width="104" height="48" rx="8" fill="#0f172a"></rect>
-<text x="64" y="54" text-anchor="middle" font-size="13" fill="#ffffff" font-family="Nunito,sans-serif">Access</text>
-<rect x="128" y="26" width="104" height="48" rx="8" fill="#e2e8f0"></rect>
-<text x="180" y="54" text-anchor="middle" font-size="13" fill="#0f172a" font-family="Nunito,sans-serif">Snapshot</text>
-<rect x="244" y="26" width="104" height="48" rx="8" fill="#e2e8f0"></rect>
-<text x="296" y="54" text-anchor="middle" font-size="13" fill="#0f172a" font-family="Nunito,sans-serif">Signals</text>
-</svg>
-</div><div data-dfd-diagram-panel="two" hidden>
-<svg class="dfd-responsive" viewBox="0 0 360 100" role="img" aria-label="Snapshot highlighted">
-<rect x="12" y="26" width="104" height="48" rx="8" fill="#e2e8f0"></rect>
-<text x="64" y="54" text-anchor="middle" font-size="13" fill="#0f172a" font-family="Nunito,sans-serif">Access</text>
-<rect x="128" y="26" width="104" height="48" rx="8" fill="#0f172a"></rect>
-<text x="180" y="54" text-anchor="middle" font-size="13" fill="#ffffff" font-family="Nunito,sans-serif">Snapshot</text>
-<rect x="244" y="26" width="104" height="48" rx="8" fill="#e2e8f0"></rect>
-<text x="296" y="54" text-anchor="middle" font-size="13" fill="#0f172a" font-family="Nunito,sans-serif">Signals</text>
-</svg>
-</div><div data-dfd-diagram-panel="three" hidden>
-<svg class="dfd-responsive" viewBox="0 0 360 100" role="img" aria-label="Signals highlighted">
-<rect x="12" y="26" width="104" height="48" rx="8" fill="#e2e8f0"></rect>
-<text x="64" y="54" text-anchor="middle" font-size="13" fill="#0f172a" font-family="Nunito,sans-serif">Access</text>
-<rect x="128" y="26" width="104" height="48" rx="8" fill="#e2e8f0"></rect>
-<text x="180" y="54" text-anchor="middle" font-size="13" fill="#0f172a" font-family="Nunito,sans-serif">Snapshot</text>
-<rect x="244" y="26" width="104" height="48" rx="8" fill="#0f172a"></rect>
-<text x="296" y="54" text-anchor="middle" font-size="13" fill="#ffffff" font-family="Nunito,sans-serif">Signals</text>
-</svg>
-</div><div class="dfd-diagram-controls"><button type="button" data-dfd-diagram-step="one" aria-pressed="true">Access</button><button type="button" data-dfd-diagram-step="two" aria-pressed="false">Snapshot</button><button type="button" data-dfd-diagram-step="three" aria-pressed="false">Signals</button></div></section>
+<section class="section dfd-diagram dfd-flow" data-dfd-diagram data-dfd-flow data-dfd-reveal>
+<h2>Lock, spare key, window</h2>
+<p class="dfd-flow-intro">Limit access, keep restorable snapshots, and watch the right signals.</p>
+<div class="dfd-diagram-controls dfd-flow-controls" role="group" aria-label="Lock, spare key, window: steps">
+<button type="button" data-dfd-diagram-step="step1" aria-pressed="true"><span class="dfd-flow-num" aria-hidden="true">1</span>Access</button>
+<button type="button" data-dfd-diagram-step="step2" aria-pressed="false"><span class="dfd-flow-num" aria-hidden="true">2</span>Snapshot</button>
+<button type="button" data-dfd-diagram-step="step3" aria-pressed="false"><span class="dfd-flow-num" aria-hidden="true">3</span>Signals</button>
+</div>
+<div class="dfd-flow-panel" data-dfd-diagram-panel="step1">
+<ol class="dfd-flow-track" aria-label="Step 1: Access">
+<li class="dfd-flow-node is-active" aria-current="step"><span class="dfd-flow-label">Access</span><span class="dfd-flow-role">Roles and least privilege</span></li>
+<li class="dfd-flow-node"><span class="dfd-flow-label">Snapshots</span><span class="dfd-flow-role">Your spare key</span></li>
+<li class="dfd-flow-node"><span class="dfd-flow-label">Signals</span><span class="dfd-flow-role">Alarms and maintenance window</span></li>
+</ol>
+<div class="dfd-flow-explain">
+<p class="dfd-flow-caption"><span class="dfd-flow-count">Step 1 of 3</span>Give each team a role with only what it needs, and keep the cluster encrypted and off the public internet.</p>
+<pre class="dfd-flow-example"><code>CREATE ROLE analyst;
+GRANT SELECT ON ALL TABLES IN SCHEMA public TO ROLE analyst;</code></pre>
+</div></div>
+<div class="dfd-flow-panel" data-dfd-diagram-panel="step2" hidden>
+<ol class="dfd-flow-track" aria-label="Step 2: Snapshot">
+<li class="dfd-flow-node"><span class="dfd-flow-label">Access</span><span class="dfd-flow-role">Roles and least privilege</span></li>
+<li class="dfd-flow-node is-active" aria-current="step"><span class="dfd-flow-label">Snapshots</span><span class="dfd-flow-role">Your spare key</span></li>
+<li class="dfd-flow-node"><span class="dfd-flow-label">Signals</span><span class="dfd-flow-role">Alarms and maintenance window</span></li>
+</ol>
+<div class="dfd-flow-explain">
+<p class="dfd-flow-caption"><span class="dfd-flow-count">Step 2 of 3</span>Automated snapshots run on their own. Take a manual snapshot before big changes. A restore creates a new cluster.</p>
+<p class="dfd-flow-example dfd-flow-example-ui">Cluster → Actions → Create snapshot</p>
+</div></div>
+<div class="dfd-flow-panel" data-dfd-diagram-panel="step3" hidden>
+<ol class="dfd-flow-track" aria-label="Step 3: Signals">
+<li class="dfd-flow-node"><span class="dfd-flow-label">Access</span><span class="dfd-flow-role">Roles and least privilege</span></li>
+<li class="dfd-flow-node"><span class="dfd-flow-label">Snapshots</span><span class="dfd-flow-role">Your spare key</span></li>
+<li class="dfd-flow-node is-active" aria-current="step"><span class="dfd-flow-label">Signals</span><span class="dfd-flow-role">Alarms and maintenance window</span></li>
+</ol>
+<div class="dfd-flow-explain">
+<p class="dfd-flow-caption"><span class="dfd-flow-count">Step 3 of 3</span>Set CloudWatch alarms on CPU, disk use and query queueing, and pick a maintenance window for patches.</p>
+<p class="dfd-flow-example dfd-flow-example-ui">CloudWatch → Alarms → PercentageDiskSpaceUsed &gt; 80%</p>
+</div></div>
+</section>
 <section class="section" data-dfd-reveal><h2>Leave a runbook</h2>
 <p>Write who can pause the warehouse, where snapshots go, and which query shows the last failed COPY. The split lessons on this hub are the course. The long <a href="index.html">single-page notes</a> are the older copy of the same subject.</p>
 <p><button type="button" data-dfd-complete>Mark lesson complete</button></p><p data-dfd-complete-status></p>
@@ -130,7 +152,6 @@ WHERE status = &#x27;failed&#x27;
     </div>
 
     <script src="../js/code-copy.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="../js/supabase-config.js"></script>
     <script src="../js/supabase-auth.js"></script>
     <script src="../js/paywall.js"></script>

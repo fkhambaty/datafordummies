@@ -8,7 +8,7 @@ Read this file, then `AGENTS.md`. The README still contains older FKTI notes und
 
 Data For Dummies is a static learning site for data analytics and data engineering. A visitor can open course pages, practice, and (when the database is awake) sign in and pay for Pro. The pages are hand-written HTML, CSS, and JavaScript. There is no React app and no build step.
 
-Live brand: **Data For Dummies**. The code still contains the older name FKTI in storage keys, a Firebase project id, and email copy. Do not rename `fkti_analytics` in `localStorage` or the Firebase project `fkti-analytics` as a cosmetic cleanup. Existing browsers would lose progress and the old analytics path would break.
+Live brand: **Data For Dummies**. The code still contains the older name FKTI in storage keys and email copy. Do not rename `fkti_analytics` in `localStorage`. The homepage does not initialize Firebase.
 
 It is not FunBerry Kids and it is not Okavo.
 
@@ -116,7 +116,7 @@ Data science, LLM, Airflow, and dbt lessons link a family `styles.css` and still
 - New rules in `dfd-system.css` use `:where()` or stay limited to focus, reduced motion, and overflow. The file loads after inline `<style>`, so a normal class selector would override lesson colors.
 - Course accent colors stay in the course stylesheet or that page's own `:root`.
 - Do not restyle `.keyword`, `.string`, `.comment`, `.function`, `.number`, `.type`, or `.operator`. Lessons paint those as inline spans.
-- Do not rename `FKTI_Auth`, any `fkti_` storage key, or the Firebase project id `fkti-analytics`. The published address `fktiindia@gmail.com` stays. Visible "FKTI" labels may say Data For Dummies.
+- Do not rename `FKTI_Auth`, any `fkti_` storage key, or the published address `fktiindia@gmail.com`. Visible "FKTI" labels may say Data For Dummies. Do not load the Firebase SDK or the Supabase browser SDK.
 - Do not rename classes that course JavaScript or the paywall reads, including hub cards, lesson nav, quiz options, and code-copy buttons.
 - Do not set `display` on `[data-access]`, `.paywall`, `.pro-lock-overlay`, `.pro-locked-wrapper`, `.dashboard`, `.auth-gate`, or `.admin-signin-overlay`. Signup verification, progress, code copy, the paywall, and Razorpay stay wired as they are.
 - Do not put `overflow` on `html` or `body` in the shared file. That forces the other axis off `visible` and breaks fixed menus and modals.
@@ -148,7 +148,7 @@ Added 13 October 2026. These files are the shared shell for new lessons. Existin
 | `scripts/verify_site.py` | Crawls HTML. Baseline stubs and known missing anchors are warnings. A `hub.html` course map is not treated as a lesson stub. New breaks exit 1. |
 | `scripts/viewport_audit.mjs` | Playwright pass for HTTP errors, console errors, page errors, document overflow, the 768px menu, and 16px inputs. `--mode sweep` covers every page at 390, 768, and 1440. `--mode full` covers representative routes at all six viewports. `--mode clicks` walks the menu, video, hubs, lessons, dummy login, and tools. `--mode all` runs those three. Local `/v1/page-view` and `/v1/event` calls return 204 so CORS noise is not a failure. |
 
-Head order for a new lesson: the family stylesheet, then the page accent, then `dfd-system.css` last. Script order: `code-copy.js`, Supabase CDN, `supabase-config.js`, `supabase-auth.js`, `paywall.js`, `progress.js`, `lesson-common.js`, `quiz.js`, `analytics-tracker.js`. Do not load `hub-script.js` on a lesson. It already owns the home-page nav and scroll handlers.
+Head order for a new lesson: the family stylesheet, then the page accent, then `dfd-system.css` last. Script order: `code-copy.js`, `supabase-config.js`, `supabase-auth.js`, `paywall.js`, `progress.js`, `lesson-common.js`, `quiz.js`, `analytics-tracker.js`. Do not load the Supabase CDN. `supabase-auth.js` talks to the Worker. Do not load `hub-script.js` on a lesson. It already owns the home-page nav and scroll handlers.
 
 `css/course-light-theme.css`, `css/hub-light.css`, and `css/dfd-system.css` gained additive `.dfd-*` classes for diagrams, knowledge checks, progress, 48px targets, safe-area padding, and scrolling tables, SVG, and code. Syntax color classes and paywall `display` rules are unchanged.
 
@@ -198,3 +198,28 @@ node scripts/viewport_audit.mjs --base http://127.0.0.1:8877 --mode all
 - The homepage must not invent learner counts, employer logos, testimonials, or project totals. Course folders and project pages that exist in this repo can be named. A number that was not counted from the repo does not go on the page.
 - The homepage footer used to link GitHub at `fkhambaty/fkti_data` and the five Python assignment cards linked `student-a1.html` through `student-a5.html`, which were 404s. Those now point at this repository and at `student-assignments.html#assignmentN`.
 - Visual changes go through the design-system table above. Do not find-and-replace course HTML class names, syntax spans, or payment scripts to chase a new look.
+
+## Trust, completion, and operations (13 October 2026)
+
+`scripts/build_learning_platform.py` writes `robots.txt`, `sitemap.xml`, `data/course-catalog.json`, and `cloudflare/worker/src/course-catalog.js`. It stamps one description, canonical URL, and Open Graph block on every HTML page. The homepage carries Organization structured data. Each course hub carries Course structured data with the provider and the hub text. There is no rating and no learner count in that data. `scripts/verify_site.py` fails if a page loses those tags, if two descriptions match, if the sitemap drifts from the HTML inventory, if the Supabase CDN or Firebase init returns, or if the APK binaries return.
+
+`privacy.html`, `terms.html`, `cancellation.html`, and `refunds.html` are linked from the homepage footer, pricing, signup, and the account page. Cancellation stops the next Razorpay renewal. A captured payment is not refunded automatically.
+
+The free plan offers the YouTube channel, the GitHub repository, and email. There is no private forum. Pro copy does not promise a job, a 12-week portfolio, priority support, or that the Android app shares the website subscription.
+
+`POST /v1/progress/complete` saves one catalog lesson with the server clock. A client-sent `completed_lesson_ids` list on `PUT /v1/progress` does not count. `POST /v1/certificates` creates a row with status `requested` and `issued_at` null only when every catalog lesson for that course is in `lesson_completions`. The account page shows that evidence. Nothing in this repository issues a certificate or prints a verification URL. Old course scripts that built a downloadable certificate now send the reader to the account page.
+
+Hub pages load `js/hub-learning.js`. Reading time is the lesson word count divided by 180, clamped between 4 and 40 minutes. Prerequisites, outcomes, and the capstone note come from `data/course-catalog.json`.
+
+`/v1/page-view` records `course_view` for a course hub and `pro_page` for pricing. Signup, the first saved lesson, checkout creation, and an active subscription are recorded by the Worker. The admin analytics page shows those six counts. `cloudflare/d1/funnel_query.sql` is the same query. Event payloads do not include the email address.
+
+`GET /v1/health` reports `email_ready` as a boolean. It does not return secrets. Signup still returns 503 when Resend is not configured, and that path does not insert an account.
+
+`docs/VENDOR_REFRESH.md` is the checklist. `python3 scripts/check_vendor_versions.py` fails when the stamp is older than 90 days. `--online` compares the stamped Airflow major version with PyPI.
+
+`snowflake_course/index.html` and `dms_course/index.html` were byte-for-byte copies of their hubs on 13 October 2026. They are now compatibility redirects to `hub.html`. Other old index pages were not byte-identical, so they stayed. The Android binaries were removed. `docs/APK_RELEASE.md` points at the Google Drive folder already used in the navigation. `apk/index.html` opens that folder.
+
+`.github/workflows/ci.yml` runs the site verifier, the vendor stamp check, and the Worker tests. `.github/workflows/production-smoke.yml` runs every Monday against the live site: homepage, `/v1/health`, the existing dummy login, a payment call that must be refused, and homepage width at 390 and 1440. It does not create an account.
+
+Pushing `main` still publishes the static site through GitHub Pages. The Worker is published with `npx wrangler deploy` from `cloudflare/worker` after `004_completion_certificates.sql` is applied to the remote D1 database. `CHECKOUT_MODE` stays `hosted` until Razorpay approves the domain.
+

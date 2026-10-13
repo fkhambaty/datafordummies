@@ -3,6 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <!-- dfd-seo:start -->
+    <meta name="description" content="CI and HCP Terraform | Terraform and OpenTofu. A pipeline should run the same commands a careful person runs: format, validate, test, plan, and a reviewed apply.">
+    <link rel="canonical" href="https://datafordummies.in/terraform_course/ci-hcp.html">
+    <meta property="og:title" content="CI and HCP Terraform | Terraform and OpenTofu | Data For Dummies">
+    <meta property="og:description" content="CI and HCP Terraform | Terraform and OpenTofu. A pipeline should run the same commands a careful person runs: format, validate, test, plan, and a reviewed apply.">
+    <meta property="og:url" content="https://datafordummies.in/terraform_course/ci-hcp.html">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="https://datafordummies.in/logo.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <!-- dfd-seo:end -->
     <title>CI and HCP Terraform | Terraform and OpenTofu | Data For Dummies</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
@@ -74,68 +84,62 @@
 </tbody>
 </table>
 </section>
-        <section class="section dfd-diagram" data-dfd-diagram data-dfd-reveal>
-            <h2>A change becomes a run</h2>
-            <div data-dfd-diagram-panel="pr">
-<svg class="dfd-responsive" viewBox="0 0 640 148" role="img" aria-label="Pull request highlighted">
-<rect class="track-drift" x="16" y="36" width="188" height="72" rx="12" fill="#a78bfa">
-</rect>
-<text x="110" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#ffffff">Pull request</text>
-<path d="M204 72 H224" stroke="#64748b" stroke-width="2" fill="none">
-</path>
-<rect x="224" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
-</rect>
-<text x="318" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">Plan</text>
-<path d="M412 72 H432" stroke="#64748b" stroke-width="2" fill="none">
-</path>
-<rect x="432" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
-</rect>
-<text x="526" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">Apply</text>
-</svg>
-<p>The pull request runs fmt, validate, and tests.</p>
+        <section class="section dfd-diagram dfd-flow" data-dfd-diagram data-dfd-flow data-dfd-reveal>
+<h2>A change becomes a run</h2>
+<div class="dfd-diagram-controls dfd-flow-controls" role="group" aria-label="A change becomes a run: steps">
+<button type="button" data-dfd-diagram-step="step1" aria-pressed="true"><span class="dfd-flow-num" aria-hidden="true">1</span>Pull request</button>
+<button type="button" data-dfd-diagram-step="step2" aria-pressed="false"><span class="dfd-flow-num" aria-hidden="true">2</span>Plan</button>
+<button type="button" data-dfd-diagram-step="step3" aria-pressed="false"><span class="dfd-flow-num" aria-hidden="true">3</span>Apply</button>
 </div>
-<div data-dfd-diagram-panel="plan" hidden>
-<svg class="dfd-responsive" viewBox="0 0 640 148" role="img" aria-label="Plan highlighted">
-<rect x="16" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
-</rect>
-<text x="110" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">Pull request</text>
-<path d="M204 72 H224" stroke="#64748b" stroke-width="2" fill="none">
-</path>
-<rect class="track-drift" x="224" y="36" width="188" height="72" rx="12" fill="#a78bfa">
-</rect>
-<text x="318" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#ffffff">Plan</text>
-<path d="M412 72 H432" stroke="#64748b" stroke-width="2" fill="none">
-</path>
-<rect x="432" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
-</rect>
-<text x="526" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">Apply</text>
-</svg>
-<p>The plan is an artifact. It is not an apply.</p>
-</div>
-<div data-dfd-diagram-panel="apply" hidden>
-<svg class="dfd-responsive" viewBox="0 0 640 148" role="img" aria-label="Apply highlighted">
-<rect x="16" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
-</rect>
-<text x="110" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">Pull request</text>
-<path d="M204 72 H224" stroke="#64748b" stroke-width="2" fill="none">
-</path>
-<rect x="224" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
-</rect>
-<text x="318" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">Plan</text>
-<path d="M412 72 H432" stroke="#64748b" stroke-width="2" fill="none">
-</path>
-<rect class="track-drift" x="432" y="36" width="188" height="72" rx="12" fill="#a78bfa">
-</rect>
-<text x="526" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#ffffff">Apply</text>
-</svg>
-<p>Apply waits for review and a lock.</p>
-</div>
-            <div class="dfd-diagram-controls">
-                <button type="button" data-dfd-diagram-step="pr" aria-pressed="true">Pull request</button>
-<button type="button" data-dfd-diagram-step="plan" aria-pressed="false">Plan</button>
-<button type="button" data-dfd-diagram-step="apply" aria-pressed="false">Apply</button>
-            </div>
-        </section>
+<div class="dfd-flow-panel" data-dfd-diagram-panel="step1">
+<ol class="dfd-flow-track" aria-label="Step 1: Pull request">
+<li class="dfd-flow-node is-active" aria-current="step"><span class="dfd-flow-label">Pull request</span></li>
+<li class="dfd-flow-node"><span class="dfd-flow-label">Plan</span></li>
+<li class="dfd-flow-node"><span class="dfd-flow-label">Apply</span></li>
+</ol>
+<div class="dfd-flow-explain">
+<p class="dfd-flow-caption"><span class="dfd-flow-count">Step 1 of 3</span>Plan
+
+
+
+
+Apply
+
+The pull request runs fmt, validate, and tests.</p>
+</div></div>
+<div class="dfd-flow-panel" data-dfd-diagram-panel="step2" hidden>
+<ol class="dfd-flow-track" aria-label="Step 2: Plan">
+<li class="dfd-flow-node"><span class="dfd-flow-label">Pull request</span></li>
+<li class="dfd-flow-node is-active" aria-current="step"><span class="dfd-flow-label">Plan</span></li>
+<li class="dfd-flow-node"><span class="dfd-flow-label">Apply</span></li>
+</ol>
+<div class="dfd-flow-explain">
+<p class="dfd-flow-caption"><span class="dfd-flow-count">Step 2 of 3</span>Plan
+
+
+
+
+Apply
+
+The plan is an artifact. It is not an apply.</p>
+</div></div>
+<div class="dfd-flow-panel" data-dfd-diagram-panel="step3" hidden>
+<ol class="dfd-flow-track" aria-label="Step 3: Apply">
+<li class="dfd-flow-node"><span class="dfd-flow-label">Pull request</span></li>
+<li class="dfd-flow-node"><span class="dfd-flow-label">Plan</span></li>
+<li class="dfd-flow-node is-active" aria-current="step"><span class="dfd-flow-label">Apply</span></li>
+</ol>
+<div class="dfd-flow-explain">
+<p class="dfd-flow-caption"><span class="dfd-flow-count">Step 3 of 3</span>Plan
+
+
+
+
+Apply
+
+Apply waits for review and a lock.</p>
+</div></div>
+</section>
         <section class="section" id="lab" data-dfd-reveal>
             <h2>Lab: write the pipeline as comments you could paste into CI</h2>
             <p>Do not point this at a production backend. The commands are the contract.</p>
@@ -226,8 +230,6 @@ terraform plan -input=false -out=tfplan
     </div>
 
     <script src="../js/code-copy.js">
-</script>
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2">
 </script>
     <script src="../js/supabase-config.js">
 </script>

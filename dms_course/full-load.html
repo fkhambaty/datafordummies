@@ -3,6 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <!-- dfd-seo:start -->
+    <meta name="description" content="Full load | AWS DMS. Full load copies the current rows.">
+    <link rel="canonical" href="https://datafordummies.in/dms_course/full-load.html">
+    <meta property="og:title" content="Full load | AWS DMS | Data For Dummies">
+    <meta property="og:description" content="Full load | AWS DMS. Full load copies the current rows.">
+    <meta property="og:url" content="https://datafordummies.in/dms_course/full-load.html">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="https://datafordummies.in/logo.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <!-- dfd-seo:end -->
     <title>Full load | AWS DMS | Data For Dummies</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
@@ -65,68 +75,56 @@
 </tbody>
 </table>
 </section>
-        <section class="section dfd-diagram" data-dfd-diagram data-dfd-reveal>
-            <h2>One pass over the tables</h2>
-            <div data-dfd-diagram-panel="read">
-<svg class="dfd-responsive" viewBox="0 0 640 148" role="img" aria-label="Source rows highlighted">
-<rect class="track-drift" x="16" y="36" width="188" height="72" rx="12" fill="#fb923c">
-</rect>
-<text x="110" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#ffffff">Source rows</text>
-<path d="M204 72 H224" stroke="#64748b" stroke-width="2" fill="none">
-</path>
-<rect x="224" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
-</rect>
-<text x="318" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">Task</text>
-<path d="M412 72 H432" stroke="#64748b" stroke-width="2" fill="none">
-</path>
-<rect x="432" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
-</rect>
-<text x="526" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">Target</text>
-</svg>
-<p>Full load reads the rows that exist when it reaches that table.</p>
+        <section class="section dfd-diagram dfd-flow" data-dfd-diagram data-dfd-flow data-dfd-reveal>
+<h2>One pass over the tables</h2>
+<div class="dfd-diagram-controls dfd-flow-controls" role="group" aria-label="One pass over the tables: steps">
+<button type="button" data-dfd-diagram-step="step1" aria-pressed="true"><span class="dfd-flow-num" aria-hidden="true">1</span>Read</button>
+<button type="button" data-dfd-diagram-step="step2" aria-pressed="false"><span class="dfd-flow-num" aria-hidden="true">2</span>Map</button>
+<button type="button" data-dfd-diagram-step="step3" aria-pressed="false"><span class="dfd-flow-num" aria-hidden="true">3</span>Write</button>
 </div>
-<div data-dfd-diagram-panel="map" hidden>
-<svg class="dfd-responsive" viewBox="0 0 640 148" role="img" aria-label="Mappings highlighted">
-<rect x="16" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
-</rect>
-<text x="110" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">Mappings</text>
-<path d="M204 72 H224" stroke="#64748b" stroke-width="2" fill="none">
-</path>
-<rect class="track-drift" x="224" y="36" width="188" height="72" rx="12" fill="#fb923c">
-</rect>
-<text x="318" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#ffffff">Task</text>
-<path d="M412 72 H432" stroke="#64748b" stroke-width="2" fill="none">
-</path>
-<rect x="432" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
-</rect>
-<text x="526" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">LOBs</text>
-</svg>
-<p>Mappings choose tables. LOB mode chooses how large values move.</p>
-</div>
-<div data-dfd-diagram-panel="write" hidden>
-<svg class="dfd-responsive" viewBox="0 0 640 148" role="img" aria-label="Target highlighted">
-<rect x="16" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
-</rect>
-<text x="110" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">Source rows</text>
-<path d="M204 72 H224" stroke="#64748b" stroke-width="2" fill="none">
-</path>
-<rect x="224" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
-</rect>
-<text x="318" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">Task</text>
-<path d="M412 72 H432" stroke="#64748b" stroke-width="2" fill="none">
-</path>
-<rect class="track-drift" x="432" y="36" width="188" height="72" rx="12" fill="#fb923c">
-</rect>
-<text x="526" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#ffffff">Target</text>
-</svg>
-<p>The target holds a point-in-time copy, already aging if the source is busy.</p>
-</div>
-            <div class="dfd-diagram-controls">
-                <button type="button" data-dfd-diagram-step="read" aria-pressed="true">Read</button>
-<button type="button" data-dfd-diagram-step="map" aria-pressed="false">Map</button>
-<button type="button" data-dfd-diagram-step="write" aria-pressed="false">Write</button>
-            </div>
-        </section>
+<div class="dfd-flow-panel" data-dfd-diagram-panel="step1">
+<ol class="dfd-flow-track" aria-label="Step 1: Read">
+<li class="dfd-flow-node is-active" aria-current="step"><span class="dfd-flow-label">Source rows</span></li>
+<li class="dfd-flow-node"><span class="dfd-flow-label">Task</span></li>
+<li class="dfd-flow-node"><span class="dfd-flow-label">Target</span></li>
+</ol>
+<div class="dfd-flow-explain"><p class="dfd-flow-caption"><span class="dfd-flow-count">Step 1 of 3</span>Task
+
+
+
+
+Target
+
+Full load reads the rows that exist when it reaches that table.</p></div></div>
+<div class="dfd-flow-panel" data-dfd-diagram-panel="step2" hidden>
+<ol class="dfd-flow-track" aria-label="Step 2: Map">
+<li class="dfd-flow-node"><span class="dfd-flow-label">Mappings</span></li>
+<li class="dfd-flow-node is-active" aria-current="step"><span class="dfd-flow-label">Task</span></li>
+<li class="dfd-flow-node"><span class="dfd-flow-label">LOBs</span></li>
+</ol>
+<div class="dfd-flow-explain"><p class="dfd-flow-caption"><span class="dfd-flow-count">Step 2 of 3</span>Task
+
+
+
+
+LOBs
+
+Mappings choose tables. LOB mode chooses how large values move.</p></div></div>
+<div class="dfd-flow-panel" data-dfd-diagram-panel="step3" hidden>
+<ol class="dfd-flow-track" aria-label="Step 3: Write">
+<li class="dfd-flow-node"><span class="dfd-flow-label">Source rows</span></li>
+<li class="dfd-flow-node"><span class="dfd-flow-label">Task</span></li>
+<li class="dfd-flow-node is-active" aria-current="step"><span class="dfd-flow-label">Target</span></li>
+</ol>
+<div class="dfd-flow-explain"><p class="dfd-flow-caption"><span class="dfd-flow-count">Step 3 of 3</span>Task
+
+
+
+
+Target
+
+The target holds a point-in-time copy, already aging if the source is busy.</p></div></div>
+</section>
         <section class="section" id="lab" data-dfd-reveal>
             <h2>Lab: say what full load will miss</h2>
             <p>Imagine the source takes orders during a six-hour load. Answer in a sentence.</p>
@@ -211,8 +209,6 @@ LOB mode we will choose, and why:</code>
     </div>
 
     <script src="../js/code-copy.js">
-</script>
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2">
 </script>
     <script src="../js/supabase-config.js">
 </script>

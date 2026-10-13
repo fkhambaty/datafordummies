@@ -1,4 +1,9 @@
-# Android APK Download – Setup Guide
+# Android APK — not stored in this repository
+
+The live download is the Google Drive folder in `docs/APK_RELEASE.md`. Do not commit `app-debug.apk` or `apk/FK-Learning-Hub.apk`. The steps below are the old copy-into-git instructions and are not the current release path.
+
+---
+
 
 The "Get Free Android App" link must point to a real APK file. Use **one** of the options below.
 

@@ -3,6 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <!-- dfd-seo:start -->
+    <meta name="description" content="Capstone | AWS DMS. Write the cutover plan for one migration.">
+    <link rel="canonical" href="https://datafordummies.in/dms_course/capstone.html">
+    <meta property="og:title" content="Capstone | AWS DMS | Data For Dummies">
+    <meta property="og:description" content="Capstone | AWS DMS. Write the cutover plan for one migration.">
+    <meta property="og:url" content="https://datafordummies.in/dms_course/capstone.html">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="https://datafordummies.in/logo.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <!-- dfd-seo:end -->
     <title>Capstone | AWS DMS | Data For Dummies</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
@@ -72,68 +82,56 @@
 </tbody>
 </table>
 </section>
-        <section class="section dfd-diagram" data-dfd-diagram data-dfd-reveal>
-            <h2>The sign flips last</h2>
-            <div data-dfd-diagram-panel="copy">
-<svg class="dfd-responsive" viewBox="0 0 640 148" role="img" aria-label="Copy steps highlighted">
-<rect class="track-drift" x="16" y="36" width="188" height="72" rx="12" fill="#fb923c">
-</rect>
-<text x="110" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#ffffff">Schema</text>
-<path d="M204 72 H224" stroke="#64748b" stroke-width="2" fill="none">
-</path>
-<rect x="224" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
-</rect>
-<text x="318" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">Load</text>
-<path d="M412 72 H432" stroke="#64748b" stroke-width="2" fill="none">
-</path>
-<rect x="432" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
-</rect>
-<text x="526" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">CDC</text>
-</svg>
-<p>Schema, load, and CDC happen while the application still uses the source.</p>
+        <section class="section dfd-diagram dfd-flow" data-dfd-diagram data-dfd-flow data-dfd-reveal>
+<h2>The sign flips last</h2>
+<div class="dfd-diagram-controls dfd-flow-controls" role="group" aria-label="The sign flips last: steps">
+<button type="button" data-dfd-diagram-step="step1" aria-pressed="true"><span class="dfd-flow-num" aria-hidden="true">1</span>Copy</button>
+<button type="button" data-dfd-diagram-step="step2" aria-pressed="false"><span class="dfd-flow-num" aria-hidden="true">2</span>Check</button>
+<button type="button" data-dfd-diagram-step="step3" aria-pressed="false"><span class="dfd-flow-num" aria-hidden="true">3</span>App</button>
 </div>
-<div data-dfd-diagram-panel="check" hidden>
-<svg class="dfd-responsive" viewBox="0 0 640 148" role="img" aria-label="Checks highlighted">
-<rect x="16" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
-</rect>
-<text x="110" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">Latency</text>
-<path d="M204 72 H224" stroke="#64748b" stroke-width="2" fill="none">
-</path>
-<rect class="track-drift" x="224" y="36" width="188" height="72" rx="12" fill="#fb923c">
-</rect>
-<text x="318" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#ffffff">Validation</text>
-<path d="M412 72 H432" stroke="#64748b" stroke-width="2" fill="none">
-</path>
-<rect x="432" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
-</rect>
-<text x="526" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">Keys</text>
-</svg>
-<p>Latency, validation, and keys are the gate.</p>
-</div>
-<div data-dfd-diagram-panel="app" hidden>
-<svg class="dfd-responsive" viewBox="0 0 640 148" role="img" aria-label="Application cutover highlighted">
-<rect x="16" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
-</rect>
-<text x="110" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">Decision</text>
-<path d="M204 72 H224" stroke="#64748b" stroke-width="2" fill="none">
-</path>
-<rect x="224" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
-</rect>
-<text x="318" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">App</text>
-<path d="M412 72 H432" stroke="#64748b" stroke-width="2" fill="none">
-</path>
-<rect class="track-drift" x="432" y="36" width="188" height="72" rx="12" fill="#fb923c">
-</rect>
-<text x="526" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#ffffff">Rollback</text>
-</svg>
-<p>The application moves last, with a way back.</p>
-</div>
-            <div class="dfd-diagram-controls">
-                <button type="button" data-dfd-diagram-step="copy" aria-pressed="true">Copy</button>
-<button type="button" data-dfd-diagram-step="check" aria-pressed="false">Check</button>
-<button type="button" data-dfd-diagram-step="app" aria-pressed="false">App</button>
-            </div>
-        </section>
+<div class="dfd-flow-panel" data-dfd-diagram-panel="step1">
+<ol class="dfd-flow-track" aria-label="Step 1: Copy">
+<li class="dfd-flow-node is-active" aria-current="step"><span class="dfd-flow-label">Schema</span></li>
+<li class="dfd-flow-node"><span class="dfd-flow-label">Load</span></li>
+<li class="dfd-flow-node"><span class="dfd-flow-label">CDC</span></li>
+</ol>
+<div class="dfd-flow-explain"><p class="dfd-flow-caption"><span class="dfd-flow-count">Step 1 of 3</span>Load
+
+
+
+
+CDC
+
+Schema, load, and CDC happen while the application still uses the source.</p></div></div>
+<div class="dfd-flow-panel" data-dfd-diagram-panel="step2" hidden>
+<ol class="dfd-flow-track" aria-label="Step 2: Check">
+<li class="dfd-flow-node"><span class="dfd-flow-label">Latency</span></li>
+<li class="dfd-flow-node is-active" aria-current="step"><span class="dfd-flow-label">Validation</span></li>
+<li class="dfd-flow-node"><span class="dfd-flow-label">Keys</span></li>
+</ol>
+<div class="dfd-flow-explain"><p class="dfd-flow-caption"><span class="dfd-flow-count">Step 2 of 3</span>Validation
+
+
+
+
+Keys
+
+Latency, validation, and keys are the gate.</p></div></div>
+<div class="dfd-flow-panel" data-dfd-diagram-panel="step3" hidden>
+<ol class="dfd-flow-track" aria-label="Step 3: App">
+<li class="dfd-flow-node"><span class="dfd-flow-label">Decision</span></li>
+<li class="dfd-flow-node"><span class="dfd-flow-label">App</span></li>
+<li class="dfd-flow-node is-active" aria-current="step"><span class="dfd-flow-label">Rollback</span></li>
+</ol>
+<div class="dfd-flow-explain"><p class="dfd-flow-caption"><span class="dfd-flow-count">Step 3 of 3</span>App
+
+
+
+
+Rollback
+
+The application moves last, with a way back.</p></div></div>
+</section>
         <section class="section" id="lab" data-dfd-reveal>
             <h2>Lab: the cutover page</h2>
             <p>Fill every line. Unknown is allowed. A blank is not.</p>
@@ -229,8 +227,6 @@ Rollback:</code>
     </div>
 
     <script src="../js/code-copy.js">
-</script>
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2">
 </script>
     <script src="../js/supabase-config.js">
 </script>

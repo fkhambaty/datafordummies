@@ -3,6 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <!-- dfd-seo:start -->
+    <meta name="description" content="Local clusters | Kubernetes. kind, minikube, and Docker Desktop can each give you a cluster.">
+    <link rel="canonical" href="https://datafordummies.in/kubernetes_course/local-setup.html">
+    <meta property="og:title" content="Local clusters | Kubernetes | Data For Dummies">
+    <meta property="og:description" content="Local clusters | Kubernetes. kind, minikube, and Docker Desktop can each give you a cluster.">
+    <meta property="og:url" content="https://datafordummies.in/kubernetes_course/local-setup.html">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="https://datafordummies.in/logo.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <!-- dfd-seo:end -->
     <title>Local clusters | Kubernetes | Data For Dummies</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
@@ -75,68 +85,62 @@
 <h2>NetworkPolicy will not prove itself here</h2>
 <p>kind&#x27;s default networking does not enforce NetworkPolicy. A policy object will sit in the API and do nothing. The security lesson says how to practice that for real. Do not treat a successful <code>kubectl apply</code> as proof the policy is enforced.</p>
 </section>
-        <section class="section dfd-diagram" data-dfd-diagram data-dfd-reveal>
-            <h2>Pick a local cluster</h2>
-            <div data-dfd-diagram-panel="kind">
-<svg class="dfd-responsive" viewBox="0 0 640 148" role="img" aria-label="kind highlighted">
-<rect class="track-drift" x="16" y="36" width="188" height="72" rx="12" fill="#5b8def">
-</rect>
-<text x="110" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#ffffff">kind</text>
-<path d="M204 72 H224" stroke="#64748b" stroke-width="2" fill="none">
-</path>
-<rect x="224" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
-</rect>
-<text x="318" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">minikube</text>
-<path d="M412 72 H432" stroke="#64748b" stroke-width="2" fill="none">
-</path>
-<rect x="432" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
-</rect>
-<text x="526" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">Desktop</text>
-</svg>
-<p>kind: nodes are containers. Fast to delete. Weak stand-in for cloud load balancers.</p>
+        <section class="section dfd-diagram dfd-flow" data-dfd-diagram data-dfd-flow data-dfd-reveal>
+<h2>Pick a local cluster</h2>
+<div class="dfd-diagram-controls dfd-flow-controls" role="group" aria-label="Pick a local cluster: steps">
+<button type="button" data-dfd-diagram-step="step1" aria-pressed="true"><span class="dfd-flow-num" aria-hidden="true">1</span>kind</button>
+<button type="button" data-dfd-diagram-step="step2" aria-pressed="false"><span class="dfd-flow-num" aria-hidden="true">2</span>minikube</button>
+<button type="button" data-dfd-diagram-step="step3" aria-pressed="false"><span class="dfd-flow-num" aria-hidden="true">3</span>Desktop</button>
 </div>
-<div data-dfd-diagram-panel="mini" hidden>
-<svg class="dfd-responsive" viewBox="0 0 640 148" role="img" aria-label="minikube highlighted">
-<rect x="16" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
-</rect>
-<text x="110" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">kind</text>
-<path d="M204 72 H224" stroke="#64748b" stroke-width="2" fill="none">
-</path>
-<rect class="track-drift" x="224" y="36" width="188" height="72" rx="12" fill="#5b8def">
-</rect>
-<text x="318" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#ffffff">minikube</text>
-<path d="M412 72 H432" stroke="#64748b" stroke-width="2" fill="none">
-</path>
-<rect x="432" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
-</rect>
-<text x="526" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">Desktop</text>
-</svg>
-<p>minikube: one cluster, a driver, and an optional tunnel for LoadBalancer Services.</p>
-</div>
-<div data-dfd-diagram-panel="desk" hidden>
-<svg class="dfd-responsive" viewBox="0 0 640 148" role="img" aria-label="Docker Desktop highlighted">
-<rect x="16" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
-</rect>
-<text x="110" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">kind</text>
-<path d="M204 72 H224" stroke="#64748b" stroke-width="2" fill="none">
-</path>
-<rect x="224" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
-</rect>
-<text x="318" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">minikube</text>
-<path d="M412 72 H432" stroke="#64748b" stroke-width="2" fill="none">
-</path>
-<rect class="track-drift" x="432" y="36" width="188" height="72" rx="12" fill="#5b8def">
-</rect>
-<text x="526" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#ffffff">Desktop</text>
-</svg>
-<p>Docker Desktop: a checkbox on macOS, Windows, or Linux. Check which minor it installed.</p>
-</div>
-            <div class="dfd-diagram-controls">
-                <button type="button" data-dfd-diagram-step="kind" aria-pressed="true">kind</button>
-<button type="button" data-dfd-diagram-step="mini" aria-pressed="false">minikube</button>
-<button type="button" data-dfd-diagram-step="desk" aria-pressed="false">Desktop</button>
-            </div>
-        </section>
+<div class="dfd-flow-panel" data-dfd-diagram-panel="step1">
+<ol class="dfd-flow-track" aria-label="Step 1: kind">
+<li class="dfd-flow-node is-active" aria-current="step"><span class="dfd-flow-label">kind</span></li>
+<li class="dfd-flow-node"><span class="dfd-flow-label">minikube</span></li>
+<li class="dfd-flow-node"><span class="dfd-flow-label">Desktop</span></li>
+</ol>
+<div class="dfd-flow-explain">
+<p class="dfd-flow-caption"><span class="dfd-flow-count">Step 1 of 3</span>minikube
+
+
+
+
+Desktop
+
+kind: nodes are containers. Fast to delete. Weak stand-in for cloud load balancers.</p>
+</div></div>
+<div class="dfd-flow-panel" data-dfd-diagram-panel="step2" hidden>
+<ol class="dfd-flow-track" aria-label="Step 2: minikube">
+<li class="dfd-flow-node"><span class="dfd-flow-label">kind</span></li>
+<li class="dfd-flow-node is-active" aria-current="step"><span class="dfd-flow-label">minikube</span></li>
+<li class="dfd-flow-node"><span class="dfd-flow-label">Desktop</span></li>
+</ol>
+<div class="dfd-flow-explain">
+<p class="dfd-flow-caption"><span class="dfd-flow-count">Step 2 of 3</span>minikube
+
+
+
+
+Desktop
+
+minikube: one cluster, a driver, and an optional tunnel for LoadBalancer Services.</p>
+</div></div>
+<div class="dfd-flow-panel" data-dfd-diagram-panel="step3" hidden>
+<ol class="dfd-flow-track" aria-label="Step 3: Desktop">
+<li class="dfd-flow-node"><span class="dfd-flow-label">kind</span></li>
+<li class="dfd-flow-node"><span class="dfd-flow-label">minikube</span></li>
+<li class="dfd-flow-node is-active" aria-current="step"><span class="dfd-flow-label">Desktop</span></li>
+</ol>
+<div class="dfd-flow-explain">
+<p class="dfd-flow-caption"><span class="dfd-flow-count">Step 3 of 3</span>minikube
+
+
+
+
+Desktop
+
+Docker Desktop: a checkbox on macOS, Windows, or Linux. Check which minor it installed.</p>
+</div></div>
+</section>
         <section class="section" id="lab" data-dfd-reveal>
             <h2>Lab: see the node you actually have</h2>
             <p>Run the block that matches the tool you started. Then confirm the context before you apply anything else.</p>
@@ -227,8 +231,6 @@ kubectl version</code>
     </div>
 
     <script src="../js/code-copy.js">
-</script>
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2">
 </script>
     <script src="../js/supabase-config.js">
 </script>

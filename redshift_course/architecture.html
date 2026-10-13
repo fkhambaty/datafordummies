@@ -3,6 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <!-- dfd-seo:start -->
+    <meta name="description" content="Redshift architecture. Leader, compute slices, and managed storage are the three pieces.">
+    <link rel="canonical" href="https://datafordummies.in/redshift_course/architecture.html">
+    <meta property="og:title" content="Redshift architecture | Data For Dummies">
+    <meta property="og:description" content="Redshift architecture. Leader, compute slices, and managed storage are the three pieces.">
+    <meta property="og:url" content="https://datafordummies.in/redshift_course/architecture.html">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="https://datafordummies.in/logo.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <!-- dfd-seo:end -->
     <title>Redshift architecture | Data For Dummies</title>
     <link rel="stylesheet" href="styles.css">
     
@@ -46,34 +56,45 @@
 <p>Redshift is not a row store for thousands of single-row updates. It is not a place to run an application transaction that must lock one customer and return in a millisecond. Use it for scans, joins, and aggregates over large sets. Small lookup tables are fine. A workload of constant single-row updates belongs in a transactional database, with the result loaded here.</p>
 <p>Zone maps and sorted blocks let a slice skip data that cannot match a filter. That only helps when the filter matches the sort. The table-design lesson is where you choose distribution and sort. The architecture is why those choices exist: data is spread across slices, and each slice wants to skip blocks.</p>
 </section>
-<section class="section dfd-diagram" data-dfd-diagram data-dfd-reveal><h2>Where a query goes</h2><div data-dfd-diagram-panel="one">
-<svg class="dfd-responsive" viewBox="0 0 360 100" role="img" aria-label="Leader highlighted">
-<rect x="12" y="26" width="104" height="48" rx="8" fill="#0f172a"></rect>
-<text x="64" y="54" text-anchor="middle" font-size="13" fill="#ffffff" font-family="Nunito,sans-serif">Leader</text>
-<rect x="128" y="26" width="104" height="48" rx="8" fill="#e2e8f0"></rect>
-<text x="180" y="54" text-anchor="middle" font-size="13" fill="#0f172a" font-family="Nunito,sans-serif">Compute</text>
-<rect x="244" y="26" width="104" height="48" rx="8" fill="#e2e8f0"></rect>
-<text x="296" y="54" text-anchor="middle" font-size="13" fill="#0f172a" font-family="Nunito,sans-serif">Storage</text>
-</svg>
-</div><div data-dfd-diagram-panel="two" hidden>
-<svg class="dfd-responsive" viewBox="0 0 360 100" role="img" aria-label="Compute highlighted">
-<rect x="12" y="26" width="104" height="48" rx="8" fill="#e2e8f0"></rect>
-<text x="64" y="54" text-anchor="middle" font-size="13" fill="#0f172a" font-family="Nunito,sans-serif">Leader</text>
-<rect x="128" y="26" width="104" height="48" rx="8" fill="#0f172a"></rect>
-<text x="180" y="54" text-anchor="middle" font-size="13" fill="#ffffff" font-family="Nunito,sans-serif">Compute</text>
-<rect x="244" y="26" width="104" height="48" rx="8" fill="#e2e8f0"></rect>
-<text x="296" y="54" text-anchor="middle" font-size="13" fill="#0f172a" font-family="Nunito,sans-serif">Storage</text>
-</svg>
-</div><div data-dfd-diagram-panel="three" hidden>
-<svg class="dfd-responsive" viewBox="0 0 360 100" role="img" aria-label="Storage highlighted">
-<rect x="12" y="26" width="104" height="48" rx="8" fill="#e2e8f0"></rect>
-<text x="64" y="54" text-anchor="middle" font-size="13" fill="#0f172a" font-family="Nunito,sans-serif">Leader</text>
-<rect x="128" y="26" width="104" height="48" rx="8" fill="#e2e8f0"></rect>
-<text x="180" y="54" text-anchor="middle" font-size="13" fill="#0f172a" font-family="Nunito,sans-serif">Compute</text>
-<rect x="244" y="26" width="104" height="48" rx="8" fill="#0f172a"></rect>
-<text x="296" y="54" text-anchor="middle" font-size="13" fill="#ffffff" font-family="Nunito,sans-serif">Storage</text>
-</svg>
-</div><div class="dfd-diagram-controls"><button type="button" data-dfd-diagram-step="one" aria-pressed="true">Leader</button><button type="button" data-dfd-diagram-step="two" aria-pressed="false">Compute</button><button type="button" data-dfd-diagram-step="three" aria-pressed="false">Storage</button></div></section>
+<section class="section dfd-diagram dfd-flow" data-dfd-diagram data-dfd-flow data-dfd-reveal>
+<h2>Where a query goes</h2>
+<p class="dfd-flow-intro">One node plans, many nodes work, and storage sits underneath them all.</p>
+<div class="dfd-diagram-controls dfd-flow-controls" role="group" aria-label="Where a query goes: steps">
+<button type="button" data-dfd-diagram-step="step1" aria-pressed="true"><span class="dfd-flow-num" aria-hidden="true">1</span>Leader</button>
+<button type="button" data-dfd-diagram-step="step2" aria-pressed="false"><span class="dfd-flow-num" aria-hidden="true">2</span>Compute</button>
+<button type="button" data-dfd-diagram-step="step3" aria-pressed="false"><span class="dfd-flow-num" aria-hidden="true">3</span>Storage</button>
+</div>
+<div class="dfd-flow-panel" data-dfd-diagram-panel="step1">
+<ol class="dfd-flow-track" aria-label="Step 1: Leader">
+<li class="dfd-flow-node is-active" aria-current="step"><span class="dfd-flow-label">Leader node</span><span class="dfd-flow-role">Receives and plans SQL</span></li>
+<li class="dfd-flow-node"><span class="dfd-flow-label">Compute nodes</span><span class="dfd-flow-role">Slices work in parallel</span></li>
+<li class="dfd-flow-node"><span class="dfd-flow-label">Managed storage</span><span class="dfd-flow-role">Data on S3 with a local cache</span></li>
+</ol>
+<div class="dfd-flow-explain">
+<p class="dfd-flow-caption"><span class="dfd-flow-count">Step 1 of 3</span>The leader node receives your SQL, makes a plan and splits it into steps for the compute nodes.</p>
+<pre class="dfd-flow-example"><code>EXPLAIN SELECT region, SUM(amount) FROM sales GROUP BY region;</code></pre>
+</div></div>
+<div class="dfd-flow-panel" data-dfd-diagram-panel="step2" hidden>
+<ol class="dfd-flow-track" aria-label="Step 2: Compute">
+<li class="dfd-flow-node is-active" aria-current="step"><span class="dfd-flow-label">Leader node</span><span class="dfd-flow-role">Receives and plans SQL</span></li>
+<li class="dfd-flow-node is-active is-fed" aria-current="step"><span class="dfd-flow-label">Compute nodes</span><span class="dfd-flow-role">Slices work in parallel</span></li>
+<li class="dfd-flow-node"><span class="dfd-flow-label">Managed storage</span><span class="dfd-flow-role">Data on S3 with a local cache</span></li>
+</ol>
+<div class="dfd-flow-explain">
+<p class="dfd-flow-caption"><span class="dfd-flow-count">Step 2 of 3</span>Each compute node is divided into slices. Every slice works on its own share of the rows at the same time, then results return to the leader.</p>
+<pre class="dfd-flow-example"><code>SELECT node, slice FROM stv_slices;</code></pre>
+</div></div>
+<div class="dfd-flow-panel" data-dfd-diagram-panel="step3" hidden>
+<ol class="dfd-flow-track" aria-label="Step 3: Storage">
+<li class="dfd-flow-node"><span class="dfd-flow-label">Leader node</span><span class="dfd-flow-role">Receives and plans SQL</span></li>
+<li class="dfd-flow-node is-active" aria-current="step"><span class="dfd-flow-label">Compute nodes</span><span class="dfd-flow-role">Slices work in parallel</span></li>
+<li class="dfd-flow-node is-active is-fed" aria-current="step"><span class="dfd-flow-label">Managed storage</span><span class="dfd-flow-role">Data on S3 with a local cache</span></li>
+</ol>
+<div class="dfd-flow-explain">
+<p class="dfd-flow-caption"><span class="dfd-flow-count">Step 3 of 3</span>On RA3 nodes, data lives in Redshift Managed Storage on S3 with a fast local cache, so storage grows without adding nodes.</p>
+<p class="dfd-flow-example dfd-flow-example-ui">Cluster → Node type: ra3.xlplus</p>
+</div></div>
+</section>
 <section class="section" data-dfd-reveal><h2>Hold this picture</h2>
 <p>When a query is slow, ask which layer is busy. A queueing query is workload management. A query that moves rows between slices is distribution. A query that reads too many blocks is sort and encoding. The later lessons take those one at a time.</p>
 <p><button type="button" data-dfd-complete>Mark lesson complete</button></p><p data-dfd-complete-status></p>
@@ -125,7 +146,6 @@
     </div>
 
     <script src="../js/code-copy.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="../js/supabase-config.js"></script>
     <script src="../js/supabase-auth.js"></script>
     <script src="../js/paywall.js"></script>

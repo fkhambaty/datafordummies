@@ -3,6 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <!-- dfd-seo:start -->
+    <meta name="description" content="Models and metrics. Models curate columns.">
+    <link rel="canonical" href="https://datafordummies.in/metabase_course/models.html">
+    <meta property="og:title" content="Models and metrics | Data For Dummies">
+    <meta property="og:description" content="Models and metrics. Models curate columns.">
+    <meta property="og:url" content="https://datafordummies.in/metabase_course/models.html">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="https://datafordummies.in/logo.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <!-- dfd-seo:end -->
     <title>Models and metrics | Data For Dummies</title>
     <link rel="stylesheet" href="styles.css">
     
@@ -52,34 +62,45 @@ FROM orders
 WHERE status = &#x27;paid&#x27;;</code></pre></div>
 <div class="pro-tip"><h4>Describe the grain in the model description</h4><p>Write "one row per paid order" where a colleague will see it. A perfect chart on the wrong grain is still wrong.</p></div>
 </section>
-<section class="section dfd-diagram" data-dfd-diagram data-dfd-reveal><h2>Start from the model</h2><div data-dfd-diagram-panel="one">
-<svg class="dfd-responsive" viewBox="0 0 360 100" role="img" aria-label="Model highlighted">
-<rect x="12" y="26" width="104" height="48" rx="8" fill="#0f172a"></rect>
-<text x="64" y="54" text-anchor="middle" font-size="13" fill="#ffffff" font-family="Nunito,sans-serif">Model</text>
-<rect x="128" y="26" width="104" height="48" rx="8" fill="#e2e8f0"></rect>
-<text x="180" y="54" text-anchor="middle" font-size="13" fill="#0f172a" font-family="Nunito,sans-serif">Metric</text>
-<rect x="244" y="26" width="104" height="48" rx="8" fill="#e2e8f0"></rect>
-<text x="296" y="54" text-anchor="middle" font-size="13" fill="#0f172a" font-family="Nunito,sans-serif">Question</text>
-</svg>
-</div><div data-dfd-diagram-panel="two" hidden>
-<svg class="dfd-responsive" viewBox="0 0 360 100" role="img" aria-label="Metric highlighted">
-<rect x="12" y="26" width="104" height="48" rx="8" fill="#e2e8f0"></rect>
-<text x="64" y="54" text-anchor="middle" font-size="13" fill="#0f172a" font-family="Nunito,sans-serif">Model</text>
-<rect x="128" y="26" width="104" height="48" rx="8" fill="#0f172a"></rect>
-<text x="180" y="54" text-anchor="middle" font-size="13" fill="#ffffff" font-family="Nunito,sans-serif">Metric</text>
-<rect x="244" y="26" width="104" height="48" rx="8" fill="#e2e8f0"></rect>
-<text x="296" y="54" text-anchor="middle" font-size="13" fill="#0f172a" font-family="Nunito,sans-serif">Question</text>
-</svg>
-</div><div data-dfd-diagram-panel="three" hidden>
-<svg class="dfd-responsive" viewBox="0 0 360 100" role="img" aria-label="Question highlighted">
-<rect x="12" y="26" width="104" height="48" rx="8" fill="#e2e8f0"></rect>
-<text x="64" y="54" text-anchor="middle" font-size="13" fill="#0f172a" font-family="Nunito,sans-serif">Model</text>
-<rect x="128" y="26" width="104" height="48" rx="8" fill="#e2e8f0"></rect>
-<text x="180" y="54" text-anchor="middle" font-size="13" fill="#0f172a" font-family="Nunito,sans-serif">Metric</text>
-<rect x="244" y="26" width="104" height="48" rx="8" fill="#0f172a"></rect>
-<text x="296" y="54" text-anchor="middle" font-size="13" fill="#ffffff" font-family="Nunito,sans-serif">Question</text>
-</svg>
-</div><div class="dfd-diagram-controls"><button type="button" data-dfd-diagram-step="one" aria-pressed="true">Model</button><button type="button" data-dfd-diagram-step="two" aria-pressed="false">Metric</button><button type="button" data-dfd-diagram-step="three" aria-pressed="false">Question</button></div></section>
+<section class="section dfd-diagram dfd-flow" data-dfd-diagram data-dfd-flow data-dfd-reveal>
+<h2>Start from the model</h2>
+<p class="dfd-flow-intro">Define clean data and key numbers once, then build every question on top.</p>
+<div class="dfd-diagram-controls dfd-flow-controls" role="group" aria-label="Start from the model: steps">
+<button type="button" data-dfd-diagram-step="step1" aria-pressed="true"><span class="dfd-flow-num" aria-hidden="true">1</span>Model</button>
+<button type="button" data-dfd-diagram-step="step2" aria-pressed="false"><span class="dfd-flow-num" aria-hidden="true">2</span>Metric</button>
+<button type="button" data-dfd-diagram-step="step3" aria-pressed="false"><span class="dfd-flow-num" aria-hidden="true">3</span>Question</button>
+</div>
+<div class="dfd-flow-panel" data-dfd-diagram-panel="step1">
+<ol class="dfd-flow-track" aria-label="Step 1: Model">
+<li class="dfd-flow-node is-active" aria-current="step"><span class="dfd-flow-label">Model</span><span class="dfd-flow-role">A curated, described table</span></li>
+<li class="dfd-flow-node"><span class="dfd-flow-label">Metric</span><span class="dfd-flow-role">A calculation defined once</span></li>
+<li class="dfd-flow-node"><span class="dfd-flow-label">Question</span><span class="dfd-flow-role">Built from both</span></li>
+</ol>
+<div class="dfd-flow-explain">
+<p class="dfd-flow-caption"><span class="dfd-flow-count">Step 1 of 3</span>A model is a saved, cleaned-up table, for example Completed orders, with descriptions on each column. It is the trusted starting point.</p>
+<p class="dfd-flow-example dfd-flow-example-ui">New → Model → Orders where Status = Completed</p>
+</div></div>
+<div class="dfd-flow-panel" data-dfd-diagram-panel="step2" hidden>
+<ol class="dfd-flow-track" aria-label="Step 2: Metric">
+<li class="dfd-flow-node is-active" aria-current="step"><span class="dfd-flow-label">Model</span><span class="dfd-flow-role">A curated, described table</span></li>
+<li class="dfd-flow-node is-active is-fed" aria-current="step"><span class="dfd-flow-label">Metric</span><span class="dfd-flow-role">A calculation defined once</span></li>
+<li class="dfd-flow-node"><span class="dfd-flow-label">Question</span><span class="dfd-flow-role">Built from both</span></li>
+</ol>
+<div class="dfd-flow-explain">
+<p class="dfd-flow-caption"><span class="dfd-flow-count">Step 2 of 3</span>A metric defines a calculation once, such as Revenue = Sum of Total on completed orders, so every team shows the same number.</p>
+<p class="dfd-flow-example dfd-flow-example-ui">New → Metric → Completed orders → Sum of Total</p>
+</div></div>
+<div class="dfd-flow-panel" data-dfd-diagram-panel="step3" hidden>
+<ol class="dfd-flow-track" aria-label="Step 3: Question">
+<li class="dfd-flow-node"><span class="dfd-flow-label">Model</span><span class="dfd-flow-role">A curated, described table</span></li>
+<li class="dfd-flow-node is-active" aria-current="step"><span class="dfd-flow-label">Metric</span><span class="dfd-flow-role">A calculation defined once</span></li>
+<li class="dfd-flow-node is-active is-fed" aria-current="step"><span class="dfd-flow-label">Question</span><span class="dfd-flow-role">Built from both</span></li>
+</ol>
+<div class="dfd-flow-explain">
+<p class="dfd-flow-caption"><span class="dfd-flow-count">Step 3 of 3</span>New questions start from the model and pick the metric instead of rebuilding the filters each time.</p>
+<p class="dfd-flow-example dfd-flow-example-ui">New → Question → Completed orders → Revenue by Month</p>
+</div></div>
+</section>
 <section class="section" data-dfd-reveal><h2>Practice</h2>
 <p>Turn one trusted question into a model. Rename two columns, hide one technical key, and write a one-sentence description of the grain. If your Metabase version offers metrics on models, add one named measure and build a question that uses it without retyping the formula.</p>
 <p><button type="button" data-dfd-complete>Mark lesson complete</button></p><p data-dfd-complete-status></p>
@@ -131,7 +152,6 @@ WHERE status = &#x27;paid&#x27;;</code></pre></div>
     </div>
 
     <script src="../js/code-copy.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="../js/supabase-config.js"></script>
     <script src="../js/supabase-auth.js"></script>
     <script src="../js/paywall.js"></script>

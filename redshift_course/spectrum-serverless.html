@@ -3,6 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <!-- dfd-seo:start -->
+    <meta name="description" content="Spectrum, sharing, and Serverless. Query the lake with Spectrum, share Redshift tables without copying them, and choose Serverless or RA3 from the workload.">
+    <link rel="canonical" href="https://datafordummies.in/redshift_course/spectrum-serverless.html">
+    <meta property="og:title" content="Spectrum, sharing, and Serverless | Data For Dummies">
+    <meta property="og:description" content="Spectrum, sharing, and Serverless. Query the lake with Spectrum, share Redshift tables without copying them, and choose Serverless or RA3 from the workload.">
+    <meta property="og:url" content="https://datafordummies.in/redshift_course/spectrum-serverless.html">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="https://datafordummies.in/logo.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <!-- dfd-seo:end -->
     <title>Spectrum, sharing, and Serverless | Data For Dummies</title>
     <link rel="stylesheet" href="styles.css">
     
@@ -53,34 +63,47 @@ SELECT COUNT(*) FROM lake.events;</code></pre></div>
 </table>
 <p>Zero-ETL, from the loading lesson, can land operational tables inside the producer. Data sharing can then publish the modeled tables to a consumer. That is a current pattern: replicate in, model, share out.</p>
 </section>
-<section class="section dfd-diagram" data-dfd-diagram data-dfd-reveal><h2>Three homes for bytes</h2><div data-dfd-diagram-panel="one">
-<svg class="dfd-responsive" viewBox="0 0 360 100" role="img" aria-label="S3 and Spectrum highlighted">
-<rect x="12" y="26" width="104" height="48" rx="8" fill="#0f172a"></rect>
-<text x="64" y="54" text-anchor="middle" font-size="13" fill="#ffffff" font-family="Nunito,sans-serif">S3</text>
-<rect x="128" y="26" width="104" height="48" rx="8" fill="#e2e8f0"></rect>
-<text x="180" y="54" text-anchor="middle" font-size="13" fill="#0f172a" font-family="Nunito,sans-serif">Share</text>
-<rect x="244" y="26" width="104" height="48" rx="8" fill="#e2e8f0"></rect>
-<text x="296" y="54" text-anchor="middle" font-size="13" fill="#0f172a" font-family="Nunito,sans-serif">RPU</text>
-</svg>
-</div><div data-dfd-diagram-panel="two" hidden>
-<svg class="dfd-responsive" viewBox="0 0 360 100" role="img" aria-label="Data sharing highlighted">
-<rect x="12" y="26" width="104" height="48" rx="8" fill="#e2e8f0"></rect>
-<text x="64" y="54" text-anchor="middle" font-size="13" fill="#0f172a" font-family="Nunito,sans-serif">S3</text>
-<rect x="128" y="26" width="104" height="48" rx="8" fill="#0f172a"></rect>
-<text x="180" y="54" text-anchor="middle" font-size="13" fill="#ffffff" font-family="Nunito,sans-serif">Share</text>
-<rect x="244" y="26" width="104" height="48" rx="8" fill="#e2e8f0"></rect>
-<text x="296" y="54" text-anchor="middle" font-size="13" fill="#0f172a" font-family="Nunito,sans-serif">RPU</text>
-</svg>
-</div><div data-dfd-diagram-panel="three" hidden>
-<svg class="dfd-responsive" viewBox="0 0 360 100" role="img" aria-label="Serverless highlighted">
-<rect x="12" y="26" width="104" height="48" rx="8" fill="#e2e8f0"></rect>
-<text x="64" y="54" text-anchor="middle" font-size="13" fill="#0f172a" font-family="Nunito,sans-serif">S3</text>
-<rect x="128" y="26" width="104" height="48" rx="8" fill="#e2e8f0"></rect>
-<text x="180" y="54" text-anchor="middle" font-size="13" fill="#0f172a" font-family="Nunito,sans-serif">Share</text>
-<rect x="244" y="26" width="104" height="48" rx="8" fill="#0f172a"></rect>
-<text x="296" y="54" text-anchor="middle" font-size="13" fill="#ffffff" font-family="Nunito,sans-serif">RPU</text>
-</svg>
-</div><div class="dfd-diagram-controls"><button type="button" data-dfd-diagram-step="one" aria-pressed="true">Lake</button><button type="button" data-dfd-diagram-step="two" aria-pressed="false">Share</button><button type="button" data-dfd-diagram-step="three" aria-pressed="false">RPU</button></div></section>
+<section class="section dfd-diagram dfd-flow" data-dfd-diagram data-dfd-flow data-dfd-reveal>
+<h2>Three homes for bytes</h2>
+<p class="dfd-flow-intro">Query files in S3, read another team&#x27;s tables, or pay only while queries run.</p>
+<div class="dfd-diagram-controls dfd-flow-controls" role="group" aria-label="Three homes for bytes: steps">
+<button type="button" data-dfd-diagram-step="step1" aria-pressed="true"><span class="dfd-flow-num" aria-hidden="true">1</span>Lake</button>
+<button type="button" data-dfd-diagram-step="step2" aria-pressed="false"><span class="dfd-flow-num" aria-hidden="true">2</span>Share</button>
+<button type="button" data-dfd-diagram-step="step3" aria-pressed="false"><span class="dfd-flow-num" aria-hidden="true">3</span>RPU</button>
+</div>
+<div class="dfd-flow-panel" data-dfd-diagram-panel="step1">
+<ol class="dfd-flow-track" aria-label="Step 1: Lake">
+<li class="dfd-flow-node is-active" aria-current="step"><span class="dfd-flow-label">Data lake (Spectrum)</span><span class="dfd-flow-role">Parquet in S3, not loaded</span></li>
+<li class="dfd-flow-node"><span class="dfd-flow-label">Data sharing</span><span class="dfd-flow-role">Live tables across clusters</span></li>
+<li class="dfd-flow-node"><span class="dfd-flow-label">Serverless</span><span class="dfd-flow-role">Billed in RPU-hours</span></li>
+</ol>
+<div class="dfd-flow-explain">
+<p class="dfd-flow-caption"><span class="dfd-flow-count">Step 1 of 3</span>Redshift Spectrum queries Parquet files in S3 through an external schema, without loading them first.</p>
+<pre class="dfd-flow-example"><code>CREATE EXTERNAL SCHEMA lake FROM DATA CATALOG
+DATABASE &#x27;lake&#x27; IAM_ROLE default;</code></pre>
+</div></div>
+<div class="dfd-flow-panel" data-dfd-diagram-panel="step2" hidden>
+<ol class="dfd-flow-track" aria-label="Step 2: Share">
+<li class="dfd-flow-node"><span class="dfd-flow-label">Data lake (Spectrum)</span><span class="dfd-flow-role">Parquet in S3, not loaded</span></li>
+<li class="dfd-flow-node is-active" aria-current="step"><span class="dfd-flow-label">Data sharing</span><span class="dfd-flow-role">Live tables across clusters</span></li>
+<li class="dfd-flow-node"><span class="dfd-flow-label">Serverless</span><span class="dfd-flow-role">Billed in RPU-hours</span></li>
+</ol>
+<div class="dfd-flow-explain">
+<p class="dfd-flow-caption"><span class="dfd-flow-count">Step 2 of 3</span>Data sharing lets another cluster or workgroup read your live tables without copying them.</p>
+<pre class="dfd-flow-example"><code>CREATE DATASHARE sales_share;
+ALTER DATASHARE sales_share ADD TABLE public.sales;</code></pre>
+</div></div>
+<div class="dfd-flow-panel" data-dfd-diagram-panel="step3" hidden>
+<ol class="dfd-flow-track" aria-label="Step 3: RPU">
+<li class="dfd-flow-node"><span class="dfd-flow-label">Data lake (Spectrum)</span><span class="dfd-flow-role">Parquet in S3, not loaded</span></li>
+<li class="dfd-flow-node"><span class="dfd-flow-label">Data sharing</span><span class="dfd-flow-role">Live tables across clusters</span></li>
+<li class="dfd-flow-node is-active" aria-current="step"><span class="dfd-flow-label">Serverless</span><span class="dfd-flow-role">Billed in RPU-hours</span></li>
+</ol>
+<div class="dfd-flow-explain">
+<p class="dfd-flow-caption"><span class="dfd-flow-count">Step 3 of 3</span>Redshift Serverless charges for capacity (RPU-hours) only while queries run. Base capacity sets how much it starts with.</p>
+<p class="dfd-flow-example dfd-flow-example-ui">Workgroup → Base capacity: 8 RPU</p>
+</div></div>
+</section>
 <section class="section" data-dfd-reveal><h2>Practice</h2>
 <p>Write one sentence for a dataset you know: does it belong in a local table, a Spectrum or Iceberg table, or a data share? The right answer names who updates it and how often it is read. If you cannot say, it is not ready to move.</p>
 <p><button type="button" data-dfd-complete>Mark lesson complete</button></p><p data-dfd-complete-status></p>
@@ -132,7 +155,6 @@ SELECT COUNT(*) FROM lake.events;</code></pre></div>
     </div>
 
     <script src="../js/code-copy.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="../js/supabase-config.js"></script>
     <script src="../js/supabase-auth.js"></script>
     <script src="../js/paywall.js"></script>

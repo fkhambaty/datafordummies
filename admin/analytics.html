@@ -3,6 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <!-- dfd-seo:start -->
+    <meta name="description" content="Admin Analytics. Checking your Data For Dummies admin account….">
+    <link rel="canonical" href="https://datafordummies.in/admin/analytics.html">
+    <meta property="og:title" content="Admin Analytics | Data For Dummies">
+    <meta property="og:description" content="Admin Analytics. Checking your Data For Dummies admin account….">
+    <meta property="og:url" content="https://datafordummies.in/admin/analytics.html">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="https://datafordummies.in/logo.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <!-- dfd-seo:end -->
     <title>Admin Analytics | Data For Dummies</title>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
@@ -355,7 +365,7 @@
                     var vis = result.data.site_visitors || [];
                     var totalSubs = result.data.total_active_subscribers;
                     var subsList = result.data.subscribers || [];
-                    renderAll(pv, ev, vis, totalSubs, subsList, result.data.users || [], result.data.revenue || {});
+                    renderAll(pv, ev, vis, totalSubs, subsList, result.data.users || [], result.data.revenue || {}, result.data.funnel || {});
                 } else {
                     showAuthError((result.error && result.error.message) || 'Admin access required.');
                 }
@@ -402,7 +412,7 @@
                 var visData = result.data.site_visitors || [];
                 var totalSubs = result.data.total_active_subscribers;
                 var subsList = result.data.subscribers || [];
-                renderAll(pvData, evData, visData, totalSubs, subsList, result.data.users || [], result.data.revenue || {});
+                renderAll(pvData, evData, visData, totalSubs, subsList, result.data.users || [], result.data.revenue || {}, result.data.funnel || {});
             })
             .catch(function (err) {
                 var msg = err && err.message ? err.message : 'Failed to load analytics.';
@@ -417,13 +427,13 @@
             });
     };
 
-    function renderAll(pvData, evData, visData, totalActiveSubscribers, subscribersList, users, revenue) {
+    function renderAll(pvData, evData, visData, totalActiveSubscribers, subscribersList, users, revenue, funnel) {
         renderKPIs(pvData, evData, visData, totalActiveSubscribers, users, revenue);
         renderTopPages(pvData);
         renderCountries(pvData);
         renderDevices(pvData);
         renderBrowsers(pvData);
-        renderFunnel(pvData, evData);
+        renderFunnel(funnel);
         renderCourseClicks(evData);
         renderDailyChart(pvData);
         renderSubscriberTable(subscribersList || []);
@@ -511,29 +521,23 @@
         renderBarChart('browsers', data, null, 8);
     }
 
-    function renderFunnel(pv, ev) {
-        var totalVisitors = new Set(pv.map(function (r) { return r.visitor_id; })).size;
-        var pricingVisitors = new Set(ev.filter(function (r) { return r.event_type === 'pricing_page_view' || r.event_type === 'pricing_click'; }).map(function (r) { return r.visitor_id; })).size;
-        var checkoutVisitors = new Set(ev.filter(function (r) { return r.event_type === 'checkout_click'; }).map(function (r) { return r.visitor_id; })).size;
-
-        var el = document.getElementById('funnel');
+    function renderFunnel(funnel) {
         var steps = [
-            { label: 'All Visitors', count: totalVisitors, color: '#6366f1', width: 100 },
-            { label: 'Viewed Pricing', count: pricingVisitors, color: '#f59e0b', width: totalVisitors ? Math.max(30, (pricingVisitors / totalVisitors) * 100) : 30 },
-            { label: 'Clicked Checkout', count: checkoutVisitors, color: '#10b981', width: totalVisitors ? Math.max(20, (checkoutVisitors / totalVisitors) * 100) : 20 }
+            ['course_view', 'Course view'],
+            ['signup', 'Signup'],
+            ['first_lesson', 'First lesson'],
+            ['pro_page', 'Pro page'],
+            ['checkout', 'Checkout'],
+            ['active_subscription', 'Active subscription']
         ];
-
-        el.innerHTML = steps.map(function (s, i) {
-            var html = '<div class="funnel-step" style="width:' + s.width + '%;background:' + s.color + '"><div class="funnel-count">' + s.count + '</div><div class="funnel-label">' + s.label + '</div></div>';
+        var el = document.getElementById('funnel');
+        var data = funnel || {};
+        el.innerHTML = steps.map(function (step, i) {
+            var row = data[step[0]] || { events: 0, people: 0 };
+            var html = '<div class="funnel-step" style="width:100%;background:#4f46e5"><div class="funnel-count">' + row.people + '</div><div class="funnel-label">' + step[1] + ' · ' + row.events + ' events</div></div>';
             if (i < steps.length - 1) html += '<div class="funnel-arrow">▼</div>';
             return html;
-        }).join('');
-
-        if (pricingVisitors > 0) {
-            var dropoff = pricingVisitors - checkoutVisitors;
-            var dropPct = ((dropoff / pricingVisitors) * 100).toFixed(1);
-            el.innerHTML += '<div style="margin-top:16px;padding:12px;background:#fef2f2;border-radius:10px;font-size:0.85rem"><strong style="color:#ef4444">' + dropPct + '% drop-off</strong> — ' + dropoff + ' visitor(s) saw pricing but didn\'t click checkout</div>';
-        }
+        }).join('') + '<p style="color:#6e6e73;font-size:0.8rem;margin-top:8px;">People are distinct accounts or visitors. These counts are not revenue and not a completion claim.</p>';
     }
 
     function renderCourseClicks(ev) {

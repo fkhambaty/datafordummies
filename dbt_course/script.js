@@ -553,36 +553,11 @@ window.onclick = function(event) {
 
 // Download Certificate (enhanced implementation)
 function downloadCertificate() {
-    const name = document.getElementById('studentName').value.trim();
-    
-    if (name === '') {
-        alert('Please enter your name!');
-        return;
-    }
-    
-    // Get completion data
-    const finalScore = localStorage.getItem('finalQuizScore') || 'N/A';
-    const completionDate = new Date();
-    const dateStr = completionDate.toLocaleDateString('en-US', { 
-        year: 'numeric', 
-        month: 'long', 
-        day: 'numeric' 
-    });
-    
-    // Generate certificate ID
-    const certId = generateCertificateId();
-    
-    // Create HTML certificate
-    const certificateHTML = generateCertificateHTML(name, dateStr, finalScore, certId);
-    
-    // Download as HTML
-    downloadHTMLCertificate(certificateHTML, name);
-    
-    // Also create text version
-    downloadTextCertificate(name, dateStr, finalScore, certId);
-    
-    showToast('Certificate downloaded! 🎉');
+    alert('This page cannot create a certificate. Open your account page after every lesson in the course is saved. The status stays “requested” until a person issues it. There is no verification website.');
+    window.location.href = '../auth/profile.html#certificates';
 }
+
+
 
 function generateCertificateId() {
     const timestamp = Date.now();
@@ -591,6 +566,7 @@ function generateCertificateId() {
 }
 
 function generateCertificateHTML(name, date, score, certId) {
+    return '<!DOCTYPE html><title>Not issued</title><p>No certificate file is created. Check your account page.</p>';
     return `
 <!DOCTYPE html>
 <html>
@@ -774,7 +750,7 @@ function generateCertificateHTML(name, date, score, certId) {
         <div class="cert-id">
             Certificate ID: ${certId}<br>
             Issued by: Fakhruddin Khambaty Training Institute<br>
-            Verify at: fkti.edu/verify/${certId}
+            Verify at: not-issued/${certId}
         </div>
         
         <button class="print-button" onclick="window.print()">🖨️ Print Certificate</button>
@@ -797,6 +773,7 @@ function downloadHTMLCertificate(html, name) {
 }
 
 function downloadTextCertificate(name, date, score, certId) {
+    return;
     const percentage = Math.round((score/30)*100);
     const certificateContent = `
 ╔════════════════════════════════════════════════════════════════╗
@@ -838,7 +815,7 @@ function downloadTextCertificate(name, date, score, certId) {
 ║                                                                ║
 ║  Certificate ID: ${certId}${' '.repeat(39 - certId.length)}║
 ║  Issued by: FKTI                                               ║
-║  Verify at: fkti.edu/verify/${certId}${' '.repeat(26 - certId.length)}║
+║  Verify at: not-issued/${certId}${' '.repeat(26 - certId.length)}║
 ║                                                                ║
 ║  "Empowering Data Scientists Worldwide" 🌍                     ║
 ║                                                                ║

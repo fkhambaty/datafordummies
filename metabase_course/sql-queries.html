@@ -3,6 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <!-- dfd-seo:start -->
+    <meta name="description" content="SQL queries in Metabase. Native questions use variables, field filters, and optional clauses so a dashboard can drive SQL safely.">
+    <link rel="canonical" href="https://datafordummies.in/metabase_course/sql-queries.html">
+    <meta property="og:title" content="SQL queries in Metabase | Data For Dummies">
+    <meta property="og:description" content="SQL queries in Metabase. Native questions use variables, field filters, and optional clauses so a dashboard can drive SQL safely.">
+    <meta property="og:url" content="https://datafordummies.in/metabase_course/sql-queries.html">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="https://datafordummies.in/logo.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <!-- dfd-seo:end -->
     <title>SQL queries in Metabase | Data For Dummies</title>
     <link rel="stylesheet" href="styles.css">
     
@@ -47,34 +57,45 @@ WHERE {{created_at}}
 <p>Snippets are reusable SQL fragments saved in Metabase. Use them for a join you repeat. Do not hide a permission check inside a snippet and assume it is security. Permissions are the admin lesson. A snippet is only text.</p>
 <div class="important-box"><h4>Do not concatenate SQL in the warehouse call</h4><p>If you need a dynamic identifier such as a schema name, that is not a value variable. Keep identifiers in the saved SQL. Let widgets pass values only.</p></div>
 </section>
-<section class="section dfd-diagram" data-dfd-diagram data-dfd-reveal><h2>Three kinds of blank</h2><div data-dfd-diagram-panel="one">
-<svg class="dfd-responsive" viewBox="0 0 360 100" role="img" aria-label="Text variable highlighted">
-<rect x="12" y="26" width="104" height="48" rx="8" fill="#0f172a"></rect>
-<text x="64" y="54" text-anchor="middle" font-size="13" fill="#ffffff" font-family="Nunito,sans-serif">Text</text>
-<rect x="128" y="26" width="104" height="48" rx="8" fill="#e2e8f0"></rect>
-<text x="180" y="54" text-anchor="middle" font-size="13" fill="#0f172a" font-family="Nunito,sans-serif">Field</text>
-<rect x="244" y="26" width="104" height="48" rx="8" fill="#e2e8f0"></rect>
-<text x="296" y="54" text-anchor="middle" font-size="13" fill="#0f172a" font-family="Nunito,sans-serif">Optional</text>
-</svg>
-</div><div data-dfd-diagram-panel="two" hidden>
-<svg class="dfd-responsive" viewBox="0 0 360 100" role="img" aria-label="Field filter highlighted">
-<rect x="12" y="26" width="104" height="48" rx="8" fill="#e2e8f0"></rect>
-<text x="64" y="54" text-anchor="middle" font-size="13" fill="#0f172a" font-family="Nunito,sans-serif">Text</text>
-<rect x="128" y="26" width="104" height="48" rx="8" fill="#0f172a"></rect>
-<text x="180" y="54" text-anchor="middle" font-size="13" fill="#ffffff" font-family="Nunito,sans-serif">Field</text>
-<rect x="244" y="26" width="104" height="48" rx="8" fill="#e2e8f0"></rect>
-<text x="296" y="54" text-anchor="middle" font-size="13" fill="#0f172a" font-family="Nunito,sans-serif">Optional</text>
-</svg>
-</div><div data-dfd-diagram-panel="three" hidden>
-<svg class="dfd-responsive" viewBox="0 0 360 100" role="img" aria-label="Optional clause highlighted">
-<rect x="12" y="26" width="104" height="48" rx="8" fill="#e2e8f0"></rect>
-<text x="64" y="54" text-anchor="middle" font-size="13" fill="#0f172a" font-family="Nunito,sans-serif">Text</text>
-<rect x="128" y="26" width="104" height="48" rx="8" fill="#e2e8f0"></rect>
-<text x="180" y="54" text-anchor="middle" font-size="13" fill="#0f172a" font-family="Nunito,sans-serif">Field</text>
-<rect x="244" y="26" width="104" height="48" rx="8" fill="#0f172a"></rect>
-<text x="296" y="54" text-anchor="middle" font-size="13" fill="#ffffff" font-family="Nunito,sans-serif">Optional</text>
-</svg>
-</div><div class="dfd-diagram-controls"><button type="button" data-dfd-diagram-step="one" aria-pressed="true">Value</button><button type="button" data-dfd-diagram-step="two" aria-pressed="false">Field</button><button type="button" data-dfd-diagram-step="three" aria-pressed="false">Optional</button></div></section>
+<section class="section dfd-diagram dfd-flow" data-dfd-diagram data-dfd-flow data-dfd-reveal>
+<h2>Three kinds of blank</h2>
+<p class="dfd-flow-intro">Variables in double curly brackets turn a SQL query into a reusable filter.</p>
+<div class="dfd-diagram-controls dfd-flow-controls" role="group" aria-label="Three kinds of blank: steps">
+<button type="button" data-dfd-diagram-step="step1" aria-pressed="true"><span class="dfd-flow-num" aria-hidden="true">1</span>Value</button>
+<button type="button" data-dfd-diagram-step="step2" aria-pressed="false"><span class="dfd-flow-num" aria-hidden="true">2</span>Field</button>
+<button type="button" data-dfd-diagram-step="step3" aria-pressed="false"><span class="dfd-flow-num" aria-hidden="true">3</span>Optional</button>
+</div>
+<div class="dfd-flow-panel" data-dfd-diagram-panel="step1">
+<ol class="dfd-flow-track" aria-label="Step 1: Value">
+<li class="dfd-flow-node is-active" aria-current="step"><span class="dfd-flow-label">Text variable</span><span class="dfd-flow-role">{{city}} becomes a typed value</span></li>
+<li class="dfd-flow-node"><span class="dfd-flow-label">Field filter</span><span class="dfd-flow-role">{{created}} maps to a column</span></li>
+<li class="dfd-flow-node"><span class="dfd-flow-label">Optional clause</span><span class="dfd-flow-role">[[ ... ]] disappears when empty</span></li>
+</ol>
+<div class="dfd-flow-explain">
+<p class="dfd-flow-caption"><span class="dfd-flow-count">Step 1 of 3</span>A text or number variable is replaced with whatever the reader types into the filter box.</p>
+<pre class="dfd-flow-example"><code>SELECT * FROM orders WHERE city = {{city}}</code></pre>
+</div></div>
+<div class="dfd-flow-panel" data-dfd-diagram-panel="step2" hidden>
+<ol class="dfd-flow-track" aria-label="Step 2: Field">
+<li class="dfd-flow-node"><span class="dfd-flow-label">Text variable</span><span class="dfd-flow-role">{{city}} becomes a typed value</span></li>
+<li class="dfd-flow-node is-active" aria-current="step"><span class="dfd-flow-label">Field filter</span><span class="dfd-flow-role">{{created}} maps to a column</span></li>
+<li class="dfd-flow-node"><span class="dfd-flow-label">Optional clause</span><span class="dfd-flow-role">[[ ... ]] disappears when empty</span></li>
+</ol>
+<div class="dfd-flow-explain">
+<p class="dfd-flow-caption"><span class="dfd-flow-count">Step 2 of 3</span>A field filter is linked to a real column, so readers get Metabase&#x27;s date picker and Metabase writes the condition. Do not put the column name before it.</p>
+<pre class="dfd-flow-example"><code>SELECT * FROM orders WHERE {{created}}</code></pre>
+</div></div>
+<div class="dfd-flow-panel" data-dfd-diagram-panel="step3" hidden>
+<ol class="dfd-flow-track" aria-label="Step 3: Optional">
+<li class="dfd-flow-node"><span class="dfd-flow-label">Text variable</span><span class="dfd-flow-role">{{city}} becomes a typed value</span></li>
+<li class="dfd-flow-node"><span class="dfd-flow-label">Field filter</span><span class="dfd-flow-role">{{created}} maps to a column</span></li>
+<li class="dfd-flow-node is-active" aria-current="step"><span class="dfd-flow-label">Optional clause</span><span class="dfd-flow-role">[[ ... ]] disappears when empty</span></li>
+</ol>
+<div class="dfd-flow-explain">
+<p class="dfd-flow-caption"><span class="dfd-flow-count">Step 3 of 3</span>Square brackets make part of the query optional. If the reader leaves the filter empty, the whole bracketed part is dropped.</p>
+<pre class="dfd-flow-example"><code>SELECT * FROM orders WHERE true [[AND city = {{city}}]]</code></pre>
+</div></div>
+</section>
 <section class="section" data-dfd-reveal><h2>Practice</h2>
 <p>Save a native question with one required text variable and one optional clause. Run it with the optional filter empty, then filled. Both runs should succeed, and only the second should restrict that column.</p>
 <p><button type="button" data-dfd-complete>Mark lesson complete</button></p><p data-dfd-complete-status></p>
@@ -126,7 +147,6 @@ WHERE {{created_at}}
     </div>
 
     <script src="../js/code-copy.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="../js/supabase-config.js"></script>
     <script src="../js/supabase-auth.js"></script>
     <script src="../js/paywall.js"></script>

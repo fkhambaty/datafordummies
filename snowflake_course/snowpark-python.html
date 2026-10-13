@@ -3,6 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <!-- dfd-seo:start -->
+    <meta name="description" content="Snowpark Python | Snowflake course. DataFrames, Python UDFs, and stored procedures run where the data already lives.">
+    <link rel="canonical" href="https://datafordummies.in/snowflake_course/snowpark-python.html">
+    <meta property="og:title" content="Snowpark Python | Snowflake course | Data For Dummies">
+    <meta property="og:description" content="Snowpark Python | Snowflake course. DataFrames, Python UDFs, and stored procedures run where the data already lives.">
+    <meta property="og:url" content="https://datafordummies.in/snowflake_course/snowpark-python.html">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="https://datafordummies.in/logo.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <!-- dfd-seo:end -->
     <title>Snowpark Python | Snowflake course | Data For Dummies</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
@@ -65,43 +75,47 @@ $$;</code>
 <p>The <code>RUNTIME_VERSION</code> in the sample is a placeholder. If the create fails, the error is telling you the account does not offer that version. Change the string. Do not keep retrying a version the error rejected.</p>
 <p>Snowpark Container Services and Streamlit in Snowflake exist and are listed in the edition matrix. They are different products from a DataFrame script. This lesson does not deploy a container.</p>
 </section>
-        <section class="section dfd-diagram" data-dfd-diagram data-dfd-reveal>
-<h2>See it move</h2>
-<div data-dfd-diagram-panel="one">
-<svg class="dfd-responsive" viewBox="0 0 360 120" role="img" aria-label="Python client builds a plan">
-<rect class="sf-drift" x="16" y="36" width="70" height="48" rx="8" fill="#bae6fd">
-</rect>
-<rect x="110" y="28" width="140" height="64" rx="8" fill="#0284c7">
-</rect>
-<rect x="274" y="36" width="70" height="48" rx="8" fill="#e0f2fe" stroke="#0369a1">
-</rect>
-</svg>
+        <section class="section dfd-diagram dfd-flow" data-dfd-diagram data-dfd-flow data-dfd-reveal>
+<h2>Python that runs next to the data</h2>
+<p class="dfd-flow-intro">Snowpark code looks like pandas but the work happens inside Snowflake, not on your laptop.</p>
+<div class="dfd-diagram-controls dfd-flow-controls" role="group" aria-label="Python that runs next to the data: steps">
+<button type="button" data-dfd-diagram-step="step1" aria-pressed="true"><span class="dfd-flow-num" aria-hidden="true">1</span>Describe the plan</button>
+<button type="button" data-dfd-diagram-step="step2" aria-pressed="false"><span class="dfd-flow-num" aria-hidden="true">2</span>Warehouse runs it</button>
+<button type="button" data-dfd-diagram-step="step3" aria-pressed="false"><span class="dfd-flow-num" aria-hidden="true">3</span>UDF per value</button>
 </div>
-<div data-dfd-diagram-panel="two" hidden>
-<svg class="dfd-responsive" viewBox="0 0 360 120" role="img" aria-label="Warehouse executes the plan">
-<rect x="16" y="36" width="70" height="48" rx="8" fill="#e0f2fe">
-</rect>
-<rect class="sf-drift" x="110" y="28" width="140" height="64" rx="8" fill="#0369a1">
-</rect>
-<rect x="274" y="36" width="70" height="48" rx="8" fill="#e0f2fe" stroke="#0369a1">
-</rect>
-</svg>
-</div>
-<div data-dfd-diagram-panel="three" hidden>
-<svg class="dfd-responsive" viewBox="0 0 360 120" role="img" aria-label="A UDF called from SQL">
-<rect x="16" y="36" width="70" height="48" rx="8" fill="#e0f2fe">
-</rect>
-<rect x="110" y="28" width="140" height="64" rx="8" fill="#bae6fd">
-</rect>
-<rect class="sf-drift" x="274" y="36" width="70" height="48" rx="8" fill="#0ea5e9">
-</rect>
-</svg>
-</div>
-<div class="dfd-diagram-controls">
-<button type="button" data-dfd-diagram-step="one" aria-pressed="true">Describe the plan</button>
-<button type="button" data-dfd-diagram-step="two" aria-pressed="false">Warehouse runs it</button>
-<button type="button" data-dfd-diagram-step="three" aria-pressed="false">UDF per value</button>
-</div>
+<div class="dfd-flow-panel" data-dfd-diagram-panel="step1">
+<ol class="dfd-flow-track" aria-label="Step 1: Describe the plan">
+<li class="dfd-flow-node is-active" aria-current="step"><span class="dfd-flow-label">Your Python</span><span class="dfd-flow-role">Notebook or script</span></li>
+<li class="dfd-flow-node is-active is-fed" aria-current="step"><span class="dfd-flow-label">DataFrame plan</span><span class="dfd-flow-role">Turned into SQL, not yet run</span></li>
+<li class="dfd-flow-node"><span class="dfd-flow-label">Warehouse</span><span class="dfd-flow-role">Runs the SQL near the data</span></li>
+<li class="dfd-flow-node"><span class="dfd-flow-label">Python UDF</span><span class="dfd-flow-role">Your function, callable from SQL</span></li>
+</ol>
+<div class="dfd-flow-explain">
+<p class="dfd-flow-caption"><span class="dfd-flow-count">Step 1 of 3</span>DataFrame calls do not download data. Each call adds to a plan that Snowpark turns into SQL.</p>
+<pre class="dfd-flow-example"><code>df = session.table(&quot;orders&quot;).filter(col(&quot;amount&quot;) &gt; 100)</code></pre>
+</div></div>
+<div class="dfd-flow-panel" data-dfd-diagram-panel="step2" hidden>
+<ol class="dfd-flow-track" aria-label="Step 2: Warehouse runs it">
+<li class="dfd-flow-node"><span class="dfd-flow-label">Your Python</span><span class="dfd-flow-role">Notebook or script</span></li>
+<li class="dfd-flow-node is-active" aria-current="step"><span class="dfd-flow-label">DataFrame plan</span><span class="dfd-flow-role">Turned into SQL, not yet run</span></li>
+<li class="dfd-flow-node is-active is-fed" aria-current="step"><span class="dfd-flow-label">Warehouse</span><span class="dfd-flow-role">Runs the SQL near the data</span></li>
+<li class="dfd-flow-node"><span class="dfd-flow-label">Python UDF</span><span class="dfd-flow-role">Your function, callable from SQL</span></li>
+</ol>
+<div class="dfd-flow-explain">
+<p class="dfd-flow-caption"><span class="dfd-flow-count">Step 2 of 3</span>Nothing runs until an action such as collect() or save_as_table(). Then the generated SQL runs on the warehouse, and only the result comes back.</p>
+<pre class="dfd-flow-example"><code>df.group_by(&quot;region&quot;).agg(sum_(&quot;amount&quot;)).collect()</code></pre>
+</div></div>
+<div class="dfd-flow-panel" data-dfd-diagram-panel="step3" hidden>
+<ol class="dfd-flow-track" aria-label="Step 3: UDF per value">
+<li class="dfd-flow-node"><span class="dfd-flow-label">Your Python</span><span class="dfd-flow-role">Notebook or script</span></li>
+<li class="dfd-flow-node"><span class="dfd-flow-label">DataFrame plan</span><span class="dfd-flow-role">Turned into SQL, not yet run</span></li>
+<li class="dfd-flow-node is-active" aria-current="step"><span class="dfd-flow-label">Warehouse</span><span class="dfd-flow-role">Runs the SQL near the data</span></li>
+<li class="dfd-flow-node is-active is-fed" aria-current="step"><span class="dfd-flow-label">Python UDF</span><span class="dfd-flow-role">Your function, callable from SQL</span></li>
+</ol>
+<div class="dfd-flow-explain">
+<p class="dfd-flow-caption"><span class="dfd-flow-count">Step 3 of 3</span>A Python UDF runs your function inside Snowflake for each value, and anyone can call it from plain SQL.</p>
+<pre class="dfd-flow-example"><code>SELECT clean_phone(phone) FROM customers;</code></pre>
+</div></div>
 </section>
         <section class="section" id="lab" data-dfd-reveal>
             <h2>Lab: a function and a DataFrame script</h2>
@@ -218,8 +232,6 @@ session.close()</code>
         </nav>
     </div>
     <script src="../js/code-copy.js">
-</script>
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2">
 </script>
     <script src="../js/supabase-config.js">
 </script>

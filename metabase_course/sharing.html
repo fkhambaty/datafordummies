@@ -3,6 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <!-- dfd-seo:start -->
+    <meta name="description" content="Sharing and embedding. Signed-in sharing, public links, and embedding move the same rows to different audiences.">
+    <link rel="canonical" href="https://datafordummies.in/metabase_course/sharing.html">
+    <meta property="og:title" content="Sharing and embedding | Data For Dummies">
+    <meta property="og:description" content="Sharing and embedding. Signed-in sharing, public links, and embedding move the same rows to different audiences.">
+    <meta property="og:url" content="https://datafordummies.in/metabase_course/sharing.html">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="https://datafordummies.in/logo.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <!-- dfd-seo:end -->
     <title>Sharing and embedding | Data For Dummies</title>
     <link rel="stylesheet" href="styles.css">
     
@@ -50,34 +60,45 @@
 # payload: resource dashboard id, params, expiry</code></pre></div>
 <div class="important-box"><h4>Public links ignore the login</h4><p>Row-level sandboxes and collection permissions do not protect a public URL. If the chart must stay inside the company, do not publish it.</p></div>
 </section>
-<section class="section dfd-diagram" data-dfd-diagram data-dfd-reveal><h2>How a reader gets in</h2><div data-dfd-diagram-panel="one">
-<svg class="dfd-responsive" viewBox="0 0 360 100" role="img" aria-label="Signed-in sharing highlighted">
-<rect x="12" y="26" width="104" height="48" rx="8" fill="#0f172a"></rect>
-<text x="64" y="54" text-anchor="middle" font-size="13" fill="#ffffff" font-family="Nunito,sans-serif">Login</text>
-<rect x="128" y="26" width="104" height="48" rx="8" fill="#e2e8f0"></rect>
-<text x="180" y="54" text-anchor="middle" font-size="13" fill="#0f172a" font-family="Nunito,sans-serif">Public</text>
-<rect x="244" y="26" width="104" height="48" rx="8" fill="#e2e8f0"></rect>
-<text x="296" y="54" text-anchor="middle" font-size="13" fill="#0f172a" font-family="Nunito,sans-serif">Embed</text>
-</svg>
-</div><div data-dfd-diagram-panel="two" hidden>
-<svg class="dfd-responsive" viewBox="0 0 360 100" role="img" aria-label="Public link highlighted">
-<rect x="12" y="26" width="104" height="48" rx="8" fill="#e2e8f0"></rect>
-<text x="64" y="54" text-anchor="middle" font-size="13" fill="#0f172a" font-family="Nunito,sans-serif">Login</text>
-<rect x="128" y="26" width="104" height="48" rx="8" fill="#0f172a"></rect>
-<text x="180" y="54" text-anchor="middle" font-size="13" fill="#ffffff" font-family="Nunito,sans-serif">Public</text>
-<rect x="244" y="26" width="104" height="48" rx="8" fill="#e2e8f0"></rect>
-<text x="296" y="54" text-anchor="middle" font-size="13" fill="#0f172a" font-family="Nunito,sans-serif">Embed</text>
-</svg>
-</div><div data-dfd-diagram-panel="three" hidden>
-<svg class="dfd-responsive" viewBox="0 0 360 100" role="img" aria-label="Embedding highlighted">
-<rect x="12" y="26" width="104" height="48" rx="8" fill="#e2e8f0"></rect>
-<text x="64" y="54" text-anchor="middle" font-size="13" fill="#0f172a" font-family="Nunito,sans-serif">Login</text>
-<rect x="128" y="26" width="104" height="48" rx="8" fill="#e2e8f0"></rect>
-<text x="180" y="54" text-anchor="middle" font-size="13" fill="#0f172a" font-family="Nunito,sans-serif">Public</text>
-<rect x="244" y="26" width="104" height="48" rx="8" fill="#0f172a"></rect>
-<text x="296" y="54" text-anchor="middle" font-size="13" fill="#ffffff" font-family="Nunito,sans-serif">Embed</text>
-</svg>
-</div><div class="dfd-diagram-controls"><button type="button" data-dfd-diagram-step="one" aria-pressed="true">Login</button><button type="button" data-dfd-diagram-step="two" aria-pressed="false">Public</button><button type="button" data-dfd-diagram-step="three" aria-pressed="false">Embed</button></div></section>
+<section class="section dfd-diagram dfd-flow" data-dfd-diagram data-dfd-flow data-dfd-reveal>
+<h2>How a reader gets in</h2>
+<p class="dfd-flow-intro">Three doors, each with a different level of control over who can see what.</p>
+<div class="dfd-diagram-controls dfd-flow-controls" role="group" aria-label="How a reader gets in: steps">
+<button type="button" data-dfd-diagram-step="step1" aria-pressed="true"><span class="dfd-flow-num" aria-hidden="true">1</span>Login</button>
+<button type="button" data-dfd-diagram-step="step2" aria-pressed="false"><span class="dfd-flow-num" aria-hidden="true">2</span>Public</button>
+<button type="button" data-dfd-diagram-step="step3" aria-pressed="false"><span class="dfd-flow-num" aria-hidden="true">3</span>Embed</button>
+</div>
+<div class="dfd-flow-panel" data-dfd-diagram-panel="step1">
+<ol class="dfd-flow-track" aria-label="Step 1: Login">
+<li class="dfd-flow-node is-active" aria-current="step"><span class="dfd-flow-label">Signed-in user</span><span class="dfd-flow-role">Group permissions apply</span></li>
+<li class="dfd-flow-node"><span class="dfd-flow-label">Public link</span><span class="dfd-flow-role">Anyone with the URL</span></li>
+<li class="dfd-flow-node"><span class="dfd-flow-label">Embedded chart</span><span class="dfd-flow-role">Inside your own app</span></li>
+</ol>
+<div class="dfd-flow-explain">
+<p class="dfd-flow-caption"><span class="dfd-flow-count">Step 1 of 3</span>People who sign in see only the collections and data their groups allow.</p>
+<p class="dfd-flow-example dfd-flow-example-ui">Admin → People → add to group ‘Sales’</p>
+</div></div>
+<div class="dfd-flow-panel" data-dfd-diagram-panel="step2" hidden>
+<ol class="dfd-flow-track" aria-label="Step 2: Public">
+<li class="dfd-flow-node"><span class="dfd-flow-label">Signed-in user</span><span class="dfd-flow-role">Group permissions apply</span></li>
+<li class="dfd-flow-node is-active" aria-current="step"><span class="dfd-flow-label">Public link</span><span class="dfd-flow-role">Anyone with the URL</span></li>
+<li class="dfd-flow-node"><span class="dfd-flow-label">Embedded chart</span><span class="dfd-flow-role">Inside your own app</span></li>
+</ol>
+<div class="dfd-flow-explain">
+<p class="dfd-flow-caption"><span class="dfd-flow-count">Step 2 of 3</span>A public link works without logging in. An admin must enable it, and you cannot limit it to particular people, so never use it for private data.</p>
+<p class="dfd-flow-example dfd-flow-example-ui">Sharing → Create a public link</p>
+</div></div>
+<div class="dfd-flow-panel" data-dfd-diagram-panel="step3" hidden>
+<ol class="dfd-flow-track" aria-label="Step 3: Embed">
+<li class="dfd-flow-node"><span class="dfd-flow-label">Signed-in user</span><span class="dfd-flow-role">Group permissions apply</span></li>
+<li class="dfd-flow-node"><span class="dfd-flow-label">Public link</span><span class="dfd-flow-role">Anyone with the URL</span></li>
+<li class="dfd-flow-node is-active" aria-current="step"><span class="dfd-flow-label">Embedded chart</span><span class="dfd-flow-role">Inside your own app</span></li>
+</ol>
+<div class="dfd-flow-explain">
+<p class="dfd-flow-caption"><span class="dfd-flow-count">Step 3 of 3</span>Embedding puts a chart inside your own app. With signed embedding, your server signs a token that locks filters, so each customer sees only their own rows.</p>
+<p class="dfd-flow-example dfd-flow-example-ui">Sharing → Embed → Locked parameter: customer_id</p>
+</div></div>
+</section>
 <section class="section" data-dfd-reveal><h2>Practice</h2>
 <p>List one question that is safe to show a signed-in colleague and one that must never have a public link. If you enable embedding in a trial, create the token on a server you control and set an expiry. Then disable public sharing again if you turned it on to look.</p>
 <p><button type="button" data-dfd-complete>Mark lesson complete</button></p><p data-dfd-complete-status></p>
@@ -129,7 +150,6 @@
     </div>
 
     <script src="../js/code-copy.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="../js/supabase-config.js"></script>
     <script src="../js/supabase-auth.js"></script>
     <script src="../js/paywall.js"></script>

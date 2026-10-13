@@ -3,6 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <!-- dfd-seo:start -->
+    <meta name="description" content="Architecture | Snowflake course. Storage, warehouses, and cloud services scale on different clocks.">
+    <link rel="canonical" href="https://datafordummies.in/snowflake_course/architecture.html">
+    <meta property="og:title" content="Architecture | Snowflake course | Data For Dummies">
+    <meta property="og:description" content="Architecture | Snowflake course. Storage, warehouses, and cloud services scale on different clocks.">
+    <meta property="og:url" content="https://datafordummies.in/snowflake_course/architecture.html">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="https://datafordummies.in/logo.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <!-- dfd-seo:end -->
     <title>Architecture | Snowflake course | Data For Dummies</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
@@ -77,43 +87,47 @@
 </tbody>
 </table>
 </section>
-        <section class="section dfd-diagram" data-dfd-diagram data-dfd-reveal>
-<h2>See it move</h2>
-<div data-dfd-diagram-panel="one">
-<svg class="dfd-responsive" viewBox="0 0 360 120" role="img" aria-label="Central storage">
-<rect class="sf-drift" x="16" y="36" width="70" height="48" rx="8" fill="#bae6fd">
-</rect>
-<rect x="110" y="28" width="140" height="64" rx="8" fill="#0284c7">
-</rect>
-<rect x="274" y="36" width="70" height="48" rx="8" fill="#e0f2fe" stroke="#0369a1">
-</rect>
-</svg>
+        <section class="section dfd-diagram dfd-flow" data-dfd-diagram data-dfd-flow data-dfd-reveal>
+<h2>Two teams, one copy of the data</h2>
+<p class="dfd-flow-intro">A nightly load and a busy dashboard share the same tables without slowing each other down.</p>
+<div class="dfd-diagram-controls dfd-flow-controls" role="group" aria-label="Two teams, one copy of the data: steps">
+<button type="button" data-dfd-diagram-step="step1" aria-pressed="true"><span class="dfd-flow-num" aria-hidden="true">1</span>One copy of the data</button>
+<button type="button" data-dfd-diagram-step="step2" aria-pressed="false"><span class="dfd-flow-num" aria-hidden="true">2</span>Two warehouses</button>
+<button type="button" data-dfd-diagram-step="step3" aria-pressed="false"><span class="dfd-flow-num" aria-hidden="true">3</span>Metadata desk</button>
 </div>
-<div data-dfd-diagram-panel="two" hidden>
-<svg class="dfd-responsive" viewBox="0 0 360 120" role="img" aria-label="Separate compute clusters">
-<rect x="16" y="36" width="70" height="48" rx="8" fill="#e0f2fe">
-</rect>
-<rect class="sf-drift" x="110" y="28" width="140" height="64" rx="8" fill="#0369a1">
-</rect>
-<rect x="274" y="36" width="70" height="48" rx="8" fill="#e0f2fe" stroke="#0369a1">
-</rect>
-</svg>
-</div>
-<div data-dfd-diagram-panel="three" hidden>
-<svg class="dfd-responsive" viewBox="0 0 360 120" role="img" aria-label="Cloud services coordinating the query">
-<rect x="16" y="36" width="70" height="48" rx="8" fill="#e0f2fe">
-</rect>
-<rect x="110" y="28" width="140" height="64" rx="8" fill="#bae6fd">
-</rect>
-<rect class="sf-drift" x="274" y="36" width="70" height="48" rx="8" fill="#0ea5e9">
-</rect>
-</svg>
-</div>
-<div class="dfd-diagram-controls">
-<button type="button" data-dfd-diagram-step="one" aria-pressed="true">One copy of the data</button>
-<button type="button" data-dfd-diagram-step="two" aria-pressed="false">Two warehouses</button>
-<button type="button" data-dfd-diagram-step="three" aria-pressed="false">Metadata desk</button>
-</div>
+<div class="dfd-flow-panel" data-dfd-diagram-panel="step1">
+<ol class="dfd-flow-track" aria-label="Step 1: One copy of the data">
+<li class="dfd-flow-node"><span class="dfd-flow-label">LOAD_WH</span><span class="dfd-flow-role">Warehouse for the nightly load</span></li>
+<li class="dfd-flow-node"><span class="dfd-flow-label">BI_WH</span><span class="dfd-flow-role">Warehouse for dashboards</span></li>
+<li class="dfd-flow-node is-active" aria-current="step"><span class="dfd-flow-label">Shared storage</span><span class="dfd-flow-role">One copy of every table</span></li>
+<li class="dfd-flow-node"><span class="dfd-flow-label">Cloud services</span><span class="dfd-flow-role">Metadata and transactions</span></li>
+</ol>
+<div class="dfd-flow-explain">
+<p class="dfd-flow-caption"><span class="dfd-flow-count">Step 1 of 3</span>Both teams read the same single copy of each table. Nobody exports or duplicates data to give another team access.</p>
+<pre class="dfd-flow-example"><code>GRANT SELECT ON ALL TABLES IN SCHEMA sales TO ROLE analyst;</code></pre>
+</div></div>
+<div class="dfd-flow-panel" data-dfd-diagram-panel="step2" hidden>
+<ol class="dfd-flow-track" aria-label="Step 2: Two warehouses">
+<li class="dfd-flow-node is-active" aria-current="step"><span class="dfd-flow-label">LOAD_WH</span><span class="dfd-flow-role">Warehouse for the nightly load</span></li>
+<li class="dfd-flow-node is-active is-fed" aria-current="step"><span class="dfd-flow-label">BI_WH</span><span class="dfd-flow-role">Warehouse for dashboards</span></li>
+<li class="dfd-flow-node"><span class="dfd-flow-label">Shared storage</span><span class="dfd-flow-role">One copy of every table</span></li>
+<li class="dfd-flow-node"><span class="dfd-flow-label">Cloud services</span><span class="dfd-flow-role">Metadata and transactions</span></li>
+</ol>
+<div class="dfd-flow-explain">
+<p class="dfd-flow-caption"><span class="dfd-flow-count">Step 2 of 3</span>The load runs on LOAD_WH while dashboards run on BI_WH. They don&#x27;t share CPU, so a heavy load can&#x27;t make a dashboard slow.</p>
+<pre class="dfd-flow-example"><code>CREATE WAREHOUSE bi_wh WAREHOUSE_SIZE = XSMALL AUTO_SUSPEND = 60;</code></pre>
+</div></div>
+<div class="dfd-flow-panel" data-dfd-diagram-panel="step3" hidden>
+<ol class="dfd-flow-track" aria-label="Step 3: Metadata desk">
+<li class="dfd-flow-node"><span class="dfd-flow-label">LOAD_WH</span><span class="dfd-flow-role">Warehouse for the nightly load</span></li>
+<li class="dfd-flow-node"><span class="dfd-flow-label">BI_WH</span><span class="dfd-flow-role">Warehouse for dashboards</span></li>
+<li class="dfd-flow-node"><span class="dfd-flow-label">Shared storage</span><span class="dfd-flow-role">One copy of every table</span></li>
+<li class="dfd-flow-node is-active" aria-current="step"><span class="dfd-flow-label">Cloud services</span><span class="dfd-flow-role">Metadata and transactions</span></li>
+</ol>
+<div class="dfd-flow-explain">
+<p class="dfd-flow-caption"><span class="dfd-flow-count">Step 3 of 3</span>Cloud services keeps the minimum and maximum of each column for every micro-partition and coordinates transactions, so readers see a consistent table even mid-load.</p>
+<pre class="dfd-flow-example"><code>SELECT MAX(order_date) FROM orders;  -- often answered from metadata alone</code></pre>
+</div></div>
 </section>
         <section class="section" id="lab" data-dfd-reveal>
             <h2>Lab: two warehouses, one table</h2>
@@ -219,8 +233,6 @@ ALTER WAREHOUSE LOAD_WH SUSPEND;</code>
         </nav>
     </div>
     <script src="../js/code-copy.js">
-</script>
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2">
 </script>
     <script src="../js/supabase-config.js">
 </script>

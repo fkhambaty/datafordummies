@@ -3,6 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <!-- dfd-seo:start -->
+    <meta name="description" content="Administration. Groups, data permissions, collection permissions, sandboxes, and the audit log decide who sees which rows.">
+    <link rel="canonical" href="https://datafordummies.in/metabase_course/admin.html">
+    <meta property="og:title" content="Administration | Data For Dummies">
+    <meta property="og:description" content="Administration. Groups, data permissions, collection permissions, sandboxes, and the audit log decide who sees which rows.">
+    <meta property="og:url" content="https://datafordummies.in/metabase_course/admin.html">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="https://datafordummies.in/logo.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <!-- dfd-seo:end -->
     <title>Administration | Data For Dummies</title>
     <link rel="stylesheet" href="styles.css">
     
@@ -47,34 +57,45 @@
 <p>SSO with SAML or JWT, sandboxes, and the audit log are paid features. The audit log answers who viewed or changed what. Turn it on when the data is sensitive enough that you will be asked. Impersonation, where Metabase connects to the warehouse as a database role that matches the viewer, is another paid path. Use it when the warehouse, not Metabase, should be the enforcement point.</p>
 <div class="important-box"><h4>Downloading is a copy</h4><p>A group that can download results can walk away with those rows. Turn download off for groups that only need to look.</p></div>
 </section>
-<section class="section dfd-diagram" data-dfd-diagram data-dfd-reveal><h2>What an admin sets</h2><div data-dfd-diagram-panel="one">
-<svg class="dfd-responsive" viewBox="0 0 360 100" role="img" aria-label="People highlighted">
-<rect x="12" y="26" width="104" height="48" rx="8" fill="#0f172a"></rect>
-<text x="64" y="54" text-anchor="middle" font-size="13" fill="#ffffff" font-family="Nunito,sans-serif">People</text>
-<rect x="128" y="26" width="104" height="48" rx="8" fill="#e2e8f0"></rect>
-<text x="180" y="54" text-anchor="middle" font-size="13" fill="#0f172a" font-family="Nunito,sans-serif">Data</text>
-<rect x="244" y="26" width="104" height="48" rx="8" fill="#e2e8f0"></rect>
-<text x="296" y="54" text-anchor="middle" font-size="13" fill="#0f172a" font-family="Nunito,sans-serif">Audit</text>
-</svg>
-</div><div data-dfd-diagram-panel="two" hidden>
-<svg class="dfd-responsive" viewBox="0 0 360 100" role="img" aria-label="Data permissions highlighted">
-<rect x="12" y="26" width="104" height="48" rx="8" fill="#e2e8f0"></rect>
-<text x="64" y="54" text-anchor="middle" font-size="13" fill="#0f172a" font-family="Nunito,sans-serif">People</text>
-<rect x="128" y="26" width="104" height="48" rx="8" fill="#0f172a"></rect>
-<text x="180" y="54" text-anchor="middle" font-size="13" fill="#ffffff" font-family="Nunito,sans-serif">Data</text>
-<rect x="244" y="26" width="104" height="48" rx="8" fill="#e2e8f0"></rect>
-<text x="296" y="54" text-anchor="middle" font-size="13" fill="#0f172a" font-family="Nunito,sans-serif">Audit</text>
-</svg>
-</div><div data-dfd-diagram-panel="three" hidden>
-<svg class="dfd-responsive" viewBox="0 0 360 100" role="img" aria-label="Audit highlighted">
-<rect x="12" y="26" width="104" height="48" rx="8" fill="#e2e8f0"></rect>
-<text x="64" y="54" text-anchor="middle" font-size="13" fill="#0f172a" font-family="Nunito,sans-serif">People</text>
-<rect x="128" y="26" width="104" height="48" rx="8" fill="#e2e8f0"></rect>
-<text x="180" y="54" text-anchor="middle" font-size="13" fill="#0f172a" font-family="Nunito,sans-serif">Data</text>
-<rect x="244" y="26" width="104" height="48" rx="8" fill="#0f172a"></rect>
-<text x="296" y="54" text-anchor="middle" font-size="13" fill="#ffffff" font-family="Nunito,sans-serif">Audit</text>
-</svg>
-</div><div class="dfd-diagram-controls"><button type="button" data-dfd-diagram-step="one" aria-pressed="true">People</button><button type="button" data-dfd-diagram-step="two" aria-pressed="false">Data</button><button type="button" data-dfd-diagram-step="three" aria-pressed="false">Audit</button></div></section>
+<section class="section dfd-diagram dfd-flow" data-dfd-diagram data-dfd-flow data-dfd-reveal>
+<h2>What an admin sets</h2>
+<p class="dfd-flow-intro">People go into groups, groups get data permissions, and the audit trail shows what happened.</p>
+<div class="dfd-diagram-controls dfd-flow-controls" role="group" aria-label="What an admin sets: steps">
+<button type="button" data-dfd-diagram-step="step1" aria-pressed="true"><span class="dfd-flow-num" aria-hidden="true">1</span>People</button>
+<button type="button" data-dfd-diagram-step="step2" aria-pressed="false"><span class="dfd-flow-num" aria-hidden="true">2</span>Data</button>
+<button type="button" data-dfd-diagram-step="step3" aria-pressed="false"><span class="dfd-flow-num" aria-hidden="true">3</span>Audit</button>
+</div>
+<div class="dfd-flow-panel" data-dfd-diagram-panel="step1">
+<ol class="dfd-flow-track" aria-label="Step 1: People">
+<li class="dfd-flow-node is-active" aria-current="step"><span class="dfd-flow-label">People and groups</span><span class="dfd-flow-role">Who belongs where</span></li>
+<li class="dfd-flow-node"><span class="dfd-flow-label">Data permissions</span><span class="dfd-flow-role">What each group can query</span></li>
+<li class="dfd-flow-node"><span class="dfd-flow-label">Usage and audit</span><span class="dfd-flow-role">Who viewed or changed what</span></li>
+</ol>
+<div class="dfd-flow-explain">
+<p class="dfd-flow-caption"><span class="dfd-flow-count">Step 1 of 3</span>Add users to groups. Permissions are given to groups, not to individual people.</p>
+<p class="dfd-flow-example dfd-flow-example-ui">Admin → People → Groups → Finance</p>
+</div></div>
+<div class="dfd-flow-panel" data-dfd-diagram-panel="step2" hidden>
+<ol class="dfd-flow-track" aria-label="Step 2: Data">
+<li class="dfd-flow-node is-active" aria-current="step"><span class="dfd-flow-label">People and groups</span><span class="dfd-flow-role">Who belongs where</span></li>
+<li class="dfd-flow-node is-active is-fed" aria-current="step"><span class="dfd-flow-label">Data permissions</span><span class="dfd-flow-role">What each group can query</span></li>
+<li class="dfd-flow-node"><span class="dfd-flow-label">Usage and audit</span><span class="dfd-flow-role">Who viewed or changed what</span></li>
+</ol>
+<div class="dfd-flow-explain">
+<p class="dfd-flow-caption"><span class="dfd-flow-count">Step 2 of 3</span>For each group and database, decide whether they can query it, use only the query builder, or write their own SQL.</p>
+<p class="dfd-flow-example dfd-flow-example-ui">Admin → Permissions → Finance → Warehouse → Query builder only</p>
+</div></div>
+<div class="dfd-flow-panel" data-dfd-diagram-panel="step3" hidden>
+<ol class="dfd-flow-track" aria-label="Step 3: Audit">
+<li class="dfd-flow-node"><span class="dfd-flow-label">People and groups</span><span class="dfd-flow-role">Who belongs where</span></li>
+<li class="dfd-flow-node"><span class="dfd-flow-label">Data permissions</span><span class="dfd-flow-role">What each group can query</span></li>
+<li class="dfd-flow-node is-active" aria-current="step"><span class="dfd-flow-label">Usage and audit</span><span class="dfd-flow-role">Who viewed or changed what</span></li>
+</ol>
+<div class="dfd-flow-explain">
+<p class="dfd-flow-caption"><span class="dfd-flow-count">Step 3 of 3</span>Usage analytics (on Pro and Enterprise) shows who viewed, created or changed questions and dashboards.</p>
+<p class="dfd-flow-example dfd-flow-example-ui">Usage analytics → Activity log</p>
+</div></div>
+</section>
 <section class="section" data-dfd-reveal><h2>Practice</h2>
 <p>Create a group that can view one collection and one schema, and cannot download. Sign in as a user in that group. Confirm a curated question opens and a question in another collection does not. If you use sandboxes, confirm another customer's key returns no rows.</p>
 <p><button type="button" data-dfd-complete>Mark lesson complete</button></p><p data-dfd-complete-status></p>
@@ -126,7 +147,6 @@
     </div>
 
     <script src="../js/code-copy.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="../js/supabase-config.js"></script>
     <script src="../js/supabase-auth.js"></script>
     <script src="../js/paywall.js"></script>

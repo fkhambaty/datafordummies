@@ -7,7 +7,7 @@ Read [`ARCHITECTURE.md`](ARCHITECTURE.md) before editing. It is the map of hosti
 - Live site: https://datafordummies.in
 - Repo: https://github.com/fkhambaty/datafordummies
 - Brand on the site: Data For Dummies
-- Older name still inside the code: FKTI. Leave `localStorage` keys and the Firebase project id `fkti-analytics` alone unless you are deliberately migrating stored progress.
+- Older name still inside the code: FKTI. Leave `localStorage` keys, including `fkti_analytics`, alone. The homepage does not load Firebase. Do not put that SDK back.
 
 ## What this product is
 

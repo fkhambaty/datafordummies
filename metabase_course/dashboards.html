@@ -3,6 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <!-- dfd-seo:start -->
+    <meta name="description" content="Building dashboards. A dashboard is saved questions, shared filters, and an optional delivery schedule.">
+    <link rel="canonical" href="https://datafordummies.in/metabase_course/dashboards.html">
+    <meta property="og:title" content="Building dashboards | Data For Dummies">
+    <meta property="og:description" content="Building dashboards. A dashboard is saved questions, shared filters, and an optional delivery schedule.">
+    <meta property="og:url" content="https://datafordummies.in/metabase_course/dashboards.html">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="https://datafordummies.in/logo.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <!-- dfd-seo:end -->
     <title>Building dashboards | Data For Dummies</title>
     <link rel="stylesheet" href="styles.css">
     
@@ -47,34 +57,45 @@
 <p>Alerts belong on a single question that crosses a line, such as a count of failed jobs. A dashboard subscription is the regular report. An alert is the exception.</p>
 <div class="important-box"><h4>Cache with a reason</h4><p>Caching repeats a result so the warehouse is not hit on every view. A cached number can be stale. Set the cache where freshness is allowed to lag, and leave operational alerts uncached or on a short period.</p></div>
 </section>
-<section class="section dfd-diagram" data-dfd-diagram data-dfd-reveal><h2>From a filter to an inbox</h2><div data-dfd-diagram-panel="one">
-<svg class="dfd-responsive" viewBox="0 0 360 100" role="img" aria-label="Filter highlighted">
-<rect x="12" y="26" width="104" height="48" rx="8" fill="#0f172a"></rect>
-<text x="64" y="54" text-anchor="middle" font-size="13" fill="#ffffff" font-family="Nunito,sans-serif">Filter</text>
-<rect x="128" y="26" width="104" height="48" rx="8" fill="#e2e8f0"></rect>
-<text x="180" y="54" text-anchor="middle" font-size="13" fill="#0f172a" font-family="Nunito,sans-serif">Cards</text>
-<rect x="244" y="26" width="104" height="48" rx="8" fill="#e2e8f0"></rect>
-<text x="296" y="54" text-anchor="middle" font-size="13" fill="#0f172a" font-family="Nunito,sans-serif">Inbox</text>
-</svg>
-</div><div data-dfd-diagram-panel="two" hidden>
-<svg class="dfd-responsive" viewBox="0 0 360 100" role="img" aria-label="Cards highlighted">
-<rect x="12" y="26" width="104" height="48" rx="8" fill="#e2e8f0"></rect>
-<text x="64" y="54" text-anchor="middle" font-size="13" fill="#0f172a" font-family="Nunito,sans-serif">Filter</text>
-<rect x="128" y="26" width="104" height="48" rx="8" fill="#0f172a"></rect>
-<text x="180" y="54" text-anchor="middle" font-size="13" fill="#ffffff" font-family="Nunito,sans-serif">Cards</text>
-<rect x="244" y="26" width="104" height="48" rx="8" fill="#e2e8f0"></rect>
-<text x="296" y="54" text-anchor="middle" font-size="13" fill="#0f172a" font-family="Nunito,sans-serif">Inbox</text>
-</svg>
-</div><div data-dfd-diagram-panel="three" hidden>
-<svg class="dfd-responsive" viewBox="0 0 360 100" role="img" aria-label="Inbox highlighted">
-<rect x="12" y="26" width="104" height="48" rx="8" fill="#e2e8f0"></rect>
-<text x="64" y="54" text-anchor="middle" font-size="13" fill="#0f172a" font-family="Nunito,sans-serif">Filter</text>
-<rect x="128" y="26" width="104" height="48" rx="8" fill="#e2e8f0"></rect>
-<text x="180" y="54" text-anchor="middle" font-size="13" fill="#0f172a" font-family="Nunito,sans-serif">Cards</text>
-<rect x="244" y="26" width="104" height="48" rx="8" fill="#0f172a"></rect>
-<text x="296" y="54" text-anchor="middle" font-size="13" fill="#ffffff" font-family="Nunito,sans-serif">Inbox</text>
-</svg>
-</div><div class="dfd-diagram-controls"><button type="button" data-dfd-diagram-step="one" aria-pressed="true">Filter</button><button type="button" data-dfd-diagram-step="two" aria-pressed="false">Cards</button><button type="button" data-dfd-diagram-step="three" aria-pressed="false">Inbox</button></div></section>
+<section class="section dfd-diagram dfd-flow" data-dfd-diagram data-dfd-flow data-dfd-reveal>
+<h2>From a filter to an inbox</h2>
+<p class="dfd-flow-intro">One dashboard filter updates every card, and a subscription delivers the result.</p>
+<div class="dfd-diagram-controls dfd-flow-controls" role="group" aria-label="From a filter to an inbox: steps">
+<button type="button" data-dfd-diagram-step="step1" aria-pressed="true"><span class="dfd-flow-num" aria-hidden="true">1</span>Filter</button>
+<button type="button" data-dfd-diagram-step="step2" aria-pressed="false"><span class="dfd-flow-num" aria-hidden="true">2</span>Cards</button>
+<button type="button" data-dfd-diagram-step="step3" aria-pressed="false"><span class="dfd-flow-num" aria-hidden="true">3</span>Inbox</button>
+</div>
+<div class="dfd-flow-panel" data-dfd-diagram-panel="step1">
+<ol class="dfd-flow-track" aria-label="Step 1: Filter">
+<li class="dfd-flow-node is-active" aria-current="step"><span class="dfd-flow-label">Dashboard filter</span><span class="dfd-flow-role">For example, Date</span></li>
+<li class="dfd-flow-node"><span class="dfd-flow-label">Cards</span><span class="dfd-flow-role">Each linked to a column</span></li>
+<li class="dfd-flow-node"><span class="dfd-flow-label">Subscription</span><span class="dfd-flow-role">Email or Slack on a schedule</span></li>
+</ol>
+<div class="dfd-flow-explain">
+<p class="dfd-flow-caption"><span class="dfd-flow-count">Step 1 of 3</span>A dashboard filter is wired to a column on each card it should affect.</p>
+<p class="dfd-flow-example dfd-flow-example-ui">Edit dashboard → Add filter → Date → link to Orders.Created At</p>
+</div></div>
+<div class="dfd-flow-panel" data-dfd-diagram-panel="step2" hidden>
+<ol class="dfd-flow-track" aria-label="Step 2: Cards">
+<li class="dfd-flow-node is-active" aria-current="step"><span class="dfd-flow-label">Dashboard filter</span><span class="dfd-flow-role">For example, Date</span></li>
+<li class="dfd-flow-node is-active is-fed" aria-current="step"><span class="dfd-flow-label">Cards</span><span class="dfd-flow-role">Each linked to a column</span></li>
+<li class="dfd-flow-node"><span class="dfd-flow-label">Subscription</span><span class="dfd-flow-role">Email or Slack on a schedule</span></li>
+</ol>
+<div class="dfd-flow-explain">
+<p class="dfd-flow-caption"><span class="dfd-flow-count">Step 2 of 3</span>When someone picks a value, every linked card reruns its question with that value.</p>
+<p class="dfd-flow-example dfd-flow-example-ui">Date = Last week → all four cards refresh</p>
+</div></div>
+<div class="dfd-flow-panel" data-dfd-diagram-panel="step3" hidden>
+<ol class="dfd-flow-track" aria-label="Step 3: Inbox">
+<li class="dfd-flow-node"><span class="dfd-flow-label">Dashboard filter</span><span class="dfd-flow-role">For example, Date</span></li>
+<li class="dfd-flow-node is-active" aria-current="step"><span class="dfd-flow-label">Cards</span><span class="dfd-flow-role">Each linked to a column</span></li>
+<li class="dfd-flow-node is-active is-fed" aria-current="step"><span class="dfd-flow-label">Subscription</span><span class="dfd-flow-role">Email or Slack on a schedule</span></li>
+</ol>
+<div class="dfd-flow-explain">
+<p class="dfd-flow-caption"><span class="dfd-flow-count">Step 3 of 3</span>A subscription sends the dashboard by email or Slack on a schedule, with the filter values you saved.</p>
+<p class="dfd-flow-example dfd-flow-example-ui">Sharing → Subscriptions → Every Monday 09:00 → #sales</p>
+</div></div>
+</section>
 <section class="section" data-dfd-reveal><h2>Practice</h2>
 <p>Put two saved questions on one dashboard. Add a date filter and connect it to both. Open the dashboard, change the filter, and confirm both cards move. Then create a subscription to yourself and check that the filter you intended is the one that was sent.</p>
 <p><button type="button" data-dfd-complete>Mark lesson complete</button></p><p data-dfd-complete-status></p>
@@ -126,7 +147,6 @@
     </div>
 
     <script src="../js/code-copy.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="../js/supabase-config.js"></script>
     <script src="../js/supabase-auth.js"></script>
     <script src="../js/paywall.js"></script>

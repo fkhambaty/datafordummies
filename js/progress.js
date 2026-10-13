@@ -57,16 +57,19 @@
         getUserId().then(function (userId) {
             if (!userId) return;
             if (!window.FKTI_Auth || !window.FKTI_Auth.getProgress || !window.FKTI_Auth.saveProgress) return;
+            if (window.FKTI_Auth.completeLesson) {
+                window.FKTI_Auth.completeLesson(courseId, lessonId);
+                return;
+            }
             window.FKTI_Auth.getProgress(courseId).then(function (res) {
                 var row = (res.data && res.data[0]) || {};
                 var existing = row.completed_lesson_ids || [];
                 if (existing.indexOf(lessonId) !== -1) return;
-                var updated = existing.concat([lessonId]);
-                var pct = totalLessons > 0 ? Math.min(100, Math.round((updated.length / totalLessons) * 100)) : 0;
                 window.FKTI_Auth.saveProgress({
                     course_id: courseId,
-                    completed_lesson_ids: updated,
-                    progress_pct: pct
+                    last_lesson_id: lessonId,
+                    completed_lesson_ids: existing,
+                    progress_pct: Number(row.progress_pct || 0)
                 });
             });
         });

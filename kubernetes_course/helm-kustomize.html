@@ -3,6 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <!-- dfd-seo:start -->
+    <meta name="description" content="Helm and Kustomize | Kubernetes. Helm packages charts.">
+    <link rel="canonical" href="https://datafordummies.in/kubernetes_course/helm-kustomize.html">
+    <meta property="og:title" content="Helm and Kustomize | Kubernetes | Data For Dummies">
+    <meta property="og:description" content="Helm and Kustomize | Kubernetes. Helm packages charts.">
+    <meta property="og:url" content="https://datafordummies.in/kubernetes_course/helm-kustomize.html">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="https://datafordummies.in/logo.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <!-- dfd-seo:end -->
     <title>Helm and Kustomize | Kubernetes | Data For Dummies</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
@@ -69,68 +79,56 @@
 </tbody>
 </table>
 </section>
-        <section class="section dfd-diagram" data-dfd-diagram data-dfd-reveal>
-            <h2>Same app, two packagings</h2>
-            <div data-dfd-diagram-panel="chart">
-<svg class="dfd-responsive" viewBox="0 0 640 148" role="img" aria-label="Helm chart highlighted">
-<rect class="track-drift" x="16" y="36" width="188" height="72" rx="12" fill="#5b8def">
-</rect>
-<text x="110" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#ffffff">Chart</text>
-<path d="M204 72 H224" stroke="#64748b" stroke-width="2" fill="none">
-</path>
-<rect x="224" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
-</rect>
-<text x="318" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">Values</text>
-<path d="M412 72 H432" stroke="#64748b" stroke-width="2" fill="none">
-</path>
-<rect x="432" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
-</rect>
-<text x="526" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">Release</text>
-</svg>
-<p>The chart is the template. Values fill it in. The release is what the cluster remembers.</p>
+        <section class="section dfd-diagram dfd-flow" data-dfd-diagram data-dfd-flow data-dfd-reveal>
+<h2>Same app, two packagings</h2>
+<div class="dfd-diagram-controls dfd-flow-controls" role="group" aria-label="Same app, two packagings: steps">
+<button type="button" data-dfd-diagram-step="step1" aria-pressed="true"><span class="dfd-flow-num" aria-hidden="true">1</span>Chart</button>
+<button type="button" data-dfd-diagram-step="step2" aria-pressed="false"><span class="dfd-flow-num" aria-hidden="true">2</span>Base</button>
+<button type="button" data-dfd-diagram-step="step3" aria-pressed="false"><span class="dfd-flow-num" aria-hidden="true">3</span>Overlay</button>
 </div>
-<div data-dfd-diagram-panel="base" hidden>
-<svg class="dfd-responsive" viewBox="0 0 640 148" role="img" aria-label="Kustomize base highlighted">
-<rect x="16" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
-</rect>
-<text x="110" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">Base</text>
-<path d="M204 72 H224" stroke="#64748b" stroke-width="2" fill="none">
-</path>
-<rect class="track-drift" x="224" y="36" width="188" height="72" rx="12" fill="#5b8def">
-</rect>
-<text x="318" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#ffffff">Overlay</text>
-<path d="M412 72 H432" stroke="#64748b" stroke-width="2" fill="none">
-</path>
-<rect x="432" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
-</rect>
-<text x="526" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">Apply</text>
-</svg>
-<p>The base is shared YAML. You do not edit it for one environment.</p>
-</div>
-<div data-dfd-diagram-panel="overlay" hidden>
-<svg class="dfd-responsive" viewBox="0 0 640 148" role="img" aria-label="Overlay highlighted">
-<rect x="16" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
-</rect>
-<text x="110" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">Base</text>
-<path d="M204 72 H224" stroke="#64748b" stroke-width="2" fill="none">
-</path>
-<rect x="224" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
-</rect>
-<text x="318" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">Overlay</text>
-<path d="M412 72 H432" stroke="#64748b" stroke-width="2" fill="none">
-</path>
-<rect class="track-drift" x="432" y="36" width="188" height="72" rx="12" fill="#5b8def">
-</rect>
-<text x="526" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#ffffff">Apply</text>
-</svg>
-<p>The overlay patches names and counts, then kubectl apply -k sends the result.</p>
-</div>
-            <div class="dfd-diagram-controls">
-                <button type="button" data-dfd-diagram-step="chart" aria-pressed="true">Chart</button>
-<button type="button" data-dfd-diagram-step="base" aria-pressed="false">Base</button>
-<button type="button" data-dfd-diagram-step="overlay" aria-pressed="false">Overlay</button>
-            </div>
-        </section>
+<div class="dfd-flow-panel" data-dfd-diagram-panel="step1">
+<ol class="dfd-flow-track" aria-label="Step 1: Chart">
+<li class="dfd-flow-node is-active" aria-current="step"><span class="dfd-flow-label">Chart</span></li>
+<li class="dfd-flow-node"><span class="dfd-flow-label">Values</span></li>
+<li class="dfd-flow-node"><span class="dfd-flow-label">Release</span></li>
+</ol>
+<div class="dfd-flow-explain"><p class="dfd-flow-caption"><span class="dfd-flow-count">Step 1 of 3</span>Values
+
+
+
+
+Release
+
+The chart is the template. Values fill it in. The release is what the cluster remembers.</p></div></div>
+<div class="dfd-flow-panel" data-dfd-diagram-panel="step2" hidden>
+<ol class="dfd-flow-track" aria-label="Step 2: Base">
+<li class="dfd-flow-node"><span class="dfd-flow-label">Base</span></li>
+<li class="dfd-flow-node is-active" aria-current="step"><span class="dfd-flow-label">Overlay</span></li>
+<li class="dfd-flow-node"><span class="dfd-flow-label">Apply</span></li>
+</ol>
+<div class="dfd-flow-explain"><p class="dfd-flow-caption"><span class="dfd-flow-count">Step 2 of 3</span>Overlay
+
+
+
+
+Apply
+
+The base is shared YAML. You do not edit it for one environment.</p></div></div>
+<div class="dfd-flow-panel" data-dfd-diagram-panel="step3" hidden>
+<ol class="dfd-flow-track" aria-label="Step 3: Overlay">
+<li class="dfd-flow-node"><span class="dfd-flow-label">Base</span></li>
+<li class="dfd-flow-node"><span class="dfd-flow-label">Overlay</span></li>
+<li class="dfd-flow-node is-active" aria-current="step"><span class="dfd-flow-label">Apply</span></li>
+</ol>
+<div class="dfd-flow-explain"><p class="dfd-flow-caption"><span class="dfd-flow-count">Step 3 of 3</span>Overlay
+
+
+
+
+Apply
+
+The overlay patches names and counts, then kubectl apply -k sends the result.</p></div></div>
+</section>
         <section class="section" id="lab" data-dfd-reveal>
             <h2>Lab: render a Kustomize overlay without a cluster change</h2>
             <p>Build the YAML and read it. Apply only if the context is still your lab cluster.</p>
@@ -235,8 +233,6 @@ kubectl kustomize lab/base</code>
     </div>
 
     <script src="../js/code-copy.js">
-</script>
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2">
 </script>
     <script src="../js/supabase-config.js">
 </script>

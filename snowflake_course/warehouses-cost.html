@@ -3,6 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <!-- dfd-seo:start -->
+    <meta name="description" content="Warehouses and cost | Snowflake course. Size, multi-cluster scale-out, auto-suspend, resource monitors, and query acceleration.">
+    <link rel="canonical" href="https://datafordummies.in/snowflake_course/warehouses-cost.html">
+    <meta property="og:title" content="Warehouses and cost | Snowflake course | Data For Dummies">
+    <meta property="og:description" content="Warehouses and cost | Snowflake course. Size, multi-cluster scale-out, auto-suspend, resource monitors, and query acceleration.">
+    <meta property="og:url" content="https://datafordummies.in/snowflake_course/warehouses-cost.html">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="https://datafordummies.in/logo.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <!-- dfd-seo:end -->
     <title>Warehouses and cost | Snowflake course | Data For Dummies</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
@@ -69,43 +79,47 @@
 </pre>
 </div>
 </section>
-        <section class="section dfd-diagram" data-dfd-diagram data-dfd-reveal>
-<h2>See it move</h2>
-<div data-dfd-diagram-panel="one">
-<svg class="dfd-responsive" viewBox="0 0 360 120" role="img" aria-label="A single warehouse cluster">
-<rect class="sf-drift" x="16" y="36" width="70" height="48" rx="8" fill="#bae6fd">
-</rect>
-<rect x="110" y="28" width="140" height="64" rx="8" fill="#0284c7">
-</rect>
-<rect x="274" y="36" width="70" height="48" rx="8" fill="#e0f2fe" stroke="#0369a1">
-</rect>
-</svg>
+        <section class="section dfd-diagram dfd-flow" data-dfd-diagram data-dfd-flow data-dfd-reveal>
+<h2>Three ways to add power</h2>
+<p class="dfd-flow-intro">When queries feel slow, the fix depends on whether one query is big or many people are waiting.</p>
+<div class="dfd-diagram-controls dfd-flow-controls" role="group" aria-label="Three ways to add power: steps">
+<button type="button" data-dfd-diagram-step="step1" aria-pressed="true"><span class="dfd-flow-num" aria-hidden="true">1</span>One small cluster</button>
+<button type="button" data-dfd-diagram-step="step2" aria-pressed="false"><span class="dfd-flow-num" aria-hidden="true">2</span>A second cluster</button>
+<button type="button" data-dfd-diagram-step="step3" aria-pressed="false"><span class="dfd-flow-num" aria-hidden="true">3</span>Acceleration beside it</button>
 </div>
-<div data-dfd-diagram-panel="two" hidden>
-<svg class="dfd-responsive" viewBox="0 0 360 120" role="img" aria-label="Multi-cluster scale-out">
-<rect x="16" y="36" width="70" height="48" rx="8" fill="#e0f2fe">
-</rect>
-<rect class="sf-drift" x="110" y="28" width="140" height="64" rx="8" fill="#0369a1">
-</rect>
-<rect x="274" y="36" width="70" height="48" rx="8" fill="#e0f2fe" stroke="#0369a1">
-</rect>
-</svg>
-</div>
-<div data-dfd-diagram-panel="three" hidden>
-<svg class="dfd-responsive" viewBox="0 0 360 120" role="img" aria-label="Query acceleration beside the warehouse">
-<rect x="16" y="36" width="70" height="48" rx="8" fill="#e0f2fe">
-</rect>
-<rect x="110" y="28" width="140" height="64" rx="8" fill="#bae6fd">
-</rect>
-<rect class="sf-drift" x="274" y="36" width="70" height="48" rx="8" fill="#0ea5e9">
-</rect>
-</svg>
-</div>
-<div class="dfd-diagram-controls">
-<button type="button" data-dfd-diagram-step="one" aria-pressed="true">One small cluster</button>
-<button type="button" data-dfd-diagram-step="two" aria-pressed="false">A second cluster</button>
-<button type="button" data-dfd-diagram-step="three" aria-pressed="false">Acceleration beside it</button>
-</div>
+<div class="dfd-flow-panel" data-dfd-diagram-panel="step1">
+<ol class="dfd-flow-track" aria-label="Step 1: One small cluster">
+<li class="dfd-flow-node is-active" aria-current="step"><span class="dfd-flow-label">Waiting queries</span><span class="dfd-flow-role">Users in the queue</span></li>
+<li class="dfd-flow-node is-active is-fed" aria-current="step"><span class="dfd-flow-label">Cluster 1</span><span class="dfd-flow-role">X-Small: 1 credit per hour</span></li>
+<li class="dfd-flow-node"><span class="dfd-flow-label">Cluster 2</span><span class="dfd-flow-role">Added only during a rush</span></li>
+<li class="dfd-flow-node"><span class="dfd-flow-label">Query acceleration</span><span class="dfd-flow-role">Extra help for one big scan</span></li>
+</ol>
+<div class="dfd-flow-explain">
+<p class="dfd-flow-caption"><span class="dfd-flow-count">Step 1 of 3</span>An X-Small warehouse uses 1 credit per hour, billed per second. Each size up doubles both the power and the credits per hour.</p>
+<pre class="dfd-flow-example"><code>CREATE WAREHOUSE wh WAREHOUSE_SIZE = XSMALL AUTO_SUSPEND = 60;</code></pre>
+</div></div>
+<div class="dfd-flow-panel" data-dfd-diagram-panel="step2" hidden>
+<ol class="dfd-flow-track" aria-label="Step 2: A second cluster">
+<li class="dfd-flow-node is-active" aria-current="step"><span class="dfd-flow-label">Waiting queries</span><span class="dfd-flow-role">Users in the queue</span></li>
+<li class="dfd-flow-node is-active is-fed" aria-current="step"><span class="dfd-flow-label">Cluster 1</span><span class="dfd-flow-role">X-Small: 1 credit per hour</span></li>
+<li class="dfd-flow-node is-active is-fed" aria-current="step"><span class="dfd-flow-label">Cluster 2</span><span class="dfd-flow-role">Added only during a rush</span></li>
+<li class="dfd-flow-node"><span class="dfd-flow-label">Query acceleration</span><span class="dfd-flow-role">Extra help for one big scan</span></li>
+</ol>
+<div class="dfd-flow-explain">
+<p class="dfd-flow-caption"><span class="dfd-flow-count">Step 2 of 3</span>When many people query at once, a multi-cluster warehouse (Enterprise edition) starts another cluster of the same size instead of making the queue wait, then stops it when the rush ends.</p>
+<pre class="dfd-flow-example"><code>ALTER WAREHOUSE wh SET MIN_CLUSTER_COUNT = 1 MAX_CLUSTER_COUNT = 3;</code></pre>
+</div></div>
+<div class="dfd-flow-panel" data-dfd-diagram-panel="step3" hidden>
+<ol class="dfd-flow-track" aria-label="Step 3: Acceleration beside it">
+<li class="dfd-flow-node"><span class="dfd-flow-label">Waiting queries</span><span class="dfd-flow-role">Users in the queue</span></li>
+<li class="dfd-flow-node is-active" aria-current="step"><span class="dfd-flow-label">Cluster 1</span><span class="dfd-flow-role">X-Small: 1 credit per hour</span></li>
+<li class="dfd-flow-node"><span class="dfd-flow-label">Cluster 2</span><span class="dfd-flow-role">Added only during a rush</span></li>
+<li class="dfd-flow-node is-active" aria-current="step"><span class="dfd-flow-label">Query acceleration</span><span class="dfd-flow-role">Extra help for one big scan</span></li>
+</ol>
+<div class="dfd-flow-explain">
+<p class="dfd-flow-caption"><span class="dfd-flow-count">Step 3 of 3</span>When one query scans far more than the rest, the Query Acceleration Service lends it serverless compute so you don&#x27;t have to upsize the whole warehouse. It is billed separately.</p>
+<pre class="dfd-flow-example"><code>ALTER WAREHOUSE wh SET ENABLE_QUERY_ACCELERATION = TRUE;</code></pre>
+</div></div>
 </section>
         <section class="section" id="lab" data-dfd-reveal>
             <h2>Lab: suspend, a monitor, and acceleration with a cap</h2>
@@ -247,8 +261,6 @@ ALTER WAREHOUSE LEARN_WH SET RESOURCE_MONITOR = LEARN_MONITOR;</code>
         </nav>
     </div>
     <script src="../js/code-copy.js">
-</script>
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2">
 </script>
     <script src="../js/supabase-config.js">
 </script>

@@ -3,6 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <!-- dfd-seo:start -->
+    <meta name="description" content="Redshift performance. Separate queue time, scan time, and data movement.">
+    <link rel="canonical" href="https://datafordummies.in/redshift_course/performance.html">
+    <meta property="og:title" content="Redshift performance | Data For Dummies">
+    <meta property="og:description" content="Redshift performance. Separate queue time, scan time, and data movement.">
+    <meta property="og:url" content="https://datafordummies.in/redshift_course/performance.html">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="https://datafordummies.in/logo.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <!-- dfd-seo:end -->
     <title>Redshift performance | Data For Dummies</title>
     <link rel="stylesheet" href="styles.css">
     
@@ -50,34 +60,45 @@ GROUP BY 1;</code></pre></div>
 </tbody>
 </table>
 </section>
-<section class="section dfd-diagram" data-dfd-diagram data-dfd-reveal><h2>Three places time goes</h2><div data-dfd-diagram-panel="one">
-<svg class="dfd-responsive" viewBox="0 0 360 100" role="img" aria-label="Queue highlighted">
-<rect x="12" y="26" width="104" height="48" rx="8" fill="#0f172a"></rect>
-<text x="64" y="54" text-anchor="middle" font-size="13" fill="#ffffff" font-family="Nunito,sans-serif">Queue</text>
-<rect x="128" y="26" width="104" height="48" rx="8" fill="#e2e8f0"></rect>
-<text x="180" y="54" text-anchor="middle" font-size="13" fill="#0f172a" font-family="Nunito,sans-serif">Scan</text>
-<rect x="244" y="26" width="104" height="48" rx="8" fill="#e2e8f0"></rect>
-<text x="296" y="54" text-anchor="middle" font-size="13" fill="#0f172a" font-family="Nunito,sans-serif">Cache</text>
-</svg>
-</div><div data-dfd-diagram-panel="two" hidden>
-<svg class="dfd-responsive" viewBox="0 0 360 100" role="img" aria-label="Scan highlighted">
-<rect x="12" y="26" width="104" height="48" rx="8" fill="#e2e8f0"></rect>
-<text x="64" y="54" text-anchor="middle" font-size="13" fill="#0f172a" font-family="Nunito,sans-serif">Queue</text>
-<rect x="128" y="26" width="104" height="48" rx="8" fill="#0f172a"></rect>
-<text x="180" y="54" text-anchor="middle" font-size="13" fill="#ffffff" font-family="Nunito,sans-serif">Scan</text>
-<rect x="244" y="26" width="104" height="48" rx="8" fill="#e2e8f0"></rect>
-<text x="296" y="54" text-anchor="middle" font-size="13" fill="#0f172a" font-family="Nunito,sans-serif">Cache</text>
-</svg>
-</div><div data-dfd-diagram-panel="three" hidden>
-<svg class="dfd-responsive" viewBox="0 0 360 100" role="img" aria-label="Cache highlighted">
-<rect x="12" y="26" width="104" height="48" rx="8" fill="#e2e8f0"></rect>
-<text x="64" y="54" text-anchor="middle" font-size="13" fill="#0f172a" font-family="Nunito,sans-serif">Queue</text>
-<rect x="128" y="26" width="104" height="48" rx="8" fill="#e2e8f0"></rect>
-<text x="180" y="54" text-anchor="middle" font-size="13" fill="#0f172a" font-family="Nunito,sans-serif">Scan</text>
-<rect x="244" y="26" width="104" height="48" rx="8" fill="#0f172a"></rect>
-<text x="296" y="54" text-anchor="middle" font-size="13" fill="#ffffff" font-family="Nunito,sans-serif">Cache</text>
-</svg>
-</div><div class="dfd-diagram-controls"><button type="button" data-dfd-diagram-step="one" aria-pressed="true">Queue</button><button type="button" data-dfd-diagram-step="two" aria-pressed="false">Scan</button><button type="button" data-dfd-diagram-step="three" aria-pressed="false">Cache</button></div></section>
+<section class="section dfd-diagram dfd-flow" data-dfd-diagram data-dfd-flow data-dfd-reveal>
+<h2>Three places time goes</h2>
+<p class="dfd-flow-intro">A slow query is waiting, reading too much, or recomputing something it already knew.</p>
+<div class="dfd-diagram-controls dfd-flow-controls" role="group" aria-label="Three places time goes: steps">
+<button type="button" data-dfd-diagram-step="step1" aria-pressed="true"><span class="dfd-flow-num" aria-hidden="true">1</span>Queue</button>
+<button type="button" data-dfd-diagram-step="step2" aria-pressed="false"><span class="dfd-flow-num" aria-hidden="true">2</span>Scan</button>
+<button type="button" data-dfd-diagram-step="step3" aria-pressed="false"><span class="dfd-flow-num" aria-hidden="true">3</span>Cache</button>
+</div>
+<div class="dfd-flow-panel" data-dfd-diagram-panel="step1">
+<ol class="dfd-flow-track" aria-label="Step 1: Queue">
+<li class="dfd-flow-node is-active" aria-current="step"><span class="dfd-flow-label">Queue</span><span class="dfd-flow-role">Waiting for a slot</span></li>
+<li class="dfd-flow-node"><span class="dfd-flow-label">Scan</span><span class="dfd-flow-role">Reading blocks from disk</span></li>
+<li class="dfd-flow-node"><span class="dfd-flow-label">Result cache</span><span class="dfd-flow-role">Answering repeats instantly</span></li>
+</ol>
+<div class="dfd-flow-explain">
+<p class="dfd-flow-caption"><span class="dfd-flow-count">Step 1 of 3</span>Workload management may hold a query until a slot is free. Check queue time before tuning the SQL.</p>
+<pre class="dfd-flow-example"><code>SELECT query_id, queue_time, execution_time FROM sys_query_history ORDER BY start_time DESC LIMIT 20;</code></pre>
+</div></div>
+<div class="dfd-flow-panel" data-dfd-diagram-panel="step2" hidden>
+<ol class="dfd-flow-track" aria-label="Step 2: Scan">
+<li class="dfd-flow-node"><span class="dfd-flow-label">Queue</span><span class="dfd-flow-role">Waiting for a slot</span></li>
+<li class="dfd-flow-node is-active" aria-current="step"><span class="dfd-flow-label">Scan</span><span class="dfd-flow-role">Reading blocks from disk</span></li>
+<li class="dfd-flow-node"><span class="dfd-flow-label">Result cache</span><span class="dfd-flow-role">Answering repeats instantly</span></li>
+</ol>
+<div class="dfd-flow-explain">
+<p class="dfd-flow-caption"><span class="dfd-flow-count">Step 2 of 3</span>Reading far more blocks than needed is the most common cause. A sort key and a selective filter let Redshift skip blocks.</p>
+<pre class="dfd-flow-example"><code>WHERE event_time &gt;= &#x27;2026-10-01&#x27;  -- with SORTKEY(event_time)</code></pre>
+</div></div>
+<div class="dfd-flow-panel" data-dfd-diagram-panel="step3" hidden>
+<ol class="dfd-flow-track" aria-label="Step 3: Cache">
+<li class="dfd-flow-node"><span class="dfd-flow-label">Queue</span><span class="dfd-flow-role">Waiting for a slot</span></li>
+<li class="dfd-flow-node"><span class="dfd-flow-label">Scan</span><span class="dfd-flow-role">Reading blocks from disk</span></li>
+<li class="dfd-flow-node is-active" aria-current="step"><span class="dfd-flow-label">Result cache</span><span class="dfd-flow-role">Answering repeats instantly</span></li>
+</ol>
+<div class="dfd-flow-explain">
+<p class="dfd-flow-caption"><span class="dfd-flow-count">Step 3 of 3</span>If the same query runs again and the data has not changed, Redshift returns the cached result without running it.</p>
+<pre class="dfd-flow-example"><code>SET enable_result_cache_for_session TO on;</code></pre>
+</div></div>
+</section>
 <section class="section" data-dfd-reveal><h2>Practice</h2>
 <p>Explain one aggregation. Write down whether you expect a queue, a large scan, or a redistribute. Then look at a recent row in <code>SYS_QUERY_HISTORY</code> and see which of those the warehouse recorded. Change the SQL before you change the cluster size.</p>
 <p><button type="button" data-dfd-complete>Mark lesson complete</button></p><p data-dfd-complete-status></p>
@@ -129,7 +150,6 @@ GROUP BY 1;</code></pre></div>
     </div>
 
     <script src="../js/code-copy.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="../js/supabase-config.js"></script>
     <script src="../js/supabase-auth.js"></script>
     <script src="../js/paywall.js"></script>

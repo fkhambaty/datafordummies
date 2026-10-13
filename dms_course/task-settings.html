@@ -3,6 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <!-- dfd-seo:start -->
+    <meta name="description" content="Task settings, mappings, and transforms | AWS DMS. Table mappings are JSON selection rules.">
+    <link rel="canonical" href="https://datafordummies.in/dms_course/task-settings.html">
+    <meta property="og:title" content="Task settings, mappings, and transforms | AWS DMS | Data For Dummies">
+    <meta property="og:description" content="Task settings, mappings, and transforms | AWS DMS. Table mappings are JSON selection rules.">
+    <meta property="og:url" content="https://datafordummies.in/dms_course/task-settings.html">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="https://datafordummies.in/logo.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <!-- dfd-seo:end -->
     <title>Task settings, mappings, and transforms | AWS DMS | Data For Dummies</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
@@ -69,68 +79,56 @@
 </tbody>
 </table>
 </section>
-        <section class="section dfd-diagram" data-dfd-diagram data-dfd-reveal>
-            <h2>Rules, then rows</h2>
-            <div data-dfd-diagram-panel="sel">
-<svg class="dfd-responsive" viewBox="0 0 640 148" role="img" aria-label="Include rule highlighted">
-<rect class="track-drift" x="16" y="36" width="188" height="72" rx="12" fill="#fb923c">
-</rect>
-<text x="110" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#ffffff">Include</text>
-<path d="M204 72 H224" stroke="#64748b" stroke-width="2" fill="none">
-</path>
-<rect x="224" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
-</rect>
-<text x="318" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">Exclude</text>
-<path d="M412 72 H432" stroke="#64748b" stroke-width="2" fill="none">
-</path>
-<rect x="432" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
-</rect>
-<text x="526" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">Tables</text>
-</svg>
-<p>Include names the tables that may move.</p>
+        <section class="section dfd-diagram dfd-flow" data-dfd-diagram data-dfd-flow data-dfd-reveal>
+<h2>Rules, then rows</h2>
+<div class="dfd-diagram-controls dfd-flow-controls" role="group" aria-label="Rules, then rows: steps">
+<button type="button" data-dfd-diagram-step="step1" aria-pressed="true"><span class="dfd-flow-num" aria-hidden="true">1</span>Select</button>
+<button type="button" data-dfd-diagram-step="step2" aria-pressed="false"><span class="dfd-flow-num" aria-hidden="true">2</span>Exclude</button>
+<button type="button" data-dfd-diagram-step="step3" aria-pressed="false"><span class="dfd-flow-num" aria-hidden="true">3</span>Apply</button>
 </div>
-<div data-dfd-diagram-panel="exc" hidden>
-<svg class="dfd-responsive" viewBox="0 0 640 148" role="img" aria-label="Exclude rule highlighted">
-<rect x="16" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
-</rect>
-<text x="110" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">Include</text>
-<path d="M204 72 H224" stroke="#64748b" stroke-width="2" fill="none">
-</path>
-<rect class="track-drift" x="224" y="36" width="188" height="72" rx="12" fill="#fb923c">
-</rect>
-<text x="318" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#ffffff">Exclude</text>
-<path d="M412 72 H432" stroke="#64748b" stroke-width="2" fill="none">
-</path>
-<rect x="432" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
-</rect>
-<text x="526" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">Tables</text>
-</svg>
-<p>A later exclude removes a table from that set.</p>
-</div>
-<div data-dfd-diagram-panel="go" hidden>
-<svg class="dfd-responsive" viewBox="0 0 640 148" role="img" aria-label="Transform highlighted">
-<rect x="16" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
-</rect>
-<text x="110" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">Mappings</text>
-<path d="M204 72 H224" stroke="#64748b" stroke-width="2" fill="none">
-</path>
-<rect x="224" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
-</rect>
-<text x="318" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">Transform</text>
-<path d="M412 72 H432" stroke="#64748b" stroke-width="2" fill="none">
-</path>
-<rect class="track-drift" x="432" y="36" width="188" height="72" rx="12" fill="#fb923c">
-</rect>
-<text x="526" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#ffffff">Target</text>
-</svg>
-<p>Transforms change names on the way. They do not convert procedural code.</p>
-</div>
-            <div class="dfd-diagram-controls">
-                <button type="button" data-dfd-diagram-step="sel" aria-pressed="true">Select</button>
-<button type="button" data-dfd-diagram-step="exc" aria-pressed="false">Exclude</button>
-<button type="button" data-dfd-diagram-step="go" aria-pressed="false">Apply</button>
-            </div>
-        </section>
+<div class="dfd-flow-panel" data-dfd-diagram-panel="step1">
+<ol class="dfd-flow-track" aria-label="Step 1: Select">
+<li class="dfd-flow-node is-active" aria-current="step"><span class="dfd-flow-label">Include</span></li>
+<li class="dfd-flow-node"><span class="dfd-flow-label">Exclude</span></li>
+<li class="dfd-flow-node"><span class="dfd-flow-label">Tables</span></li>
+</ol>
+<div class="dfd-flow-explain"><p class="dfd-flow-caption"><span class="dfd-flow-count">Step 1 of 3</span>Exclude
+
+
+
+
+Tables
+
+Include names the tables that may move.</p></div></div>
+<div class="dfd-flow-panel" data-dfd-diagram-panel="step2" hidden>
+<ol class="dfd-flow-track" aria-label="Step 2: Exclude">
+<li class="dfd-flow-node"><span class="dfd-flow-label">Include</span></li>
+<li class="dfd-flow-node is-active" aria-current="step"><span class="dfd-flow-label">Exclude</span></li>
+<li class="dfd-flow-node"><span class="dfd-flow-label">Tables</span></li>
+</ol>
+<div class="dfd-flow-explain"><p class="dfd-flow-caption"><span class="dfd-flow-count">Step 2 of 3</span>Exclude
+
+
+
+
+Tables
+
+A later exclude removes a table from that set.</p></div></div>
+<div class="dfd-flow-panel" data-dfd-diagram-panel="step3" hidden>
+<ol class="dfd-flow-track" aria-label="Step 3: Apply">
+<li class="dfd-flow-node"><span class="dfd-flow-label">Mappings</span></li>
+<li class="dfd-flow-node"><span class="dfd-flow-label">Transform</span></li>
+<li class="dfd-flow-node is-active" aria-current="step"><span class="dfd-flow-label">Target</span></li>
+</ol>
+<div class="dfd-flow-explain"><p class="dfd-flow-caption"><span class="dfd-flow-count">Step 3 of 3</span>Transform
+
+
+
+
+Target
+
+Transforms change names on the way. They do not convert procedural code.</p></div></div>
+</section>
         <section class="section" id="lab" data-dfd-reveal>
             <h2>Lab: include two tables and exclude a third</h2>
             <p>This JSON is the shape of a selection. Replace the names. Do not start a task until the endpoint test from the earlier lesson is green.</p>
@@ -228,8 +226,6 @@
     </div>
 
     <script src="../js/code-copy.js">
-</script>
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2">
 </script>
     <script src="../js/supabase-config.js">
 </script>

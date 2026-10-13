@@ -1,0 +1,71 @@
+{
+  "checked_on": "2026-10-13",
+  "checklist": "docs/VENDOR_REFRESH.md",
+  "dependencies": [
+    {
+      "name": "apache-airflow",
+      "source": "pypi",
+      "stamped": "3.3.2",
+      "course": "airflow",
+      "note": "Lessons were framed for 3.3.2 on 13 October 2026."
+    }
+  ],
+  "courses": {
+    "airflow": {
+      "vendor_checked_on": "2026-10-13",
+      "vendor_note": "Lessons were framed on 13 October 2026 for Apache Airflow 3.3.2."
+    },
+    "clickhouse": {
+      "vendor_checked_on": "2026-10-13",
+      "vendor_note": "Lessons were framed on 13 October 2026 for MergeTree, the JSON type since 25.3, and ClickHouse Cloud SharedMergeTree."
+    },
+    "data-science": {
+      "vendor_checked_on": "2026-10-13",
+      "vendor_note": "The course hub is data_science_course/index.html. data-science-basics.html remains a separate overview page."
+    },
+    "dbt": {
+      "vendor_checked_on": "2026-10-13",
+      "vendor_note": "Lessons were framed on 13 October 2026 for the dbt Developer Hub, Fusion v2.0.8, and dbt-core as the Apache-licensed runtime."
+    },
+    "dms": {
+      "vendor_checked_on": "2026-10-13",
+      "vendor_note": "Premigration assessment, DMS Schema Conversion, and the desktop AWS SCT are described as three different reports."
+    },
+    "kubernetes": {
+      "vendor_checked_on": "2026-10-13",
+      "vendor_note": "Lessons do not pin one patch release. The Gateway API 1.5 notes cited Kubernetes 1.30 or later for that release."
+    },
+    "llm": {
+      "vendor_checked_on": "2026-10-13",
+      "vendor_note": "Lessons distinguish the 2019 GPT-2 decoder from ChatGPT."
+    },
+    "metabase": {
+      "vendor_checked_on": "2026-10-13",
+      "vendor_note": "Lessons keep Cloud, self-host, embedding, models, and permissions. They do not publish an application-database password."
+    },
+    "mssql": {
+      "vendor_checked_on": "2026-10-13",
+      "vendor_note": "Lessons were framed on 13 October 2026 for SQL Server 2017, 2019, 2022, and 2025. SQL Server 2016 extended support had ended on 15 July 2026."
+    },
+    "postgres": {
+      "vendor_checked_on": "2026-10-13",
+      "vendor_note": "Lessons were framed on 13 October 2026 for PostgreSQL 18.6 as the current major, with 17, 16, and 15 still supported. PostgreSQL 14 support was dated through 12 November 2026."
+    },
+    "python": {
+      "vendor_checked_on": "2026-10-13",
+      "vendor_note": "Sessions 13 and 14 teach matplotlib and seaborn."
+    },
+    "redshift": {
+      "vendor_checked_on": "2026-10-13",
+      "vendor_note": "Lessons keep the October 2026 caveats on zero-ETL, data sharing, RA3, Serverless, and Spectrum. They do not tell a new warehouse to start on DC2."
+    },
+    "snowflake": {
+      "vendor_checked_on": "2026-10-13",
+      "vendor_note": "Thirteen lessons are on the hub. Two are free. No separate vendor patch version is stamped."
+    },
+    "terraform": {
+      "vendor_checked_on": "2026-10-13",
+      "vendor_note": "S3 locking is described as version-dependent. OpenTofu is a separate project."
+    }
+  }
+}

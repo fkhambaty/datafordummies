@@ -3,6 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <!-- dfd-seo:start -->
+    <meta name="description" content="Meet Terraform and OpenTofu | Terraform and OpenTofu. Terraform and OpenTofu both read HCL and both keep a state file.">
+    <link rel="canonical" href="https://datafordummies.in/terraform_course/meet-terraform.html">
+    <meta property="og:title" content="Meet Terraform and OpenTofu | Terraform and OpenTofu | Data For Dummies">
+    <meta property="og:description" content="Meet Terraform and OpenTofu | Terraform and OpenTofu. Terraform and OpenTofu both read HCL and both keep a state file.">
+    <meta property="og:url" content="https://datafordummies.in/terraform_course/meet-terraform.html">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="https://datafordummies.in/logo.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <!-- dfd-seo:end -->
     <title>Meet Terraform and OpenTofu | Terraform and OpenTofu | Data For Dummies</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
@@ -69,68 +79,62 @@
 </tbody>
 </table>
 </section>
-        <section class="section dfd-diagram" data-dfd-diagram data-dfd-reveal>
-            <h2>List, plan, reality</h2>
-            <div data-dfd-diagram-panel="cfg">
-<svg class="dfd-responsive" viewBox="0 0 640 148" role="img" aria-label="HCL highlighted">
-<rect class="track-drift" x="16" y="36" width="188" height="72" rx="12" fill="#a78bfa">
-</rect>
-<text x="110" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#ffffff">HCL</text>
-<path d="M204 72 H224" stroke="#64748b" stroke-width="2" fill="none">
-</path>
-<rect x="224" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
-</rect>
-<text x="318" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">Plan</text>
-<path d="M412 72 H432" stroke="#64748b" stroke-width="2" fill="none">
-</path>
-<rect x="432" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
-</rect>
-<text x="526" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">Cloud</text>
-</svg>
-<p>The configuration is the list. It is not the cloud.</p>
+        <section class="section dfd-diagram dfd-flow" data-dfd-diagram data-dfd-flow data-dfd-reveal>
+<h2>List, plan, reality</h2>
+<div class="dfd-diagram-controls dfd-flow-controls" role="group" aria-label="List, plan, reality: steps">
+<button type="button" data-dfd-diagram-step="step1" aria-pressed="true"><span class="dfd-flow-num" aria-hidden="true">1</span>Config</button>
+<button type="button" data-dfd-diagram-step="step2" aria-pressed="false"><span class="dfd-flow-num" aria-hidden="true">2</span>Plan</button>
+<button type="button" data-dfd-diagram-step="step3" aria-pressed="false"><span class="dfd-flow-num" aria-hidden="true">3</span>Cloud</button>
 </div>
-<div data-dfd-diagram-panel="plan" hidden>
-<svg class="dfd-responsive" viewBox="0 0 640 148" role="img" aria-label="Plan highlighted">
-<rect x="16" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
-</rect>
-<text x="110" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">HCL</text>
-<path d="M204 72 H224" stroke="#64748b" stroke-width="2" fill="none">
-</path>
-<rect class="track-drift" x="224" y="36" width="188" height="72" rx="12" fill="#a78bfa">
-</rect>
-<text x="318" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#ffffff">Plan</text>
-<path d="M412 72 H432" stroke="#64748b" stroke-width="2" fill="none">
-</path>
-<rect x="432" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
-</rect>
-<text x="526" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">Cloud</text>
-</svg>
-<p>The plan is a diff against state and the provider. Read it.</p>
-</div>
-<div data-dfd-diagram-panel="cloud" hidden>
-<svg class="dfd-responsive" viewBox="0 0 640 148" role="img" aria-label="Cloud highlighted">
-<rect x="16" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
-</rect>
-<text x="110" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">HCL</text>
-<path d="M204 72 H224" stroke="#64748b" stroke-width="2" fill="none">
-</path>
-<rect x="224" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
-</rect>
-<text x="318" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">Plan</text>
-<path d="M412 72 H432" stroke="#64748b" stroke-width="2" fill="none">
-</path>
-<rect class="track-drift" x="432" y="36" width="188" height="72" rx="12" fill="#a78bfa">
-</rect>
-<text x="526" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#ffffff">Cloud</text>
-</svg>
-<p>Apply asks the provider to change the cloud, then updates state.</p>
-</div>
-            <div class="dfd-diagram-controls">
-                <button type="button" data-dfd-diagram-step="cfg" aria-pressed="true">Config</button>
-<button type="button" data-dfd-diagram-step="plan" aria-pressed="false">Plan</button>
-<button type="button" data-dfd-diagram-step="cloud" aria-pressed="false">Cloud</button>
-            </div>
-        </section>
+<div class="dfd-flow-panel" data-dfd-diagram-panel="step1">
+<ol class="dfd-flow-track" aria-label="Step 1: Config">
+<li class="dfd-flow-node is-active" aria-current="step"><span class="dfd-flow-label">HCL</span></li>
+<li class="dfd-flow-node"><span class="dfd-flow-label">Plan</span></li>
+<li class="dfd-flow-node"><span class="dfd-flow-label">Cloud</span></li>
+</ol>
+<div class="dfd-flow-explain">
+<p class="dfd-flow-caption"><span class="dfd-flow-count">Step 1 of 3</span>Plan
+
+
+
+
+Cloud
+
+The configuration is the list. It is not the cloud.</p>
+</div></div>
+<div class="dfd-flow-panel" data-dfd-diagram-panel="step2" hidden>
+<ol class="dfd-flow-track" aria-label="Step 2: Plan">
+<li class="dfd-flow-node"><span class="dfd-flow-label">HCL</span></li>
+<li class="dfd-flow-node is-active" aria-current="step"><span class="dfd-flow-label">Plan</span></li>
+<li class="dfd-flow-node"><span class="dfd-flow-label">Cloud</span></li>
+</ol>
+<div class="dfd-flow-explain">
+<p class="dfd-flow-caption"><span class="dfd-flow-count">Step 2 of 3</span>Plan
+
+
+
+
+Cloud
+
+The plan is a diff against state and the provider. Read it.</p>
+</div></div>
+<div class="dfd-flow-panel" data-dfd-diagram-panel="step3" hidden>
+<ol class="dfd-flow-track" aria-label="Step 3: Cloud">
+<li class="dfd-flow-node"><span class="dfd-flow-label">HCL</span></li>
+<li class="dfd-flow-node"><span class="dfd-flow-label">Plan</span></li>
+<li class="dfd-flow-node is-active" aria-current="step"><span class="dfd-flow-label">Cloud</span></li>
+</ol>
+<div class="dfd-flow-explain">
+<p class="dfd-flow-caption"><span class="dfd-flow-count">Step 3 of 3</span>Plan
+
+
+
+
+Cloud
+
+Apply asks the provider to change the cloud, then updates state.</p>
+</div></div>
+</section>
         <section class="section" id="lab" data-dfd-reveal>
             <h2>Lab: say which binary you mean</h2>
             <p>You may not have either tool installed yet. Write the sentence anyway. The next lesson installs one on purpose.</p>
@@ -216,8 +220,6 @@ HCP Terraform is a HashiCorp service. It is not OpenTofu.</code>
     </div>
 
     <script src="../js/code-copy.js">
-</script>
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2">
 </script>
     <script src="../js/supabase-config.js">
 </script>

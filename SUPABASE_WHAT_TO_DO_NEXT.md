@@ -1,4 +1,9 @@
-# What to Do Next — Supabase Login/Sign Up (Simple Steps)
+# What to Do Next — retired
+
+Supabase is not the account system. Accounts, progress, and Pro live on the Cloudflare Worker. Follow `ARCHITECTURE.md`. The steps below are historical and must not be repeated.
+
+---
+
 
 You’ve already set the **Site URL** and **Redirect URLs** in Supabase. Here’s what’s left.
 

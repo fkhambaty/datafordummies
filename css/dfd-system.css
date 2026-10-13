@@ -413,3 +413,263 @@ body.page-home .home-stage {
         background: transparent;
     }
 }
+
+:where(.dfd-legal) {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 16px;
+    margin: 12px 0 0;
+}
+
+:where(.dfd-legal a) {
+    text-underline-offset: 3px;
+}
+
+/* Step-through lesson diagrams (scripts/build_lesson_diagrams.py). */
+.dfd-flow {
+    --flow-accent: var(--hub-color, var(--dfd-accent));
+    overflow: visible;
+}
+
+.dfd-flow .dfd-flow-intro {
+    margin: 4px 0 16px;
+    color: var(--dfd-muted);
+}
+
+.dfd-flow .dfd-flow-controls {
+    margin: 0 0 18px;
+}
+
+.dfd-flow .dfd-flow-controls button {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    min-height: 44px;
+    padding: 8px 14px 8px 8px;
+    border: 1px solid var(--dfd-line);
+    border-radius: 999px;
+    background: var(--dfd-surface);
+    color: var(--dfd-text);
+    font: 600 0.95rem/1.2 var(--dfd-font);
+    cursor: pointer;
+    transition: border-color var(--dfd-fast) var(--dfd-ease), background var(--dfd-fast) var(--dfd-ease), color var(--dfd-fast) var(--dfd-ease);
+}
+
+.dfd-flow .dfd-flow-controls button:hover {
+    border-color: var(--flow-accent);
+}
+
+.dfd-flow .dfd-flow-controls button[aria-pressed="true"] {
+    border-color: var(--flow-accent);
+    background: var(--flow-accent);
+    color: #ffffff;
+}
+
+.dfd-flow-num {
+    display: inline-grid;
+    place-items: center;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: var(--dfd-accent-soft);
+    color: var(--dfd-accent-strong);
+    font-size: 0.85rem;
+    font-weight: 700;
+}
+
+.dfd-flow .dfd-flow-controls button[aria-pressed="true"] .dfd-flow-num {
+    background: rgba(255, 255, 255, 0.22);
+    color: #ffffff;
+}
+
+.dfd-flow-track {
+    display: flex;
+    align-items: stretch;
+    gap: 28px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    counter-reset: none;
+}
+
+.dfd-flow-node {
+    position: relative;
+    flex: 1 1 0;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 4px;
+    padding: 16px;
+    border: 1px solid var(--dfd-line);
+    border-radius: var(--dfd-radius-sm);
+    background: var(--dfd-wash);
+    color: var(--dfd-muted);
+    transition: transform 240ms var(--dfd-ease), border-color 240ms var(--dfd-ease), background 240ms var(--dfd-ease), box-shadow 240ms var(--dfd-ease), opacity 240ms var(--dfd-ease);
+    opacity: 0.72;
+}
+
+.dfd-flow-node + .dfd-flow-node::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: -24px;
+    width: 20px;
+    height: 2px;
+    background: var(--dfd-line);
+}
+
+.dfd-flow-node + .dfd-flow-node::after {
+    content: "";
+    position: absolute;
+    top: calc(50% - 4px);
+    left: -10px;
+    border: 5px solid transparent;
+    border-left-color: var(--dfd-line);
+}
+
+.dfd-flow-node.is-active {
+    border-color: var(--flow-accent);
+    background: var(--dfd-surface);
+    color: var(--dfd-text);
+    box-shadow: 0 0 0 3px var(--dfd-accent-soft), var(--dfd-shadow);
+    transform: translateY(-2px);
+    opacity: 1;
+}
+
+.dfd-flow-node.is-fed::before {
+    background: repeating-linear-gradient(90deg, var(--flow-accent) 0 6px, transparent 6px 10px);
+    background-size: 20px 2px;
+    animation: dfdFlowDash 900ms linear infinite;
+}
+
+.dfd-flow-node.is-fed::after {
+    border-left-color: var(--flow-accent);
+}
+
+.dfd-flow-label {
+    color: var(--dfd-ink);
+    font-weight: 700;
+    font-size: 1rem;
+    line-height: 1.3;
+    overflow-wrap: anywhere;
+}
+
+.dfd-flow-role {
+    font-size: 0.88rem;
+    line-height: 1.4;
+}
+
+.dfd-flow-explain {
+    margin-top: 18px;
+    padding: 16px 18px;
+    border-left: 4px solid var(--flow-accent);
+    border-radius: 0 var(--dfd-radius-sm) var(--dfd-radius-sm) 0;
+    background: var(--dfd-wash);
+}
+
+.dfd-flow-caption {
+    margin: 0;
+    color: var(--dfd-text);
+    line-height: 1.6;
+}
+
+.dfd-flow-count {
+    display: block;
+    margin-bottom: 4px;
+    color: var(--flow-accent);
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+}
+
+.dfd-flow-example {
+    margin: 12px 0 0;
+    padding: 12px 14px;
+    border-radius: 8px;
+    background: #0f172a;
+    color: #e2e8f0;
+    padding-right: 52px;
+    font: 0.86rem/1.55 var(--dfd-mono);
+    font-variant-ligatures: none;
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+}
+
+.dfd-flow-example code {
+    background: none;
+    color: inherit;
+    padding: 0;
+    font: inherit;
+}
+
+.dfd-flow-example-ui {
+    background: var(--dfd-surface);
+    color: var(--dfd-text);
+    border: 1px dashed var(--dfd-line);
+    font-family: var(--dfd-font);
+}
+
+.dfd-flow-panel:not([hidden]) {
+    animation: dfdFlowIn 260ms var(--dfd-ease);
+}
+
+@keyframes dfdFlowDash {
+    to { background-position: 20px 0; }
+}
+
+@keyframes dfdFlowIn {
+    from { opacity: 0; transform: translateY(6px); }
+    to { opacity: 1; transform: none; }
+}
+
+@media (max-width: 640px) {
+    .dfd-flow-track {
+        flex-direction: column;
+        gap: 22px;
+    }
+
+    .dfd-flow-node + .dfd-flow-node::before {
+        top: -18px;
+        left: 24px;
+        width: 2px;
+        height: 14px;
+    }
+
+    .dfd-flow-node.is-fed::before {
+        background: repeating-linear-gradient(180deg, var(--flow-accent) 0 6px, transparent 6px 10px);
+        background-size: 2px 20px;
+        animation-name: dfdFlowDashDown;
+    }
+
+    .dfd-flow-node + .dfd-flow-node::after {
+        top: -6px;
+        left: 20px;
+        border-left-color: transparent;
+        border-top-color: var(--dfd-line);
+    }
+
+    .dfd-flow-node.is-fed::after {
+        border-left-color: transparent;
+        border-top-color: var(--flow-accent);
+    }
+
+    .dfd-flow .dfd-flow-controls button {
+        flex: 1 1 100%;
+    }
+}
+
+@keyframes dfdFlowDashDown {
+    to { background-position: 0 20px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .dfd-flow-node,
+    .dfd-flow-panel:not([hidden]),
+    .dfd-flow-node.is-fed::before {
+        animation: none;
+        transition: none;
+        transform: none;
+    }
+}

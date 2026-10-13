@@ -3,6 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <!-- dfd-seo:start -->
+    <meta name="description" content="Lifecycle, import, moved, and removed | Terraform and OpenTofu. These blocks tell Terraform how to treat an object that already exists or that you renamed.">
+    <link rel="canonical" href="https://datafordummies.in/terraform_course/lifecycle-blocks.html">
+    <meta property="og:title" content="Lifecycle, import, moved, and removed | Terraform and OpenTofu | Data For Dummies">
+    <meta property="og:description" content="Lifecycle, import, moved, and removed | Terraform and OpenTofu. These blocks tell Terraform how to treat an object that already exists or that you renamed.">
+    <meta property="og:url" content="https://datafordummies.in/terraform_course/lifecycle-blocks.html">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="https://datafordummies.in/logo.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <!-- dfd-seo:end -->
     <title>Lifecycle, import, moved, and removed | Terraform and OpenTofu | Data For Dummies</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
@@ -73,68 +83,62 @@
 </tbody>
 </table>
 </section>
-        <section class="section dfd-diagram" data-dfd-diagram data-dfd-reveal>
-            <h2>Rename without destroy</h2>
-            <div data-dfd-diagram-panel="old">
-<svg class="dfd-responsive" viewBox="0 0 640 148" role="img" aria-label="Old address highlighted">
-<rect class="track-drift" x="16" y="36" width="188" height="72" rx="12" fill="#a78bfa">
-</rect>
-<text x="110" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#ffffff">Old address</text>
-<path d="M204 72 H224" stroke="#64748b" stroke-width="2" fill="none">
-</path>
-<rect x="224" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
-</rect>
-<text x="318" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">moved</text>
-<path d="M412 72 H432" stroke="#64748b" stroke-width="2" fill="none">
-</path>
-<rect x="432" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
-</rect>
-<text x="526" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">New address</text>
-</svg>
-<p>The state still has the old address.</p>
+        <section class="section dfd-diagram dfd-flow" data-dfd-diagram data-dfd-flow data-dfd-reveal>
+<h2>Rename without destroy</h2>
+<div class="dfd-diagram-controls dfd-flow-controls" role="group" aria-label="Rename without destroy: steps">
+<button type="button" data-dfd-diagram-step="step1" aria-pressed="true"><span class="dfd-flow-num" aria-hidden="true">1</span>Old name</button>
+<button type="button" data-dfd-diagram-step="step2" aria-pressed="false"><span class="dfd-flow-num" aria-hidden="true">2</span>moved</button>
+<button type="button" data-dfd-diagram-step="step3" aria-pressed="false"><span class="dfd-flow-num" aria-hidden="true">3</span>New name</button>
 </div>
-<div data-dfd-diagram-panel="moved" hidden>
-<svg class="dfd-responsive" viewBox="0 0 640 148" role="img" aria-label="moved block highlighted">
-<rect x="16" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
-</rect>
-<text x="110" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">Old address</text>
-<path d="M204 72 H224" stroke="#64748b" stroke-width="2" fill="none">
-</path>
-<rect class="track-drift" x="224" y="36" width="188" height="72" rx="12" fill="#a78bfa">
-</rect>
-<text x="318" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#ffffff">moved</text>
-<path d="M412 72 H432" stroke="#64748b" stroke-width="2" fill="none">
-</path>
-<rect x="432" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
-</rect>
-<text x="526" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">New address</text>
-</svg>
-<p>The moved block tells plan this is a rename.</p>
-</div>
-<div data-dfd-diagram-panel="new" hidden>
-<svg class="dfd-responsive" viewBox="0 0 640 148" role="img" aria-label="New address highlighted">
-<rect x="16" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
-</rect>
-<text x="110" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">Old address</text>
-<path d="M204 72 H224" stroke="#64748b" stroke-width="2" fill="none">
-</path>
-<rect x="224" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
-</rect>
-<text x="318" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">moved</text>
-<path d="M412 72 H432" stroke="#64748b" stroke-width="2" fill="none">
-</path>
-<rect class="track-drift" x="432" y="36" width="188" height="72" rx="12" fill="#a78bfa">
-</rect>
-<text x="526" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#ffffff">New address</text>
-</svg>
-<p>The same object keeps its cloud id under the new address.</p>
-</div>
-            <div class="dfd-diagram-controls">
-                <button type="button" data-dfd-diagram-step="old" aria-pressed="true">Old name</button>
-<button type="button" data-dfd-diagram-step="moved" aria-pressed="false">moved</button>
-<button type="button" data-dfd-diagram-step="new" aria-pressed="false">New name</button>
-            </div>
-        </section>
+<div class="dfd-flow-panel" data-dfd-diagram-panel="step1">
+<ol class="dfd-flow-track" aria-label="Step 1: Old name">
+<li class="dfd-flow-node is-active" aria-current="step"><span class="dfd-flow-label">Old address</span></li>
+<li class="dfd-flow-node"><span class="dfd-flow-label">moved</span></li>
+<li class="dfd-flow-node"><span class="dfd-flow-label">New address</span></li>
+</ol>
+<div class="dfd-flow-explain">
+<p class="dfd-flow-caption"><span class="dfd-flow-count">Step 1 of 3</span>moved
+
+
+
+
+New address
+
+The state still has the old address.</p>
+</div></div>
+<div class="dfd-flow-panel" data-dfd-diagram-panel="step2" hidden>
+<ol class="dfd-flow-track" aria-label="Step 2: moved">
+<li class="dfd-flow-node"><span class="dfd-flow-label">Old address</span></li>
+<li class="dfd-flow-node is-active" aria-current="step"><span class="dfd-flow-label">moved</span></li>
+<li class="dfd-flow-node"><span class="dfd-flow-label">New address</span></li>
+</ol>
+<div class="dfd-flow-explain">
+<p class="dfd-flow-caption"><span class="dfd-flow-count">Step 2 of 3</span>moved
+
+
+
+
+New address
+
+The moved block tells plan this is a rename.</p>
+</div></div>
+<div class="dfd-flow-panel" data-dfd-diagram-panel="step3" hidden>
+<ol class="dfd-flow-track" aria-label="Step 3: New name">
+<li class="dfd-flow-node"><span class="dfd-flow-label">Old address</span></li>
+<li class="dfd-flow-node"><span class="dfd-flow-label">moved</span></li>
+<li class="dfd-flow-node is-active" aria-current="step"><span class="dfd-flow-label">New address</span></li>
+</ol>
+<div class="dfd-flow-explain">
+<p class="dfd-flow-caption"><span class="dfd-flow-count">Step 3 of 3</span>moved
+
+
+
+
+New address
+
+The same object keeps its cloud id under the new address.</p>
+</div></div>
+</section>
         <section class="section" id="lab" data-dfd-reveal>
             <h2>Lab: read a moved block before you need one</h2>
             <p>Do not apply this against a real bucket. The point is the shape of the block.</p>
@@ -228,8 +232,6 @@ removed {
     </div>
 
     <script src="../js/code-copy.js">
-</script>
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2">
 </script>
     <script src="../js/supabase-config.js">
 </script>

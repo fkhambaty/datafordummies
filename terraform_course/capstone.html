@@ -3,6 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <!-- dfd-seo:start -->
+    <meta name="description" content="Capstone | Terraform and OpenTofu. Build a small root module you can init, validate, and test without a cloud account.">
+    <link rel="canonical" href="https://datafordummies.in/terraform_course/capstone.html">
+    <meta property="og:title" content="Capstone | Terraform and OpenTofu | Data For Dummies">
+    <meta property="og:description" content="Capstone | Terraform and OpenTofu. Build a small root module you can init, validate, and test without a cloud account.">
+    <meta property="og:url" content="https://datafordummies.in/terraform_course/capstone.html">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="https://datafordummies.in/logo.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <!-- dfd-seo:end -->
     <title>Capstone | Terraform and OpenTofu | Data For Dummies</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
@@ -68,68 +78,56 @@
 </tbody>
 </table>
 </section>
-        <section class="section dfd-diagram" data-dfd-diagram data-dfd-reveal>
-            <h2>Toy kitchen, then the real one</h2>
-            <div data-dfd-diagram-panel="lab">
-<svg class="dfd-responsive" viewBox="0 0 640 148" role="img" aria-label="Lab pieces highlighted">
-<rect class="track-drift" x="16" y="36" width="188" height="72" rx="12" fill="#a78bfa">
-</rect>
-<text x="110" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#ffffff">Variable</text>
-<path d="M204 72 H224" stroke="#64748b" stroke-width="2" fill="none">
-</path>
-<rect x="224" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
-</rect>
-<text x="318" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">Resource</text>
-<path d="M412 72 H432" stroke="#64748b" stroke-width="2" fill="none">
-</path>
-<rect x="432" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
-</rect>
-<text x="526" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">Test</text>
-</svg>
-<p>The lab stays on local state and terraform_data.</p>
+        <section class="section dfd-diagram dfd-flow" data-dfd-diagram data-dfd-flow data-dfd-reveal>
+<h2>Toy kitchen, then the real one</h2>
+<div class="dfd-diagram-controls dfd-flow-controls" role="group" aria-label="Toy kitchen, then the real one: steps">
+<button type="button" data-dfd-diagram-step="step1" aria-pressed="true"><span class="dfd-flow-num" aria-hidden="true">1</span>Lab</button>
+<button type="button" data-dfd-diagram-step="step2" aria-pressed="false"><span class="dfd-flow-num" aria-hidden="true">2</span>Review</button>
+<button type="button" data-dfd-diagram-step="step3" aria-pressed="false"><span class="dfd-flow-num" aria-hidden="true">3</span>Production</button>
 </div>
-<div data-dfd-diagram-panel="review" hidden>
-<svg class="dfd-responsive" viewBox="0 0 640 148" role="img" aria-label="Review steps highlighted">
-<rect x="16" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
-</rect>
-<text x="110" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">fmt</text>
-<path d="M204 72 H224" stroke="#64748b" stroke-width="2" fill="none">
-</path>
-<rect class="track-drift" x="224" y="36" width="188" height="72" rx="12" fill="#a78bfa">
-</rect>
-<text x="318" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#ffffff">validate</text>
-<path d="M412 72 H432" stroke="#64748b" stroke-width="2" fill="none">
-</path>
-<rect x="432" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
-</rect>
-<text x="526" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">plan</text>
-</svg>
-<p>fmt, validate, and a plan are still required when a cloud provider appears.</p>
-</div>
-<div data-dfd-diagram-panel="prod" hidden>
-<svg class="dfd-responsive" viewBox="0 0 640 148" role="img" aria-label="Production pieces highlighted">
-<rect x="16" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
-</rect>
-<text x="110" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">Backend</text>
-<path d="M204 72 H224" stroke="#64748b" stroke-width="2" fill="none">
-</path>
-<rect x="224" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
-</rect>
-<text x="318" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">Lock</text>
-<path d="M412 72 H432" stroke="#64748b" stroke-width="2" fill="none">
-</path>
-<rect class="track-drift" x="432" y="36" width="188" height="72" rx="12" fill="#a78bfa">
-</rect>
-<text x="526" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#ffffff">Apply</text>
-</svg>
-<p>Production adds a backend, a lock, and an apply that a human approved.</p>
-</div>
-            <div class="dfd-diagram-controls">
-                <button type="button" data-dfd-diagram-step="lab" aria-pressed="true">Lab</button>
-<button type="button" data-dfd-diagram-step="review" aria-pressed="false">Review</button>
-<button type="button" data-dfd-diagram-step="prod" aria-pressed="false">Production</button>
-            </div>
-        </section>
+<div class="dfd-flow-panel" data-dfd-diagram-panel="step1">
+<ol class="dfd-flow-track" aria-label="Step 1: Lab">
+<li class="dfd-flow-node is-active" aria-current="step"><span class="dfd-flow-label">Variable</span></li>
+<li class="dfd-flow-node"><span class="dfd-flow-label">Resource</span></li>
+<li class="dfd-flow-node"><span class="dfd-flow-label">Test</span></li>
+</ol>
+<div class="dfd-flow-explain"><p class="dfd-flow-caption"><span class="dfd-flow-count">Step 1 of 3</span>Resource
+
+
+
+
+Test
+
+The lab stays on local state and terraform_data.</p></div></div>
+<div class="dfd-flow-panel" data-dfd-diagram-panel="step2" hidden>
+<ol class="dfd-flow-track" aria-label="Step 2: Review">
+<li class="dfd-flow-node"><span class="dfd-flow-label">fmt</span></li>
+<li class="dfd-flow-node is-active" aria-current="step"><span class="dfd-flow-label">validate</span></li>
+<li class="dfd-flow-node"><span class="dfd-flow-label">plan</span></li>
+</ol>
+<div class="dfd-flow-explain"><p class="dfd-flow-caption"><span class="dfd-flow-count">Step 2 of 3</span>validate
+
+
+
+
+plan
+
+fmt, validate, and a plan are still required when a cloud provider appears.</p></div></div>
+<div class="dfd-flow-panel" data-dfd-diagram-panel="step3" hidden>
+<ol class="dfd-flow-track" aria-label="Step 3: Production">
+<li class="dfd-flow-node"><span class="dfd-flow-label">Backend</span></li>
+<li class="dfd-flow-node"><span class="dfd-flow-label">Lock</span></li>
+<li class="dfd-flow-node is-active" aria-current="step"><span class="dfd-flow-label">Apply</span></li>
+</ol>
+<div class="dfd-flow-explain"><p class="dfd-flow-caption"><span class="dfd-flow-count">Step 3 of 3</span>Lock
+
+
+
+
+Apply
+
+Production adds a backend, a lock, and an apply that a human approved.</p></div></div>
+</section>
         <section class="section" id="lab" data-dfd-reveal>
             <h2>Lab: init, validate, and test</h2>
             <p>Put these files in an empty directory. Use the Terraform binary if that is what you installed. If you use OpenTofu, run tofu and treat a rejected argument as a version note, not as a pass.</p>
@@ -246,8 +244,6 @@ terraform test</code>
     </div>
 
     <script src="../js/code-copy.js">
-</script>
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2">
 </script>
     <script src="../js/supabase-config.js">
 </script>

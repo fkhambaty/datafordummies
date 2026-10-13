@@ -3,6 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <!-- dfd-seo:start -->
+    <meta name="description" content="Redshift table design. Start with AUTO distribution, sort, and encoding.">
+    <link rel="canonical" href="https://datafordummies.in/redshift_course/table-design.html">
+    <meta property="og:title" content="Redshift table design | Data For Dummies">
+    <meta property="og:description" content="Redshift table design. Start with AUTO distribution, sort, and encoding.">
+    <meta property="og:url" content="https://datafordummies.in/redshift_course/table-design.html">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="https://datafordummies.in/logo.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <!-- dfd-seo:end -->
     <title>Redshift table design | Data For Dummies</title>
     <link rel="stylesheet" href="styles.css">
     
@@ -55,34 +65,45 @@ ENCODE AUTO;</code></pre></div>
 <p>Key distribution on a column that is almost always the same value parks the rows on one slice. That slice works while the others wait. Check skew before you congratulate yourself on a key. <code>ALL</code> is only for tables small enough to copy everywhere. A fact table marked ALL will waste storage and load time.</p>
 <p>Encoding compresses columns. AUTO picks encodings. Do not hand-tune encodings on day one. Vacuum and analyze are largely automatic on current RA3 and Serverless warehouses. You still need to know the words, because an old cluster or a deleted-row heavy table can need a manual vacuum. Design the table so the load does not depend on a weekly rescue.</p>
 </section>
-<section class="section dfd-diagram" data-dfd-diagram data-dfd-reveal><h2>Three choices on a table</h2><div data-dfd-diagram-panel="one">
-<svg class="dfd-responsive" viewBox="0 0 360 100" role="img" aria-label="Distribution highlighted">
-<rect x="12" y="26" width="104" height="48" rx="8" fill="#0f172a"></rect>
-<text x="64" y="54" text-anchor="middle" font-size="13" fill="#ffffff" font-family="Nunito,sans-serif">Dist</text>
-<rect x="128" y="26" width="104" height="48" rx="8" fill="#e2e8f0"></rect>
-<text x="180" y="54" text-anchor="middle" font-size="13" fill="#0f172a" font-family="Nunito,sans-serif">Sort</text>
-<rect x="244" y="26" width="104" height="48" rx="8" fill="#e2e8f0"></rect>
-<text x="296" y="54" text-anchor="middle" font-size="13" fill="#0f172a" font-family="Nunito,sans-serif">Encode</text>
-</svg>
-</div><div data-dfd-diagram-panel="two" hidden>
-<svg class="dfd-responsive" viewBox="0 0 360 100" role="img" aria-label="Sort highlighted">
-<rect x="12" y="26" width="104" height="48" rx="8" fill="#e2e8f0"></rect>
-<text x="64" y="54" text-anchor="middle" font-size="13" fill="#0f172a" font-family="Nunito,sans-serif">Dist</text>
-<rect x="128" y="26" width="104" height="48" rx="8" fill="#0f172a"></rect>
-<text x="180" y="54" text-anchor="middle" font-size="13" fill="#ffffff" font-family="Nunito,sans-serif">Sort</text>
-<rect x="244" y="26" width="104" height="48" rx="8" fill="#e2e8f0"></rect>
-<text x="296" y="54" text-anchor="middle" font-size="13" fill="#0f172a" font-family="Nunito,sans-serif">Encode</text>
-</svg>
-</div><div data-dfd-diagram-panel="three" hidden>
-<svg class="dfd-responsive" viewBox="0 0 360 100" role="img" aria-label="Encoding highlighted">
-<rect x="12" y="26" width="104" height="48" rx="8" fill="#e2e8f0"></rect>
-<text x="64" y="54" text-anchor="middle" font-size="13" fill="#0f172a" font-family="Nunito,sans-serif">Dist</text>
-<rect x="128" y="26" width="104" height="48" rx="8" fill="#e2e8f0"></rect>
-<text x="180" y="54" text-anchor="middle" font-size="13" fill="#0f172a" font-family="Nunito,sans-serif">Sort</text>
-<rect x="244" y="26" width="104" height="48" rx="8" fill="#0f172a"></rect>
-<text x="296" y="54" text-anchor="middle" font-size="13" fill="#ffffff" font-family="Nunito,sans-serif">Encode</text>
-</svg>
-</div><div class="dfd-diagram-controls"><button type="button" data-dfd-diagram-step="one" aria-pressed="true">Dist</button><button type="button" data-dfd-diagram-step="two" aria-pressed="false">Sort</button><button type="button" data-dfd-diagram-step="three" aria-pressed="false">Encode</button></div></section>
+<section class="section dfd-diagram dfd-flow" data-dfd-diagram data-dfd-flow data-dfd-reveal>
+<h2>Three choices on a table</h2>
+<p class="dfd-flow-intro">Where rows live, what order they are stored in, and how they are compressed.</p>
+<div class="dfd-diagram-controls dfd-flow-controls" role="group" aria-label="Three choices on a table: steps">
+<button type="button" data-dfd-diagram-step="step1" aria-pressed="true"><span class="dfd-flow-num" aria-hidden="true">1</span>Dist</button>
+<button type="button" data-dfd-diagram-step="step2" aria-pressed="false"><span class="dfd-flow-num" aria-hidden="true">2</span>Sort</button>
+<button type="button" data-dfd-diagram-step="step3" aria-pressed="false"><span class="dfd-flow-num" aria-hidden="true">3</span>Encode</button>
+</div>
+<div class="dfd-flow-panel" data-dfd-diagram-panel="step1">
+<ol class="dfd-flow-track" aria-label="Step 1: Dist">
+<li class="dfd-flow-node is-active" aria-current="step"><span class="dfd-flow-label">Distribution</span><span class="dfd-flow-role">Which slice holds each row</span></li>
+<li class="dfd-flow-node"><span class="dfd-flow-label">Sort key</span><span class="dfd-flow-role">Order of rows on disk</span></li>
+<li class="dfd-flow-node"><span class="dfd-flow-label">Encoding</span><span class="dfd-flow-role">How columns are compressed</span></li>
+</ol>
+<div class="dfd-flow-explain">
+<p class="dfd-flow-caption"><span class="dfd-flow-count">Step 1 of 3</span>A DISTKEY on a join column puts matching rows on the same slice. DISTSTYLE ALL copies a small table everywhere. AUTO lets Redshift choose.</p>
+<pre class="dfd-flow-example"><code>CREATE TABLE sales (...) DISTKEY(customer_id);</code></pre>
+</div></div>
+<div class="dfd-flow-panel" data-dfd-diagram-panel="step2" hidden>
+<ol class="dfd-flow-track" aria-label="Step 2: Sort">
+<li class="dfd-flow-node"><span class="dfd-flow-label">Distribution</span><span class="dfd-flow-role">Which slice holds each row</span></li>
+<li class="dfd-flow-node is-active" aria-current="step"><span class="dfd-flow-label">Sort key</span><span class="dfd-flow-role">Order of rows on disk</span></li>
+<li class="dfd-flow-node"><span class="dfd-flow-label">Encoding</span><span class="dfd-flow-role">How columns are compressed</span></li>
+</ol>
+<div class="dfd-flow-explain">
+<p class="dfd-flow-caption"><span class="dfd-flow-count">Step 2 of 3</span>A sort key stores rows in order, so a date filter can skip whole blocks using zone maps.</p>
+<pre class="dfd-flow-example"><code>CREATE TABLE events (...) SORTKEY(event_time);</code></pre>
+</div></div>
+<div class="dfd-flow-panel" data-dfd-diagram-panel="step3" hidden>
+<ol class="dfd-flow-track" aria-label="Step 3: Encode">
+<li class="dfd-flow-node"><span class="dfd-flow-label">Distribution</span><span class="dfd-flow-role">Which slice holds each row</span></li>
+<li class="dfd-flow-node"><span class="dfd-flow-label">Sort key</span><span class="dfd-flow-role">Order of rows on disk</span></li>
+<li class="dfd-flow-node is-active" aria-current="step"><span class="dfd-flow-label">Encoding</span><span class="dfd-flow-role">How columns are compressed</span></li>
+</ol>
+<div class="dfd-flow-explain">
+<p class="dfd-flow-caption"><span class="dfd-flow-count">Step 3 of 3</span>Compression shrinks storage and the amount of data each query reads. ENCODE AUTO is the default.</p>
+<pre class="dfd-flow-example"><code>SELECT &quot;column&quot;, encoding FROM pg_table_def WHERE tablename = &#x27;sales&#x27;;</code></pre>
+</div></div>
+</section>
 <section class="section" data-dfd-reveal><h2>Practice</h2>
 <p>Create one table with AUTO for distribution, sort, and encoding. Write one sentence that says which column you would switch to KEY if the automatic choice proved wrong, and why that column is not a constant.</p>
 <p><button type="button" data-dfd-complete>Mark lesson complete</button></p><p data-dfd-complete-status></p>
@@ -134,7 +155,6 @@ ENCODE AUTO;</code></pre></div>
     </div>
 
     <script src="../js/code-copy.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="../js/supabase-config.js"></script>
     <script src="../js/supabase-auth.js"></script>
     <script src="../js/paywall.js"></script>

@@ -3,6 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <!-- dfd-seo:start -->
+    <meta name="description" content="State, backends, and locking | Terraform and OpenTofu. State maps your config to real objects.">
+    <link rel="canonical" href="https://datafordummies.in/terraform_course/state-backends.html">
+    <meta property="og:title" content="State, backends, and locking | Terraform and OpenTofu | Data For Dummies">
+    <meta property="og:description" content="State, backends, and locking | Terraform and OpenTofu. State maps your config to real objects.">
+    <meta property="og:url" content="https://datafordummies.in/terraform_course/state-backends.html">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="https://datafordummies.in/logo.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <!-- dfd-seo:end -->
     <title>State, backends, and locking | Terraform and OpenTofu | Data For Dummies</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
@@ -70,68 +80,62 @@
 </tbody>
 </table>
 </section>
-        <section class="section dfd-diagram" data-dfd-diagram data-dfd-reveal>
-            <h2>One state, one writer</h2>
-            <div data-dfd-diagram-panel="cfg">
-<svg class="dfd-responsive" viewBox="0 0 640 148" role="img" aria-label="Config highlighted">
-<rect class="track-drift" x="16" y="36" width="188" height="72" rx="12" fill="#a78bfa">
-</rect>
-<text x="110" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#ffffff">Config</text>
-<path d="M204 72 H224" stroke="#64748b" stroke-width="2" fill="none">
-</path>
-<rect x="224" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
-</rect>
-<text x="318" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">State</text>
-<path d="M412 72 H432" stroke="#64748b" stroke-width="2" fill="none">
-</path>
-<rect x="432" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
-</rect>
-<text x="526" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">Lock</text>
-</svg>
-<p>Config is what you want. It is not a record of what exists.</p>
+        <section class="section dfd-diagram dfd-flow" data-dfd-diagram data-dfd-flow data-dfd-reveal>
+<h2>One state, one writer</h2>
+<div class="dfd-diagram-controls dfd-flow-controls" role="group" aria-label="One state, one writer: steps">
+<button type="button" data-dfd-diagram-step="step1" aria-pressed="true"><span class="dfd-flow-num" aria-hidden="true">1</span>Config</button>
+<button type="button" data-dfd-diagram-step="step2" aria-pressed="false"><span class="dfd-flow-num" aria-hidden="true">2</span>State</button>
+<button type="button" data-dfd-diagram-step="step3" aria-pressed="false"><span class="dfd-flow-num" aria-hidden="true">3</span>Lock</button>
 </div>
-<div data-dfd-diagram-panel="state" hidden>
-<svg class="dfd-responsive" viewBox="0 0 640 148" role="img" aria-label="State highlighted">
-<rect x="16" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
-</rect>
-<text x="110" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">Config</text>
-<path d="M204 72 H224" stroke="#64748b" stroke-width="2" fill="none">
-</path>
-<rect class="track-drift" x="224" y="36" width="188" height="72" rx="12" fill="#a78bfa">
-</rect>
-<text x="318" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#ffffff">State</text>
-<path d="M412 72 H432" stroke="#64748b" stroke-width="2" fill="none">
-</path>
-<rect x="432" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
-</rect>
-<text x="526" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">Lock</text>
-</svg>
-<p>State records the ids. Lose it and the next plan looks like everything is new.</p>
-</div>
-<div data-dfd-diagram-panel="lock" hidden>
-<svg class="dfd-responsive" viewBox="0 0 640 148" role="img" aria-label="Lock highlighted">
-<rect x="16" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
-</rect>
-<text x="110" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">Config</text>
-<path d="M204 72 H224" stroke="#64748b" stroke-width="2" fill="none">
-</path>
-<rect x="224" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
-</rect>
-<text x="318" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">State</text>
-<path d="M412 72 H432" stroke="#64748b" stroke-width="2" fill="none">
-</path>
-<rect class="track-drift" x="432" y="36" width="188" height="72" rx="12" fill="#a78bfa">
-</rect>
-<text x="526" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#ffffff">Lock</text>
-</svg>
-<p>The lock stops a second apply. The lock&#x27;s storage depends on version and backend.</p>
-</div>
-            <div class="dfd-diagram-controls">
-                <button type="button" data-dfd-diagram-step="cfg" aria-pressed="true">Config</button>
-<button type="button" data-dfd-diagram-step="state" aria-pressed="false">State</button>
-<button type="button" data-dfd-diagram-step="lock" aria-pressed="false">Lock</button>
-            </div>
-        </section>
+<div class="dfd-flow-panel" data-dfd-diagram-panel="step1">
+<ol class="dfd-flow-track" aria-label="Step 1: Config">
+<li class="dfd-flow-node is-active" aria-current="step"><span class="dfd-flow-label">Config</span></li>
+<li class="dfd-flow-node"><span class="dfd-flow-label">State</span></li>
+<li class="dfd-flow-node"><span class="dfd-flow-label">Lock</span></li>
+</ol>
+<div class="dfd-flow-explain">
+<p class="dfd-flow-caption"><span class="dfd-flow-count">Step 1 of 3</span>State
+
+
+
+
+Lock
+
+Config is what you want. It is not a record of what exists.</p>
+</div></div>
+<div class="dfd-flow-panel" data-dfd-diagram-panel="step2" hidden>
+<ol class="dfd-flow-track" aria-label="Step 2: State">
+<li class="dfd-flow-node"><span class="dfd-flow-label">Config</span></li>
+<li class="dfd-flow-node is-active" aria-current="step"><span class="dfd-flow-label">State</span></li>
+<li class="dfd-flow-node"><span class="dfd-flow-label">Lock</span></li>
+</ol>
+<div class="dfd-flow-explain">
+<p class="dfd-flow-caption"><span class="dfd-flow-count">Step 2 of 3</span>State
+
+
+
+
+Lock
+
+State records the ids. Lose it and the next plan looks like everything is new.</p>
+</div></div>
+<div class="dfd-flow-panel" data-dfd-diagram-panel="step3" hidden>
+<ol class="dfd-flow-track" aria-label="Step 3: Lock">
+<li class="dfd-flow-node"><span class="dfd-flow-label">Config</span></li>
+<li class="dfd-flow-node"><span class="dfd-flow-label">State</span></li>
+<li class="dfd-flow-node is-active" aria-current="step"><span class="dfd-flow-label">Lock</span></li>
+</ol>
+<div class="dfd-flow-explain">
+<p class="dfd-flow-caption"><span class="dfd-flow-count">Step 3 of 3</span>State
+
+
+
+
+Lock
+
+The lock stops a second apply. The lock&#x27;s storage depends on version and backend.</p>
+</div></div>
+</section>
         <section class="section" id="lab" data-dfd-reveal>
             <h2>Lab: find the local state file and do not commit it</h2>
             <p>From the previous lab directory, list the state file after a plan or apply. Add it to a local ignore file if you use git.</p>
@@ -217,8 +221,6 @@ printf &#x27;%s\n&#x27; &#x27;.terraform/&#x27; &#x27;*.tfstate&#x27; &#x27;*.tf
     </div>
 
     <script src="../js/code-copy.js">
-</script>
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2">
 </script>
     <script src="../js/supabase-config.js">
 </script>

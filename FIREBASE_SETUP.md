@@ -1,3 +1,9 @@
+# Firebase — retired
+
+The homepage no longer loads Firebase. Visit notes that stay in the browser use the `fkti_analytics` localStorage key. Do not add the Firebase SDK back. Follow `ARCHITECTURE.md`.
+
+---
+
 # Firebase Setup for Centralized Analytics
 
 ## Why Firebase?

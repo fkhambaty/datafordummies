@@ -3,6 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <!-- dfd-seo:start -->
+    <meta name="description" content="Meet Kubernetes | Kubernetes. Kubernetes runs containers.">
+    <link rel="canonical" href="https://datafordummies.in/kubernetes_course/meet-kubernetes.html">
+    <meta property="og:title" content="Meet Kubernetes | Kubernetes | Data For Dummies">
+    <meta property="og:description" content="Meet Kubernetes | Kubernetes. Kubernetes runs containers.">
+    <meta property="og:url" content="https://datafordummies.in/kubernetes_course/meet-kubernetes.html">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="https://datafordummies.in/logo.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <!-- dfd-seo:end -->
     <title>Meet Kubernetes | Kubernetes | Data For Dummies</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
@@ -74,68 +84,62 @@
 <p>The Kubernetes project publishes a new minor release about every four months. A minor version branch is maintained for about 14 months. Patch releases land on that branch.</p>
 <p>This course does not name one patch as the version you must install. <code>kubectl version</code> and your cloud&#x27;s version calendar are the numbers that matter. A tutorial that says &quot;install 1.xx&quot; without a date is already drifting.</p>
 </section>
-        <section class="section dfd-diagram" data-dfd-diagram data-dfd-reveal>
-            <h2>Follow one request</h2>
-            <div data-dfd-diagram-panel="ask">
-<svg class="dfd-responsive" viewBox="0 0 640 148" role="img" aria-label="kubectl highlighted as the client">
-<rect class="track-drift" x="16" y="36" width="188" height="72" rx="12" fill="#5b8def">
-</rect>
-<text x="110" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#ffffff">kubectl</text>
-<path d="M204 72 H224" stroke="#64748b" stroke-width="2" fill="none">
-</path>
-<rect x="224" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
-</rect>
-<text x="318" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">API server</text>
-<path d="M412 72 H432" stroke="#64748b" stroke-width="2" fill="none">
-</path>
-<rect x="432" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
-</rect>
-<text x="526" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">Node</text>
-</svg>
-<p>kubectl sends the object to the API server. It does not start the container itself.</p>
+        <section class="section dfd-diagram dfd-flow" data-dfd-diagram data-dfd-flow data-dfd-reveal>
+<h2>Follow one request</h2>
+<div class="dfd-diagram-controls dfd-flow-controls" role="group" aria-label="Follow one request: steps">
+<button type="button" data-dfd-diagram-step="step1" aria-pressed="true"><span class="dfd-flow-num" aria-hidden="true">1</span>You ask</button>
+<button type="button" data-dfd-diagram-step="step2" aria-pressed="false"><span class="dfd-flow-num" aria-hidden="true">2</span>API stores</button>
+<button type="button" data-dfd-diagram-step="step3" aria-pressed="false"><span class="dfd-flow-num" aria-hidden="true">3</span>Node runs</button>
 </div>
-<div data-dfd-diagram-panel="store" hidden>
-<svg class="dfd-responsive" viewBox="0 0 640 148" role="img" aria-label="API server highlighted">
-<rect x="16" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
-</rect>
-<text x="110" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">kubectl</text>
-<path d="M204 72 H224" stroke="#64748b" stroke-width="2" fill="none">
-</path>
-<rect class="track-drift" x="224" y="36" width="188" height="72" rx="12" fill="#5b8def">
-</rect>
-<text x="318" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#ffffff">API server</text>
-<path d="M412 72 H432" stroke="#64748b" stroke-width="2" fill="none">
-</path>
-<rect x="432" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
-</rect>
-<text x="526" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">Node</text>
-</svg>
-<p>The API server checks the object and stores it. Controllers and the scheduler watch that store.</p>
-</div>
-<div data-dfd-diagram-panel="run" hidden>
-<svg class="dfd-responsive" viewBox="0 0 640 148" role="img" aria-label="Node highlighted">
-<rect x="16" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
-</rect>
-<text x="110" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">kubectl</text>
-<path d="M204 72 H224" stroke="#64748b" stroke-width="2" fill="none">
-</path>
-<rect x="224" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
-</rect>
-<text x="318" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">API server</text>
-<path d="M412 72 H432" stroke="#64748b" stroke-width="2" fill="none">
-</path>
-<rect class="track-drift" x="432" y="36" width="188" height="72" rx="12" fill="#5b8def">
-</rect>
-<text x="526" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#ffffff">Node</text>
-</svg>
-<p>A kubelet on a node sees the Pod and asks the container runtime to start it.</p>
-</div>
-            <div class="dfd-diagram-controls">
-                <button type="button" data-dfd-diagram-step="ask" aria-pressed="true">You ask</button>
-<button type="button" data-dfd-diagram-step="store" aria-pressed="false">API stores</button>
-<button type="button" data-dfd-diagram-step="run" aria-pressed="false">Node runs</button>
-            </div>
-        </section>
+<div class="dfd-flow-panel" data-dfd-diagram-panel="step1">
+<ol class="dfd-flow-track" aria-label="Step 1: You ask">
+<li class="dfd-flow-node is-active" aria-current="step"><span class="dfd-flow-label">kubectl</span></li>
+<li class="dfd-flow-node"><span class="dfd-flow-label">API server</span></li>
+<li class="dfd-flow-node"><span class="dfd-flow-label">Node</span></li>
+</ol>
+<div class="dfd-flow-explain">
+<p class="dfd-flow-caption"><span class="dfd-flow-count">Step 1 of 3</span>API server
+
+
+
+
+Node
+
+kubectl sends the object to the API server. It does not start the container itself.</p>
+</div></div>
+<div class="dfd-flow-panel" data-dfd-diagram-panel="step2" hidden>
+<ol class="dfd-flow-track" aria-label="Step 2: API stores">
+<li class="dfd-flow-node"><span class="dfd-flow-label">kubectl</span></li>
+<li class="dfd-flow-node is-active" aria-current="step"><span class="dfd-flow-label">API server</span></li>
+<li class="dfd-flow-node"><span class="dfd-flow-label">Node</span></li>
+</ol>
+<div class="dfd-flow-explain">
+<p class="dfd-flow-caption"><span class="dfd-flow-count">Step 2 of 3</span>API server
+
+
+
+
+Node
+
+The API server checks the object and stores it. Controllers and the scheduler watch that store.</p>
+</div></div>
+<div class="dfd-flow-panel" data-dfd-diagram-panel="step3" hidden>
+<ol class="dfd-flow-track" aria-label="Step 3: Node runs">
+<li class="dfd-flow-node"><span class="dfd-flow-label">kubectl</span></li>
+<li class="dfd-flow-node"><span class="dfd-flow-label">API server</span></li>
+<li class="dfd-flow-node is-active" aria-current="step"><span class="dfd-flow-label">Node</span></li>
+</ol>
+<div class="dfd-flow-explain">
+<p class="dfd-flow-caption"><span class="dfd-flow-count">Step 3 of 3</span>API server
+
+
+
+
+Node
+
+A kubelet on a node sees the Pod and asks the container runtime to start it.</p>
+</div></div>
+</section>
         <section class="section" id="lab" data-dfd-reveal>
             <h2>Lab: read the words before you install</h2>
             <p>You do not need a cluster yet. Say which sentence is about a Pod and which is about a node.</p>
@@ -221,8 +225,6 @@ Control plane: the API and the decision makers. Not where your web server proces
     </div>
 
     <script src="../js/code-copy.js">
-</script>
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2">
 </script>
     <script src="../js/supabase-config.js">
 </script>

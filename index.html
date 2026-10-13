@@ -3,55 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>Data For Dummies | Data & Analytics Learning</title>
-    <meta name="description" content="Learn SQL, Python, data engineering and analytics through plain-language lessons, practical examples and guided projects. Start free and go Pro when ready.">
-    <meta name="keywords" content="data engineering, python, sql, airflow, dbt, data science, learn data, data for dummies, pro courses">
-    <meta property="og:title" content="Data For Dummies — Data & Analytics Learning">
-    <meta property="og:description" content="Master data engineering tools from basic SQL to building LLMs. Start for free; unlock advanced courses and projects with Pro.">
+    <!-- dfd-seo:start -->
+    <meta name="description" content="Data For Dummies | Data &amp; Analytics Learning. We simplify the complex, master the essential, and skip the jargon.">
+    <link rel="canonical" href="https://datafordummies.in/">
+    <meta property="og:title" content="Data For Dummies | Data &amp; Analytics Learning">
+    <meta property="og:description" content="Data For Dummies | Data &amp; Analytics Learning. We simplify the complex, master the essential, and skip the jargon.">
+    <meta property="og:url" content="https://datafordummies.in/">
     <meta property="og:type" content="website">
-    <meta property="og:url" content="https://datafordummies.in">
     <meta property="og:image" content="https://datafordummies.in/logo.png">
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Data For Dummies — Data & Analytics Learning">
-    <meta name="twitter:description" content="Learn SQL, Python, DBT and more. Start learning for free. Advanced courses and premium projects available with Pro.">
-    <link rel="canonical" href="https://datafordummies.in">
+
+    <script type="application/ld+json" data-dfd-structured="1">{"@context": "https://schema.org", "@type": "Organization", "name": "Data For Dummies", "url": "https://datafordummies.in/", "email": "fktiindia@gmail.com", "sameAs": ["https://www.youtube.com/@fakhruddinkhambaty", "https://github.com/fkhambaty/datafordummies"]}</script>
+    <!-- dfd-seo:end -->
+    <title>Data For Dummies | Data & Analytics Learning</title>
+    <meta name="keywords" content="data engineering, python, sql, airflow, dbt, data science, learn data, data for dummies, pro courses">
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Nunito:wght@400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/fkti-light-theme.css">
     <link rel="stylesheet" href="css/hub-styles.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <link rel="stylesheet" href="styles/ui-upgrade.css">
     
-    <!-- Firebase SDK for Centralized Analytics -->
-    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
-    <script>
-        // Firebase configuration - REPLACE WITH YOUR FIREBASE CONFIG
-        // Get this from: Firebase Console > Project Settings > General > Your apps > Web app
-        // See FIREBASE_SETUP.md for detailed instructions
-        const firebaseConfig = {
-            apiKey: "AIzaSyDummyKeyReplaceWithYourOwn",
-            authDomain: "fkti-analytics.firebaseapp.com",
-            projectId: "fkti-analytics",
-            storageBucket: "fkti-analytics.appspot.com",
-            messagingSenderId: "123456789",
-            appId: "1:123456789:web:abcdef"
-        };
-        
-        // Initialize Firebase (only if config is valid)
-        if (firebaseConfig.apiKey && firebaseConfig.apiKey !== "AIzaSyDummyKeyReplaceWithYourOwn") {
-            try {
-                if (typeof firebase !== 'undefined') {
-                    firebase.initializeApp(firebaseConfig);
-                    window.fktiFirestore = firebase.firestore();
-                    console.log('✅ Firebase initialized for centralized analytics');
-                }
-            } catch (e) {
-                console.log('⚠️ Firebase initialization error:', e);
-            }
-        } else {
-            console.log('⚠️ Firebase not configured - using localStorage only. See FIREBASE_SETUP.md');
-        }
-    </script>
+    <!-- Visit notes stay in localStorage under fkti_analytics. Firebase is not loaded. -->
     <style>
         /* Home stage styles live in styles/ui-upgrade.css */
         .hero-logo-block { margin: 0; perspective: 900px; }
@@ -525,6 +497,13 @@
         <div class="footer-bottom">
             <p>&copy; 2025 Data For Dummies &middot; Learning notes for everyone &middot; Start free, unlock more with Pro &middot; The best way to learn is to teach.</p>
         </div>
+    
+        <nav class="dfd-legal" aria-label="Policies">
+            <a href="privacy.html">Privacy</a>
+            <a href="terms.html">Terms</a>
+            <a href="cancellation.html">Cancellation</a>
+            <a href="refunds.html">Refunds</a>
+        </nav>
     </footer>
 
     <!-- Chat Support Modal -->
@@ -826,8 +805,6 @@
             return false;
         }
     </script>
-
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="js/supabase-config.js"></script>
     <script src="js/supabase-auth.js"></script>
     <script src="js/auth-guard.js"></script>
@@ -1171,92 +1148,20 @@
             saveToCloud(analytics);
         })();
 
-        // Save to cloud - Central storage on internet using Firebase Firestore
-        // This ensures data is synced across all devices (laptop, mobile, different networks)
         async function saveToCloud(data) {
             try {
                 data.lastUpdated = new Date().toISOString();
-                data.deviceId = navigator.userAgent + '_' + (screen.width + screen.height);
-                
-                // Store locally as backup
                 localStorage.setItem('fkti_analytics', JSON.stringify(data));
-                
-                // Save to Firebase Firestore (centralized storage)
-                if (window.fktiFirestore && typeof firebase !== 'undefined') {
-                    try {
-                        const db = window.fktiFirestore;
-                        
-                        // Get existing data from Firestore
-                        const analyticsRef = db.collection('analytics').doc('main');
-                        const existingDoc = await analyticsRef.get();
-                        const existingData = existingDoc.exists ? existingDoc.data() : {};
-                        
-                        // Merge data intelligently
-                        const mergedData = {
-                            totalVisits: Math.max(existingData.totalVisits || 0, data.totalVisits || 0),
-                            pageViews: Math.max(existingData.pageViews || 0, data.pageViews || 0),
-                            uniqueVisitors: [...new Set([...(existingData.uniqueVisitors || []), ...(data.uniqueVisitors || [])])],
-                            dailyStats: { ...(existingData.dailyStats || {}), ...(data.dailyStats || {}) },
-                            recentVisits: [...(data.recentVisits || []), ...(existingData.recentVisits || [])]
-                                .sort((a, b) => {
-                                    const timeA = a.time || a.timestamp || '';
-                                    const timeB = b.time || b.timestamp || '';
-                                    return timeB.localeCompare(timeA);
-                                })
-                                .slice(0, 20),
-                            courseCounts: { ...(existingData.courseCounts || {}), ...(data.courseCounts || {}) },
-                            lastUpdated: firebase.firestore.FieldValue.serverTimestamp()
-                        };
-                        
-                        // Save merged data to Firestore
-                        await analyticsRef.set(mergedData, { merge: true });
-                        console.log('✅ Analytics saved to Firebase (centralized storage)');
-                        
-                        // Update local storage with merged data
-                        localStorage.setItem('fkti_analytics', JSON.stringify({
-                            ...mergedData,
-                            lastUpdated: new Date().toISOString() // Convert timestamp for localStorage
-                        }));
-                    } catch (firebaseError) {
-                        console.log('⚠️ Firebase save failed, using localStorage:', firebaseError.message);
-                    }
-                } else {
-                    console.log('⚠️ Firebase not configured - using localStorage only. See FIREBASE_SETUP.md');
-                }
             } catch (e) {
                 console.log('Analytics save error:', e);
             }
         }
 
-        // Load analytics from central storage (Firebase Firestore)
         async function loadAnalyticsFromCloud() {
             try {
-                // Try to load from Firebase Firestore first
-                if (window.fktiFirestore && typeof firebase !== 'undefined') {
-                    try {
-                        const db = window.fktiFirestore;
-                        const analyticsRef = db.collection('analytics').doc('main');
-                        const docSnap = await analyticsRef.get();
-                        
-                        if (docSnap.exists) {
-                            const cloudData = docSnap.data();
-                            // Merge with local data
-                            const localData = JSON.parse(localStorage.getItem('fkti_analytics') || '{}');
-                            const merged = mergeAnalytics(localData, cloudData);
-                            localStorage.setItem('fkti_analytics', JSON.stringify(merged));
-                            console.log('✅ Analytics loaded from Firebase (centralized storage)');
-                            return merged;
-                        }
-                    } catch (firebaseError) {
-                        console.log('⚠️ Firebase load failed, using localStorage:', firebaseError.message);
-                    }
-                }
-                
-                // Fallback to localStorage
                 return JSON.parse(localStorage.getItem('fkti_analytics') || '{}');
             } catch (e) {
-                console.log('Cloud load failed, using local:', e);
-                return JSON.parse(localStorage.getItem('fkti_analytics') || '{}');
+                return {};
             }
         }
         

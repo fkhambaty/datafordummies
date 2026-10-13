@@ -3,6 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <!-- dfd-seo:start -->
+    <meta name="description" content="SQL for analytics | Snowflake course. Snowflake SQL is familiar SELECT, plus first-class semi-structured data.">
+    <link rel="canonical" href="https://datafordummies.in/snowflake_course/sql-analytics.html">
+    <meta property="og:title" content="SQL for analytics | Snowflake course | Data For Dummies">
+    <meta property="og:description" content="SQL for analytics | Snowflake course. Snowflake SQL is familiar SELECT, plus first-class semi-structured data.">
+    <meta property="og:url" content="https://datafordummies.in/snowflake_course/sql-analytics.html">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="https://datafordummies.in/logo.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <!-- dfd-seo:end -->
     <title>SQL for analytics | Snowflake course | Data For Dummies</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
@@ -67,43 +77,48 @@ LATERAL FLATTEN(input =&gt; raw:lines) line;</code>
 <p>After a query, open its profile in Snowsight. Look at partitions scanned against partitions total, bytes spilled, and whether the result came from cache. A warehouse cache (local disk on the compute cluster) helps a repeated scan. A result cache can skip the warehouse entirely when Snowflake still considers the underlying data unchanged.</p>
 <p>If most partitions are pruned, a larger warehouse often wastes credits. If the profile shows a huge scan and a long operator, then a larger size is the experiment. Snowflake's own guidance: per-second billing means you can try a larger size and suspend it, then compare elapsed time, not just the size label.</p>
 </section>
-        <section class="section dfd-diagram" data-dfd-diagram data-dfd-reveal>
-<h2>See it move</h2>
-<div data-dfd-diagram-panel="one">
-<svg class="dfd-responsive" viewBox="0 0 360 120" role="img" aria-label="SQL filter on typed columns">
-<rect class="sf-drift" x="16" y="36" width="70" height="48" rx="8" fill="#bae6fd">
-</rect>
-<rect x="110" y="28" width="140" height="64" rx="8" fill="#0284c7">
-</rect>
-<rect x="274" y="36" width="70" height="48" rx="8" fill="#e0f2fe" stroke="#0369a1">
-</rect>
-</svg>
+        <section class="section dfd-diagram dfd-flow" data-dfd-diagram data-dfd-flow data-dfd-reveal>
+<h2>From raw rows to a fast answer</h2>
+<p class="dfd-flow-intro">Filter early, open nested JSON into rows, then let the query profile tell you what was slow.</p>
+<div class="dfd-diagram-controls dfd-flow-controls" role="group" aria-label="From raw rows to a fast answer: steps">
+<button type="button" data-dfd-diagram-step="step1" aria-pressed="true"><span class="dfd-flow-num" aria-hidden="true">1</span>Filter rows</button>
+<button type="button" data-dfd-diagram-step="step2" aria-pressed="false"><span class="dfd-flow-num" aria-hidden="true">2</span>Open the array</button>
+<button type="button" data-dfd-diagram-step="step3" aria-pressed="false"><span class="dfd-flow-num" aria-hidden="true">3</span>Read the profile</button>
 </div>
-<div data-dfd-diagram-panel="two" hidden>
-<svg class="dfd-responsive" viewBox="0 0 360 120" role="img" aria-label="FLATTEN turning an array into rows">
-<rect x="16" y="36" width="70" height="48" rx="8" fill="#e0f2fe">
-</rect>
-<rect class="sf-drift" x="110" y="28" width="140" height="64" rx="8" fill="#0369a1">
-</rect>
-<rect x="274" y="36" width="70" height="48" rx="8" fill="#e0f2fe" stroke="#0369a1">
-</rect>
-</svg>
-</div>
-<div data-dfd-diagram-panel="three" hidden>
-<svg class="dfd-responsive" viewBox="0 0 360 120" role="img" aria-label="Query profile after the statement">
-<rect x="16" y="36" width="70" height="48" rx="8" fill="#e0f2fe">
-</rect>
-<rect x="110" y="28" width="140" height="64" rx="8" fill="#bae6fd">
-</rect>
-<rect class="sf-drift" x="274" y="36" width="70" height="48" rx="8" fill="#0ea5e9">
-</rect>
-</svg>
-</div>
-<div class="dfd-diagram-controls">
-<button type="button" data-dfd-diagram-step="one" aria-pressed="true">Filter rows</button>
-<button type="button" data-dfd-diagram-step="two" aria-pressed="false">Open the array</button>
-<button type="button" data-dfd-diagram-step="three" aria-pressed="false">Read the profile</button>
-</div>
+<div class="dfd-flow-panel" data-dfd-diagram-panel="step1">
+<ol class="dfd-flow-track" aria-label="Step 1: Filter rows">
+<li class="dfd-flow-node is-active" aria-current="step"><span class="dfd-flow-label">orders table</span><span class="dfd-flow-role">Typed columns + a JSON items column</span></li>
+<li class="dfd-flow-node is-active is-fed" aria-current="step"><span class="dfd-flow-label">Your query</span><span class="dfd-flow-role">WHERE, FLATTEN, GROUP BY</span></li>
+<li class="dfd-flow-node"><span class="dfd-flow-label">Result</span><span class="dfd-flow-role">Rows you can chart</span></li>
+<li class="dfd-flow-node"><span class="dfd-flow-label">Query profile</span><span class="dfd-flow-role">Where the time went</span></li>
+</ol>
+<div class="dfd-flow-explain">
+<p class="dfd-flow-caption"><span class="dfd-flow-count">Step 1 of 3</span>A WHERE clause on a typed column such as order_date lets Snowflake skip micro-partitions that cannot match, so less data is read.</p>
+<pre class="dfd-flow-example"><code>SELECT * FROM orders WHERE order_date &gt;= &#x27;2026-10-01&#x27;;</code></pre>
+</div></div>
+<div class="dfd-flow-panel" data-dfd-diagram-panel="step2" hidden>
+<ol class="dfd-flow-track" aria-label="Step 2: Open the array">
+<li class="dfd-flow-node"><span class="dfd-flow-label">orders table</span><span class="dfd-flow-role">Typed columns + a JSON items column</span></li>
+<li class="dfd-flow-node is-active" aria-current="step"><span class="dfd-flow-label">Your query</span><span class="dfd-flow-role">WHERE, FLATTEN, GROUP BY</span></li>
+<li class="dfd-flow-node is-active is-fed" aria-current="step"><span class="dfd-flow-label">Result</span><span class="dfd-flow-role">Rows you can chart</span></li>
+<li class="dfd-flow-node"><span class="dfd-flow-label">Query profile</span><span class="dfd-flow-role">Where the time went</span></li>
+</ol>
+<div class="dfd-flow-explain">
+<p class="dfd-flow-caption"><span class="dfd-flow-count">Step 2 of 3</span>LATERAL FLATTEN turns a JSON array into one row per element, so ordinary SQL can count and group the items inside each order.</p>
+<pre class="dfd-flow-example"><code>SELECT o.id, i.value:sku::STRING AS sku
+FROM orders o, LATERAL FLATTEN(input =&gt; o.items) i;</code></pre>
+</div></div>
+<div class="dfd-flow-panel" data-dfd-diagram-panel="step3" hidden>
+<ol class="dfd-flow-track" aria-label="Step 3: Read the profile">
+<li class="dfd-flow-node"><span class="dfd-flow-label">orders table</span><span class="dfd-flow-role">Typed columns + a JSON items column</span></li>
+<li class="dfd-flow-node"><span class="dfd-flow-label">Your query</span><span class="dfd-flow-role">WHERE, FLATTEN, GROUP BY</span></li>
+<li class="dfd-flow-node"><span class="dfd-flow-label">Result</span><span class="dfd-flow-role">Rows you can chart</span></li>
+<li class="dfd-flow-node is-active" aria-current="step"><span class="dfd-flow-label">Query profile</span><span class="dfd-flow-role">Where the time went</span></li>
+</ol>
+<div class="dfd-flow-explain">
+<p class="dfd-flow-caption"><span class="dfd-flow-count">Step 3 of 3</span>The query profile shows partitions scanned against the total, any spilling to disk, and the slowest step. Fix that step, not a guess.</p>
+<p class="dfd-flow-example dfd-flow-example-ui">Query History → your query → Query Profile → Partitions scanned</p>
+</div></div>
 </section>
         <section class="section" id="lab" data-dfd-reveal>
             <h2>Lab: a typed table and a JSON array</h2>
@@ -210,8 +225,6 @@ LATERAL FLATTEN(input =&gt; raw:lines) line;</code>
         </nav>
     </div>
     <script src="../js/code-copy.js">
-</script>
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2">
 </script>
     <script src="../js/supabase-config.js">
 </script>

@@ -3,6 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <!-- dfd-seo:start -->
+    <meta name="description" content="Redshift setup. Create a Serverless workgroup or an RA3 cluster, then connect without leaving the endpoint open to the world.">
+    <link rel="canonical" href="https://datafordummies.in/redshift_course/setup.html">
+    <meta property="og:title" content="Redshift setup | Data For Dummies">
+    <meta property="og:description" content="Redshift setup. Create a Serverless workgroup or an RA3 cluster, then connect without leaving the endpoint open to the world.">
+    <meta property="og:url" content="https://datafordummies.in/redshift_course/setup.html">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="https://datafordummies.in/logo.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <!-- dfd-seo:end -->
     <title>Redshift setup | Data For Dummies</title>
     <link rel="stylesheet" href="styles.css">
     
@@ -47,34 +57,45 @@
 <div class="code-block"><pre><code>psql &quot;host=your-workgroup.account.region.redshift-serverless.amazonaws.com port=5439 dbname=dev user=admin sslmode=require&quot;</code></pre></div>
 <div class="important-box"><h4>Turn it off when the lesson ends</h4><p>A provisioned cluster bills while it exists. Pause or delete it. On Serverless, set a low base and a max, and delete the workgroup if you will not return this week.</p></div>
 </section>
-<section class="section dfd-diagram" data-dfd-diagram data-dfd-reveal><h2>Three gates before SQL</h2><div data-dfd-diagram-panel="one">
-<svg class="dfd-responsive" viewBox="0 0 360 100" role="img" aria-label="Account highlighted">
-<rect x="12" y="26" width="104" height="48" rx="8" fill="#0f172a"></rect>
-<text x="64" y="54" text-anchor="middle" font-size="13" fill="#ffffff" font-family="Nunito,sans-serif">Account</text>
-<rect x="128" y="26" width="104" height="48" rx="8" fill="#e2e8f0"></rect>
-<text x="180" y="54" text-anchor="middle" font-size="13" fill="#0f172a" font-family="Nunito,sans-serif">Network</text>
-<rect x="244" y="26" width="104" height="48" rx="8" fill="#e2e8f0"></rect>
-<text x="296" y="54" text-anchor="middle" font-size="13" fill="#0f172a" font-family="Nunito,sans-serif">Query</text>
-</svg>
-</div><div data-dfd-diagram-panel="two" hidden>
-<svg class="dfd-responsive" viewBox="0 0 360 100" role="img" aria-label="Network highlighted">
-<rect x="12" y="26" width="104" height="48" rx="8" fill="#e2e8f0"></rect>
-<text x="64" y="54" text-anchor="middle" font-size="13" fill="#0f172a" font-family="Nunito,sans-serif">Account</text>
-<rect x="128" y="26" width="104" height="48" rx="8" fill="#0f172a"></rect>
-<text x="180" y="54" text-anchor="middle" font-size="13" fill="#ffffff" font-family="Nunito,sans-serif">Network</text>
-<rect x="244" y="26" width="104" height="48" rx="8" fill="#e2e8f0"></rect>
-<text x="296" y="54" text-anchor="middle" font-size="13" fill="#0f172a" font-family="Nunito,sans-serif">Query</text>
-</svg>
-</div><div data-dfd-diagram-panel="three" hidden>
-<svg class="dfd-responsive" viewBox="0 0 360 100" role="img" aria-label="Query highlighted">
-<rect x="12" y="26" width="104" height="48" rx="8" fill="#e2e8f0"></rect>
-<text x="64" y="54" text-anchor="middle" font-size="13" fill="#0f172a" font-family="Nunito,sans-serif">Account</text>
-<rect x="128" y="26" width="104" height="48" rx="8" fill="#e2e8f0"></rect>
-<text x="180" y="54" text-anchor="middle" font-size="13" fill="#0f172a" font-family="Nunito,sans-serif">Network</text>
-<rect x="244" y="26" width="104" height="48" rx="8" fill="#0f172a"></rect>
-<text x="296" y="54" text-anchor="middle" font-size="13" fill="#ffffff" font-family="Nunito,sans-serif">Query</text>
-</svg>
-</div><div class="dfd-diagram-controls"><button type="button" data-dfd-diagram-step="one" aria-pressed="true">Account</button><button type="button" data-dfd-diagram-step="two" aria-pressed="false">Network</button><button type="button" data-dfd-diagram-step="three" aria-pressed="false">Query</button></div></section>
+<section class="section dfd-diagram dfd-flow" data-dfd-diagram data-dfd-flow data-dfd-reveal>
+<h2>Three gates before SQL</h2>
+<p class="dfd-flow-intro">A connection fails if any one of these is closed.</p>
+<div class="dfd-diagram-controls dfd-flow-controls" role="group" aria-label="Three gates before SQL: steps">
+<button type="button" data-dfd-diagram-step="step1" aria-pressed="true"><span class="dfd-flow-num" aria-hidden="true">1</span>Account</button>
+<button type="button" data-dfd-diagram-step="step2" aria-pressed="false"><span class="dfd-flow-num" aria-hidden="true">2</span>Network</button>
+<button type="button" data-dfd-diagram-step="step3" aria-pressed="false"><span class="dfd-flow-num" aria-hidden="true">3</span>Query</button>
+</div>
+<div class="dfd-flow-panel" data-dfd-diagram-panel="step1">
+<ol class="dfd-flow-track" aria-label="Step 1: Account">
+<li class="dfd-flow-node is-active" aria-current="step"><span class="dfd-flow-label">AWS account and IAM</span><span class="dfd-flow-role">Who may create or connect</span></li>
+<li class="dfd-flow-node"><span class="dfd-flow-label">Network</span><span class="dfd-flow-role">VPC and security group, port 5439</span></li>
+<li class="dfd-flow-node"><span class="dfd-flow-label">Database user</span><span class="dfd-flow-role">Runs the SQL</span></li>
+</ol>
+<div class="dfd-flow-explain">
+<p class="dfd-flow-caption"><span class="dfd-flow-count">Step 1 of 3</span>Your IAM user or role must be allowed to create the cluster or workgroup and to get credentials for it.</p>
+<p class="dfd-flow-example dfd-flow-example-ui">IAM → Policies → AmazonRedshiftFullAccess (lab only)</p>
+</div></div>
+<div class="dfd-flow-panel" data-dfd-diagram-panel="step2" hidden>
+<ol class="dfd-flow-track" aria-label="Step 2: Network">
+<li class="dfd-flow-node is-active" aria-current="step"><span class="dfd-flow-label">AWS account and IAM</span><span class="dfd-flow-role">Who may create or connect</span></li>
+<li class="dfd-flow-node is-active is-fed" aria-current="step"><span class="dfd-flow-label">Network</span><span class="dfd-flow-role">VPC and security group, port 5439</span></li>
+<li class="dfd-flow-node"><span class="dfd-flow-label">Database user</span><span class="dfd-flow-role">Runs the SQL</span></li>
+</ol>
+<div class="dfd-flow-explain">
+<p class="dfd-flow-caption"><span class="dfd-flow-count">Step 2 of 3</span>The security group must allow inbound traffic on port 5439 from your IP. If it doesn&#x27;t, the connection simply times out.</p>
+<p class="dfd-flow-example dfd-flow-example-ui">Security group → Inbound rule → TCP 5439 → My IP</p>
+</div></div>
+<div class="dfd-flow-panel" data-dfd-diagram-panel="step3" hidden>
+<ol class="dfd-flow-track" aria-label="Step 3: Query">
+<li class="dfd-flow-node"><span class="dfd-flow-label">AWS account and IAM</span><span class="dfd-flow-role">Who may create or connect</span></li>
+<li class="dfd-flow-node is-active" aria-current="step"><span class="dfd-flow-label">Network</span><span class="dfd-flow-role">VPC and security group, port 5439</span></li>
+<li class="dfd-flow-node is-active is-fed" aria-current="step"><span class="dfd-flow-label">Database user</span><span class="dfd-flow-role">Runs the SQL</span></li>
+</ol>
+<div class="dfd-flow-explain">
+<p class="dfd-flow-caption"><span class="dfd-flow-count">Step 3 of 3</span>Only then can a database user connect from Query Editor v2 or a SQL client and run a query.</p>
+<pre class="dfd-flow-example"><code>SELECT current_user, version();</code></pre>
+</div></div>
+</section>
 <section class="section" data-dfd-reveal><h2>You are in when this works</h2>
 <p>Run <code>SELECT current_user, current_database();</code> from Query Editor v2. If it hangs, the security group or the route is wrong. If it refuses the password, fix the credential before you change the node type.</p>
 <p><button type="button" data-dfd-complete>Mark lesson complete</button></p><p data-dfd-complete-status></p>
@@ -126,7 +147,6 @@
     </div>
 
     <script src="../js/code-copy.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="../js/supabase-config.js"></script>
     <script src="../js/supabase-auth.js"></script>
     <script src="../js/paywall.js"></script>

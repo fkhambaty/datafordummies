@@ -3,6 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <!-- dfd-seo:start -->
+    <meta name="description" content="Capstone | Kubernetes. Ship a small app on your local cluster, then write the production list you have not turned on yet.">
+    <link rel="canonical" href="https://datafordummies.in/kubernetes_course/capstone.html">
+    <meta property="og:title" content="Capstone | Kubernetes | Data For Dummies">
+    <meta property="og:description" content="Capstone | Kubernetes. Ship a small app on your local cluster, then write the production list you have not turned on yet.">
+    <meta property="og:url" content="https://datafordummies.in/kubernetes_course/capstone.html">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="https://datafordummies.in/logo.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <!-- dfd-seo:end -->
     <title>Capstone | Kubernetes | Data For Dummies</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
@@ -72,68 +82,56 @@
 </tbody>
 </table>
 </section>
-        <section class="section dfd-diagram" data-dfd-diagram data-dfd-reveal>
-            <h2>Lab versus production</h2>
-            <div data-dfd-diagram-panel="lab">
-<svg class="dfd-responsive" viewBox="0 0 640 148" role="img" aria-label="Lab objects highlighted">
-<rect class="track-drift" x="16" y="36" width="188" height="72" rx="12" fill="#5b8def">
-</rect>
-<text x="110" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#ffffff">Deployment</text>
-<path d="M204 72 H224" stroke="#64748b" stroke-width="2" fill="none">
-</path>
-<rect x="224" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
-</rect>
-<text x="318" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">Service</text>
-<path d="M412 72 H432" stroke="#64748b" stroke-width="2" fill="none">
-</path>
-<rect x="432" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
-</rect>
-<text x="526" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">ConfigMap</text>
-</svg>
-<p>These three are enough for the local lab.</p>
+        <section class="section dfd-diagram dfd-flow" data-dfd-diagram data-dfd-flow data-dfd-reveal>
+<h2>Lab versus production</h2>
+<div class="dfd-diagram-controls dfd-flow-controls" role="group" aria-label="Lab versus production: steps">
+<button type="button" data-dfd-diagram-step="step1" aria-pressed="true"><span class="dfd-flow-num" aria-hidden="true">1</span>Lab</button>
+<button type="button" data-dfd-diagram-step="step2" aria-pressed="false"><span class="dfd-flow-num" aria-hidden="true">2</span>Edge</button>
+<button type="button" data-dfd-diagram-step="step3" aria-pressed="false"><span class="dfd-flow-num" aria-hidden="true">3</span>Guards</button>
 </div>
-<div data-dfd-diagram-panel="edge" hidden>
-<svg class="dfd-responsive" viewBox="0 0 640 148" role="img" aria-label="Edge highlighted">
-<rect x="16" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
-</rect>
-<text x="110" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">Gateway</text>
-<path d="M204 72 H224" stroke="#64748b" stroke-width="2" fill="none">
-</path>
-<rect class="track-drift" x="224" y="36" width="188" height="72" rx="12" fill="#5b8def">
-</rect>
-<text x="318" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#ffffff">Controller</text>
-<path d="M412 72 H432" stroke="#64748b" stroke-width="2" fill="none">
-</path>
-<rect x="432" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
-</rect>
-<text x="526" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">DNS</text>
-</svg>
-<p>The public edge needs a controller and a name. The lab skips it on purpose.</p>
-</div>
-<div data-dfd-diagram-panel="guard" hidden>
-<svg class="dfd-responsive" viewBox="0 0 640 148" role="img" aria-label="Guards highlighted">
-<rect x="16" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
-</rect>
-<text x="110" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">RBAC</text>
-<path d="M204 72 H224" stroke="#64748b" stroke-width="2" fill="none">
-</path>
-<rect x="224" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
-</rect>
-<text x="318" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">Policy</text>
-<path d="M412 72 H432" stroke="#64748b" stroke-width="2" fill="none">
-</path>
-<rect class="track-drift" x="432" y="36" width="188" height="72" rx="12" fill="#5b8def">
-</rect>
-<text x="526" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#ffffff">Backup</text>
-</svg>
-<p>RBAC, an enforced network policy, and a backup plan are production work.</p>
-</div>
-            <div class="dfd-diagram-controls">
-                <button type="button" data-dfd-diagram-step="lab" aria-pressed="true">Lab</button>
-<button type="button" data-dfd-diagram-step="edge" aria-pressed="false">Edge</button>
-<button type="button" data-dfd-diagram-step="guard" aria-pressed="false">Guards</button>
-            </div>
-        </section>
+<div class="dfd-flow-panel" data-dfd-diagram-panel="step1">
+<ol class="dfd-flow-track" aria-label="Step 1: Lab">
+<li class="dfd-flow-node is-active" aria-current="step"><span class="dfd-flow-label">Deployment</span></li>
+<li class="dfd-flow-node"><span class="dfd-flow-label">Service</span></li>
+<li class="dfd-flow-node"><span class="dfd-flow-label">ConfigMap</span></li>
+</ol>
+<div class="dfd-flow-explain"><p class="dfd-flow-caption"><span class="dfd-flow-count">Step 1 of 3</span>Service
+
+
+
+
+ConfigMap
+
+These three are enough for the local lab.</p></div></div>
+<div class="dfd-flow-panel" data-dfd-diagram-panel="step2" hidden>
+<ol class="dfd-flow-track" aria-label="Step 2: Edge">
+<li class="dfd-flow-node"><span class="dfd-flow-label">Gateway</span></li>
+<li class="dfd-flow-node is-active" aria-current="step"><span class="dfd-flow-label">Controller</span></li>
+<li class="dfd-flow-node"><span class="dfd-flow-label">DNS</span></li>
+</ol>
+<div class="dfd-flow-explain"><p class="dfd-flow-caption"><span class="dfd-flow-count">Step 2 of 3</span>Controller
+
+
+
+
+DNS
+
+The public edge needs a controller and a name. The lab skips it on purpose.</p></div></div>
+<div class="dfd-flow-panel" data-dfd-diagram-panel="step3" hidden>
+<ol class="dfd-flow-track" aria-label="Step 3: Guards">
+<li class="dfd-flow-node"><span class="dfd-flow-label">RBAC</span></li>
+<li class="dfd-flow-node"><span class="dfd-flow-label">Policy</span></li>
+<li class="dfd-flow-node is-active" aria-current="step"><span class="dfd-flow-label">Backup</span></li>
+</ol>
+<div class="dfd-flow-explain"><p class="dfd-flow-caption"><span class="dfd-flow-count">Step 3 of 3</span>Policy
+
+
+
+
+Backup
+
+RBAC, an enforced network policy, and a backup plan are production work.</p></div></div>
+</section>
         <section class="section" id="lab" data-dfd-reveal>
             <h2>Lab: apply the app, then write the gap list</h2>
             <p>Apply the manifest. Port-forward. Then write five lines: what you would add for a managed cluster, and which lesson in this course covers it.</p>
@@ -260,8 +258,6 @@ kubectl port-forward svc/hello 8080:80</code>
     </div>
 
     <script src="../js/code-copy.js">
-</script>
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2">
 </script>
     <script src="../js/supabase-config.js">
 </script>

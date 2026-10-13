@@ -3,6 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <!-- dfd-seo:start -->
+    <meta name="description" content="Workspaces and environments | Terraform and OpenTofu. A CLI workspace is a separate state name inside one backend.">
+    <link rel="canonical" href="https://datafordummies.in/terraform_course/workspaces.html">
+    <meta property="og:title" content="Workspaces and environments | Terraform and OpenTofu | Data For Dummies">
+    <meta property="og:description" content="Workspaces and environments | Terraform and OpenTofu. A CLI workspace is a separate state name inside one backend.">
+    <meta property="og:url" content="https://datafordummies.in/terraform_course/workspaces.html">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="https://datafordummies.in/logo.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <!-- dfd-seo:end -->
     <title>Workspaces and environments | Terraform and OpenTofu | Data For Dummies</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
@@ -70,68 +80,56 @@
 </tbody>
 </table>
 </section>
-        <section class="section dfd-diagram" data-dfd-diagram data-dfd-reveal>
-            <h2>Same word, two objects</h2>
-            <div data-dfd-diagram-panel="cli">
-<svg class="dfd-responsive" viewBox="0 0 640 148" role="img" aria-label="CLI workspace highlighted">
-<rect class="track-drift" x="16" y="36" width="188" height="72" rx="12" fill="#a78bfa">
-</rect>
-<text x="110" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#ffffff">CLI workspace</text>
-<path d="M204 72 H224" stroke="#64748b" stroke-width="2" fill="none">
-</path>
-<rect x="224" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
-</rect>
-<text x="318" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">One config</text>
-<path d="M412 72 H432" stroke="#64748b" stroke-width="2" fill="none">
-</path>
-<rect x="432" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
-</rect>
-<text x="526" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">Many states</text>
-</svg>
-<p>One configuration, several state names. You select one.</p>
+        <section class="section dfd-diagram dfd-flow" data-dfd-diagram data-dfd-flow data-dfd-reveal>
+<h2>Same word, two objects</h2>
+<div class="dfd-diagram-controls dfd-flow-controls" role="group" aria-label="Same word, two objects: steps">
+<button type="button" data-dfd-diagram-step="step1" aria-pressed="true"><span class="dfd-flow-num" aria-hidden="true">1</span>CLI</button>
+<button type="button" data-dfd-diagram-step="step2" aria-pressed="false"><span class="dfd-flow-num" aria-hidden="true">2</span>HCP</button>
+<button type="button" data-dfd-diagram-step="step3" aria-pressed="false"><span class="dfd-flow-num" aria-hidden="true">3</span>Folders</button>
 </div>
-<div data-dfd-diagram-panel="hcp" hidden>
-<svg class="dfd-responsive" viewBox="0 0 640 148" role="img" aria-label="HCP workspace highlighted">
-<rect x="16" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
-</rect>
-<text x="110" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">HCP workspace</text>
-<path d="M204 72 H224" stroke="#64748b" stroke-width="2" fill="none">
-</path>
-<rect class="track-drift" x="224" y="36" width="188" height="72" rx="12" fill="#a78bfa">
-</rect>
-<text x="318" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#ffffff">Variables</text>
-<path d="M412 72 H432" stroke="#64748b" stroke-width="2" fill="none">
-</path>
-<rect x="432" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
-</rect>
-<text x="526" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">Remote state</text>
-</svg>
-<p>An HCP workspace is a remote environment with its own settings.</p>
-</div>
-<div data-dfd-diagram-panel="dir" hidden>
-<svg class="dfd-responsive" viewBox="0 0 640 148" role="img" aria-label="Separate folders highlighted">
-<rect x="16" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
-</rect>
-<text x="110" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">dev folder</text>
-<path d="M204 72 H224" stroke="#64748b" stroke-width="2" fill="none">
-</path>
-<rect x="224" y="36" width="188" height="72" rx="12" fill="#e0f2fe">
-</rect>
-<text x="318" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#0f172a">prod folder</text>
-<path d="M412 72 H432" stroke="#64748b" stroke-width="2" fill="none">
-</path>
-<rect class="track-drift" x="432" y="36" width="188" height="72" rx="12" fill="#a78bfa">
-</rect>
-<text x="526" y="78" text-anchor="middle" font-size="16" font-family="Nunito, sans-serif" fill="#ffffff">Review</text>
-</svg>
-<p>Separate root modules make the production apply a deliberate directory change.</p>
-</div>
-            <div class="dfd-diagram-controls">
-                <button type="button" data-dfd-diagram-step="cli" aria-pressed="true">CLI</button>
-<button type="button" data-dfd-diagram-step="hcp" aria-pressed="false">HCP</button>
-<button type="button" data-dfd-diagram-step="dir" aria-pressed="false">Folders</button>
-            </div>
-        </section>
+<div class="dfd-flow-panel" data-dfd-diagram-panel="step1">
+<ol class="dfd-flow-track" aria-label="Step 1: CLI">
+<li class="dfd-flow-node is-active" aria-current="step"><span class="dfd-flow-label">CLI workspace</span></li>
+<li class="dfd-flow-node"><span class="dfd-flow-label">One config</span></li>
+<li class="dfd-flow-node"><span class="dfd-flow-label">Many states</span></li>
+</ol>
+<div class="dfd-flow-explain"><p class="dfd-flow-caption"><span class="dfd-flow-count">Step 1 of 3</span>One config
+
+
+
+
+Many states
+
+One configuration, several state names. You select one.</p></div></div>
+<div class="dfd-flow-panel" data-dfd-diagram-panel="step2" hidden>
+<ol class="dfd-flow-track" aria-label="Step 2: HCP">
+<li class="dfd-flow-node"><span class="dfd-flow-label">HCP workspace</span></li>
+<li class="dfd-flow-node is-active" aria-current="step"><span class="dfd-flow-label">Variables</span></li>
+<li class="dfd-flow-node"><span class="dfd-flow-label">Remote state</span></li>
+</ol>
+<div class="dfd-flow-explain"><p class="dfd-flow-caption"><span class="dfd-flow-count">Step 2 of 3</span>Variables
+
+
+
+
+Remote state
+
+An HCP workspace is a remote environment with its own settings.</p></div></div>
+<div class="dfd-flow-panel" data-dfd-diagram-panel="step3" hidden>
+<ol class="dfd-flow-track" aria-label="Step 3: Folders">
+<li class="dfd-flow-node"><span class="dfd-flow-label">dev folder</span></li>
+<li class="dfd-flow-node"><span class="dfd-flow-label">prod folder</span></li>
+<li class="dfd-flow-node is-active" aria-current="step"><span class="dfd-flow-label">Review</span></li>
+</ol>
+<div class="dfd-flow-explain"><p class="dfd-flow-caption"><span class="dfd-flow-count">Step 3 of 3</span>prod folder
+
+
+
+
+Review
+
+Separate root modules make the production apply a deliberate directory change.</p></div></div>
+</section>
         <section class="section" id="lab" data-dfd-reveal>
             <h2>Lab: list CLI workspaces without creating a second cloud</h2>
             <p>From a lab directory that already ran terraform init. Do not select a workspace you do not understand in a directory that has real cloud resources.</p>
@@ -215,8 +213,6 @@
     </div>
 
     <script src="../js/code-copy.js">
-</script>
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2">
 </script>
     <script src="../js/supabase-config.js">
 </script>
