@@ -63,6 +63,11 @@ async function health() {
   if (body.email_ready !== true) {
     failures.push("signup email is not ready. No account was created. Resend domain verification is still required.");
   }
+  if (body.email_sender !== "primary" && body.email_sender !== "fallback") {
+    failures.push(`signup email has no verified sender domain (email_sender=${body.email_sender})`);
+  } else if (body.email_sender === "fallback") {
+    note("health", "warning: datafordummies.in is not verified in Resend; codes are sent from the fallback domain");
+  }
   if (body.payments_configured !== true) {
     failures.push("Razorpay is not configured");
   }

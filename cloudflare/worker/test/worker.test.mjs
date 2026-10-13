@@ -92,6 +92,39 @@ test("health reports email readiness without secrets or a new account", async ()
   assert.equal(sqlite.prepare("SELECT COUNT(*) AS n FROM profiles").get().n, 0);
 });
 
+test("signup falls back to the verified sender when the primary domain is refused", async () => {
+  const { env, sqlite } = fresh();
+  Object.assign(env, {
+    RESEND_API_KEY: "test-key",
+    MAIL_FROM: "Data For Dummies <no-reply@datafordummies.in>",
+    MAIL_FROM_FALLBACK: "Data For Dummies <no-reply@funberrykids.in>",
+  });
+  const senders = [];
+  const original = globalThis.fetch;
+  globalThis.fetch = async (url, init) => {
+    if (String(url).endsWith("/domains")) {
+      return Response.json({ data: [{ name: "funberrykids.in", status: "verified" }] });
+    }
+    const from = JSON.parse(init.body).from;
+    senders.push(from);
+    return new Response("{}", { status: from.includes("datafordummies.in") ? 403 : 200 });
+  };
+  try {
+    const signup = await call(env, "/v1/signup", {
+      method: "POST",
+      body: { email: "new-reader@example.com", password: "password12", full_name: "New Reader" },
+    });
+    assert.equal(signup.status, 201);
+    assert.deepEqual(senders, [env.MAIL_FROM, env.MAIL_FROM_FALLBACK]);
+    assert.equal(sqlite.prepare("SELECT COUNT(*) AS n FROM email_codes").get().n, 1);
+    const health = await call(env, "/v1/health");
+    assert.equal(health.body.email_sender, "fallback");
+    assert.equal(health.body.email_domain_verified, false);
+  } finally {
+    globalThis.fetch = original;
+  }
+});
+
 test("dummy login does not create a payment", async () => {
   const { env, sqlite } = fresh();
   const salt = "0123456789abcdef0123456789abcdef";

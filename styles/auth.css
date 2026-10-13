@@ -26,6 +26,25 @@
     animation: ds-fade-in 0.5s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
+.auth-page:not(.auth-profile-page) {
+    flex-direction: column;
+}
+
+.auth-legal {
+    width: 100%;
+    max-width: 420px;
+    margin-top: var(--ds-space-4);
+}
+
+.auth-legal .dfd-legal {
+    justify-content: center;
+    font-size: 0.85rem;
+}
+
+.auth-legal a {
+    color: var(--ds-text-muted, #64748b);
+}
+
 .auth-card h1 {
     font-size: 1.5rem;
     font-weight: 700;

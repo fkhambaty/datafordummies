@@ -355,7 +355,7 @@ def insert_legal(rel: str, html: str) -> str:
     if "</footer>" in html:
         return html.replace("</footer>", nav + "\n    </footer>", 1)
     if rel.startswith("auth/"):
-        return html.replace("</body>", f"    <p>{nav}\n    </p>\n</body>", 1)
+        return html.replace("</body>", f'    <footer class="auth-legal">{nav}\n    </footer>\n</body>', 1)
     return html
 
 

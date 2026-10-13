@@ -6,6 +6,9 @@ workers_dev = true
 
 [vars]
 MAIL_FROM = "Data For Dummies <no-reply@datafordummies.in>"
+# datafordummies.in is not verified in Resend until its four DNS records exist; this sender keeps signup working meanwhile.
+MAIL_FROM_FALLBACK = "Data For Dummies <no-reply@funberrykids.in>"
+MAIL_REPLY_TO = "fktiindia@gmail.com"
 CHECKOUT_MODE = "hosted"
 RAZORPAY_KEY_ID = "rzp_live_Tn7dYq8sfB9jgp"
 RAZORPAY_PLAN_WEEKLY = "plan_TnFsuVyhaGf5Xi"

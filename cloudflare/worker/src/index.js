@@ -108,16 +108,45 @@ function newCode() {
   return String(value).padStart(6, "0");
 }
 
-async function sendEmail(env, to, subject, text) {
+async function sendFrom(env, from, to, subject, text) {
   const response = await fetch("https://api.resend.com/emails", {
     method: "POST",
     headers: {
       authorization: `Bearer ${env.RESEND_API_KEY}`,
       "content-type": "application/json",
     },
-    body: JSON.stringify({ from: env.MAIL_FROM, to: [to], subject, text }),
+    body: JSON.stringify({ from, to: [to], subject, text, reply_to: env.MAIL_REPLY_TO || undefined }),
   });
+  if (!response.ok) console.log(`resend ${response.status} from ${senderDomain(from)}`);
   return response.ok;
+}
+
+// MAIL_FROM_FALLBACK must be on a Resend-verified domain; it is used only when MAIL_FROM is refused.
+async function sendEmail(env, to, subject, text) {
+  if (await sendFrom(env, env.MAIL_FROM, to, subject, text)) return true;
+  if (!env.MAIL_FROM_FALLBACK || env.MAIL_FROM_FALLBACK === env.MAIL_FROM) return false;
+  return sendFrom(env, env.MAIL_FROM_FALLBACK, to, subject, text);
+}
+
+function senderDomain(from) {
+  const match = String(from || "").match(/@([^>\s]+)/);
+  return match ? match[1].toLowerCase() : "";
+}
+
+async function senderStatus(env) {
+  if (!emailReady(env)) return { email_domain_verified: false, email_sender: "none" };
+  const response = await fetch("https://api.resend.com/domains", {
+    headers: { authorization: `Bearer ${env.RESEND_API_KEY}` },
+  }).catch(() => null);
+  if (!response || !response.ok) return { email_domain_verified: null, email_sender: "unknown" };
+  const verified = new Set(
+    ((await response.json()).data || []).filter((d) => d.status === "verified").map((d) => d.name),
+  );
+  if (verified.has(senderDomain(env.MAIL_FROM))) return { email_domain_verified: true, email_sender: "primary" };
+  if (verified.has(senderDomain(env.MAIL_FROM_FALLBACK))) {
+    return { email_domain_verified: false, email_sender: "fallback" };
+  }
+  return { email_domain_verified: false, email_sender: "none" };
 }
 
 async function issueCode(db, env, email, purpose) {
@@ -516,6 +545,7 @@ export default {
             ok: true,
             service: "datafordummies-api",
             email_ready: emailReady(env),
+            ...(await senderStatus(env)),
             checkout_mode: env.CHECKOUT_MODE || "hosted",
             payments_configured: Boolean(env.RAZORPAY_KEY_ID && env.RAZORPAY_KEY_SECRET),
           },
