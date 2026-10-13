@@ -29,6 +29,25 @@ async function homepage() {
   note("homepage", String(response.status));
 }
 
+async function paymentPolicies() {
+  const paths = [
+    "/pricing.html",
+    "/privacy.html",
+    "/terms.html",
+    "/cancellation.html",
+    "/refunds.html",
+    "/shipping.html",
+    "/contact.html",
+  ];
+  for (const path of paths) {
+    const response = await fetch(site + path);
+    note("payment-policy", `${path} ${response.status}`);
+    if (response.status !== 200) {
+      failures.push(`payment policy ${path} returned ${response.status}`);
+    }
+  }
+}
+
 async function health() {
   const response = await fetch(api + "/v1/health");
   const body = await readJson(response);
@@ -43,6 +62,12 @@ async function health() {
   }
   if (body.email_ready !== true) {
     failures.push("signup email is not ready. No account was created. Resend domain verification is still required.");
+  }
+  if (body.payments_configured !== true) {
+    failures.push("Razorpay is not configured");
+  }
+  if (body.checkout_mode !== "hosted" && body.checkout_mode !== "modal") {
+    failures.push(`unexpected checkout mode ${body.checkout_mode}`);
   }
 }
 
@@ -110,6 +135,7 @@ async function browser() {
 }
 
 await homepage();
+await paymentPolicies();
 await health();
 await dummyLogin();
 await browser();
