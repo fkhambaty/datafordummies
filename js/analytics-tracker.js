@@ -150,11 +150,22 @@
         return /youtube\.com|youtube-nocookie\.com|youtu\.be|player\.vimeo\.com/i.test(src || '');
     }
 
-    function posterButton() {
+    function posterButton(poster) {
         var button = document.createElement('button');
         button.type = 'button';
         button.className = 'home-video-play';
-        button.textContent = 'Play the lesson video';
+        if (poster) {
+            var img = document.createElement('img');
+            img.src = poster;
+            img.alt = '';
+            img.width = 1280;
+            img.height = 720;
+            button.appendChild(img);
+        }
+        var label = document.createElement('span');
+        label.className = 'home-video-play-label';
+        label.textContent = 'Play the lesson video';
+        button.appendChild(label);
         return button;
     }
 
@@ -182,7 +193,7 @@
                 if (!box.getAttribute('data-video-title')) {
                     box.setAttribute('data-video-title', frame.title || 'Lesson video');
                 }
-                box.replaceChildren(posterButton());
+                box.replaceChildren(posterButton(box.getAttribute('data-video-poster')));
             } else {
                 frame.removeAttribute('src');
             }

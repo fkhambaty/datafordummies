@@ -554,7 +554,7 @@ body.page-home .home-stage {
     aspect-ratio: 16 / 9;
     border-radius: 24px;
     overflow: hidden;
-    background: #0f172a url("https://i.ytimg.com/vi/aMUeQKyW51k/maxresdefault.jpg") center / cover no-repeat;
+    background: #0f172a;
     box-shadow: 0 24px 60px rgba(15, 23, 42, 0.18);
 }
 .home-video iframe,
@@ -566,19 +566,41 @@ body.page-home .home-stage {
     border: 0;
 }
 .home-video-play {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+    display: block;
+    padding: 0;
     cursor: pointer;
-    color: transparent;
-    font-size: 0;
-    background: transparent;
+    -webkit-appearance: none;
+    appearance: none;
+    background: none;
+}
+.home-video-play img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+.home-video-play-label {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
 }
 .home-video-play::before {
     content: "";
+    position: absolute;
+    z-index: 1;
+    left: 50%;
+    top: 50%;
     width: 76px;
     height: 54px;
+    margin: -27px 0 0 -38px;
     border-radius: 14px;
     background: #ff0033 url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%23fff' d='M9 7.5v9l8-4.5z'/%3E%3C/svg%3E") center / 34px 34px no-repeat;
     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
