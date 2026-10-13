@@ -524,7 +524,7 @@ body.page-home .home-stage {
     text-align: center;
 }
 .home-intent {
-    margin: 0 auto 16px;
+    margin: 0 auto 20px;
     max-width: 760px;
     padding: 16px 18px;
     text-align: left;
@@ -554,7 +554,7 @@ body.page-home .home-stage {
     aspect-ratio: 16 / 9;
     border-radius: 24px;
     overflow: hidden;
-    background: #0f172a;
+    background: #0f172a url("https://i.ytimg.com/vi/aMUeQKyW51k/maxresdefault.jpg") center / cover no-repeat;
     box-shadow: 0 24px 60px rgba(15, 23, 42, 0.18);
 }
 .home-video iframe,
@@ -570,23 +570,21 @@ body.page-home .home-stage {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 12px;
     cursor: pointer;
-    color: #fff;
-    background:
-        linear-gradient(180deg, rgba(15, 23, 42, 0.2), rgba(15, 23, 42, 0.72)),
-        #1e1b4b;
-    font: inherit;
-    font-size: 1.15rem;
-    font-weight: 800;
+    color: transparent;
+    font-size: 0;
+    background: transparent;
 }
 .home-video-play::before {
     content: "";
-    width: 68px;
-    height: 68px;
-    border-radius: 50%;
-    background: #fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%234f46e5' d='M9 7.5v9l8-4.5z'/%3E%3C/svg%3E") center / 34px 34px no-repeat;
+    width: 76px;
+    height: 54px;
+    border-radius: 14px;
+    background: #ff0033 url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%23fff' d='M9 7.5v9l8-4.5z'/%3E%3C/svg%3E") center / 34px 34px no-repeat;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+    transition: transform 0.2s ease;
 }
+.home-video-play:hover::before { transform: scale(1.08); }
 .home-video-play:focus-visible {
     outline: 3px solid #fff;
     outline-offset: -8px;
