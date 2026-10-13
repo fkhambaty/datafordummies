@@ -316,8 +316,11 @@ function toggleMobileMenu() {
     mobileMenuOpen = !mobileMenuOpen;
 
     if (mobileMenuOpen) {
+        navLinks.classList.add('nav-open');
         navLinks.style.display = 'flex';
         navLinks.style.flexDirection = 'column';
+        navLinks.style.justifyContent = 'flex-start';
+        navLinks.style.alignItems = 'stretch';
         navLinks.style.position = 'absolute';
         navLinks.style.top = 'calc(100% + 6px)';
         navLinks.style.left = '0';
@@ -337,6 +340,7 @@ function toggleMobileMenu() {
         toggleBtn.setAttribute('aria-expanded', 'true');
         toggleBtn.setAttribute('aria-label', 'Close menu');
     } else {
+        navLinks.classList.remove('nav-open');
         navLinks.style.display = 'none';
         toggleBtn.innerHTML = '<i class="fas fa-bars"></i>';
         toggleBtn.setAttribute('aria-expanded', 'false');
@@ -355,6 +359,7 @@ function handleResize() {
     if (!navIsMobile()) {
         const navLinks = document.querySelector('.nav-links');
         if (navLinks) {
+            navLinks.classList.remove('nav-open');
             navLinks.style.cssText = '';
         }
     }

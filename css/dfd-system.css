@@ -396,7 +396,12 @@ body.page-home .home-stage {
         align-items: center;
     }
 
-    .nav-links .nav-dropdown-panel {
+    .nav-links.nav-open {
+        justify-content: flex-start;
+        align-items: stretch;
+    }
+
+    .nav-links.nav-open .nav-dropdown-panel {
         position: static;
         opacity: 1;
         visibility: visible;
@@ -423,6 +428,100 @@ body.page-home .home-stage {
 
 :where(.dfd-legal a) {
     text-underline-offset: 3px;
+}
+
+/* Learn menu stays closed until hover, keyboard focus, or the mobile menu opens.
+   Tool pages do not load hub-styles.css, so this rule has to live here. */
+.nav-dropdown {
+    position: relative;
+    flex: 0 0 auto;
+}
+
+.nav-dropdown-trigger {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    border: 0;
+    background: transparent;
+    color: #475569;
+    font: inherit;
+    font-weight: 600;
+    white-space: nowrap;
+    cursor: pointer;
+}
+
+.top-nav .nav-dropdown-panel,
+.main-nav .nav-dropdown-panel {
+    position: absolute;
+    top: calc(100% + 8px);
+    left: 0;
+    z-index: 1002;
+    display: flex;
+    flex-direction: column;
+    min-width: 220px;
+    margin: 0;
+    padding: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.7);
+    border-radius: 16px;
+    background: rgba(255, 255, 255, 0.98);
+    box-shadow: 0 16px 40px rgba(15, 23, 42, 0.14);
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transform: translateY(-4px);
+}
+
+.nav-dropdown:hover .nav-dropdown-panel,
+.nav-dropdown:focus-within .nav-dropdown-panel {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    transform: none;
+}
+
+.nav-dropdown-link {
+    display: flex;
+    align-items: center;
+    min-height: 40px;
+    padding: 8px 12px;
+    border-radius: 10px;
+    color: #334155;
+    font-weight: 650;
+    text-decoration: none;
+    white-space: nowrap;
+}
+
+.nav-dropdown-link:hover {
+    background: #eef2ff;
+    color: #4338ca;
+}
+
+#auth-nav-slot,
+.app-download-nav {
+    display: inline-flex;
+    align-items: center;
+    flex: 0 0 auto;
+    white-space: nowrap;
+}
+
+.app-download-nav {
+    gap: 4px;
+    color: #64748b;
+    font-weight: 700;
+    text-decoration: none;
+}
+
+.app-download-nav-text {
+    max-width: 0;
+    overflow: hidden;
+    opacity: 0;
+    white-space: nowrap;
+}
+
+.app-download-nav:hover .app-download-nav-text,
+.app-download-nav:focus-visible .app-download-nav-text {
+    max-width: 160px;
+    opacity: 1;
 }
 
 /* Step-through lesson diagrams (scripts/build_lesson_diagrams.py). */

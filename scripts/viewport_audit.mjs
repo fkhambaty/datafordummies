@@ -176,6 +176,8 @@ function assertBreakpointContract() {
     if (/@media \(max-width:\s*720px\)/.test(css)) problems.push('css/dfd-system.css still has a 720px breakpoint');
     if (!css.includes('@media (max-width: 768px)')) problems.push('css/dfd-system.css is missing the 768px breakpoint');
     if (!js.includes("'(max-width: 768px)'")) problems.push('js/hub-script.js is missing matchMedia (max-width: 768px)');
+    if (!css.includes('.nav-links.nav-open .nav-dropdown-panel')) problems.push('css/dfd-system.css opens the learn menu without nav-open');
+    if (!js.includes("classList.add('nav-open')")) problems.push('js/hub-script.js does not mark the opened mobile menu');
     if (/innerWidth\s*>\s*768/.test(js)) problems.push('js/hub-script.js still branches on innerWidth > 768');
     return problems;
 }
@@ -311,8 +313,20 @@ async function measure(page) {
             }
         }
         const issues = [];
+        const nav = document.querySelector('.top-nav, .main-nav');
+        const panel = document.querySelector('.nav-dropdown-panel');
         const toggle = document.querySelector('.mobile-menu-toggle');
         const links = document.querySelector('.nav-links');
+        const menuOpen = links && links.classList.contains('nav-open');
+        if (panel && !menuOpen) {
+            const panelStyle = window.getComputedStyle(panel);
+            const closed = panelStyle.visibility === 'hidden' || panelStyle.display === 'none' || Number(panelStyle.opacity) === 0;
+            if (!closed) issues.push('learn menu spills into the navigation bar');
+        }
+        if (nav && !menuOpen) {
+            const navHeight = Math.round(nav.getBoundingClientRect().height);
+            if (navHeight > 88) issues.push('navigation is ' + navHeight + 'px tall');
+        }
         const mobile = window.matchMedia('(max-width: 768px)').matches;
         if (toggle && links && toggle.closest('.main-nav')) {
             const toggleStyle = window.getComputedStyle(toggle);

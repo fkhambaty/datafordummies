@@ -190,6 +190,8 @@ def check_site(root: Path) -> dict[str, list[str] | int]:
         problem = viewport_problem(text)
         if problem:
             failures.append(f"FAIL {rel} {problem}")
+        if 'class="top-nav"' in text and "nav-dropdown-panel" in text and "hub-script.js" not in text and "tool-nav.js" not in text:
+            failures.append(f"FAIL {rel} tool navigation has no mobile menu script")
         system = [href for href in parser.stylesheets if href.split("?", 1)[0].endswith("dfd-system.css")]
         if len(system) != 1:
             failures.append(f"FAIL {rel} has {len(system)} dfd-system.css links")
