@@ -279,7 +279,12 @@ def check_site(root: Path) -> dict[str, list[str] | int]:
             # short hubs. That is not an unfinished lesson. Lesson pages stay
             # subject to the line and boilerplate checks.
             if target.name == "hub.html" or target.name in {
-                "privacy.html", "terms.html", "cancellation.html", "refunds.html",
+                "privacy.html",
+                "terms.html",
+                "cancellation.html",
+                "refunds.html",
+                "shipping.html",
+                "contact.html",
             }:
                 continue
             target_text, _parser = parsed[target.resolve()]
@@ -379,7 +384,14 @@ def check_discoverability(root: Path) -> list[str]:
             failures.append("FAIL index.html does not explain that this is a text-based course")
         if "<iframe" in home and "youtube" in home.lower():
             failures.append("FAIL index.html still auto-loads a YouTube iframe")
-        for href in ("privacy.html", "terms.html", "cancellation.html", "refunds.html"):
+        for href in (
+            "privacy.html",
+            "terms.html",
+            "cancellation.html",
+            "refunds.html",
+            "shipping.html",
+            "contact.html",
+        ):
             if href not in home:
                 failures.append(f"FAIL index.html does not link {href}")
     for rel in ("pricing.html", "auth/signup.html"):
@@ -387,7 +399,14 @@ def check_discoverability(root: Path) -> list[str]:
         if not page.is_file():
             continue
         text = page.read_text(encoding="utf-8", errors="replace")
-        for href in ("privacy.html", "terms.html", "cancellation.html", "refunds.html"):
+        for href in (
+            "privacy.html",
+            "terms.html",
+            "cancellation.html",
+            "refunds.html",
+            "shipping.html",
+            "contact.html",
+        ):
             if href not in text:
                 failures.append(f"FAIL {rel} does not link {href}")
     profile = root / "auth" / "profile.html"

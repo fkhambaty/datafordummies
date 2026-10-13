@@ -331,6 +331,12 @@ html {
     overflow-wrap: anywhere;
 }
 
+.dfd-policy {
+    max-width: 760px;
+    margin: 32px auto;
+    padding: 24px;
+}
+
 .top-offset-for-nav,
 body.page-home .home-stage {
     padding-top: max(76px, calc(64px + env(safe-area-inset-top, 0px))) !important;

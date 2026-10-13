@@ -1,6 +1,6 @@
 # Payments setup (Razorpay + Cloudflare Worker)
 
-Data For Dummies uses the single FKTech live Razorpay account shared with FunBerry and Okavo. Product isolation comes from separate plan ids, a separate webhook secret, and subscription notes containing `product: datafordummies` plus the D1 user id.
+Data For Dummies uses the FKTech EdTech Razorpay account shared only with FunBerry Kids. Okavo requires a separate marketplace merchant account. Product isolation comes from separate plan ids, a separate webhook secret, and subscription notes containing `product: datafordummies` plus the D1 user id.
 
 ## Live plans
 

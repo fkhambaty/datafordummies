@@ -333,6 +333,8 @@ def legal_nav(rel: str) -> str:
         ("terms.html", "Terms"),
         ("cancellation.html", "Cancellation"),
         ("refunds.html", "Refunds"),
+        ("shipping.html", "Digital delivery"),
+        ("contact.html", "Contact"),
     ]
     anchors = "\n".join(
         f'            <a href="{prefix}{href}">{label}</a>' for href, label in links
@@ -341,9 +343,15 @@ def legal_nav(rel: str) -> str:
 
 
 def insert_legal(rel: str, html: str) -> str:
-    if "privacy.html" in html and "refunds.html" in html and "cancellation.html" in html:
-        return html
     nav = legal_nav(rel)
+    if 'class="dfd-legal"' in html:
+        return re.sub(
+            r'\s*<nav class="dfd-legal" aria-label="Policies">.*?</nav>',
+            nav,
+            html,
+            count=1,
+            flags=re.DOTALL,
+        )
     if "</footer>" in html:
         return html.replace("</footer>", nav + "\n    </footer>", 1)
     if rel.startswith("auth/"):

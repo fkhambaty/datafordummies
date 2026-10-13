@@ -75,7 +75,7 @@ Course folders, each with its own `index.html` and usually a `hub.html`:
 
 ## Payments and accounts
 
-Pro subscriptions use the single **FKTech live Razorpay account**, shared with FunBerry and Okavo. Data For Dummies has its own weekly and monthly plan ids and its own webhook secret. Secrets live only in Cloudflare Worker secrets. Public plan ids and the live key id are Worker vars.
+Pro subscriptions use the **FKTech EdTech Razorpay account**, shared only with FunBerry Kids. Okavo is a marketplace and requires a separate merchant account. Data For Dummies has its own weekly and monthly plan ids and its own webhook secret. Secrets live only in Cloudflare Worker secrets. Public plan ids and the live key id are Worker vars.
 
 The Worker creates a subscription with notes tying it to the signed-in D1 profile, verifies every payment or webhook signature, fetches the subscription from Razorpay, and grants Pro only when Razorpay reports `active` or `authenticated`. D1 stores subscription state, captured charges for revenue reporting, and webhook event ids for idempotency. `/v1/profile` reconciles pending or expired subscriptions directly with Razorpay, so renewal does not depend on webhooks.
 

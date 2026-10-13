@@ -15,7 +15,7 @@ A static HTML learning site. GitHub Pages serves the files in this repository. A
 
 ## Payments
 
-- Data For Dummies uses the single FKTech live Razorpay account shared with FunBerry and Okavo, with product-specific plan ids and webhook secret.
+- Data For Dummies uses the FKTech EdTech Razorpay account shared only with FunBerry Kids, with product-specific plan ids and webhook secret. Okavo requires a separate marketplace merchant account.
 - Production uses `CHECKOUT_MODE = "hosted"` until Razorpay approves `datafordummies.in`. Flip it to `modal` and redeploy only after approval.
 - The Worker creates subscriptions, verifies signatures, checks ownership through Razorpay notes, reconciles `/v1/profile`, records charges, and handles cancellation at cycle end.
 - Never use the retired ₹499 plan or the generic `razorpay.me` link. Never call the retired Supabase payment functions.
