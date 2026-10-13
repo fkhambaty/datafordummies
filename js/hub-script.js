@@ -189,9 +189,10 @@ function setupCourseClickHandlers() {
  * Enter a specific course
  */
 function enterCourse(courseType) {
-    // Show loading animation
-    showLoadingAnimation();
-    
+    var stuck = document.getElementById('loadingOverlay');
+    if (stuck) stuck.remove();
+    document.body.style.overflow = '';
+
     // Course routing (hub-first: use hub.html where available)
     const courseUrls = {
         'python': 'python_course/index.html',
@@ -212,13 +213,9 @@ function enterCourse(courseType) {
     
     const url = courseUrls[courseType];
     if (url) {
-        // Add a slight delay for better UX
-        setTimeout(() => {
-            window.location.href = url;
-        }, 800);
+        window.location.assign(url);
     } else {
         console.error('Course type not found:', courseType);
-        hideLoadingAnimation();
     }
 }
 

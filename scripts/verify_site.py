@@ -190,6 +190,10 @@ def check_site(root: Path) -> dict[str, list[str] | int]:
         problem = viewport_problem(text)
         if problem:
             failures.append(f"FAIL {rel} {problem}")
+        if 'http-equiv="refresh"' in text.lower() or "http-equiv='refresh'" in text.lower():
+            failures.append(f"FAIL {rel} meta refresh traps the browser back button")
+        if re.search(r"<iframe\b[^>]*\bsrc\s*=\s*[\"'][^\"']*(?:youtube\.com|youtube-nocookie\.com|youtu\.be)", text, re.I):
+            failures.append(f"FAIL {rel} a YouTube iframe loads on its own and traps the back button")
         if 'class="top-nav"' in text and "nav-dropdown-panel" in text and "hub-script.js" not in text and "tool-nav.js" not in text:
             failures.append(f"FAIL {rel} tool navigation has no mobile menu script")
         system = [href for href in parser.stylesheets if href.split("?", 1)[0].endswith("dfd-system.css")]
@@ -371,6 +375,10 @@ def check_discoverability(root: Path) -> list[str]:
         home = (root / "index.html").read_text(encoding="utf-8", errors="replace")
         if '"@type": "Organization"' not in home and '"@type":"Organization"' not in home:
             failures.append("FAIL index.html is missing Organization structured data")
+        if "text-based course" not in home or "one book for many technologies" not in home:
+            failures.append("FAIL index.html does not explain that this is a text-based course")
+        if "<iframe" in home and "youtube" in home.lower():
+            failures.append("FAIL index.html still auto-loads a YouTube iframe")
         for href in ("privacy.html", "terms.html", "cancellation.html", "refunds.html"):
             if href not in home:
                 failures.append(f"FAIL index.html does not link {href}")
