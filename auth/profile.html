@@ -46,7 +46,7 @@
                 <p class="auth-profile-block-text" id="subscriptionText">You’re on the Free plan. Unlock all courses and projects with Pro.</p>
                 <div id="upgradeBtns">
                     <button type="button" class="ds-btn ds-btn-primary auth-upgrade-btn" id="upgradeWeekly">Upgrade — ₹10/week</button>
-                    <button type="button" class="ds-btn auth-upgrade-btn auth-upgrade-monthly" id="upgradeMonthly">Upgrade — ₹50/month</button>
+                    <button type="button" class="ds-btn auth-upgrade-btn auth-upgrade-monthly" id="upgradeMonthly">Upgrade — ₹30/month</button>
                 </div>
                 <button type="button" class="ds-btn auth-upgrade-btn" id="cancelSubscription" hidden>Cancel at end of billing cycle</button>
                 <p class="auth-links"><a href="../cancellation.html">How cancellation works</a> · <a href="../refunds.html">Refunds</a> · <a href="../privacy.html">Privacy</a> · <a href="../terms.html">Terms</a></p>
@@ -343,7 +343,7 @@
                     if (isPaid) {
                         subscriptionBadge.className = 'auth-badge auth-badge-pro';
                         subscriptionBadge.textContent = 'Pro';
-                        var planLabel = profile.subscription_plan === 'monthly' ? '₹50/month' : '₹10/week';
+                        var planLabel = profile.subscription_plan === 'monthly' ? '₹30/month' : '₹10/week';
                         if (profile.subscription_plan === 'lifetime') {
                             subscriptionBadge.textContent = 'Pro · Lifetime';
                             subscriptionText.textContent = 'You have lifetime Pro access. Nothing renews and nothing is charged.';

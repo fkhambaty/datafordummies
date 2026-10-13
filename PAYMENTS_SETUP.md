@@ -5,9 +5,9 @@ Data For Dummies uses the single FKTech live Razorpay account shared with FunBer
 ## Live plans
 
 - Weekly: ₹10, 52 charges (`plan_TnFsuVyhaGf5Xi`).
-- Monthly: ₹50, 12 charges (`plan_TnFsufo9rA4IYI`).
-- Retired plans that must not be used: ₹99 weekly (`plan_SSz7kXoJkkgqg2`), ₹349 monthly (`plan_ST5Q9Zy8y9gQT9`) and the older ₹499 monthly plan.
-- Weekly works out to about ₹43 a month, so monthly is not cheaper. Do not call it a saving.
+- Monthly: ₹30, 12 charges (`plan_TnGQvKI04Yha2p`).
+- Retired plans that must not be used: ₹99 weekly (`plan_SSz7kXoJkkgqg2`), ₹349 monthly (`plan_ST5Q9Zy8y9gQT9`), ₹50 monthly (`plan_TnFsufo9rA4IYI`) and the older ₹499 monthly plan.
+- Weekly works out to about ₹43 a month, so monthly saves roughly ₹13.
 
 Plan ids and the live key id are public Worker vars in `cloudflare/worker/wrangler.toml`. `RAZORPAY_KEY_SECRET` and `RAZORPAY_WEBHOOK_SECRET` are Worker secrets. Never place either secret in HTML, JavaScript, logs, or commits.
 

@@ -58,6 +58,49 @@
     line-height: 1.5;
 }
 
+.pricing-value-note {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    max-width: 760px;
+    margin: 0 auto var(--ds-space-6);
+    padding: 18px 22px;
+    border: 1px solid rgba(99, 102, 241, 0.22);
+    border-radius: 18px;
+    background: rgba(255, 255, 255, 0.58);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+    box-shadow: 0 10px 30px rgba(99, 102, 241, 0.08);
+    position: relative;
+    z-index: 1;
+}
+
+.pricing-value-note-icon {
+    display: inline-grid;
+    flex: 0 0 36px;
+    width: 36px;
+    height: 36px;
+    place-items: center;
+    border-radius: 50%;
+    background: #eef2ff;
+    color: #4f46e5;
+    font-size: 1rem;
+}
+
+.pricing-value-note strong {
+    display: block;
+    margin-bottom: 3px;
+    color: var(--ds-text);
+    font-size: 1rem;
+}
+
+.pricing-value-note p {
+    margin: 0;
+    color: var(--ds-text-muted);
+    font-size: 0.94rem;
+    line-height: 1.55;
+}
+
 /* Grid with stagger */
 .pricing-grid {
     display: grid;
@@ -70,6 +113,13 @@
     position: relative;
     z-index: 1;
     perspective: 1200px;
+}
+
+@media (max-width: 800px) {
+    .pricing-value-note {
+        margin-right: var(--ds-space-3);
+        margin-left: var(--ds-space-3);
+    }
 }
 
 /* 3D glass cards */

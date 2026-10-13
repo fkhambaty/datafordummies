@@ -9,7 +9,7 @@ MAIL_FROM = "Data For Dummies <no-reply@datafordummies.in>"
 CHECKOUT_MODE = "hosted"
 RAZORPAY_KEY_ID = "rzp_live_Tn7dYq8sfB9jgp"
 RAZORPAY_PLAN_WEEKLY = "plan_TnFsuVyhaGf5Xi"
-RAZORPAY_PLAN_MONTHLY = "plan_TnFsufo9rA4IYI"
+RAZORPAY_PLAN_MONTHLY = "plan_TnGQvKI04Yha2p"
 
 [[d1_databases]]
 binding = "DB"
