@@ -7,8 +7,8 @@
     'use strict';
 
     var planDescriptions = {
-        weekly: 'Data For Dummies Pro — ₹99/week',
-        monthly: 'Data For Dummies Pro — ₹349/month'
+        weekly: 'Data For Dummies Pro — ₹10/week',
+        monthly: 'Data For Dummies Pro — ₹50/month'
     };
 
     function authPageUrl(page) {

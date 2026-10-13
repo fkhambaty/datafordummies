@@ -8,8 +8,8 @@ workers_dev = true
 MAIL_FROM = "Data For Dummies <no-reply@datafordummies.in>"
 CHECKOUT_MODE = "hosted"
 RAZORPAY_KEY_ID = "rzp_live_Tn7dYq8sfB9jgp"
-RAZORPAY_PLAN_WEEKLY = "plan_SSz7kXoJkkgqg2"
-RAZORPAY_PLAN_MONTHLY = "plan_ST5Q9Zy8y9gQT9"
+RAZORPAY_PLAN_WEEKLY = "plan_TnFsuVyhaGf5Xi"
+RAZORPAY_PLAN_MONTHLY = "plan_TnFsufo9rA4IYI"
 
 [[d1_databases]]
 binding = "DB"

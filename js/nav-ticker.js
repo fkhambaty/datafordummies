@@ -27,7 +27,7 @@
         "\ud83d\udccb Metabase has 50,000+ active installations worldwide",
         "\ud83c\udfd7\ufe0f The medallion architecture (Bronze\u2192Silver\u2192Gold) is industry standard",
         "\ud83d\udc4b Real projects, real skills. No fake it till you make it.",
-        "\u2705 Pro = full courses + certs. Less than a chai a day. We did the math."
+        "\u2705 Pro = full courses + certs from \u20b910 a week."
     ];
     var el = document.getElementById('tickerText');
     var iconEl = document.querySelector('.ticker-icon');

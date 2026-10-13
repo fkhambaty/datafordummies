@@ -780,7 +780,7 @@ export default {
             `/subscriptions/${encodeURIComponent(reusable.razorpay_subscription_id)}`,
           );
           await saveSubscription(db, remote, profile.id, details.plan);
-          if (remote.status === "created") {
+          if (remote.status === "created" && remote.plan_id === details.planId) {
             await recordFunnel(db, "checkout", {
               visitorId: "server",
               userId: profile.id,
