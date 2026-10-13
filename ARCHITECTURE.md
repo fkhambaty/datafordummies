@@ -27,17 +27,22 @@ The domain itself is registered at GoDaddy. API keys for DNS changes are created
 
 ## How a page works
 
+```mermaid
+flowchart LR
+  browser[Browser]
+  pages["GitHub Pages<br/>datafordummies.in"]
+  worker["Worker<br/>datafordummies-api"]
+  d1["D1 database<br/>datafordummies"]
+  razor["Razorpay FKTech<br/>EdTech merchant"]
+  mail["Resend<br/>domain not verified"]
+  browser --> pages
+  pages --> worker
+  worker --> d1
+  worker --> razor
+  worker --> mail
 ```
-Browser
-  → GitHub Pages (the HTML in this repo)
-      → course pages stay in these files
-      → new accounts, lesson progress, and visit counts call
-        https://datafordummies-api.fkhambaty.workers.dev
-  → Cloudflare D1 database datafordummies
-      → schema cloudflare/d1/schema.sql
-      → worker cloudflare/worker
-      → FKTech Razorpay subscriptions and verified webhooks
-```
+
+The pages in this repository are the site. Accounts, progress, and Pro state go to `https://datafordummies-api.fkhambaty.workers.dev`, then to the D1 schema in `cloudflare/d1`. Razorpay is the FKTech EdTech merchant, shared only with FunBerry Kids. Okavo is not on this merchant. Signup and reset mail use Resend, and `datafordummies.in` is still unverified there.
 
 New accounts do not use Supabase. Signup emails a 6-digit code. The account cannot log in until `auth/verify.html` accepts that code. `auth/reset-password.html` emails a reset code and sets a new password. Codes expire after 15 minutes and allow 5 tries. Email goes through Resend: the worker secret is `RESEND_API_KEY` and the sender is `MAIL_FROM` in `wrangler.toml`. Without the secret, signup and reset return 503 on purpose.
 
@@ -222,4 +227,10 @@ Hub pages load `js/hub-learning.js`. Reading time is the lesson word count divid
 `.github/workflows/ci.yml` runs the site verifier, the vendor stamp check, and the Worker tests. `.github/workflows/production-smoke.yml` runs every Monday against the live site: homepage, `/v1/health`, the existing dummy login, a payment call that must be refused, and homepage width at 390 and 1440. It does not create an account.
 
 Pushing `main` still publishes the static site through GitHub Pages. The Worker is published with `npx wrangler deploy` from `cloudflare/worker` after `004_completion_certificates.sql` is applied to the remote D1 database. `CHECKOUT_MODE` stays `hosted` until Razorpay approves the domain.
+
+## If this computer is gone
+
+`https://github.com/fkhambaty/datafordummies` is the copy that matters. It contains this guide, `AGENTS.md`, the HTML, the Worker, the D1 schema, and `cloudflare/worker/wrangler.toml`. Clone it on another computer and the site can be read and redeployed.
+
+These names are Worker secrets and are not stored in Git: `RESEND_API_KEY`, `RAZORPAY_KEY_SECRET`, and `RAZORPAY_WEBHOOK_SECRET`. They remain in the Cloudflare Worker even if this laptop is lost. A local copy under `~/.config/fk-products/` is only a convenience and must never be committed. Public values that are safe in Git are the key id `RAZORPAY_KEY_ID` and the two plan ids in `wrangler.toml`.
 
