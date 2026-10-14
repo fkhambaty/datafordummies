@@ -130,7 +130,8 @@
     }
 
     function signOut() {
-        return request('/v1/logout', { method: 'POST', body: {} }).then(function () {
+        return request('/v1/logout', { method: 'POST', body: {} }).then(function (res) {
+            if (res.error) return { error: res.error };
             writeStored(null);
             return { error: null };
         });

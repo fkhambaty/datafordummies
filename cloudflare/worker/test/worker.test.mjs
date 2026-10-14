@@ -92,6 +92,25 @@ test("health reports email readiness without secrets or a new account", async ()
   assert.equal(sqlite.prepare("SELECT COUNT(*) AS n FROM profiles").get().n, 0);
 });
 
+test("D1 daily quota exhaustion returns a clear retryable response", async () => {
+  const env = {
+    DB: {
+      prepare() {
+        throw new Error("D1_ERROR: Your account has exceeded D1's free tier daily row write limit.");
+      },
+    },
+    RESEND_API_KEY: "test-key",
+    MAIL_FROM: "Data For Dummies <no-reply@datafordummies.in>",
+  };
+  const signup = await call(env, "/v1/signup", {
+    method: "POST",
+    body: { email: "quota@example.com", password: "password12", full_name: "Quota Test" },
+  });
+  assert.equal(signup.status, 503);
+  assert.match(signup.body.error, /storage allowance/i);
+  assert.match(signup.body.error, /Nothing was charged/i);
+});
+
 test("signup falls back to the verified sender when the primary domain is refused", async () => {
   const { env, sqlite } = fresh();
   Object.assign(env, {

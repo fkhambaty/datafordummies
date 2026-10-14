@@ -616,77 +616,77 @@ export const COURSE_CATALOG = {
           "id": "architecture",
           "href": "dms_course/architecture.html",
           "label": "How DMS is built",
-          "words": 679,
+          "words": 694,
           "minutes": 4
         },
         {
           "id": "assessment",
           "href": "dms_course/assessment.html",
           "label": "Assessments, SCT, and schema conversion",
-          "words": 702,
+          "words": 717,
           "minutes": 4
         },
         {
           "id": "capstone",
           "href": "dms_course/capstone.html",
           "label": "Capstone",
-          "words": 521,
+          "words": 536,
           "minutes": 4
         },
         {
           "id": "cdc",
           "href": "dms_course/cdc.html",
           "label": "CDC and log positions",
-          "words": 636,
+          "words": 651,
           "minutes": 4
         },
         {
           "id": "endpoints",
           "href": "dms_course/endpoints.html",
           "label": "Endpoints, connectivity, and VPC",
-          "words": 571,
+          "words": 586,
           "minutes": 4
         },
         {
           "id": "examples",
           "href": "dms_course/examples.html",
           "label": "Homogeneous and heterogeneous examples",
-          "words": 614,
+          "words": 629,
           "minutes": 4
         },
         {
           "id": "full-load",
           "href": "dms_course/full-load.html",
           "label": "Full load",
-          "words": 597,
+          "words": 612,
           "minutes": 4
         },
         {
           "id": "operations",
           "href": "dms_course/operations.html",
           "label": "Serverless, instances, cost, and troubleshooting",
-          "words": 704,
+          "words": 719,
           "minutes": 4
         },
         {
           "id": "schema-conversion",
           "href": "dms_course/schema-conversion.html",
           "label": "Schema conversion paths",
-          "words": 600,
+          "words": 615,
           "minutes": 4
         },
         {
           "id": "task-settings",
           "href": "dms_course/task-settings.html",
           "label": "Task settings, mappings, and transforms",
-          "words": 612,
+          "words": 627,
           "minutes": 4
         },
         {
           "id": "validation",
           "href": "dms_course/validation.html",
           "label": "Validation and CloudWatch",
-          "words": 540,
+          "words": 675,
           "minutes": 4
         }
       ]
@@ -712,84 +712,84 @@ export const COURSE_CATALOG = {
           "id": "capstone",
           "href": "kubernetes_course/capstone.html",
           "label": "Capstone",
-          "words": 623,
+          "words": 638,
           "minutes": 4
         },
         {
           "id": "config-secrets",
           "href": "kubernetes_course/config-secrets.html",
           "label": "ConfigMaps and Secrets",
-          "words": 641,
+          "words": 656,
           "minutes": 4
         },
         {
           "id": "helm-kustomize",
           "href": "kubernetes_course/helm-kustomize.html",
           "label": "Helm and Kustomize",
-          "words": 627,
+          "words": 642,
           "minutes": 4
         },
         {
           "id": "jobs-cronjobs",
           "href": "kubernetes_course/jobs-cronjobs.html",
           "label": "Jobs and CronJobs",
-          "words": 562,
+          "words": 577,
           "minutes": 4
         },
         {
           "id": "local-setup",
           "href": "kubernetes_course/local-setup.html",
           "label": "Local clusters",
-          "words": 681,
+          "words": 696,
           "minutes": 4
         },
         {
           "id": "meet-kubernetes",
           "href": "kubernetes_course/meet-kubernetes.html",
           "label": "Meet Kubernetes",
-          "words": 697,
+          "words": 712,
           "minutes": 4
         },
         {
           "id": "observability",
           "href": "kubernetes_course/observability.html",
           "label": "Observability and debugging",
-          "words": 575,
+          "words": 590,
           "minutes": 4
         },
         {
           "id": "pods-deployments",
           "href": "kubernetes_course/pods-deployments.html",
           "label": "Pods and Deployments",
-          "words": 646,
+          "words": 661,
           "minutes": 4
         },
         {
           "id": "production-clouds",
           "href": "kubernetes_course/production-clouds.html",
           "label": "Production on EKS, GKE, and AKS",
-          "words": 770,
+          "words": 785,
           "minutes": 4
         },
         {
           "id": "security",
           "href": "kubernetes_course/security.html",
           "label": "Security: RBAC, NetworkPolicy, Pod Security",
-          "words": 659,
+          "words": 674,
           "minutes": 4
         },
         {
           "id": "services-networking",
           "href": "kubernetes_course/services-networking.html",
           "label": "Services, Ingress, and Gateway API",
-          "words": 691,
+          "words": 706,
           "minutes": 4
         },
         {
           "id": "storage-statefulsets",
           "href": "kubernetes_course/storage-statefulsets.html",
           "label": "Storage and StatefulSets",
-          "words": 597,
+          "words": 612,
           "minutes": 4
         }
       ]
@@ -887,69 +887,69 @@ export const COURSE_CATALOG = {
       "vendor_checked_on": "2026-10-13",
       "vendor_note": "Lessons keep Cloud, self-host, embedding, models, and permissions. They do not publish an application-database password.",
       "estimate": "Reading time is the lesson word count divided by 180, with a floor of 4 minutes and a ceiling of 40. It is not a classroom hour.",
-      "minutes": 36,
+      "minutes": 37,
       "lessons": [
         {
           "id": "admin",
           "href": "metabase_course/admin.html",
           "label": "Administration",
-          "words": 558,
+          "words": 706,
           "minutes": 4
         },
         {
           "id": "dashboards",
           "href": "metabase_course/dashboards.html",
           "label": "Building dashboards",
-          "words": 580,
+          "words": 722,
           "minutes": 4
         },
         {
           "id": "installation",
           "href": "metabase_course/installation.html",
           "label": "Installation and setup",
-          "words": 643,
-          "minutes": 4
+          "words": 811,
+          "minutes": 5
         },
         {
           "id": "meet-metabase",
           "href": "metabase_course/meet-metabase.html",
           "label": "Meet Metabase",
-          "words": 631,
+          "words": 805,
           "minutes": 4
         },
         {
           "id": "models",
           "href": "metabase_course/models.html",
           "label": "Models and metrics",
-          "words": 585,
+          "words": 728,
           "minutes": 4
         },
         {
           "id": "production",
           "href": "metabase_course/production.html",
           "label": "Production deployment",
-          "words": 599,
+          "words": 749,
           "minutes": 4
         },
         {
           "id": "questions",
           "href": "metabase_course/questions.html",
           "label": "Asking questions",
-          "words": 515,
+          "words": 641,
           "minutes": 4
         },
         {
           "id": "sharing",
           "href": "metabase_course/sharing.html",
           "label": "Sharing and embedding",
-          "words": 592,
+          "words": 750,
           "minutes": 4
         },
         {
           "id": "sql-queries",
           "href": "metabase_course/sql-queries.html",
           "label": "SQL queries",
-          "words": 568,
+          "words": 730,
           "minutes": 4
         }
       ]
@@ -965,7 +965,7 @@ export const COURSE_CATALOG = {
       "vendor_checked_on": "2026-10-13",
       "vendor_note": "Lessons were framed on 13 October 2026 for SQL Server 2017, 2019, 2022, and 2025. SQL Server 2016 extended support had ended on 15 July 2026.",
       "estimate": "Reading time is the lesson word count divided by 180, with a floor of 4 minutes and a ceiling of 40. It is not a classroom hour.",
-      "minutes": 60,
+      "minutes": 61,
       "lessons": [
         {
           "id": "aggregations",
@@ -999,8 +999,8 @@ export const COURSE_CATALOG = {
           "id": "datasets",
           "href": "mssql_course/datasets.html",
           "label": "Practice datasets",
-          "words": 699,
-          "minutes": 4
+          "words": 879,
+          "minutes": 5
         },
         {
           "id": "indexes-performance",
@@ -1078,7 +1078,7 @@ export const COURSE_CATALOG = {
       "vendor_checked_on": "2026-10-13",
       "vendor_note": "Lessons were framed on 13 October 2026 for PostgreSQL 18.6 as the current major, with 17, 16, and 15 still supported. PostgreSQL 14 support was dated through 12 November 2026.",
       "estimate": "Reading time is the lesson word count divided by 180, with a floor of 4 minutes and a ceiling of 40. It is not a classroom hour.",
-      "minutes": 322,
+      "minutes": 323,
       "lessons": [
         {
           "id": "aggregations",
@@ -1154,8 +1154,8 @@ export const COURSE_CATALOG = {
           "id": "replication",
           "href": "postgres_course/replication.html",
           "label": "Replication and HA",
-          "words": 1172,
-          "minutes": 7
+          "words": 1357,
+          "minutes": 8
         },
         {
           "id": "sql-basics",
@@ -1191,69 +1191,69 @@ export const COURSE_CATALOG = {
       "vendor_checked_on": "2026-10-13",
       "vendor_note": "Sessions 13 and 14 teach matplotlib and seaborn.",
       "estimate": "Reading time is the lesson word count divided by 180, with a floor of 4 minutes and a ceiling of 40. It is not a classroom hour.",
-      "minutes": 257,
+      "minutes": 258,
       "lessons": [
         {
           "id": "admin-assignments",
           "href": "python_course/admin-assignments.html",
           "label": "🔐 Instructor Solutions | Python Mastery",
-          "words": 216,
+          "words": 219,
           "minutes": 4
         },
         {
           "id": "assignments",
           "href": "python_course/assignments.html",
           "label": "Assignments | 🐍 Python Mastery",
-          "words": 1902,
+          "words": 1905,
           "minutes": 11
         },
         {
           "id": "complete-course",
           "href": "python_course/complete-course.html",
           "label": "🐍 Python Mastery - Complete Interactive Course",
-          "words": 522,
+          "words": 525,
           "minutes": 4
         },
         {
           "id": "s1-intro",
           "href": "python_course/s1-intro.html",
           "label": "Session 1: Introduction to Python | 🐍 Python Mastery",
-          "words": 2863,
+          "words": 2866,
           "minutes": 16
         },
         {
           "id": "s10-pandas1",
           "href": "python_course/s10-pandas1.html",
           "label": "Session 10: Pandas Part I | 🐍 Python Mastery",
-          "words": 2751,
+          "words": 2754,
           "minutes": 15
         },
         {
           "id": "s11-pandas2",
           "href": "python_course/s11-pandas2.html",
           "label": "Session 11: Pandas Part II | 🐍 Python Mastery",
-          "words": 2609,
-          "minutes": 14
+          "words": 2612,
+          "minutes": 15
         },
         {
           "id": "s12-api-sql",
           "href": "python_course/s12-api-sql.html",
           "label": "Session 12: APIs & SQL | 🐍 Python Mastery",
-          "words": 2073,
+          "words": 2076,
           "minutes": 12
         },
         {
           "id": "s13-dataviz",
           "href": "python_course/s13-dataviz.html",
           "label": "Session 13: Data Visualization",
-          "words": 483,
+          "words": 486,
           "minutes": 4
         },
         {
           "id": "s14-enhanced-viz",
           "href": "python_course/s14-enhanced-viz.html",
           "label": "Session 14: Enhanced Visualization",
-          "words": 478,
+          "words": 481,
           "minutes": 4
         },
         {
@@ -1267,63 +1267,63 @@ export const COURSE_CATALOG = {
           "id": "s2-datatypes",
           "href": "python_course/s2-datatypes.html",
           "label": "Session 2: Data Types | 🐍 Python Mastery",
-          "words": 3290,
+          "words": 3293,
           "minutes": 18
         },
         {
           "id": "s3-loops",
           "href": "python_course/s3-loops.html",
           "label": "Session 3: Loops & Conditions | 🐍 Python Mastery",
-          "words": 3420,
+          "words": 3423,
           "minutes": 19
         },
         {
           "id": "s4-lists",
           "href": "python_course/s4-lists.html",
           "label": "Session 4: Lists & Tuples | 🐍 Python Mastery",
-          "words": 5078,
+          "words": 5081,
           "minutes": 28
         },
         {
           "id": "s5-datastructures",
           "href": "python_course/s5-datastructures.html",
           "label": "Session 5: Sets & Dictionaries | 🐍 Python Mastery",
-          "words": 4786,
+          "words": 4789,
           "minutes": 27
         },
         {
           "id": "s6-functions1",
           "href": "python_course/s6-functions1.html",
           "label": "Session 6: Functions Part I",
-          "words": 2345,
+          "words": 2348,
           "minutes": 13
         },
         {
           "id": "s7-functions2",
           "href": "python_course/s7-functions2.html",
           "label": "Session 7: Functions Part II | 🐍 Python Mastery",
-          "words": 3388,
+          "words": 3391,
           "minutes": 19
         },
         {
           "id": "s8-oop",
           "href": "python_course/s8-oop.html",
           "label": "Session 8: Object-Oriented Programming | 🐍 Python Mastery",
-          "words": 2385,
+          "words": 2388,
           "minutes": 13
         },
         {
           "id": "s9-numpy",
           "href": "python_course/s9-numpy.html",
           "label": "Session 9: NumPy & Comprehensions | 🐍 Python Mastery",
-          "words": 2842,
+          "words": 2845,
           "minutes": 16
         },
         {
           "id": "student-assignments",
           "href": "python_course/student-assignments.html",
           "label": "Student Practice | 🐍 Python Mastery",
-          "words": 1988,
+          "words": 1991,
           "minutes": 11
         }
       ]
@@ -1345,14 +1345,14 @@ export const COURSE_CATALOG = {
           "id": "architecture",
           "href": "redshift_course/architecture.html",
           "label": "Architecture",
-          "words": 557,
+          "words": 726,
           "minutes": 4
         },
         {
           "id": "data-loading",
           "href": "redshift_course/data-loading.html",
           "label": "Data loading",
-          "words": 549,
+          "words": 717,
           "minutes": 4
         },
         {
@@ -1366,42 +1366,42 @@ export const COURSE_CATALOG = {
           "id": "performance",
           "href": "redshift_course/performance.html",
           "label": "Performance",
-          "words": 513,
+          "words": 677,
           "minutes": 4
         },
         {
           "id": "production",
           "href": "redshift_course/production.html",
           "label": "Production",
-          "words": 598,
+          "words": 735,
           "minutes": 4
         },
         {
           "id": "setup",
           "href": "redshift_course/setup.html",
           "label": "Cluster setup",
-          "words": 622,
+          "words": 780,
           "minutes": 4
         },
         {
           "id": "spectrum-serverless",
           "href": "redshift_course/spectrum-serverless.html",
           "label": "Spectrum and Serverless",
-          "words": 575,
+          "words": 733,
           "minutes": 4
         },
         {
           "id": "sql-queries",
           "href": "redshift_course/sql-queries.html",
           "label": "SQL queries",
-          "words": 533,
+          "words": 681,
           "minutes": 4
         },
         {
           "id": "table-design",
           "href": "redshift_course/table-design.html",
           "label": "Table design",
-          "words": 581,
+          "words": 739,
           "minutes": 4
         }
       ]
@@ -1417,98 +1417,98 @@ export const COURSE_CATALOG = {
       "vendor_checked_on": "2026-10-13",
       "vendor_note": "Thirteen lessons are on the hub. Two are free. No separate vendor patch version is stamped.",
       "estimate": "Reading time is the lesson word count divided by 180, with a floor of 4 minutes and a ceiling of 40. It is not a classroom hour.",
-      "minutes": 63,
+      "minutes": 80,
       "lessons": [
         {
           "id": "architecture",
           "href": "snowflake_course/architecture.html",
           "label": "Architecture",
-          "words": 812,
-          "minutes": 5
+          "words": 1026,
+          "minutes": 6
         },
         {
           "id": "cortex-ai",
           "href": "snowflake_course/cortex-ai.html",
           "label": "Cortex AI",
-          "words": 935,
-          "minutes": 5
+          "words": 1175,
+          "minutes": 7
         },
         {
           "id": "dbt-airflow-production",
           "href": "snowflake_course/dbt-airflow-production.html",
           "label": "dbt, Airflow, and production",
-          "words": 1006,
-          "minutes": 6
+          "words": 1217,
+          "minutes": 7
         },
         {
           "id": "governance-horizon",
           "href": "snowflake_course/governance-horizon.html",
           "label": "Governance and Horizon",
-          "words": 930,
-          "minutes": 5
+          "words": 1163,
+          "minutes": 6
         },
         {
           "id": "iceberg-unstructured",
           "href": "snowflake_course/iceberg-unstructured.html",
           "label": "Iceberg and unstructured files",
-          "words": 891,
-          "minutes": 5
+          "words": 1117,
+          "minutes": 6
         },
         {
           "id": "meet-snowflake",
           "href": "snowflake_course/meet-snowflake.html",
           "label": "Meet Snowflake",
-          "words": 744,
-          "minutes": 4
+          "words": 934,
+          "minutes": 5
         },
         {
           "id": "snowpark-python",
           "href": "snowflake_course/snowpark-python.html",
           "label": "Snowpark Python",
-          "words": 839,
-          "minutes": 5
+          "words": 1047,
+          "minutes": 6
         },
         {
           "id": "sql-analytics",
           "href": "snowflake_course/sql-analytics.html",
           "label": "SQL for analytics",
-          "words": 776,
-          "minutes": 4
+          "words": 996,
+          "minutes": 6
         },
         {
           "id": "stages-loading",
           "href": "snowflake_course/stages-loading.html",
           "label": "Stages, COPY, and Snowpipe",
-          "words": 908,
-          "minutes": 5
+          "words": 1113,
+          "minutes": 6
         },
         {
           "id": "streams-tasks",
           "href": "snowflake_course/streams-tasks.html",
           "label": "Streams, tasks, and dynamic tables",
-          "words": 910,
-          "minutes": 5
+          "words": 1147,
+          "minutes": 6
         },
         {
           "id": "table-design",
           "href": "snowflake_course/table-design.html",
           "label": "Tables, pruning, and history",
-          "words": 980,
-          "minutes": 5
+          "words": 1214,
+          "minutes": 7
         },
         {
           "id": "trial-account",
           "href": "snowflake_course/trial-account.html",
           "label": "Trial account and Snowsight",
-          "words": 804,
-          "minutes": 4
+          "words": 983,
+          "minutes": 5
         },
         {
           "id": "warehouses-cost",
           "href": "snowflake_course/warehouses-cost.html",
           "label": "Warehouses and cost",
-          "words": 986,
-          "minutes": 5
+          "words": 1225,
+          "minutes": 7
         }
       ]
     },
@@ -1533,84 +1533,84 @@ export const COURSE_CATALOG = {
           "id": "capstone",
           "href": "terraform_course/capstone.html",
           "label": "Capstone",
-          "words": 618,
+          "words": 633,
           "minutes": 4
         },
         {
           "id": "ci-hcp",
           "href": "terraform_course/ci-hcp.html",
           "label": "CI and HCP Terraform",
-          "words": 644,
+          "words": 659,
           "minutes": 4
         },
         {
           "id": "hcl-resources",
           "href": "terraform_course/hcl-resources.html",
           "label": "HCL, providers, resources, and data",
-          "words": 587,
+          "words": 602,
           "minutes": 4
         },
         {
           "id": "lifecycle-blocks",
           "href": "terraform_course/lifecycle-blocks.html",
           "label": "Lifecycle, import, moved, and removed",
-          "words": 645,
+          "words": 660,
           "minutes": 4
         },
         {
           "id": "meet-terraform",
           "href": "terraform_course/meet-terraform.html",
           "label": "Meet Terraform and OpenTofu",
-          "words": 587,
+          "words": 602,
           "minutes": 4
         },
         {
           "id": "modules",
           "href": "terraform_course/modules.html",
           "label": "Modules",
-          "words": 574,
+          "words": 589,
           "minutes": 4
         },
         {
           "id": "security-opentofu",
           "href": "terraform_course/security-opentofu.html",
           "label": "Security, policy, and OpenTofu",
-          "words": 816,
+          "words": 831,
           "minutes": 5
         },
         {
           "id": "setup",
           "href": "terraform_course/setup.html",
           "label": "Install and version managers",
-          "words": 559,
+          "words": 574,
           "minutes": 4
         },
         {
           "id": "state-backends",
           "href": "terraform_course/state-backends.html",
           "label": "State, backends, and locking",
-          "words": 698,
+          "words": 713,
           "minutes": 4
         },
         {
           "id": "testing",
           "href": "terraform_course/testing.html",
           "label": "Testing and validation",
-          "words": 585,
+          "words": 600,
           "minutes": 4
         },
         {
           "id": "variables-outputs",
           "href": "terraform_course/variables-outputs.html",
           "label": "Variables, outputs, and locals",
-          "words": 553,
+          "words": 568,
           "minutes": 4
         },
         {
           "id": "workspaces",
           "href": "terraform_course/workspaces.html",
           "label": "Workspaces and environments",
-          "words": 616,
+          "words": 631,
           "minutes": 4
         }
       ]

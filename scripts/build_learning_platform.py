@@ -393,6 +393,7 @@ def stamp(rel: str, html: str, description: str, catalog: dict) -> str:
     else:
         html = html.replace("</head>", block + "\n</head>", 1)
     html = insert_legal(rel, html)
+    html = re.sub(r"\n[ \t]+\n(?=[ \t]*<nav class=\"dfd-legal\")", "\n\n", html)
     html = insert_hub_assets(rel, html, catalog)
     return html
 

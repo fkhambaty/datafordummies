@@ -33,6 +33,10 @@ import { fileURLToPath } from 'node:url';
 const require = createRequire(import.meta.url);
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const SKIP_PARTS = new Set(['.git', 'node_modules', 'supabase']);
+// This page immediately leaves the site for Google Drive. The static verifier
+// checks its local link and location.replace; measuring Google's UI would
+// report Google's overflow, console and storage behavior as our own.
+const EXTERNAL_REDIRECT_PAGES = new Set(['apk/index.html']);
 
 const VIEWPORTS = [
     { width: 390, height: 667 },
@@ -141,7 +145,8 @@ function discoverPages() {
                 continue;
             }
             if (!entry.name.endsWith('.html') || entry.name.endsWith('.backup')) continue;
-            found.push(path.relative(ROOT, full).split(path.sep).join('/'));
+            const relative = path.relative(ROOT, full).split(path.sep).join('/');
+            if (!EXTERNAL_REDIRECT_PAGES.has(relative)) found.push(relative);
         }
     }
     walk(ROOT);
@@ -522,11 +527,19 @@ async function runClicks(browser, base) {
         if (!(await courses.isVisible())) problems.push('clicks home menu did not show Courses');
         const box = await toggle.boundingBox();
         if (!box || box.width < 47 || box.height < 47) problems.push('clicks menu toggle under 48px');
-        const video = page.locator('.home-video iframe');
-        if (await video.count() === 0) problems.push('clicks home video missing');
-        else {
-            const frame = await video.boundingBox();
-            if (!frame || frame.width < 280 || frame.height < 120) problems.push('clicks home video is not visible');
+        await toggle.click();
+        const poster = page.locator('.home-video-play');
+        if (!(await poster.isVisible())) problems.push('clicks home video poster missing');
+        if (await page.locator('.home-video iframe').count()) {
+            problems.push('clicks home video loads before a user asks it to');
+        } else if (await poster.isVisible()) {
+            await poster.click();
+            const video = page.locator('.home-video iframe');
+            await video.waitFor({ state: 'visible', timeout: 10000 }).catch(() => {});
+            const frame = await video.boundingBox().catch(() => null);
+            if (!frame || frame.width < 280 || frame.height < 120) {
+                problems.push('clicks home video did not open visibly');
+            }
         }
         await page.setViewportSize({ width: 768, height: 1024 });
         await open('index.html');

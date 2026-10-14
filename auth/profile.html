@@ -385,7 +385,11 @@
             logoutBtn.addEventListener('click', function (e) {
                 e.preventDefault();
                 if (window.FKTI_Auth && window.FKTI_Auth.signOut) {
-                    window.FKTI_Auth.signOut().then(function () {
+                    window.FKTI_Auth.signOut().then(function (result) {
+                        if (result && result.error) {
+                            window.alert('Logout could not be completed. Please try again so this session can be closed safely.');
+                            return;
+                        }
                         window.location.href = 'login.html';
                     });
                 } else {
@@ -419,5 +423,16 @@
     </script>
     <p>
     </p>
+    <footer class="auth-legal">
+
+        <nav class="dfd-legal" aria-label="Policies">
+            <a href="../privacy.html">Privacy</a>
+            <a href="../terms.html">Terms</a>
+            <a href="../cancellation.html">Cancellation</a>
+            <a href="../refunds.html">Refunds</a>
+            <a href="../shipping.html">Digital delivery</a>
+            <a href="../contact.html">Contact</a>
+        </nav>
+    </footer>
 </body>
 </html>

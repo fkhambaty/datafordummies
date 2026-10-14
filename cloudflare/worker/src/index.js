@@ -208,6 +208,10 @@ function emailReady(env) {
   return Boolean(env.RESEND_API_KEY && env.MAIL_FROM);
 }
 
+function d1DailyLimitReached(error) {
+  return /exceeded D1's free tier daily row (?:write|read) limit/i.test(String(error?.message || ""));
+}
+
 async function createSession(db, userId) {
   const token = bytesToHex(crypto.getRandomValues(new Uint8Array(32)));
   const tokenHash = await sha256(token);
@@ -1264,6 +1268,14 @@ export default {
 
       return json({ error: "Not found" }, 404, allowedOrigin);
     } catch (error) {
+      console.error("request failed", request.method, path, error?.name || "Error", error?.message || "unknown");
+      if (d1DailyLimitReached(error)) {
+        return json(
+          { error: "Accounts and saved progress are temporarily unavailable because today's storage allowance has been reached. Nothing was charged. Please try again after the daily reset." },
+          503,
+          allowedOrigin,
+        );
+      }
       return json({ error: "The service could not complete that request." }, 500, allowedOrigin);
     }
   },

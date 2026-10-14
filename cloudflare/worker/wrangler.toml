@@ -6,7 +6,7 @@ workers_dev = true
 
 [vars]
 MAIL_FROM = "Data For Dummies <no-reply@datafordummies.in>"
-# datafordummies.in is not verified in Resend until its four DNS records exist; this sender keeps signup working meanwhile.
+# Keep the verified education-domain sender as a fallback if Resend ever refuses the primary sender.
 MAIL_FROM_FALLBACK = "Data For Dummies <no-reply@funberrykids.in>"
 MAIL_REPLY_TO = "fktiindia@gmail.com"
 CHECKOUT_MODE = "hosted"

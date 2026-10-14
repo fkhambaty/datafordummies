@@ -36,7 +36,11 @@
     function handleLogout() {
         var auth = window.FKTI_Auth;
         if (auth && auth.signOut) {
-            auth.signOut().then(function () {
+            auth.signOut().then(function (result) {
+                if (result && result.error) {
+                    window.alert('Logout could not be completed. Please try again so this session can be closed safely.');
+                    return;
+                }
                 window.location.reload();
             });
         }

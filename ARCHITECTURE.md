@@ -14,7 +14,7 @@ It is not FunBerry Kids and it is not Okavo.
 
 ## Live addresses
 
-| Surface | Address | Status on 12 Oct 2026 |
+| Surface | Address | Status on 14 Oct 2026 |
 |---------|---------|------------------------|
 | Website | https://datafordummies.in | HTTP 200. |
 | www | https://www.datafordummies.in | Redirects to the apex. CNAME is `fkhambaty.github.io`. |
@@ -25,6 +25,8 @@ Hosting is **GitHub Pages**, not Vercel. The DNS `A` records are GitHub Pages (`
 
 The domain itself is registered at GoDaddy. Since 13 October 2026 its DNS is also at GoDaddy (`ns33`/`ns34.domaincontrol.com`); the earlier Cloudflare nameservers belonged to a login nobody uses. Keep four `A` records for `@` (`185.199.108.153` to `185.199.111.153`), `CNAME www` to `fkhambaty.github.io`, and the four Resend records (`TXT resend._domainkey`, `MX send` priority 10, `TXT send`, `CNAME rsend`). Switching nameservers to GoDaddy restores a parked `A` record that takes the site down, so set the website records first. API keys are created at https://developer.godaddy.com/keys; the production key is stored locally as `GODADDY_KEY` and `GODADDY_SECRET` in `~/.config/fk-products/godaddy.env` and never committed.
 
+GoDaddy reported on 14 October 2026 that the domain expires **13 March 2027** and automatic renewal is **off**. The site does not survive that date unless the owner renews it or explicitly enables auto-renew in GoDaddy. This is an account/billing action, not a code deployment.
+
 ## How a page works
 
 ```mermaid
@@ -34,7 +36,7 @@ flowchart LR
   worker["Worker<br/>datafordummies-api"]
   d1["D1 database<br/>datafordummies"]
   razor["Razorpay FKTech<br/>EdTech merchant"]
-  mail["Resend<br/>fallback sender until DNS"]
+  mail["Resend<br/>datafordummies.in verified"]
   browser --> pages
   pages --> worker
   worker --> d1
@@ -42,11 +44,19 @@ flowchart LR
   worker --> mail
 ```
 
-The pages in this repository are the site. Accounts, progress, and Pro state go to `https://datafordummies-api.fkhambaty.workers.dev`, then to the D1 schema in `cloudflare/d1`. Razorpay is the FKTech EdTech merchant, shared only with FunBerry Kids. Okavo is not on this merchant. Signup and reset mail use Resend, and `datafordummies.in` is still unverified there.
+The pages in this repository are the site. Accounts, progress, and Pro state go to `https://datafordummies-api.fkhambaty.workers.dev`, then to the D1 schema in `cloudflare/d1`. Razorpay is the FKTech EdTech merchant, shared only with FunBerry Kids. Okavo is not on this merchant. Signup and reset mail use Resend; `datafordummies.in` is verified and the Worker health response reports `email_sender: "primary"` and `email_domain_verified: true`.
 
 New accounts do not use Supabase. Signup emails a 6-digit code. The account cannot log in until `auth/verify.html` accepts that code. `auth/reset-password.html` emails a reset code and sets a new password. Codes expire after 15 minutes and allow 5 tries. Email goes through Resend: the worker secret is `RESEND_API_KEY` and the sender is `MAIL_FROM` in `wrangler.toml`. Without the secret, signup and reset return 503 on purpose.
 
-The four Resend records for `datafordummies.in` were added at GoDaddy on 13 October 2026. While Resend has not verified the domain, it refuses `MAIL_FROM`, so the Worker resends the same code from `MAIL_FROM_FALLBACK` (`Data For Dummies <no-reply@funberrykids.in>`, a verified FKTech education domain) with reply-to `fktiindia@gmail.com`. When the domain verifies, `MAIL_FROM` succeeds first and the fallback stops being used. `GET /v1/health` reports `email_sender` as `primary`, `fallback`, or `none`. The weekly smoke check fails on `none`.
+The four Resend records for `datafordummies.in` were added at GoDaddy on 13 October 2026 and all four are verified. `MAIL_FROM` now sends as `Data For Dummies <no-reply@datafordummies.in>`. `MAIL_FROM_FALLBACK` (`Data For Dummies <no-reply@funberrykids.in>`) remains a safety net if the primary sender is ever refused, with reply-to `fktiindia@gmail.com`. `GET /v1/health` reports `email_sender` as `primary`, `fallback`, or `none`; the weekly smoke check fails on `none`.
+
+### Shared D1 quota dependency
+
+All D1 databases in Cloudflare account `ec00d4a6131c20118d82605d6b969c8e` share the free-tier daily limits. On 14 October 2026 an unrelated `customjobseek` database used 167,866 row writes, exhausting the account's 100,000 free daily row-write allowance even though Data For Dummies used only 69. Account and progress writes then failed until Cloudflare's 00:00 UTC reset. The Worker detects this exact condition and returns a truthful retryable HTTP 503 instead of a generic 500; it cannot restore writes.
+
+This can recur every day while that workload remains in the same free account. The durable remedies are to upgrade the Cloudflare account to Workers Paid or isolate/stop the unrelated workload. Do not modify `customjobseek` from this repository. Cloudflare documents the shared daily allowance and reset at https://developers.cloudflare.com/d1/platform/pricing/ and https://developers.cloudflare.com/d1/platform/limits/.
+
+The owner explicitly declined a billing-plan change on 14 October 2026. Therefore daily write outages remain an accepted external risk until that decision changes.
 
 Test login: username `dummy`, password `dummy`. It is an already-confirmed student account, never an admin. Delete it with `DELETE FROM profiles WHERE id = 'dummy-test-account'` if the site should not have it. The public config is `window.DFD_API` in `js/supabase-config.js`. Do not put the Cloudflare API token in that file.
 

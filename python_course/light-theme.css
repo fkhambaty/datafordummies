@@ -1203,15 +1203,69 @@ footer p {
 /* ════════════════════════════════════
    Responsive Design
    ════════════════════════════════════ */
+@media (min-width: 769px) and (max-width: 900px) {
+  .main-nav, .course-nav {
+    padding: 10px 12px;
+  }
+
+  .nav-content, .nav-inner {
+    justify-content: flex-start;
+    gap: 8px;
+    max-width: 100%;
+    overflow-x: auto;
+    overscroll-behavior-inline: contain;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .nav-content::-webkit-scrollbar,
+  .nav-inner::-webkit-scrollbar {
+    display: none;
+  }
+
+  .nav-content > *,
+  .nav-inner > * {
+    flex: 0 0 auto;
+    white-space: nowrap;
+  }
+
+  .session-nav, .session-pills {
+    width: auto;
+    flex: 0 0 auto;
+    overflow: visible;
+  }
+}
+
 @media (max-width: 768px) {
   .main-nav, .course-nav {
     padding: 10px 12px;
   }
   
   .nav-content, .nav-inner {
-    flex-wrap: wrap;
-    justify-content: center;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
     gap: 8px;
+    max-width: 100%;
+    overflow-x: auto;
+    overscroll-behavior-inline: contain;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .nav-content::-webkit-scrollbar,
+  .nav-inner::-webkit-scrollbar {
+    display: none;
+  }
+
+  .nav-content > *,
+  .nav-inner > * {
+    flex: 0 0 auto;
+    white-space: nowrap;
+  }
+
+  .logo {
+    flex: 0 0 auto;
+    white-space: nowrap;
   }
   
   .nav-hub, .nav-home-link, .nav-home-btn {
@@ -1225,11 +1279,13 @@ footer p {
   }
   
   .session-nav, .session-pills {
-    order: 3;
-    width: 100%;
-    justify-content: center;
-    margin-top: 4px;
+    order: initial;
+    width: auto;
+    flex: 0 0 auto;
+    justify-content: flex-start;
+    margin-top: 0;
     padding: 3px;
+    overflow: visible;
   }
   
   .nav-link, .pill {
