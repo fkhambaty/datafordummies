@@ -6,7 +6,7 @@ Read this file, then `AGENTS.md`. The README still contains older FKTI notes und
 
 ## What it is
 
-Data For Dummies is a static learning site for data analytics and data engineering. A visitor can open course pages, practice, and (when the database is awake) sign in and pay for Pro. The pages are hand-written HTML, CSS, and JavaScript. There is no React app and no build step.
+Data For Dummies is a static learning site for data analytics and data engineering. A visitor can open course pages, practice, and (when the database is awake) sign in and pay for Pro. The pages are hand-written HTML, CSS, and JavaScript. The website has no React app and no build step. `mobile/` is a separate Expo app for phones and tablets; it is documented in `docs/MOBILE_ARCHITECTURE.md` and it does not change how the website is published.
 
 Live brand: **Data For Dummies**. The code still contains the older name FKTI in storage keys and email copy. Do not rename `fkti_analytics` in `localStorage`. The homepage does not initialize Firebase.
 
@@ -239,6 +239,23 @@ Hub pages load `js/hub-learning.js`. Reading time is the lesson word count divid
 `.github/workflows/ci.yml` runs the site verifier, the vendor stamp check, and the Worker tests. `.github/workflows/production-smoke.yml` runs every Monday against the live site: homepage, `/v1/health`, the existing dummy login, a payment call that must be refused, and homepage width at 390 and 1440. It does not create an account.
 
 Pushing `main` still publishes the static site through GitHub Pages. The Worker is published with `npx wrangler deploy` from `cloudflare/worker` after `004_completion_certificates.sql` is applied to the remote D1 database. `CHECKOUT_MODE` stays `hosted` until Razorpay approves the domain.
+
+## Mobile app
+
+`mobile/` is an Expo SDK 57 app (React Native) for the same lessons and the same account. Package id and iOS bundle id are both `in.datafordummies.app`. It is not in the stores. GitHub Pages does not serve it, and pushing `main` does not publish a phone build.
+
+The app keeps the session in the device keychain through `expo-secure-store`, under the same `dfd_session` shape that `js/supabase-auth.js` stores in `localStorage`. `DELETE /v1/account` deletes that account after the current password and the confirmation phrase `DELETE`. The keychain is cleared only when that call succeeds. The demo account cannot be deleted. The website profile page does not call this route yet. Lessons, tools, and legal pages open in a WebView that is limited to `https://datafordummies.in` and `https://www.datafordummies.in`. The injected script writes `dfd_session` only on those hosts, before the page scripts run, so the existing paywall and progress code see the signed-in account. Pricing and Razorpay hosts never load: they open a native screen that says Pro is not sold in the app. A Pro lesson still asks the Worker, through the page's own `paywall.js`, whether the account is Pro.
+
+The course list is generated from `data/course-catalog.json` by `cd mobile && npm run sync:catalog`. Icons and the splash image are generated from `logo.png` by `npm run assets`. Neither command is part of the website build.
+
+The website crawler skips `mobile/`. Checks for the app:
+
+```bash
+cd mobile
+npm run typecheck && npm run lint && npm run test:ci && npm run doctor
+```
+
+`docs/MOBILE_RELEASE.md` is the build and store note. No store binary has been produced from this tree.
 
 ## If this computer is gone
 

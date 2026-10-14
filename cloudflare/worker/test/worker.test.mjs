@@ -15,6 +15,8 @@ function wrap(sqlite) {
         bind(...params) {
           const statement = sqlite.prepare(sql);
           return {
+            sql,
+            params,
             async first() {
               const row = statement.get(...params);
               return row ?? null;
@@ -29,6 +31,18 @@ function wrap(sqlite) {
           };
         },
       };
+    },
+    async batch(statements) {
+      sqlite.exec("BEGIN IMMEDIATE");
+      try {
+        for (const statement of statements) {
+          sqlite.prepare(statement.sql).run(...statement.params);
+        }
+        sqlite.exec("COMMIT");
+      } catch (error) {
+        sqlite.exec("ROLLBACK");
+        throw error;
+      }
     },
   };
 }
@@ -268,4 +282,171 @@ test("page views record course and pro steps without storing an email", async ()
   ).all();
   assert.deepEqual(rows.map((row) => row.event_type), ["course_view", "pro_page"]);
   assert.equal(JSON.stringify(rows).includes("@"), false);
+});
+
+test("account deletion requires the password and the confirmation phrase, then removes that account only", async () => {
+  const { env, sqlite } = fresh();
+  const salt = "abcdef0123456789abcdef0123456789";
+  const passwordHash = await hashPassword("password12", salt);
+  sqlite.prepare(
+    `INSERT INTO profiles
+     (id, email, username, password_hash, password_salt, email_verified_at, role, razorpay_subscription_id, subscription_status)
+     VALUES ('learner-1', 'learner@example.com', 'learner', ?, ?, '2026-10-13T00:00:00Z', 'student', NULL, 'free')`,
+  ).run(passwordHash, salt);
+  sqlite.prepare(
+    `INSERT INTO profiles
+     (id, email, username, password_hash, password_salt, email_verified_at, role)
+     VALUES ('learner-2', 'other@example.com', 'other', ?, ?, '2026-10-13T00:00:00Z', 'student')`,
+  ).run(passwordHash, salt);
+  const login = await call(env, "/v1/login", {
+    method: "POST",
+    body: { email: "learner@example.com", password: "password12" },
+  });
+  assert.equal(login.status, 200);
+  const token = login.body.token;
+  sqlite.prepare(
+    "INSERT INTO user_progress (user_id, course_id, completed_lesson_ids, progress_pct) VALUES ('learner-1', 'snowflake', '[]', 0)",
+  ).run();
+  sqlite.prepare(
+    "INSERT INTO lesson_completions (user_id, course_id, lesson_id, completed_at) VALUES ('learner-1', 'snowflake', 'meet-snowflake', '2026-10-14T00:00:00Z')",
+  ).run();
+  sqlite.prepare(
+    `INSERT INTO certificate_requests (id, user_id, course_id, status, evidence_json, requested_at)
+     VALUES ('cert-1', 'learner-1', 'snowflake', 'requested', '[]', '2026-10-14T00:00:00Z')`,
+  ).run();
+  sqlite.prepare(
+    `INSERT INTO email_codes (email, purpose, code_hash, expires_at, attempts, created_at)
+     VALUES ('learner@example.com', 'reset', 'hash', '2026-10-14T00:15:00Z', 0, '2026-10-14T00:00:00Z')`,
+  ).run();
+  sqlite.prepare(
+    `INSERT INTO razorpay_subscriptions
+     (razorpay_subscription_id, user_id, plan, status, created_at, updated_at)
+     VALUES ('sub_old', 'learner-1', 'monthly', 'cancelled', '2026-10-01T00:00:00Z', '2026-10-01T00:00:00Z')`,
+  ).run();
+  sqlite.prepare(
+    `INSERT INTO razorpay_payments
+     (razorpay_payment_id, razorpay_subscription_id, user_id, amount, currency, status, paid_at)
+     VALUES ('pay_old', 'sub_old', 'learner-1', 1000, 'INR', 'captured', '2026-10-01T00:00:00Z')`,
+  ).run();
+  sqlite.prepare(
+    "INSERT INTO razorpay_webhook_events (event_id, event_type) VALUES ('evt_1', 'subscription.charged')",
+  ).run();
+  sqlite.prepare(
+    "INSERT INTO page_views (visitor_id, page_path, user_id) VALUES ('visitor-1', '/index.html', 'learner-1'), ('visitor-2', '/index.html', 'learner-2')",
+  ).run();
+  sqlite.prepare(
+    "INSERT INTO analytics_events (visitor_id, event_type, user_id) VALUES ('visitor-1', 'signup', 'learner-1')",
+  ).run();
+  sqlite.prepare(
+    "INSERT INTO site_visitors (visitor_id, is_registered, user_id) VALUES ('visitor-1', 1, 'learner-1')",
+  ).run();
+
+  const missing = await call(env, "/v1/account", { method: "DELETE", body: { password: "password12", confirmation: "DELETE" } });
+  assert.equal(missing.status, 401);
+  const phrase = await call(env, "/v1/account", {
+    method: "DELETE",
+    token,
+    body: { password: "password12", confirmation: "delete" },
+  });
+  assert.equal(phrase.status, 400);
+  const wrong = await call(env, "/v1/account", {
+    method: "DELETE",
+    token,
+    body: { password: "not-the-password", confirmation: "DELETE" },
+  });
+  assert.equal(wrong.status, 401);
+  assert.equal(sqlite.prepare("SELECT COUNT(*) AS n FROM profiles WHERE id = 'learner-1'").get().n, 1);
+
+  const deleted = await call(env, "/v1/account", {
+    method: "DELETE",
+    token,
+    body: { password: "password12", confirmation: "DELETE" },
+  });
+  assert.equal(deleted.status, 200);
+  assert.equal(deleted.body.ok, true);
+  assert.equal(sqlite.prepare("SELECT COUNT(*) AS n FROM profiles WHERE id = 'learner-1'").get().n, 0);
+  assert.equal(sqlite.prepare("SELECT COUNT(*) AS n FROM profiles WHERE id = 'learner-2'").get().n, 1);
+  assert.equal(sqlite.prepare("SELECT COUNT(*) AS n FROM sessions WHERE user_id = 'learner-1'").get().n, 0);
+  assert.equal(sqlite.prepare("SELECT COUNT(*) AS n FROM user_progress").get().n, 0);
+  assert.equal(sqlite.prepare("SELECT COUNT(*) AS n FROM lesson_completions").get().n, 0);
+  assert.equal(sqlite.prepare("SELECT COUNT(*) AS n FROM certificate_requests").get().n, 0);
+  assert.equal(sqlite.prepare("SELECT COUNT(*) AS n FROM email_codes").get().n, 0);
+  assert.equal(sqlite.prepare("SELECT COUNT(*) AS n FROM razorpay_subscriptions").get().n, 0);
+  assert.equal(sqlite.prepare("SELECT COUNT(*) AS n FROM razorpay_payments").get().n, 0);
+  assert.equal(sqlite.prepare("SELECT COUNT(*) AS n FROM razorpay_webhook_events").get().n, 1);
+  assert.equal(sqlite.prepare("SELECT COUNT(*) AS n FROM page_views WHERE user_id = 'learner-1'").get().n, 0);
+  assert.equal(sqlite.prepare("SELECT COUNT(*) AS n FROM page_views WHERE user_id = 'learner-2'").get().n, 1);
+  assert.equal(sqlite.prepare("SELECT COUNT(*) AS n FROM analytics_events").get().n, 0);
+  const visitor = sqlite.prepare("SELECT user_id, is_registered FROM site_visitors WHERE visitor_id = 'visitor-1'").get();
+  assert.equal(visitor.user_id, null);
+  assert.equal(visitor.is_registered, 0);
+  const session = await call(env, "/v1/session", { token });
+  assert.equal(session.status, 200);
+  assert.equal(session.body.user, null);
+});
+
+test("the demo account cannot be deleted", async () => {
+  const { env, sqlite } = fresh();
+  const salt = "0123456789abcdef0123456789abcdef";
+  sqlite.prepare(
+    `INSERT INTO profiles
+     (id, email, username, password_hash, password_salt, email_verified_at, role)
+     VALUES ('dummy-test-account', 'dummy@example.com', 'dummy', ?, ?, '2026-10-13T00:00:00Z', 'student')`,
+  ).run(await hashPassword("dummy", salt), salt);
+  const login = await call(env, "/v1/login", { method: "POST", body: { email: "dummy", password: "dummy" } });
+  const deleted = await call(env, "/v1/account", {
+    method: "DELETE",
+    token: login.body.token,
+    body: { password: "dummy", confirmation: "DELETE" },
+  });
+  assert.equal(deleted.status, 403);
+  assert.equal(sqlite.prepare("SELECT COUNT(*) AS n FROM profiles").get().n, 1);
+});
+
+test("an active subscription is cancelled before the account is deleted, or the account stays", async () => {
+  const { env, sqlite } = fresh();
+  env.RAZORPAY_KEY_ID = "rzp_test_example";
+  env.RAZORPAY_KEY_SECRET = "test-secret";
+  const salt = "fedcba9876543210fedcba9876543210";
+  sqlite.prepare(
+    `INSERT INTO profiles
+     (id, email, username, password_hash, password_salt, email_verified_at, role, subscription_status, razorpay_subscription_id)
+     VALUES ('learner-1', 'learner@example.com', 'learner', ?, ?, '2026-10-13T00:00:00Z', 'student', 'active', 'sub_live')`,
+  ).run(await hashPassword("password12", salt), salt);
+  const login = await call(env, "/v1/login", {
+    method: "POST",
+    body: { email: "learner@example.com", password: "password12" },
+  });
+  const original = globalThis.fetch;
+  const calls = [];
+  globalThis.fetch = async (url) => {
+    calls.push(String(url));
+    return new Response("{}", { status: 500 });
+  };
+  try {
+    const refused = await call(env, "/v1/account", {
+      method: "DELETE",
+      token: login.body.token,
+      body: { password: "password12", confirmation: "DELETE" },
+    });
+    assert.equal(refused.status, 502);
+    assert.match(refused.body.error, /not deleted/);
+    assert.equal(sqlite.prepare("SELECT COUNT(*) AS n FROM profiles").get().n, 1);
+    assert.equal(calls.some((url) => url.endsWith("/subscriptions/sub_live/cancel")), true);
+
+    globalThis.fetch = async (url, init) => {
+      calls.push(`${init?.method || "GET"} ${url}`);
+      return Response.json({ id: "sub_live", status: "cancelled" });
+    };
+    const deleted = await call(env, "/v1/account", {
+      method: "DELETE",
+      token: login.body.token,
+      body: { password: "password12", confirmation: "DELETE" },
+    });
+    assert.equal(deleted.status, 200);
+    assert.equal(sqlite.prepare("SELECT COUNT(*) AS n FROM profiles").get().n, 0);
+    assert.equal(sqlite.prepare("SELECT COUNT(*) AS n FROM sessions").get().n, 0);
+  } finally {
+    globalThis.fetch = original;
+  }
 });

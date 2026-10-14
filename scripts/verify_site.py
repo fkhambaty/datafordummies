@@ -32,7 +32,7 @@ from pathlib import Path
 from urllib.parse import unquote
 
 ROOT = Path(__file__).resolve().parents[1]
-SKIP_PARTS = {".git", "node_modules", "supabase"}
+SKIP_PARTS = {".git", "node_modules", "supabase", "mobile"}
 STUB_LINE_LIMIT = 120
 BOILERPLATE = (
     "every concept is broken down into simple analogies that anyone can understand",

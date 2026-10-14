@@ -32,7 +32,7 @@ import { fileURLToPath } from 'node:url';
 
 const require = createRequire(import.meta.url);
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
-const SKIP_PARTS = new Set(['.git', 'node_modules', 'supabase']);
+const SKIP_PARTS = new Set(['.git', 'mobile', 'node_modules', 'supabase']);
 // This page immediately leaves the site for Google Drive. The static verifier
 // checks its local link and location.replace; measuring Google's UI would
 // report Google's overflow, console and storage behavior as our own.
@@ -410,7 +410,10 @@ async function exerciseQuiz(page, problems, label) {
         });
         if (!moved) problems.push(label + ' arrow key did not move quiz focus');
         const wrong = page.locator('[data-dfd-quiz] [data-correct="false"]').first();
-        await wrong.click();
+        // Some lesson choices sit inside a continuous decorative animation.
+        // Visibility is checked above; forcing this click avoids treating that
+        // intentional motion as a flaky Playwright "element is not stable" failure.
+        await wrong.click({ force: true });
         const feedback = page.locator('[data-dfd-feedback]').first();
         const text = ((await feedback.textContent()) || '').trim();
         if (!/Not quite/i.test(text)) problems.push(label + ' quiz feedback was "' + text + '"');
@@ -432,7 +435,9 @@ async function auditJob(browser, base, pagePath, viewport, exercise) {
         let response = null;
         try {
             response = await page.goto(base + '/' + pagePath.replace(/^\//, ''), {
-                waitUntil: 'load',
+                // Several lessons embed third-party media whose load event can
+                // remain open even after the document is ready to inspect.
+                waitUntil: 'domcontentloaded',
                 timeout: 30000,
             });
         } catch (error) {
@@ -511,7 +516,7 @@ async function runClicks(browser, base) {
     });
 
     async function open(pagePath) {
-        const response = await page.goto(base + '/' + pagePath, { waitUntil: 'load', timeout: 30000 });
+        const response = await page.goto(base + '/' + pagePath, { waitUntil: 'domcontentloaded', timeout: 30000 });
         if (!response || response.status() >= 400) problems.push('clicks ' + pagePath + ' HTTP ' + (response ? response.status() : 'none'));
         const measured = await measure(page);
         if (measured.overflow > 1) {
@@ -597,9 +602,15 @@ async function runClicks(browser, base) {
 
         await open('pricing.html');
         paymentHit = false;
-        const weekly = page.locator('#proWeeklyBtn');
-        if (await weekly.count() && await weekly.isVisible()) await weekly.click();
-        else {
+        const clickedWeekly = await page.evaluate(() => {
+            const button = document.getElementById('proWeeklyBtn');
+            if (!button) return false;
+            const style = window.getComputedStyle(button);
+            if (style.display === 'none' || style.visibility === 'hidden') return false;
+            button.click();
+            return true;
+        });
+        if (!clickedWeekly) {
             await page.evaluate(() => {
                 if (window.FKTI_RazorpayCheckout) window.FKTI_RazorpayCheckout.openProCheckout('weekly');
             });

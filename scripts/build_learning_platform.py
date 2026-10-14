@@ -22,7 +22,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 SITE = "https://datafordummies.in"
-SKIP_PARTS = {".git", "node_modules", "supabase"}
+SKIP_PARTS = {".git", "node_modules", "supabase", "mobile"}
 EXCLUDE_COURSES = {"example", "python-practice"}
 CHECKED_ON = "2026-10-13"
 ESTIMATE = (

@@ -1,0 +1,1575 @@
+{
+  "source": "data/course-catalog.json",
+  "generatedOn": "2026-10-13",
+  "estimate": "Reading time is the lesson word count divided by 180, with a floor of 4 minutes and a ceiling of 40. It is not a classroom hour.",
+  "courses": [
+    {
+      "id": "airflow",
+      "title": "Apache Airflow",
+      "hub": "airflow_course/hub.html",
+      "accent": "#0d9488",
+      "minutes": 210,
+      "prerequisites": "Read the lessons in the order listed. Each one assumes you read the previous lesson in this course. No other course on this site is required first.",
+      "outcomes": "From \"What is Airflow?\" to production-grade orchestration. Every concept explained like you're 5 years old!",
+      "capstoneNote": "This course has no separate capstone page. Finishing means every lesson in this list is saved on the account. That save is not an issued certificate and not a vendor exam.",
+      "vendorNote": "Lessons were framed on 13 October 2026 for Apache Airflow 3.3.2.",
+      "lessons": [
+        {
+          "id": "meet-airflow",
+          "href": "airflow_course/meet-airflow.html",
+          "label": "Module 1: Meet Apache Airflow",
+          "minutes": 18,
+          "access": "free"
+        },
+        {
+          "id": "first-dag",
+          "href": "airflow_course/first-dag.html",
+          "label": "Module 2: Your First DAG",
+          "minutes": 15,
+          "access": "pro"
+        },
+        {
+          "id": "scheduling",
+          "href": "airflow_course/scheduling.html",
+          "label": "Module 3: Scheduling Mastery",
+          "minutes": 14,
+          "access": "pro"
+        },
+        {
+          "id": "operators",
+          "href": "airflow_course/operators.html",
+          "label": "Module 4: Operators Deep Dive",
+          "minutes": 14,
+          "access": "pro"
+        },
+        {
+          "id": "dependencies",
+          "href": "airflow_course/dependencies.html",
+          "label": "Module 5: Task Dependencies",
+          "minutes": 14,
+          "access": "pro"
+        },
+        {
+          "id": "templating",
+          "href": "airflow_course/templating.html",
+          "label": "Module 6: Templating & Context",
+          "minutes": 11,
+          "access": "pro"
+        },
+        {
+          "id": "sensors",
+          "href": "airflow_course/sensors.html",
+          "label": "Module 7: Sensors & Triggers",
+          "minutes": 14,
+          "access": "pro"
+        },
+        {
+          "id": "xcom",
+          "href": "airflow_course/xcom.html",
+          "label": "Module 8: XCom & TaskFlow API",
+          "minutes": 12,
+          "access": "pro"
+        },
+        {
+          "id": "variables-connections",
+          "href": "airflow_course/variables-connections.html",
+          "label": "Module 9: Variables & Connections",
+          "minutes": 10,
+          "access": "pro"
+        },
+        {
+          "id": "custom-components",
+          "href": "airflow_course/custom-components.html",
+          "label": "Module 10: Custom Components",
+          "minutes": 12,
+          "access": "pro"
+        },
+        {
+          "id": "testing",
+          "href": "airflow_course/testing.html",
+          "label": "Module 11: Testing Airflow",
+          "minutes": 10,
+          "access": "pro"
+        },
+        {
+          "id": "containers",
+          "href": "airflow_course/containers.html",
+          "label": "Module 12: Containers & Airflow",
+          "minutes": 11,
+          "access": "pro"
+        },
+        {
+          "id": "best-practices",
+          "href": "airflow_course/best-practices.html",
+          "label": "Module 13: Best Practices",
+          "minutes": 14,
+          "access": "pro"
+        },
+        {
+          "id": "production",
+          "href": "airflow_course/production.html",
+          "label": "Module 14: Production Operations",
+          "minutes": 14,
+          "access": "pro"
+        },
+        {
+          "id": "security-cloud",
+          "href": "airflow_course/security-cloud.html",
+          "label": "Module 15: Security & Cloud",
+          "minutes": 11,
+          "access": "pro"
+        },
+        {
+          "id": "certification-hub",
+          "href": "airflow_course/certification-hub.html",
+          "label": "Airflow Certification",
+          "minutes": 4,
+          "access": "free"
+        },
+        {
+          "id": "certification-admin",
+          "href": "airflow_course/certification-admin.html",
+          "label": "Airflow Certification Answers",
+          "minutes": 4,
+          "access": "free"
+        },
+        {
+          "id": "certification-student",
+          "href": "airflow_course/certification-student.html",
+          "label": "Airflow Certification Practice",
+          "minutes": 4,
+          "access": "free"
+        },
+        {
+          "id": "certification",
+          "href": "airflow_course/certification.html",
+          "label": "Airflow Certification",
+          "minutes": 4,
+          "access": "free"
+        }
+      ]
+    },
+    {
+      "id": "clickhouse",
+      "title": "ClickHouse",
+      "hub": "clickhouse_course/hub.html",
+      "accent": "#ca8a04",
+      "minutes": 49,
+      "prerequisites": "Read the lessons in the order listed. Each one assumes you read the previous lesson in this course. No other course on this site is required first.",
+      "outcomes": "From \"What is ClickHouse?\" to building blazing-fast analytics at petabyte scale. Every concept explained like you're 5!",
+      "capstoneNote": "This course has no separate capstone page. Finishing means every lesson in this list is saved on the account. That save is not an issued certificate and not a vendor exam.",
+      "vendorNote": "Lessons were framed on 13 October 2026 for MergeTree, the JSON type since 25.3, and ClickHouse Cloud SharedMergeTree.",
+      "lessons": [
+        {
+          "id": "meet-clickhouse",
+          "href": "clickhouse_course/meet-clickhouse.html",
+          "label": "Meet ClickHouse",
+          "minutes": 7,
+          "access": "free"
+        },
+        {
+          "id": "installation",
+          "href": "clickhouse_course/installation.html",
+          "label": "Installation & Setup | ClickHouse Course",
+          "minutes": 4,
+          "access": "pro"
+        },
+        {
+          "id": "architecture",
+          "href": "clickhouse_course/architecture.html",
+          "label": "Architecture Deep Dive | ClickHouse Course",
+          "minutes": 5,
+          "access": "pro"
+        },
+        {
+          "id": "table-engines",
+          "href": "clickhouse_course/table-engines.html",
+          "label": "Table Engines & MergeTree | ClickHouse Course",
+          "minutes": 4,
+          "access": "pro"
+        },
+        {
+          "id": "data-types",
+          "href": "clickhouse_course/data-types.html",
+          "label": "Data Types & Schema Design | ClickHouse Course",
+          "minutes": 4,
+          "access": "pro"
+        },
+        {
+          "id": "querying",
+          "href": "clickhouse_course/querying.html",
+          "label": "SQL Queries & Aggregations | ClickHouse Course",
+          "minutes": 5,
+          "access": "pro"
+        },
+        {
+          "id": "advanced-sql",
+          "href": "clickhouse_course/advanced-sql.html",
+          "label": "Advanced SQL & Functions | ClickHouse Course",
+          "minutes": 4,
+          "access": "pro"
+        },
+        {
+          "id": "performance",
+          "href": "clickhouse_course/performance.html",
+          "label": "Performance & Optimization | ClickHouse Course",
+          "minutes": 4,
+          "access": "pro"
+        },
+        {
+          "id": "materialized-views",
+          "href": "clickhouse_course/materialized-views.html",
+          "label": "Materialized Views | ClickHouse Course",
+          "minutes": 4,
+          "access": "pro"
+        },
+        {
+          "id": "replication-sharding",
+          "href": "clickhouse_course/replication-sharding.html",
+          "label": "Replication & Sharding | ClickHouse Course",
+          "minutes": 4,
+          "access": "pro"
+        },
+        {
+          "id": "production",
+          "href": "clickhouse_course/production.html",
+          "label": "Production & Use Cases | ClickHouse Course",
+          "minutes": 4,
+          "access": "pro"
+        }
+      ]
+    },
+    {
+      "id": "data-science",
+      "title": "Data Science",
+      "hub": "data_science_course/index.html",
+      "accent": "#4f46e5",
+      "minutes": 425,
+      "prerequisites": "Read the lessons in the order listed. Each one assumes you read the previous lesson in this course. No other course on this site is required first.",
+      "outcomes": "From zero programming knowledge to building real machine learning models. Every concept explained like you're 5 years old!",
+      "capstoneNote": "This course has no separate capstone page. Finishing means every lesson in this list is saved on the account. That save is not an issued certificate and not a vendor exam.",
+      "vendorNote": "The course hub is data_science_course/index.html. data-science-basics.html remains a separate overview page.",
+      "lessons": [
+        {
+          "id": "data-science",
+          "href": "data-science.html",
+          "label": "Data Science Fundamentals | Fakhruddin Khambaty's Learning Hub",
+          "minutes": 4,
+          "access": "free"
+        },
+        {
+          "id": "datasets",
+          "href": "data_science_course/datasets.html",
+          "label": "Download Datasets | Data Science Course",
+          "minutes": 4,
+          "access": "pro"
+        },
+        {
+          "id": "python-basics",
+          "href": "data_science_course/python-basics.html",
+          "label": "Python Basics (From Zero) | Fakhruddin Khambaty's Learning Hub",
+          "minutes": 10,
+          "access": "free"
+        },
+        {
+          "id": "python-data-structures",
+          "href": "data_science_course/python-data-structures.html",
+          "label": "Python Data Structures (Lists, Tuples, Sets, Dicts) | Fakhruddin Khambaty's Learning Hub",
+          "minutes": 7,
+          "access": "free"
+        },
+        {
+          "id": "math-foundations",
+          "href": "data_science_course/math-foundations.html",
+          "label": "Math for Data Science (For Complete Beginners) | Fakhruddin Khambaty's Learning Hub",
+          "minutes": 14,
+          "access": "free"
+        },
+        {
+          "id": "statistics-foundations",
+          "href": "data_science_course/statistics-foundations.html",
+          "label": "Statistics for Data Science (Super Simple) | Fakhruddin Khambaty's Learning Hub",
+          "minutes": 16,
+          "access": "free"
+        },
+        {
+          "id": "missing-values-outliers",
+          "href": "data_science_course/missing-values-outliers.html",
+          "label": "Missing Values & Outliers | Fakhruddin Khambaty's Learning Hub",
+          "minutes": 6,
+          "access": "pro"
+        },
+        {
+          "id": "hypothesis-testing",
+          "href": "data_science_course/hypothesis-testing.html",
+          "label": "Hypothesis Testing | Fakhruddin Khambaty's Learning Hub",
+          "minutes": 16,
+          "access": "pro"
+        },
+        {
+          "id": "ml-introduction",
+          "href": "data_science_course/ml-introduction.html",
+          "label": "Introduction to Machine Learning | Fakhruddin Khambaty's Learning Hub",
+          "minutes": 10,
+          "access": "free"
+        },
+        {
+          "id": "linear-regression",
+          "href": "data_science_course/linear-regression.html",
+          "label": "Linear Regression (Super Detailed) | Fakhruddin Khambaty's Learning Hub",
+          "minutes": 19,
+          "access": "pro"
+        },
+        {
+          "id": "bias-variance",
+          "href": "data_science_course/bias-variance.html",
+          "label": "Bias, Variance & Gradient Descent | Fakhruddin Khambaty's Learning Hub",
+          "minutes": 17,
+          "access": "pro"
+        },
+        {
+          "id": "logistic-regression",
+          "href": "data_science_course/logistic-regression.html",
+          "label": "Logistic Regression - Complete Guide | Fakhruddin Khambaty's Learning Hub",
+          "minutes": 26,
+          "access": "pro"
+        },
+        {
+          "id": "k-nearest-neighbors",
+          "href": "data_science_course/k-nearest-neighbors.html",
+          "label": "k-Nearest Neighbors (kNN) | Fakhruddin Khambaty's Learning Hub",
+          "minutes": 15,
+          "access": "pro"
+        },
+        {
+          "id": "support-vector-machines",
+          "href": "data_science_course/support-vector-machines.html",
+          "label": "Support Vector Machines (SVM) | Fakhruddin Khambaty's Learning Hub",
+          "minutes": 31,
+          "access": "pro"
+        },
+        {
+          "id": "svm-code-walkthrough",
+          "href": "data_science_course/svm-code-walkthrough.html",
+          "label": "SVM Code Walkthrough – Bank Churn | Data Science Course",
+          "minutes": 13,
+          "access": "pro"
+        },
+        {
+          "id": "decision-trees",
+          "href": "data_science_course/decision-trees.html",
+          "label": "Decision Trees & Random Forest | Fakhruddin Khambaty's Learning Hub",
+          "minutes": 8,
+          "access": "pro"
+        },
+        {
+          "id": "random-forest-code-walkthrough",
+          "href": "data_science_course/random-forest-code-walkthrough.html",
+          "label": "Random Forest – Ultra-Detailed Guide & Car Evaluation | Data Science Course",
+          "minutes": 18,
+          "access": "pro"
+        },
+        {
+          "id": "boosting",
+          "href": "data_science_course/boosting.html",
+          "label": "Bagging & Boosting | Fakhruddin Khambaty's Learning Hub",
+          "minutes": 8,
+          "access": "pro"
+        },
+        {
+          "id": "clustering",
+          "href": "data_science_course/clustering.html",
+          "label": "Clustering | Fakhruddin Khambaty's Learning Hub",
+          "minutes": 32,
+          "access": "pro"
+        },
+        {
+          "id": "kmeans-code-walkthrough",
+          "href": "data_science_course/kmeans-code-walkthrough.html",
+          "label": "K-Means Clustering Code – Line by Line | Data Science Course",
+          "minutes": 24,
+          "access": "pro"
+        },
+        {
+          "id": "deep-learning",
+          "href": "data_science_course/deep-learning.html",
+          "label": "Deep Learning & Neural Networks | Fakhruddin Khambaty's Learning Hub",
+          "minutes": 8,
+          "access": "pro"
+        },
+        {
+          "id": "deep-learning-cnn-time-series",
+          "href": "data_science_course/deep-learning-cnn-time-series.html",
+          "label": "CNNs & Time Series | Fakhruddin Khambaty's Learning Hub",
+          "minutes": 4,
+          "access": "pro"
+        },
+        {
+          "id": "nlp-basics",
+          "href": "data_science_course/nlp-basics.html",
+          "label": "Natural Language Processing (NLP) | Fakhruddin Khambaty's Learning Hub",
+          "minutes": 8,
+          "access": "pro"
+        },
+        {
+          "id": "nlp-cleansing-applications",
+          "href": "data_science_course/nlp-cleansing-applications.html",
+          "label": "NLP: Data Cleansing & Applications | Fakhruddin Khambaty's Learning Hub",
+          "minutes": 4,
+          "access": "pro"
+        },
+        {
+          "id": "ab-testing",
+          "href": "data_science_course/ab-testing.html",
+          "label": "A/B Testing (Split Testing) | Fakhruddin Khambaty's Learning Hub",
+          "minutes": 9,
+          "access": "pro"
+        },
+        {
+          "id": "market-basket-analysis",
+          "href": "data_science_course/market-basket-analysis.html",
+          "label": "Market Basket Analysis | Fakhruddin Khambaty's Learning Hub",
+          "minutes": 9,
+          "access": "pro"
+        },
+        {
+          "id": "explainable-ai",
+          "href": "data_science_course/explainable-ai.html",
+          "label": "Explainable AI (XAI) | Fakhruddin Khambaty's Learning Hub",
+          "minutes": 4,
+          "access": "pro"
+        },
+        {
+          "id": "gen-ai-intro",
+          "href": "data_science_course/gen-ai-intro.html",
+          "label": "Introduction to Gen AI | Fakhruddin Khambaty's Learning Hub",
+          "minutes": 4,
+          "access": "pro"
+        },
+        {
+          "id": "data-science-basics",
+          "href": "data-science-basics.html",
+          "label": "Data Science Fundamentals | Fakhruddin Khambaty's Learning Hub",
+          "minutes": 40,
+          "access": "free"
+        },
+        {
+          "id": "classification",
+          "href": "data_science_course/classification.html",
+          "label": "Classification Algorithms | Fakhruddin Khambaty's Learning Hub",
+          "minutes": 8,
+          "access": "pro"
+        },
+        {
+          "id": "linear-regression-code-walkthrough",
+          "href": "data_science_course/linear-regression-code-walkthrough.html",
+          "label": "Linear Regression Code – Line by Line | Data Science Course",
+          "minutes": 11,
+          "access": "pro"
+        },
+        {
+          "id": "logistic-regression-code-walkthrough",
+          "href": "data_science_course/logistic-regression-code-walkthrough.html",
+          "label": "Logistic Regression Code – Line by Line | Data Science Course",
+          "minutes": 4,
+          "access": "pro"
+        },
+        {
+          "id": "nlp",
+          "href": "data_science_course/nlp.html",
+          "label": "NLP - Natural Language Processing | Fakhruddin Khambaty's Learning Hub",
+          "minutes": 8,
+          "access": "pro"
+        },
+        {
+          "id": "regularization-code-walkthrough",
+          "href": "data_science_course/regularization-code-walkthrough.html",
+          "label": "Regularization Code – Line by Line | Data Science Course",
+          "minutes": 6,
+          "access": "pro"
+        }
+      ]
+    },
+    {
+      "id": "dbt",
+      "title": "dbt",
+      "hub": "dbt_course/hub.html",
+      "accent": "#ff694a",
+      "minutes": 200,
+      "prerequisites": "Read the lessons in the order listed. Each one assumes you read the previous lesson in this course. No other course on this site is required first.",
+      "outcomes": "From \"What is dbt?\" to building production data pipelines. Every concept explained like you're 5 years old, with animations and real-world examples!",
+      "capstoneNote": "This course has no separate capstone page. Finishing means every lesson in this list is saved on the account. That save is not an issued certificate and not a vendor exam.",
+      "vendorNote": "Lessons were framed on 13 October 2026 for the dbt Developer Hub, Fusion v2.0.8, and dbt-core as the Apache-licensed runtime.",
+      "lessons": [
+        {
+          "id": "history",
+          "href": "dbt_course/history.html",
+          "label": "Lesson 2: History & Evolution of dbt",
+          "minutes": 17,
+          "access": "pro"
+        },
+        {
+          "id": "meet-dbt",
+          "href": "dbt_course/meet-dbt.html",
+          "label": "Meet dbt — Your Data's Best Friend",
+          "minutes": 13,
+          "access": "free"
+        },
+        {
+          "id": "installation",
+          "href": "dbt_course/installation.html",
+          "label": "Installation & Setup | dbt Course",
+          "minutes": 17,
+          "access": "pro"
+        },
+        {
+          "id": "project-structure",
+          "href": "dbt_course/project-structure.html",
+          "label": "Project Structure | dbt Course",
+          "minutes": 15,
+          "access": "pro"
+        },
+        {
+          "id": "models",
+          "href": "dbt_course/models.html",
+          "label": "Models & Materializations | dbt Course",
+          "minutes": 19,
+          "access": "pro"
+        },
+        {
+          "id": "sources-refs",
+          "href": "dbt_course/sources-refs.html",
+          "label": "Sources, Refs & Lineage | dbt Course",
+          "minutes": 13,
+          "access": "pro"
+        },
+        {
+          "id": "testing",
+          "href": "dbt_course/testing.html",
+          "label": "Testing & Data Quality | dbt Course",
+          "minutes": 18,
+          "access": "pro"
+        },
+        {
+          "id": "documentation",
+          "href": "dbt_course/documentation.html",
+          "label": "Documentation & Lineage | dbt Course",
+          "minutes": 14,
+          "access": "pro"
+        },
+        {
+          "id": "jinja-macros",
+          "href": "dbt_course/jinja-macros.html",
+          "label": "Jinja & Macros | dbt Course",
+          "minutes": 17,
+          "access": "pro"
+        },
+        {
+          "id": "packages-seeds",
+          "href": "dbt_course/packages-seeds.html",
+          "label": "Packages & Seeds | dbt Course",
+          "minutes": 17,
+          "access": "pro"
+        },
+        {
+          "id": "deployment",
+          "href": "dbt_course/deployment.html",
+          "label": "Deployment & CI/CD | dbt Course",
+          "minutes": 18,
+          "access": "pro"
+        },
+        {
+          "id": "advanced",
+          "href": "dbt_course/advanced.html",
+          "label": "Advanced dbt & Best Practices | dbt Course",
+          "minutes": 22,
+          "access": "pro"
+        }
+      ]
+    },
+    {
+      "id": "dms",
+      "title": "AWS Database Migration Service, from the first assessment to cutover",
+      "hub": "dms_course/hub.html",
+      "accent": "#ea580c",
+      "minutes": 44,
+      "prerequisites": "Read the lessons in the order listed. Each one assumes you read the previous lesson in this course. No other course on this site is required first.",
+      "outcomes": "Replication, endpoints, full load, CDC, schema conversion, and the difference between a task assessment and SCT. 2 lessons are free. The other 9 open with Pro.",
+      "capstoneNote": "The capstone page is one of the lessons. Saving it does not issue a certificate.",
+      "vendorNote": "Premigration assessment, DMS Schema Conversion, and the desktop AWS SCT are described as three different reports.",
+      "lessons": [
+        {
+          "id": "architecture",
+          "href": "dms_course/architecture.html",
+          "label": "How DMS is built",
+          "minutes": 4,
+          "access": "free"
+        },
+        {
+          "id": "assessment",
+          "href": "dms_course/assessment.html",
+          "label": "Assessments, SCT, and schema conversion",
+          "minutes": 4,
+          "access": "free"
+        },
+        {
+          "id": "endpoints",
+          "href": "dms_course/endpoints.html",
+          "label": "Endpoints, connectivity, and VPC",
+          "minutes": 4,
+          "access": "pro"
+        },
+        {
+          "id": "full-load",
+          "href": "dms_course/full-load.html",
+          "label": "Full load",
+          "minutes": 4,
+          "access": "pro"
+        },
+        {
+          "id": "cdc",
+          "href": "dms_course/cdc.html",
+          "label": "CDC and log positions",
+          "minutes": 4,
+          "access": "pro"
+        },
+        {
+          "id": "task-settings",
+          "href": "dms_course/task-settings.html",
+          "label": "Task settings, mappings, and transforms",
+          "minutes": 4,
+          "access": "pro"
+        },
+        {
+          "id": "schema-conversion",
+          "href": "dms_course/schema-conversion.html",
+          "label": "Schema conversion paths",
+          "minutes": 4,
+          "access": "pro"
+        },
+        {
+          "id": "validation",
+          "href": "dms_course/validation.html",
+          "label": "Validation and CloudWatch",
+          "minutes": 4,
+          "access": "pro"
+        },
+        {
+          "id": "examples",
+          "href": "dms_course/examples.html",
+          "label": "Homogeneous and heterogeneous examples",
+          "minutes": 4,
+          "access": "pro"
+        },
+        {
+          "id": "operations",
+          "href": "dms_course/operations.html",
+          "label": "Serverless, instances, cost, and troubleshooting",
+          "minutes": 4,
+          "access": "pro"
+        },
+        {
+          "id": "capstone",
+          "href": "dms_course/capstone.html",
+          "label": "Capstone",
+          "minutes": 4,
+          "access": "pro"
+        }
+      ]
+    },
+    {
+      "id": "kubernetes",
+      "title": "Kubernetes, from a laptop cluster to a production upgrade",
+      "hub": "kubernetes_course/hub.html",
+      "accent": "#326ce5",
+      "minutes": 48,
+      "prerequisites": "Read the lessons in the order listed. Each one assumes you read the previous lesson in this course. No other course on this site is required first.",
+      "outcomes": "Pods, networking, storage, security, Helm, and the managed clouds. 2 lessons are free. The other 10 open with Pro.",
+      "capstoneNote": "The capstone page is one of the lessons. Saving it does not issue a certificate.",
+      "vendorNote": "Lessons do not pin one patch release. The Gateway API 1.5 notes cited Kubernetes 1.30 or later for that release.",
+      "lessons": [
+        {
+          "id": "meet-kubernetes",
+          "href": "kubernetes_course/meet-kubernetes.html",
+          "label": "Meet Kubernetes",
+          "minutes": 4,
+          "access": "free"
+        },
+        {
+          "id": "local-setup",
+          "href": "kubernetes_course/local-setup.html",
+          "label": "Local clusters",
+          "minutes": 4,
+          "access": "free"
+        },
+        {
+          "id": "pods-deployments",
+          "href": "kubernetes_course/pods-deployments.html",
+          "label": "Pods and Deployments",
+          "minutes": 4,
+          "access": "pro"
+        },
+        {
+          "id": "services-networking",
+          "href": "kubernetes_course/services-networking.html",
+          "label": "Services, Ingress, and Gateway API",
+          "minutes": 4,
+          "access": "pro"
+        },
+        {
+          "id": "config-secrets",
+          "href": "kubernetes_course/config-secrets.html",
+          "label": "ConfigMaps and Secrets",
+          "minutes": 4,
+          "access": "pro"
+        },
+        {
+          "id": "storage-statefulsets",
+          "href": "kubernetes_course/storage-statefulsets.html",
+          "label": "Storage and StatefulSets",
+          "minutes": 4,
+          "access": "pro"
+        },
+        {
+          "id": "jobs-cronjobs",
+          "href": "kubernetes_course/jobs-cronjobs.html",
+          "label": "Jobs and CronJobs",
+          "minutes": 4,
+          "access": "pro"
+        },
+        {
+          "id": "observability",
+          "href": "kubernetes_course/observability.html",
+          "label": "Observability and debugging",
+          "minutes": 4,
+          "access": "pro"
+        },
+        {
+          "id": "security",
+          "href": "kubernetes_course/security.html",
+          "label": "Security: RBAC, NetworkPolicy, Pod Security",
+          "minutes": 4,
+          "access": "pro"
+        },
+        {
+          "id": "helm-kustomize",
+          "href": "kubernetes_course/helm-kustomize.html",
+          "label": "Helm and Kustomize",
+          "minutes": 4,
+          "access": "pro"
+        },
+        {
+          "id": "production-clouds",
+          "href": "kubernetes_course/production-clouds.html",
+          "label": "Production on EKS, GKE, and AKS",
+          "minutes": 4,
+          "access": "pro"
+        },
+        {
+          "id": "capstone",
+          "href": "kubernetes_course/capstone.html",
+          "label": "Capstone",
+          "minutes": 4,
+          "access": "pro"
+        }
+      ]
+    },
+    {
+      "id": "llm",
+      "title": "Large Language Models",
+      "hub": "llm_course/index.html",
+      "accent": "#4f46e5",
+      "minutes": 131,
+      "prerequisites": "Read the lessons in the order listed. Each one assumes you read the previous lesson in this course. No other course on this site is required first.",
+      "outcomes": "From \"What is a language model?\" all the way to building a working GPT-like text generator. Every concept explained like you're 5, then we code it for real.",
+      "capstoneNote": "The capstone page is one of the lessons. Saving it does not issue a certificate.",
+      "vendorNote": "Lessons distinguish the 2019 GPT-2 decoder from ChatGPT.",
+      "lessons": [
+        {
+          "id": "what-are-llms",
+          "href": "llm_course/what-are-llms.html",
+          "label": "What Are LLMs? | LLM Course | Fakhruddin Khambaty's Learning Hub",
+          "minutes": 14,
+          "access": "free"
+        },
+        {
+          "id": "text-to-numbers",
+          "href": "llm_course/text-to-numbers.html",
+          "label": "Text to Numbers | LLM Course | Fakhruddin Khambaty's Learning Hub",
+          "minutes": 18,
+          "access": "pro"
+        },
+        {
+          "id": "nn-refresher",
+          "href": "llm_course/nn-refresher.html",
+          "label": "Neural Network Refresher | LLM Course | Fakhruddin Khambaty's Learning Hub",
+          "minutes": 16,
+          "access": "pro"
+        },
+        {
+          "id": "attention",
+          "href": "llm_course/attention.html",
+          "label": "Attention Mechanism | LLM Course | Fakhruddin Khambaty's Learning Hub",
+          "minutes": 13,
+          "access": "pro"
+        },
+        {
+          "id": "transformer",
+          "href": "llm_course/transformer.html",
+          "label": "The Transformer Architecture | LLM Course | Fakhruddin Khambaty's Learning Hub",
+          "minutes": 17,
+          "access": "pro"
+        },
+        {
+          "id": "training",
+          "href": "llm_course/training.html",
+          "label": "Training LLMs | LLM Course | Fakhruddin Khambaty's Learning Hub",
+          "minutes": 16,
+          "access": "pro"
+        },
+        {
+          "id": "finetuning",
+          "href": "llm_course/finetuning.html",
+          "label": "Fine-Tuning LLMs | LLM Course | Fakhruddin Khambaty's Learning Hub",
+          "minutes": 11,
+          "access": "pro"
+        },
+        {
+          "id": "deployment",
+          "href": "llm_course/deployment.html",
+          "label": "Deployment & Production | LLM Course | Fakhruddin Khambaty's Learning Hub",
+          "minutes": 13,
+          "access": "pro"
+        },
+        {
+          "id": "capstone",
+          "href": "llm_course/capstone.html",
+          "label": "Capstone: Build Your Own Mini-ChatGPT | LLM Course",
+          "minutes": 13,
+          "access": "pro"
+        }
+      ]
+    },
+    {
+      "id": "metabase",
+      "title": "Metabase",
+      "hub": "metabase_course/hub.html",
+      "accent": "#509ee3",
+      "minutes": 37,
+      "prerequisites": "Read the lessons in the order listed. Each one assumes you read the previous lesson in this course. No other course on this site is required first.",
+      "outcomes": "Every concept explained like you're 5 years old with animations, real-world examples, and hands-on exercises.",
+      "capstoneNote": "This course has no separate capstone page. Finishing means every lesson in this list is saved on the account. That save is not an issued certificate and not a vendor exam.",
+      "vendorNote": "Lessons keep Cloud, self-host, embedding, models, and permissions. They do not publish an application-database password.",
+      "lessons": [
+        {
+          "id": "meet-metabase",
+          "href": "metabase_course/meet-metabase.html",
+          "label": "Meet Metabase",
+          "minutes": 4,
+          "access": "free"
+        },
+        {
+          "id": "installation",
+          "href": "metabase_course/installation.html",
+          "label": "Installation and setup",
+          "minutes": 5,
+          "access": "pro"
+        },
+        {
+          "id": "questions",
+          "href": "metabase_course/questions.html",
+          "label": "Asking questions",
+          "minutes": 4,
+          "access": "pro"
+        },
+        {
+          "id": "dashboards",
+          "href": "metabase_course/dashboards.html",
+          "label": "Building dashboards",
+          "minutes": 4,
+          "access": "pro"
+        },
+        {
+          "id": "sql-queries",
+          "href": "metabase_course/sql-queries.html",
+          "label": "SQL queries",
+          "minutes": 4,
+          "access": "pro"
+        },
+        {
+          "id": "models",
+          "href": "metabase_course/models.html",
+          "label": "Models and metrics",
+          "minutes": 4,
+          "access": "pro"
+        },
+        {
+          "id": "sharing",
+          "href": "metabase_course/sharing.html",
+          "label": "Sharing and embedding",
+          "minutes": 4,
+          "access": "pro"
+        },
+        {
+          "id": "admin",
+          "href": "metabase_course/admin.html",
+          "label": "Administration",
+          "minutes": 4,
+          "access": "pro"
+        },
+        {
+          "id": "production",
+          "href": "metabase_course/production.html",
+          "label": "Production deployment",
+          "minutes": 4,
+          "access": "pro"
+        }
+      ]
+    },
+    {
+      "id": "mssql",
+      "title": "MS SQL Server",
+      "hub": "mssql_course/hub.html",
+      "accent": "#dc2626",
+      "minutes": 61,
+      "prerequisites": "Read the lessons in the order listed. Each one assumes you read the previous lesson in this course. No other course on this site is required first.",
+      "outcomes": "From installation to advanced T-SQL, indexes, and security. Master Microsoft's enterprise database!",
+      "capstoneNote": "This course has no separate capstone page. Finishing means every lesson in this list is saved on the account. That save is not an issued certificate and not a vendor exam.",
+      "vendorNote": "Lessons were framed on 13 October 2026 for SQL Server 2017, 2019, 2022, and 2025. SQL Server 2016 extended support had ended on 15 July 2026.",
+      "lessons": [
+        {
+          "id": "meet-sql-server",
+          "href": "mssql_course/meet-sql-server.html",
+          "label": "Meet SQL Server",
+          "minutes": 7,
+          "access": "free"
+        },
+        {
+          "id": "installation-ssms",
+          "href": "mssql_course/installation-ssms.html",
+          "label": "Installation and SSMS",
+          "minutes": 5,
+          "access": "pro"
+        },
+        {
+          "id": "ssms-tour",
+          "href": "mssql_course/ssms-tour.html",
+          "label": "SSMS tour",
+          "minutes": 4,
+          "access": "pro"
+        },
+        {
+          "id": "select-where-order",
+          "href": "mssql_course/select-where-order.html",
+          "label": "SELECT WHERE ORDER BY",
+          "minutes": 4,
+          "access": "pro"
+        },
+        {
+          "id": "aggregations",
+          "href": "mssql_course/aggregations.html",
+          "label": "Aggregations",
+          "minutes": 4,
+          "access": "pro"
+        },
+        {
+          "id": "joins",
+          "href": "mssql_course/joins.html",
+          "label": "Joins",
+          "minutes": 4,
+          "access": "pro"
+        },
+        {
+          "id": "subqueries-ctes",
+          "href": "mssql_course/subqueries-ctes.html",
+          "label": "Subqueries and CTEs",
+          "minutes": 4,
+          "access": "pro"
+        },
+        {
+          "id": "creating-tables",
+          "href": "mssql_course/creating-tables.html",
+          "label": "Creating tables",
+          "minutes": 4,
+          "access": "pro"
+        },
+        {
+          "id": "tsql-basics",
+          "href": "mssql_course/tsql-basics.html",
+          "label": "T-SQL basics",
+          "minutes": 4,
+          "access": "pro"
+        },
+        {
+          "id": "indexes-performance",
+          "href": "mssql_course/indexes-performance.html",
+          "label": "Indexes and performance",
+          "minutes": 4,
+          "access": "pro"
+        },
+        {
+          "id": "backups-restore",
+          "href": "mssql_course/backups-restore.html",
+          "label": "Backups and restore",
+          "minutes": 4,
+          "access": "pro"
+        },
+        {
+          "id": "security-basics",
+          "href": "mssql_course/security-basics.html",
+          "label": "Security basics",
+          "minutes": 4,
+          "access": "pro"
+        },
+        {
+          "id": "datasets",
+          "href": "mssql_course/datasets.html",
+          "label": "Practice datasets",
+          "minutes": 5,
+          "access": "pro"
+        },
+        {
+          "id": "certification",
+          "href": "mssql_course/certification-hub.html",
+          "label": "Course practice",
+          "minutes": 4,
+          "access": "free"
+        }
+      ]
+    },
+    {
+      "id": "postgres",
+      "title": "PostgreSQL",
+      "hub": "postgres_course/hub.html",
+      "accent": "#336791",
+      "minutes": 323,
+      "prerequisites": "Read the lessons in the order listed. Each one assumes you read the previous lesson in this course. No other course on this site is required first.",
+      "outcomes": "Every module at a glance. Click any lesson to jump right in!",
+      "capstoneNote": "This course has no separate capstone page. Finishing means every lesson in this list is saved on the account. That save is not an issued certificate and not a vendor exam.",
+      "vendorNote": "Lessons were framed on 13 October 2026 for PostgreSQL 18.6 as the current major, with 17, 16, and 15 still supported. PostgreSQL 14 support was dated through 12 November 2026.",
+      "lessons": [
+        {
+          "id": "meet-postgresql",
+          "href": "postgres_course/meet-postgresql.html",
+          "label": "Meet PostgreSQL",
+          "minutes": 13,
+          "access": "free"
+        },
+        {
+          "id": "installation",
+          "href": "postgres_course/installation.html",
+          "label": "Installation and setup",
+          "minutes": 12,
+          "access": "free"
+        },
+        {
+          "id": "sql-basics",
+          "href": "postgres_course/sql-basics.html",
+          "label": "SQL basics",
+          "minutes": 24,
+          "access": "pro"
+        },
+        {
+          "id": "data-types",
+          "href": "postgres_course/data-types.html",
+          "label": "Data types",
+          "minutes": 30,
+          "access": "pro"
+        },
+        {
+          "id": "querying",
+          "href": "postgres_course/querying.html",
+          "label": "Querying",
+          "minutes": 30,
+          "access": "pro"
+        },
+        {
+          "id": "aggregations",
+          "href": "postgres_course/aggregations.html",
+          "label": "Aggregations",
+          "minutes": 25,
+          "access": "pro"
+        },
+        {
+          "id": "joins",
+          "href": "postgres_course/joins.html",
+          "label": "Joins",
+          "minutes": 30,
+          "access": "pro"
+        },
+        {
+          "id": "subqueries-ctes",
+          "href": "postgres_course/subqueries-ctes.html",
+          "label": "Subqueries and CTEs",
+          "minutes": 25,
+          "access": "pro"
+        },
+        {
+          "id": "indexes",
+          "href": "postgres_course/indexes.html",
+          "label": "Indexes",
+          "minutes": 24,
+          "access": "pro"
+        },
+        {
+          "id": "functions",
+          "href": "postgres_course/functions.html",
+          "label": "Functions",
+          "minutes": 23,
+          "access": "pro"
+        },
+        {
+          "id": "transactions",
+          "href": "postgres_course/transactions.html",
+          "label": "Transactions",
+          "minutes": 25,
+          "access": "pro"
+        },
+        {
+          "id": "json-arrays",
+          "href": "postgres_course/json-arrays.html",
+          "label": "JSON and arrays",
+          "minutes": 23,
+          "access": "pro"
+        },
+        {
+          "id": "replication",
+          "href": "postgres_course/replication.html",
+          "label": "Replication and HA",
+          "minutes": 8,
+          "access": "pro"
+        },
+        {
+          "id": "production",
+          "href": "postgres_course/production.html",
+          "label": "Production",
+          "minutes": 31,
+          "access": "pro"
+        }
+      ]
+    },
+    {
+      "id": "python",
+      "title": "Python",
+      "hub": "python_course/index.html",
+      "accent": "#4f46e5",
+      "minutes": 258,
+      "prerequisites": "Read the lessons in the order listed. Each one assumes you read the previous lesson in this course. No other course on this site is required first.",
+      "outcomes": "Learn Python from zero to data science hero. Every concept explained simply with hands-on practice!",
+      "capstoneNote": "This course has no separate capstone page. Finishing means every lesson in this list is saved on the account. That save is not an issued certificate and not a vendor exam.",
+      "vendorNote": "Sessions 13 and 14 teach matplotlib and seaborn.",
+      "lessons": [
+        {
+          "id": "s1-intro",
+          "href": "python_course/s1-intro.html",
+          "label": "Session 1: Introduction to Python | 🐍 Python Mastery",
+          "minutes": 16,
+          "access": "free"
+        },
+        {
+          "id": "s2-datatypes",
+          "href": "python_course/s2-datatypes.html",
+          "label": "Session 2: Data Types | 🐍 Python Mastery",
+          "minutes": 18,
+          "access": "free"
+        },
+        {
+          "id": "s3-loops",
+          "href": "python_course/s3-loops.html",
+          "label": "Session 3: Loops & Conditions | 🐍 Python Mastery",
+          "minutes": 19,
+          "access": "free"
+        },
+        {
+          "id": "s4-lists",
+          "href": "python_course/s4-lists.html",
+          "label": "Session 4: Lists & Tuples | 🐍 Python Mastery",
+          "minutes": 28,
+          "access": "free"
+        },
+        {
+          "id": "s5-datastructures",
+          "href": "python_course/s5-datastructures.html",
+          "label": "Session 5: Sets & Dictionaries | 🐍 Python Mastery",
+          "minutes": 27,
+          "access": "pro"
+        },
+        {
+          "id": "s6-functions1",
+          "href": "python_course/s6-functions1.html",
+          "label": "Session 6: Functions Part I",
+          "minutes": 13,
+          "access": "pro"
+        },
+        {
+          "id": "s7-functions2",
+          "href": "python_course/s7-functions2.html",
+          "label": "Session 7: Functions Part II | 🐍 Python Mastery",
+          "minutes": 19,
+          "access": "pro"
+        },
+        {
+          "id": "s8-oop",
+          "href": "python_course/s8-oop.html",
+          "label": "Session 8: Object-Oriented Programming | 🐍 Python Mastery",
+          "minutes": 13,
+          "access": "pro"
+        },
+        {
+          "id": "s9-numpy",
+          "href": "python_course/s9-numpy.html",
+          "label": "Session 9: NumPy & Comprehensions | 🐍 Python Mastery",
+          "minutes": 16,
+          "access": "pro"
+        },
+        {
+          "id": "s10-pandas1",
+          "href": "python_course/s10-pandas1.html",
+          "label": "Session 10: Pandas Part I | 🐍 Python Mastery",
+          "minutes": 15,
+          "access": "pro"
+        },
+        {
+          "id": "s11-pandas2",
+          "href": "python_course/s11-pandas2.html",
+          "label": "Session 11: Pandas Part II | 🐍 Python Mastery",
+          "minutes": 15,
+          "access": "pro"
+        },
+        {
+          "id": "s12-api-sql",
+          "href": "python_course/s12-api-sql.html",
+          "label": "Session 12: APIs & SQL | 🐍 Python Mastery",
+          "minutes": 12,
+          "access": "pro"
+        },
+        {
+          "id": "s13-dataviz",
+          "href": "python_course/s13-dataviz.html",
+          "label": "Session 13: Data Visualization",
+          "minutes": 4,
+          "access": "pro"
+        },
+        {
+          "id": "s14-enhanced-viz",
+          "href": "python_course/s14-enhanced-viz.html",
+          "label": "Session 14: Enhanced Visualization",
+          "minutes": 4,
+          "access": "pro"
+        },
+        {
+          "id": "s15-web-scraping",
+          "href": "python_course/s15-web-scraping.html",
+          "label": "Session 15: Web Scraping with Python | 🐍 Python Mastery",
+          "minutes": 9,
+          "access": "pro"
+        },
+        {
+          "id": "student-assignments",
+          "href": "python_course/student-assignments.html",
+          "label": "Student Practice | 🐍 Python Mastery",
+          "minutes": 11,
+          "access": "pro"
+        },
+        {
+          "id": "assignments",
+          "href": "python_course/assignments.html",
+          "label": "Assignments | 🐍 Python Mastery",
+          "minutes": 11,
+          "access": "pro"
+        },
+        {
+          "id": "complete-course",
+          "href": "python_course/complete-course.html",
+          "label": "🐍 Python Mastery - Complete Interactive Course",
+          "minutes": 4,
+          "access": "pro"
+        },
+        {
+          "id": "admin-assignments",
+          "href": "python_course/admin-assignments.html",
+          "label": "🔐 Instructor Solutions | Python Mastery",
+          "minutes": 4,
+          "access": "free"
+        }
+      ]
+    },
+    {
+      "id": "redshift",
+      "title": "Amazon Redshift",
+      "hub": "redshift_course/hub.html",
+      "accent": "#e47911",
+      "minutes": 36,
+      "prerequisites": "Read the lessons in the order listed. Each one assumes you read the previous lesson in this course. No other course on this site is required first.",
+      "outcomes": "Master AWS's cloud data warehouse. From basics to petabyte-scale analytics with Spectrum, Serverless, and ML.",
+      "capstoneNote": "This course has no separate capstone page. Finishing means every lesson in this list is saved on the account. That save is not an issued certificate and not a vendor exam.",
+      "vendorNote": "Lessons keep the October 2026 caveats on zero-ETL, data sharing, RA3, Serverless, and Spectrum. They do not tell a new warehouse to start on DC2.",
+      "lessons": [
+        {
+          "id": "meet-redshift",
+          "href": "redshift_course/meet-redshift.html",
+          "label": "Meet Redshift",
+          "minutes": 4,
+          "access": "free"
+        },
+        {
+          "id": "setup",
+          "href": "redshift_course/setup.html",
+          "label": "Cluster setup",
+          "minutes": 4,
+          "access": "pro"
+        },
+        {
+          "id": "architecture",
+          "href": "redshift_course/architecture.html",
+          "label": "Architecture",
+          "minutes": 4,
+          "access": "pro"
+        },
+        {
+          "id": "sql-queries",
+          "href": "redshift_course/sql-queries.html",
+          "label": "SQL queries",
+          "minutes": 4,
+          "access": "pro"
+        },
+        {
+          "id": "data-loading",
+          "href": "redshift_course/data-loading.html",
+          "label": "Data loading",
+          "minutes": 4,
+          "access": "pro"
+        },
+        {
+          "id": "table-design",
+          "href": "redshift_course/table-design.html",
+          "label": "Table design",
+          "minutes": 4,
+          "access": "pro"
+        },
+        {
+          "id": "performance",
+          "href": "redshift_course/performance.html",
+          "label": "Performance",
+          "minutes": 4,
+          "access": "pro"
+        },
+        {
+          "id": "spectrum-serverless",
+          "href": "redshift_course/spectrum-serverless.html",
+          "label": "Spectrum and Serverless",
+          "minutes": 4,
+          "access": "pro"
+        },
+        {
+          "id": "production",
+          "href": "redshift_course/production.html",
+          "label": "Production",
+          "minutes": 4,
+          "access": "pro"
+        }
+      ]
+    },
+    {
+      "id": "snowflake",
+      "title": "Snowflake, explained plainly",
+      "hub": "snowflake_course/hub.html",
+      "accent": "#0369a1",
+      "minutes": 80,
+      "prerequisites": "Read the lessons in the order listed. Each one assumes you read the previous lesson in this course. No other course on this site is required first.",
+      "outcomes": "Storage, warehouses, and cloud services stay separate. Two lessons are free. The other eleven open with Pro.",
+      "capstoneNote": "This course has no separate capstone page. Finishing means every lesson in this list is saved on the account. That save is not an issued certificate and not a vendor exam.",
+      "vendorNote": "Thirteen lessons are on the hub. Two are free. No separate vendor patch version is stamped.",
+      "lessons": [
+        {
+          "id": "meet-snowflake",
+          "href": "snowflake_course/meet-snowflake.html",
+          "label": "Meet Snowflake",
+          "minutes": 5,
+          "access": "free"
+        },
+        {
+          "id": "trial-account",
+          "href": "snowflake_course/trial-account.html",
+          "label": "Trial account and Snowsight",
+          "minutes": 5,
+          "access": "free"
+        },
+        {
+          "id": "architecture",
+          "href": "snowflake_course/architecture.html",
+          "label": "Architecture",
+          "minutes": 6,
+          "access": "pro"
+        },
+        {
+          "id": "sql-analytics",
+          "href": "snowflake_course/sql-analytics.html",
+          "label": "SQL for analytics",
+          "minutes": 6,
+          "access": "pro"
+        },
+        {
+          "id": "stages-loading",
+          "href": "snowflake_course/stages-loading.html",
+          "label": "Stages, COPY, and Snowpipe",
+          "minutes": 6,
+          "access": "pro"
+        },
+        {
+          "id": "table-design",
+          "href": "snowflake_course/table-design.html",
+          "label": "Tables, pruning, and history",
+          "minutes": 7,
+          "access": "pro"
+        },
+        {
+          "id": "warehouses-cost",
+          "href": "snowflake_course/warehouses-cost.html",
+          "label": "Warehouses and cost",
+          "minutes": 7,
+          "access": "pro"
+        },
+        {
+          "id": "streams-tasks",
+          "href": "snowflake_course/streams-tasks.html",
+          "label": "Streams, tasks, and dynamic tables",
+          "minutes": 6,
+          "access": "pro"
+        },
+        {
+          "id": "snowpark-python",
+          "href": "snowflake_course/snowpark-python.html",
+          "label": "Snowpark Python",
+          "minutes": 6,
+          "access": "pro"
+        },
+        {
+          "id": "iceberg-unstructured",
+          "href": "snowflake_course/iceberg-unstructured.html",
+          "label": "Iceberg and unstructured files",
+          "minutes": 6,
+          "access": "pro"
+        },
+        {
+          "id": "governance-horizon",
+          "href": "snowflake_course/governance-horizon.html",
+          "label": "Governance and Horizon",
+          "minutes": 6,
+          "access": "pro"
+        },
+        {
+          "id": "cortex-ai",
+          "href": "snowflake_course/cortex-ai.html",
+          "label": "Cortex AI",
+          "minutes": 7,
+          "access": "pro"
+        },
+        {
+          "id": "dbt-airflow-production",
+          "href": "snowflake_course/dbt-airflow-production.html",
+          "label": "dbt, Airflow, and production",
+          "minutes": 7,
+          "access": "pro"
+        }
+      ]
+    },
+    {
+      "id": "terraform",
+      "title": "Terraform and OpenTofu, without pretending they are the same product",
+      "hub": "terraform_course/hub.html",
+      "accent": "#7c3aed",
+      "minutes": 49,
+      "prerequisites": "Read the lessons in the order listed. Each one assumes you read the previous lesson in this course. No other course on this site is required first.",
+      "outcomes": "HCL, state, modules, workspaces, tests, HCP Terraform, and a separate OpenTofu comparison. 2 lessons are free. The other 10 open with Pro.",
+      "capstoneNote": "The capstone page is one of the lessons. Saving it does not issue a certificate.",
+      "vendorNote": "S3 locking is described as version-dependent. OpenTofu is a separate project.",
+      "lessons": [
+        {
+          "id": "meet-terraform",
+          "href": "terraform_course/meet-terraform.html",
+          "label": "Meet Terraform and OpenTofu",
+          "minutes": 4,
+          "access": "free"
+        },
+        {
+          "id": "setup",
+          "href": "terraform_course/setup.html",
+          "label": "Install and version managers",
+          "minutes": 4,
+          "access": "free"
+        },
+        {
+          "id": "hcl-resources",
+          "href": "terraform_course/hcl-resources.html",
+          "label": "HCL, providers, resources, and data",
+          "minutes": 4,
+          "access": "pro"
+        },
+        {
+          "id": "variables-outputs",
+          "href": "terraform_course/variables-outputs.html",
+          "label": "Variables, outputs, and locals",
+          "minutes": 4,
+          "access": "pro"
+        },
+        {
+          "id": "state-backends",
+          "href": "terraform_course/state-backends.html",
+          "label": "State, backends, and locking",
+          "minutes": 4,
+          "access": "pro"
+        },
+        {
+          "id": "modules",
+          "href": "terraform_course/modules.html",
+          "label": "Modules",
+          "minutes": 4,
+          "access": "pro"
+        },
+        {
+          "id": "workspaces",
+          "href": "terraform_course/workspaces.html",
+          "label": "Workspaces and environments",
+          "minutes": 4,
+          "access": "pro"
+        },
+        {
+          "id": "lifecycle-blocks",
+          "href": "terraform_course/lifecycle-blocks.html",
+          "label": "Lifecycle, import, moved, and removed",
+          "minutes": 4,
+          "access": "pro"
+        },
+        {
+          "id": "testing",
+          "href": "terraform_course/testing.html",
+          "label": "Testing and validation",
+          "minutes": 4,
+          "access": "pro"
+        },
+        {
+          "id": "ci-hcp",
+          "href": "terraform_course/ci-hcp.html",
+          "label": "CI and HCP Terraform",
+          "minutes": 4,
+          "access": "pro"
+        },
+        {
+          "id": "security-opentofu",
+          "href": "terraform_course/security-opentofu.html",
+          "label": "Security, policy, and OpenTofu",
+          "minutes": 5,
+          "access": "pro"
+        },
+        {
+          "id": "capstone",
+          "href": "terraform_course/capstone.html",
+          "label": "Capstone",
+          "minutes": 4,
+          "access": "pro"
+        }
+      ]
+    }
+  ]
+}

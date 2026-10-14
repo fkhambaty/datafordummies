@@ -1570,6 +1570,12 @@ pre {
     overflow-x: auto;
 }
 
+/* Let long inline examples shrink inside flex-based question headers. */
+.question-text {
+    min-width: 0;
+    overflow-wrap: anywhere;
+}
+
 /* October 2026 touch and motion. Session pills stay in the scrolling nav. */
 .nav-link,
 .pill,

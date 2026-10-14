@@ -13,6 +13,8 @@ Read [`ARCHITECTURE.md`](ARCHITECTURE.md) before editing. It is the map of hosti
 
 A static HTML learning site. GitHub Pages serves the files in this repository. Accounts, progress, analytics, admin data, and Pro subscription state live in the Cloudflare Worker + D1 backend. The old Supabase project and edge functions are retired.
 
+`mobile/` is a separate Expo app for the same account and the same lessons. It is not the website and it is not a second backend. Read `docs/MOBILE_ARCHITECTURE.md` before editing it. The app does not sell Pro and does not embed Razorpay. Account deletion is `DELETE /v1/account`: the current password and the confirmation phrase `DELETE`, then one database batch. The demo account cannot be deleted.
+
 ## Payments
 
 - Data For Dummies uses the FKTech EdTech Razorpay account shared only with FunBerry Kids, with product-specific plan ids and webhook secret. Okavo requires a separate marketplace merchant account.
@@ -22,7 +24,7 @@ A static HTML learning site. GitHub Pages serves the files in this repository. A
 
 ## What this product is not
 
-- Not a Next.js or Vite app. There is no build.
+- Not a Next.js or Vite website. The site has no build. `mobile/` is an Expo app with its own `package.json`; do not add that build to the website.
 - Not hosted on Vercel. `CNAME` plus GitHub Pages DNS is the production path.
 - Not FunBerry Kids and not Okavo.
 - Not a Discord community. Do not link `href="#"` and call it a forum.
@@ -53,4 +55,14 @@ python3 scripts/verify_site.py
 scripts/check_viewports.sh sweep
 ```
 
-`verify_site.py` must exit 0 with no warnings. A broken internal link, a bad `dfd-system.css` link, or a new Pro page missing `paywall.js` is a failure. `scripts/check_viewports.sh all` is the full matrix: every page at 390, 768, and 1440, representative routes at the other three target viewports, then the click path. The audit uses Playwright from `PLAYWRIGHT_MODULE` or the Okavo `node_modules` checkout. There is no site package install. It stubs local `/v1/page-view` and `/v1/event` so a CORS line is not treated as a page failure.
+`verify_site.py` must exit 0 with no warnings. A broken internal link, a bad `dfd-system.css` link, or a new Pro page missing `paywall.js` is a failure. `scripts/check_viewports.sh all` is the full matrix: every page at 390, 768, and 1440, representative routes at the other three target viewports, then the click path. The audit uses Playwright from `PLAYWRIGHT_MODULE` or the Okavo `node_modules` checkout. There is no site package install. It stubs local `/v1/page-view` and `/v1/event` so a CORS line is not treated as a page failure. The crawler skips `mobile/`.
+
+After a change inside `mobile/`:
+
+```bash
+cd mobile
+npm run typecheck
+npm run lint
+npm run test:ci
+npm run doctor
+```

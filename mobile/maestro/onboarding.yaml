@@ -1,0 +1,11 @@
+appId: in.datafordummies.app
+---
+- launchApp:
+    clearState: true
+- assertVisible: "Data, explained plainly"
+- tapOn: "Next"
+- assertVisible: "One account, web and app"
+- tapOn: "Next"
+- assertVisible: "Pro works if you already have it"
+- tapOn: "Look around first"
+- assertVisible: "Learn data the plain way"

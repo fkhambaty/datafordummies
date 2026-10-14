@@ -36,7 +36,7 @@ function json(body, status, origin) {
   if (origin) {
     headers["access-control-allow-origin"] = origin;
     headers["access-control-allow-headers"] = "authorization, content-type";
-    headers["access-control-allow-methods"] = "GET, POST, PUT, OPTIONS";
+    headers["access-control-allow-methods"] = "GET, POST, PUT, DELETE, OPTIONS";
     headers.vary = "Origin";
   }
   return new Response(status === 204 ? null : JSON.stringify(body), { status, headers });
@@ -100,6 +100,7 @@ async function readJson(request) {
 }
 
 const CODE_MINUTES = 15;
+const DELETE_CONFIRMATION = "DELETE";
 const MAX_CODE_ATTEMPTS = 5;
 const RESEND_GAP_MS = 60 * 1000;
 
@@ -742,6 +743,55 @@ export default {
         }
         const token = await createSession(db, profile.id);
         return json({ token, user: publicProfile(profile) }, 200, allowedOrigin);
+      }
+
+      if (request.method === "DELETE" && path === "/v1/account") {
+        const profile = await userFromRequest(request, db);
+        if (!profile) return json({ error: "Log in again." }, 401, allowedOrigin);
+        if (isDummyProfile(profile)) {
+          return json({ error: "This demo account cannot be deleted." }, 403, allowedOrigin);
+        }
+        const body = await readJson(request);
+        const password = String(body?.password || "");
+        const confirmation = String(body?.confirmation || "");
+        if (confirmation !== DELETE_CONFIRMATION) {
+          return json({ error: "Type DELETE to confirm." }, 400, allowedOrigin);
+        }
+        if (!profile.password_hash || !profile.password_salt || password.length < 8) {
+          return json({ error: "That password does not match this account." }, 401, allowedOrigin);
+        }
+        const passwordHash = await hashPassword(password, profile.password_salt);
+        if (passwordHash !== profile.password_hash) {
+          return json({ error: "That password does not match this account." }, 401, allowedOrigin);
+        }
+        if (profile.razorpay_subscription_id && !TERMINAL_SUBSCRIPTION_STATUSES.has(profile.subscription_status)) {
+          try {
+            await razorpayRequest(env, `/subscriptions/${encodeURIComponent(profile.razorpay_subscription_id)}/cancel`, {
+              method: "POST",
+              body: JSON.stringify({ cancel_at_cycle_end: 0 }),
+            });
+          } catch {
+            return json(
+              { error: "The subscription could not be stopped, so the account was not deleted." },
+              502,
+              allowedOrigin,
+            );
+          }
+        }
+        await db.batch([
+          db.prepare("DELETE FROM sessions WHERE user_id = ?").bind(profile.id),
+          db.prepare("DELETE FROM user_progress WHERE user_id = ?").bind(profile.id),
+          db.prepare("DELETE FROM lesson_completions WHERE user_id = ?").bind(profile.id),
+          db.prepare("DELETE FROM certificate_requests WHERE user_id = ?").bind(profile.id),
+          db.prepare("DELETE FROM email_codes WHERE email = ?").bind(profile.email),
+          db.prepare("DELETE FROM razorpay_subscriptions WHERE user_id = ?").bind(profile.id),
+          db.prepare("DELETE FROM razorpay_payments WHERE user_id = ?").bind(profile.id),
+          db.prepare("DELETE FROM page_views WHERE user_id = ?").bind(profile.id),
+          db.prepare("DELETE FROM analytics_events WHERE user_id = ?").bind(profile.id),
+          db.prepare("UPDATE site_visitors SET user_id = NULL, is_registered = 0 WHERE user_id = ?").bind(profile.id),
+          db.prepare("DELETE FROM profiles WHERE id = ?").bind(profile.id),
+        ]);
+        return json({ ok: true }, 200, allowedOrigin);
       }
 
       if (request.method === "POST" && path === "/v1/logout") {
