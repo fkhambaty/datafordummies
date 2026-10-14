@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900">
+    <defs>
+      <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+        <feDropShadow dx="0" dy="14" stdDeviation="18" flood-color="#0F172A" flood-opacity="0.12"/>
+      </filter>
+      <clipPath id="phoneClip"><rect x="1166" y="95" width="304" height="660" rx="42"/></clipPath>
+    </defs>
+    
+    
+    <rect width="1600" height="900" fill="#F7F8FC"/>
+    <circle cx="1510" cy="-30" r="245" fill="#4F46E5" opacity="0.11"/>
+    <circle cx="35" cy="910" r="210" fill="#06B6D4" opacity="0.09"/>
+    <rect x="64" y="46" width="236" height="42" rx="21" fill="#E9E7FF"/>
+    <text x="182" y="74" fill="#4F46E5" font-family="Outfit" font-size="17" font-weight="700" text-anchor="middle" opacity="1"  letter-spacing="1.1">
+    <tspan x="182" dy="0">WHY THIS PRODUCT</tspan>
+  </text>
+    <text x="64" y="132" fill="#0F172A" font-family="Outfit" font-size="48" font-weight="800" text-anchor="start" opacity="1"  letter-spacing="0">
+    <tspan x="64" dy="0">Learning data should feel</tspan><tspan x="64" dy="56">achievable</tspan>
+  </text>
+    <line x1="64" y1="842" x2="1536" y2="842" stroke="#DDE3ED" stroke-width="2"/>
+    <text x="64" y="874" fill="#536179" font-family="Arial" font-size="17" font-weight="600" text-anchor="start" opacity="1"  letter-spacing="0">
+    <tspan x="64" dy="0">Data For Dummies</tspan>
+  </text>
+    <text x="1536" y="874" fill="#536179" font-family="Arial" font-size="17" font-weight="700" text-anchor="end" opacity="1"  letter-spacing="0">
+    <tspan x="1536" dy="0">02</tspan>
+  </text>
+  
+    <text x="64" y="252" fill="#536179" font-family="Arial" font-size="30" font-weight="500" text-anchor="start" opacity="1"  letter-spacing="0">
+    <tspan x="64" dy="0">The app turns a broad, intimidating subject into a clear</tspan><tspan x="64" dy="40">next step—on the device learners already carry.</tspan>
+  </text>
+    <rect x="64" y="430" width="456" height="300" rx="28" fill="#FFFFFF" stroke="#DDE3ED" stroke-width="2"/>
+        <circle cx="126" cy="495" r="29" fill="#E9E7FF"/>
+   <text x="126" y="502.54" fill="#4F46E5" font-family="Outfit" font-size="24.94" font-weight="800" text-anchor="middle" opacity="1"  letter-spacing="0">
+    <tspan x="126" dy="0">01</tspan>
+  </text>
+        <text x="102" y="570" fill="#0F172A" font-family="Outfit" font-size="25" font-weight="800" text-anchor="start" opacity="1"  letter-spacing="0">
+    <tspan x="102" dy="0">Start without friction</tspan>
+  </text>
+        <text x="102" y="650" fill="#536179" font-family="Arial" font-size="18" font-weight="500" text-anchor="start" opacity="1"  letter-spacing="0">
+    <tspan x="102" dy="0">Browse the course catalogue and</tspan><tspan x="102" dy="25">free lessons before committing.</tspan>
+  </text><rect x="564" y="430" width="456" height="300" rx="28" fill="#FFFFFF" stroke="#DDE3ED" stroke-width="2"/>
+        <circle cx="626" cy="495" r="29" fill="#E9E7FF"/>
+   <text x="626" y="502.54" fill="#4F46E5" font-family="Outfit" font-size="24.94" font-weight="800" text-anchor="middle" opacity="1"  letter-spacing="0">
+    <tspan x="626" dy="0">02</tspan>
+  </text>
+        <text x="602" y="570" fill="#0F172A" font-family="Outfit" font-size="25" font-weight="800" text-anchor="start" opacity="1"  letter-spacing="0">
+    <tspan x="602" dy="0">Learn at your pace</tspan>
+  </text>
+        <text x="602" y="650" fill="#536179" font-family="Arial" font-size="18" font-weight="500" text-anchor="start" opacity="1"  letter-spacing="0">
+    <tspan x="602" dy="0">Read focused lessons, use practical</tspan><tspan x="602" dy="25">tools, and continue where you</tspan><tspan x="602" dy="25">stopped.</tspan>
+  </text><rect x="1064" y="430" width="456" height="300" rx="28" fill="#FFFFFF" stroke="#DDE3ED" stroke-width="2"/>
+        <circle cx="1126" cy="495" r="29" fill="#E9E7FF"/>
+   <text x="1126" y="502.54" fill="#4F46E5" font-family="Outfit" font-size="24.94" font-weight="800" text-anchor="middle" opacity="1"  letter-spacing="0">
+    <tspan x="1126" dy="0">03</tspan>
+  </text>
+        <text x="1102" y="570" fill="#0F172A" font-family="Outfit" font-size="25" font-weight="800" text-anchor="start" opacity="1"  letter-spacing="0">
+    <tspan x="1102" dy="0">See real progress</tspan>
+  </text>
+        <text x="1102" y="650" fill="#536179" font-family="Arial" font-size="18" font-weight="500" text-anchor="start" opacity="1"  letter-spacing="0">
+    <tspan x="1102" dy="0">Saved completion, course progress,</tspan><tspan x="1102" dy="25">and certificates make momentum</tspan><tspan x="1102" dy="25">visible.</tspan>
+  </text>
+  
+  </svg>

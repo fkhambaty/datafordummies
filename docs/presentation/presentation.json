@@ -1,0 +1,364 @@
+{
+  "name": "Data For Dummies",
+  "shortName": "DFD",
+  "slug": "data-for-dummies",
+  "appId": "in.datafordummies.app",
+  "font": "Outfit",
+  "bodyFont": "Arial",
+  "coverTitle": "Data skills.\nExplained plainly.",
+  "tagline": "A calm, focused mobile learning companion for people who want practical data skills without the jargon.",
+  "screenshot": "assets",
+  "palette": {
+    "bg": "#F7F8FC",
+    "cover": "#0F172A",
+    "coverInk": "#FFFFFF",
+    "coverMuted": "#CBD5E1",
+    "ink": "#0F172A",
+    "muted": "#536179",
+    "accent": "#4F46E5",
+    "secondary": "#06B6D4",
+    "tint": "#E9E7FF",
+    "card": "#FFFFFF",
+    "line": "#DDE3ED",
+    "phone": "#090C14",
+    "onAccent": "#FFFFFF"
+  },
+  "slides": [
+    {
+      "type": "cover"
+    },
+    {
+      "type": "statement",
+      "eyebrow": "Why this product",
+      "title": "Learning data should feel achievable",
+      "lead": "The app turns a broad, intimidating subject into a clear next step—on the device learners already carry.",
+      "items": [
+        {
+          "icon": "01",
+          "title": "Start without friction",
+          "body": "Browse the course catalogue and free lessons before committing."
+        },
+        {
+          "icon": "02",
+          "title": "Learn at your pace",
+          "body": "Read focused lessons, use practical tools, and continue where you stopped."
+        },
+        {
+          "icon": "03",
+          "title": "See real progress",
+          "body": "Saved completion, course progress, and certificates make momentum visible."
+        }
+      ]
+    },
+    {
+      "type": "personas",
+      "eyebrow": "Every user point of view",
+      "title": "One product, four learner moments",
+      "lead": "The experience adapts to intent—from a curious visitor to a committed Pro learner managing their account.",
+      "items": [
+        {
+          "icon": "G",
+          "title": "Guest explorer",
+          "goal": "“Show me whether this is for me.”",
+          "value": "Catalogue, course detail, lesson previews and free learning paths."
+        },
+        {
+          "icon": "L",
+          "title": "Signed-in learner",
+          "goal": "“Help me keep going.”",
+          "value": "Saved progress, continue-learning cues and account-aware navigation."
+        },
+        {
+          "icon": "P",
+          "title": "Existing Pro learner",
+          "goal": "“Give me my full access.”",
+          "value": "Entitlement-aware lessons, tools and certificate access."
+        },
+        {
+          "icon": "A",
+          "title": "Account owner",
+          "goal": "“Keep my data under control.”",
+          "value": "Settings, password reset, privacy links, sign-out and deletion."
+        }
+      ]
+    },
+    {
+      "type": "journey",
+      "eyebrow": "End-to-end experience",
+      "title": "From curiosity to a completed course",
+      "lead": "Every step is explicit, recoverable and designed for small-screen focus.",
+      "steps": [
+        {
+          "title": "Discover",
+          "body": "Browse courses"
+        },
+        {
+          "title": "Join",
+          "body": "Create or sign in"
+        },
+        {
+          "title": "Learn",
+          "body": "Read lessons"
+        },
+        {
+          "title": "Practise",
+          "body": "Use tools"
+        },
+        {
+          "title": "Progress",
+          "body": "Resume and complete"
+        },
+        {
+          "title": "Prove",
+          "body": "View certificates"
+        }
+      ],
+      "footer": "A web learner can continue in the app with the same account"
+    },
+    {
+      "type": "features",
+      "eyebrow": "Learner experience",
+      "title": "Everything needed to learn—nothing noisy",
+      "lead": "The information architecture stays familiar: Home, Courses, Tools and Account are always one tap away.",
+      "groups": [
+        {
+          "icon": "⌂",
+          "title": "Home and discovery",
+          "highlight": true,
+          "items": [
+            "Recommended starting points",
+            "Course catalogue and details",
+            "Free lesson visibility"
+          ]
+        },
+        {
+          "icon": "→",
+          "title": "Learning continuity",
+          "items": [
+            "Continue where you stopped",
+            "Lesson completion state",
+            "Course-level progress"
+          ]
+        },
+        {
+          "icon": "T",
+          "title": "Practical tools",
+          "items": [
+            "Purpose-built data utilities",
+            "Hardened in-app tool pages",
+            "Safe external-link handling"
+          ]
+        },
+        {
+          "icon": "★",
+          "title": "Recognition",
+          "items": [
+            "Certificate catalogue",
+            "Entitlement-aware access",
+            "Account-linked history"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "features",
+      "eyebrow": "Identity and account",
+      "title": "A complete account lifecycle",
+      "lead": "People can enter, recover, understand and leave the service without getting trapped.",
+      "groups": [
+        {
+          "icon": "@",
+          "title": "Authentication",
+          "highlight": true,
+          "items": [
+            "Sign in and create account",
+            "Email-code verification",
+            "Session-aware navigation"
+          ]
+        },
+        {
+          "icon": "↺",
+          "title": "Recovery",
+          "items": [
+            "Forgot-password entry",
+            "Reset-code workflow",
+            "Clear error and success states"
+          ]
+        },
+        {
+          "icon": "⚙",
+          "title": "Settings",
+          "items": [
+            "Account overview",
+            "Privacy and legal links",
+            "Sign out on demand"
+          ]
+        },
+        {
+          "icon": "×",
+          "title": "Deletion",
+          "items": [
+            "In-app deletion request",
+            "Confirmation before action",
+            "Visible policy destination"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "features",
+      "eyebrow": "Trust by design",
+      "title": "The app protects the learner’s context",
+      "lead": "Native boundaries are strict where identity and navigation matter most; web content is admitted only on purpose.",
+      "groups": [
+        {
+          "icon": "S",
+          "title": "Secure sessions",
+          "highlight": true,
+          "items": [
+            "Tokens stored in secure device storage",
+            "Session refresh and expiry handling",
+            "Sensitive state cleared on sign out"
+          ]
+        },
+        {
+          "icon": "W",
+          "title": "Hardened WebView",
+          "items": [
+            "Allowlisted lesson and tool routes",
+            "Unexpected navigation is blocked",
+            "External URLs open outside the app"
+          ]
+        },
+        {
+          "icon": "P",
+          "title": "Privacy controls",
+          "items": [
+            "No invented social or tracking claims",
+            "Account deletion available",
+            "Legal pages remain reachable"
+          ]
+        },
+        {
+          "icon": "A",
+          "title": "Accessible interaction",
+          "items": [
+            "Readable contrast and type scale",
+            "Touch-friendly controls",
+            "Predictable bottom navigation"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "architecture",
+      "eyebrow": "Mobile architecture",
+      "title": "Native where it matters. Reuse where it helps.",
+      "lead": "A React Native shell delivers app-grade identity, navigation and state while selected long-form content remains safely reusable.",
+      "layers": [
+        {
+          "title": "Android + iOS",
+          "body": "One React Native app with platform-specific packaging, icons and release settings."
+        },
+        {
+          "title": "Native product shell",
+          "body": "Authentication, Home, Courses, Progress, Certificates, Tools and Account."
+        },
+        {
+          "title": "Controlled web content",
+          "body": "Existing lesson and tool routes inside an allowlisted, hardened WebView."
+        },
+        {
+          "title": "Existing backend",
+          "body": "The same account, content, entitlement and progress services."
+        }
+      ],
+      "nativeLabel": "Native: identity + navigation + state",
+      "webLabel": "WebView: selected lessons + tools",
+      "safetyLabel": "Guardrails: allowlist + external browser"
+    },
+    {
+      "type": "evidence",
+      "eyebrow": "Quality evidence",
+      "title": "Release confidence is earned, not claimed",
+      "lead": "The product has passed repeatable engineering checks while keeping platform limitations explicit.",
+      "metrics": [
+        {
+          "value": "2",
+          "label": "platform targets"
+        },
+        {
+          "value": "API 36",
+          "label": "Android emulator verification"
+        },
+        {
+          "value": "Hermes",
+          "label": "iOS JavaScript export"
+        },
+        {
+          "value": "0",
+          "label": "known release-blocking app defects"
+        }
+      ],
+      "checks": [
+        "Release APK built and installed",
+        "Critical mobile flows exercised",
+        "Type, lint and automated tests passed",
+        "Architecture and release runbooks included"
+      ]
+    },
+    {
+      "type": "readiness",
+      "eyebrow": "Store readiness",
+      "title": "Technically ready for the owner’s store steps",
+      "lead": "This is an approval-ready product build—not a claim that Apple or Google has already reviewed it.",
+      "ready": [
+        "Branded icon, launch experience and app identity",
+        "Android release build and device verification",
+        "iOS export verification and native project",
+        "Privacy, account deletion and legal entry points",
+        "Architecture, testing and release documentation"
+      ],
+      "before": [
+        "Provide Apple signing and App Store Connect access",
+        "Provide Google Play Console access and signing",
+        "Run full iOS build on Xcode with credentials",
+        "Complete store privacy and content questionnaires",
+        "Capture final store screenshots and submit"
+      ]
+    },
+    {
+      "type": "statement",
+      "eyebrow": "What approval unlocks",
+      "title": "A credible mobile extension of the learning brand",
+      "lead": "The app is valuable on its own and strategically useful to the wider product.",
+      "items": [
+        {
+          "icon": "R",
+          "title": "Retention",
+          "body": "A persistent home for continuing lessons and seeing progress."
+        },
+        {
+          "icon": "T",
+          "title": "Trust",
+          "body": "A focused branded experience with explicit security and privacy boundaries."
+        },
+        {
+          "icon": "G",
+          "title": "Growth",
+          "body": "A store presence that can turn discovery into an owned learner relationship."
+        }
+      ]
+    },
+    {
+      "type": "approval",
+      "title": "Approve the path\nto store submission",
+      "lead": "The experience is coherent, branded and technically verified. The remaining work is owner-controlled store access, signing and final listing operations.",
+      "actions": [
+        "Approve the product experience",
+        "Release store credentials and assets",
+        "Run final signed builds and submit"
+      ]
+    }
+  ]
+}

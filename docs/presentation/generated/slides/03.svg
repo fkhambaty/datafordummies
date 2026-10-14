@@ -1,0 +1,89 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900">
+    <defs>
+      <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+        <feDropShadow dx="0" dy="14" stdDeviation="18" flood-color="#0F172A" flood-opacity="0.12"/>
+      </filter>
+      <clipPath id="phoneClip"><rect x="1166" y="95" width="304" height="660" rx="42"/></clipPath>
+    </defs>
+    
+    
+    <rect width="1600" height="900" fill="#F7F8FC"/>
+    <circle cx="1510" cy="-30" r="245" fill="#4F46E5" opacity="0.11"/>
+    <circle cx="35" cy="910" r="210" fill="#06B6D4" opacity="0.09"/>
+    <rect x="64" y="46" width="332" height="42" rx="21" fill="#E9E7FF"/>
+    <text x="230" y="74" fill="#4F46E5" font-family="Outfit" font-size="17" font-weight="700" text-anchor="middle" opacity="1"  letter-spacing="1.1">
+    <tspan x="230" dy="0">EVERY USER POINT OF VIEW</tspan>
+  </text>
+    <text x="64" y="132" fill="#0F172A" font-family="Outfit" font-size="48" font-weight="800" text-anchor="start" opacity="1"  letter-spacing="0">
+    <tspan x="64" dy="0">One product, four learner moments</tspan>
+  </text>
+    <line x1="64" y1="842" x2="1536" y2="842" stroke="#DDE3ED" stroke-width="2"/>
+    <text x="64" y="874" fill="#536179" font-family="Arial" font-size="17" font-weight="600" text-anchor="start" opacity="1"  letter-spacing="0">
+    <tspan x="64" dy="0">Data For Dummies</tspan>
+  </text>
+    <text x="1536" y="874" fill="#536179" font-family="Arial" font-size="17" font-weight="700" text-anchor="end" opacity="1"  letter-spacing="0">
+    <tspan x="1536" dy="0">03</tspan>
+  </text>
+  
+    <text x="64" y="220" fill="#536179" font-family="Arial" font-size="26" font-weight="500" text-anchor="start" opacity="1"  letter-spacing="0">
+    <tspan x="64" dy="0">The experience adapts to intent—from a curious visitor to a committed Pro learner</tspan><tspan x="64" dy="35">managing their account.</tspan>
+  </text>
+    <rect x="64" y="320" width="351.5" height="430" rx="28" fill="#E9E7FF" stroke="#DDE3ED" stroke-width="2"/>
+        <circle cx="122" cy="380" r="31" fill="#4F46E5"/>
+   <text x="122" y="388.06" fill="#FFFFFF" font-family="Outfit" font-size="26.66" font-weight="800" text-anchor="middle" opacity="1"  letter-spacing="0">
+    <tspan x="122" dy="0">G</tspan>
+  </text>
+        <text x="94" y="466" fill="#0F172A" font-family="Outfit" font-size="26" font-weight="800" text-anchor="start" opacity="1"  letter-spacing="0">
+    <tspan x="94" dy="0">Guest explorer</tspan>
+  </text>
+        <text x="94" y="540" fill="#536179" font-family="Arial" font-size="18" font-weight="600" text-anchor="start" opacity="1"  letter-spacing="0">
+    <tspan x="94" dy="0">“Show me whether this is for</tspan><tspan x="94" dy="25">me.”</tspan>
+  </text>
+        <line x1="94" y1="625" x2="385.5" y2="625" stroke="#DDE3ED" stroke-width="2"/>
+        <text x="94" y="663" fill="#0F172A" font-family="Arial" font-size="17" font-weight="500" text-anchor="start" opacity="1"  letter-spacing="0">
+    <tspan x="94" dy="0">Catalogue, course detail,</tspan><tspan x="94" dy="24">lesson previews and free</tspan><tspan x="94" dy="24">learning paths.</tspan>
+  </text><rect x="437.5" y="320" width="351.5" height="430" rx="28" fill="#FFFFFF" stroke="#DDE3ED" stroke-width="2"/>
+        <circle cx="495.5" cy="380" r="31" fill="#E9E7FF"/>
+   <text x="495.5" y="388.06" fill="#4F46E5" font-family="Outfit" font-size="26.66" font-weight="800" text-anchor="middle" opacity="1"  letter-spacing="0">
+    <tspan x="495.5" dy="0">L</tspan>
+  </text>
+        <text x="467.5" y="466" fill="#0F172A" font-family="Outfit" font-size="26" font-weight="800" text-anchor="start" opacity="1"  letter-spacing="0">
+    <tspan x="467.5" dy="0">Signed-in learner</tspan>
+  </text>
+        <text x="467.5" y="540" fill="#536179" font-family="Arial" font-size="18" font-weight="600" text-anchor="start" opacity="1"  letter-spacing="0">
+    <tspan x="467.5" dy="0">“Help me keep going.”</tspan>
+  </text>
+        <line x1="467.5" y1="625" x2="759" y2="625" stroke="#DDE3ED" stroke-width="2"/>
+        <text x="467.5" y="663" fill="#0F172A" font-family="Arial" font-size="17" font-weight="500" text-anchor="start" opacity="1"  letter-spacing="0">
+    <tspan x="467.5" dy="0">Saved progress,</tspan><tspan x="467.5" dy="24">continue-learning cues and</tspan><tspan x="467.5" dy="24">account-aware navigation.</tspan>
+  </text><rect x="811" y="320" width="351.5" height="430" rx="28" fill="#FFFFFF" stroke="#DDE3ED" stroke-width="2"/>
+        <circle cx="869" cy="380" r="31" fill="#E9E7FF"/>
+   <text x="869" y="388.06" fill="#4F46E5" font-family="Outfit" font-size="26.66" font-weight="800" text-anchor="middle" opacity="1"  letter-spacing="0">
+    <tspan x="869" dy="0">P</tspan>
+  </text>
+        <text x="841" y="466" fill="#0F172A" font-family="Outfit" font-size="26" font-weight="800" text-anchor="start" opacity="1"  letter-spacing="0">
+    <tspan x="841" dy="0">Existing Pro learner</tspan>
+  </text>
+        <text x="841" y="540" fill="#536179" font-family="Arial" font-size="18" font-weight="600" text-anchor="start" opacity="1"  letter-spacing="0">
+    <tspan x="841" dy="0">“Give me my full access.”</tspan>
+  </text>
+        <line x1="841" y1="625" x2="1132.5" y2="625" stroke="#DDE3ED" stroke-width="2"/>
+        <text x="841" y="663" fill="#0F172A" font-family="Arial" font-size="17" font-weight="500" text-anchor="start" opacity="1"  letter-spacing="0">
+    <tspan x="841" dy="0">Entitlement-aware lessons,</tspan><tspan x="841" dy="24">tools and certificate access.</tspan>
+  </text><rect x="1184.5" y="320" width="351.5" height="430" rx="28" fill="#FFFFFF" stroke="#DDE3ED" stroke-width="2"/>
+        <circle cx="1242.5" cy="380" r="31" fill="#E9E7FF"/>
+   <text x="1242.5" y="388.06" fill="#4F46E5" font-family="Outfit" font-size="26.66" font-weight="800" text-anchor="middle" opacity="1"  letter-spacing="0">
+    <tspan x="1242.5" dy="0">A</tspan>
+  </text>
+        <text x="1214.5" y="466" fill="#0F172A" font-family="Outfit" font-size="26" font-weight="800" text-anchor="start" opacity="1"  letter-spacing="0">
+    <tspan x="1214.5" dy="0">Account owner</tspan>
+  </text>
+        <text x="1214.5" y="540" fill="#536179" font-family="Arial" font-size="18" font-weight="600" text-anchor="start" opacity="1"  letter-spacing="0">
+    <tspan x="1214.5" dy="0">“Keep my data under</tspan><tspan x="1214.5" dy="25">control.”</tspan>
+  </text>
+        <line x1="1214.5" y1="625" x2="1506" y2="625" stroke="#DDE3ED" stroke-width="2"/>
+        <text x="1214.5" y="663" fill="#0F172A" font-family="Arial" font-size="17" font-weight="500" text-anchor="start" opacity="1"  letter-spacing="0">
+    <tspan x="1214.5" dy="0">Settings, password reset,</tspan><tspan x="1214.5" dy="24">privacy links, sign-out and</tspan><tspan x="1214.5" dy="24">deletion.</tspan>
+  </text>
+  
+  </svg>
